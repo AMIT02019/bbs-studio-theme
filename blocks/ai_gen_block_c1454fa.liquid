@@ -1,0 +1,448 @@
+{% doc %}
+  @prompt
+    I want to create a section on my Shopify homepage that displays 3 categories.
+    
+    Each category should display 1 selected collection.
+    
+    Requirements:
+    
+    Show 3 category blocks in one row (desktop).
+    
+    Each category block should:
+    
+    Display the Collection Image
+    
+    Display the Collection Title
+    
+    Be clickable and link to that collection page
+    
+    Each category should allow me to select a different collection from the theme customizer.
+    
+    On mobile, the layout should stack vertically (1 per row).
+    
+    The section should be fully dynamic so I can change the collections anytime from Customize → Theme Editor.
+    
+    Structure example:
+    
+    Category 1 → Collection A
+    Category 2 → Collection B
+    Category 3 → Collection C
+    
+    The section must be responsive and clean in design.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-categories-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-collection-categories__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-collection-category__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-collection-category__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }}:hover .ai-collection-category__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-category__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+  }
+
+  .ai-collection-category__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-category__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, {{ block.settings.overlay_opacity }}) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: {{ block.settings.content_padding }}px;
+  }
+
+  .ai-collection-category__title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    text-transform: {{ block.settings.title_text_transform }};
+    margin: 0;
+    text-align: {{ block.settings.title_alignment }};
+    width: 100%;
+  }
+
+  .ai-collection-category__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-categories__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ block.settings.mobile_grid_gap }}px;
+    }
+
+    .ai-collection-category__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<collection-categories-{{ ai_gen_id }} class="ai-collection-categories-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-categories__grid-{{ ai_gen_id }}">
+    {% for i in (1..2) %}
+      {% liquid
+        assign collection_key = 'collection_' | append: i
+        assign collection = block.settings[collection_key]
+      %}
+
+      {% if collection != blank %}
+        <a href="{{ collection.url }}" class="ai-collection-category-{{ ai_gen_id }}">
+          <div class="ai-collection-category__image-wrapper-{{ ai_gen_id }}">
+            {% if collection.image %}
+              <img
+                src="{{ collection.image | image_url: width: 800 }}"
+                alt="{{ collection.title | escape }}"
+                class="ai-collection-category__image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="800"
+                height="{{ 800 | times: block.settings.image_aspect_ratio | divided_by: 100 }}"
+              >
+            {% elsif collection.products.first and collection.products.first.featured_image %}
+              <img
+                src="{{ collection.products.first.featured_image | image_url: width: 800 }}"
+                alt="{{ collection.title | escape }}"
+                class="ai-collection-category__image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="800"
+                height="{{ 800 | times: block.settings.image_aspect_ratio | divided_by: 100 }}"
+              >
+            {% else %}
+              <div class="ai-collection-category__placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+            <div class="ai-collection-category__overlay-{{ ai_gen_id }}">
+              <h3 class="ai-collection-category__title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            </div>
+          </div>
+        </a>
+      {% else %}
+        <div class="ai-collection-category-{{ ai_gen_id }}">
+          <div class="ai-collection-category__image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-collection-category__placeholder-{{ ai_gen_id }}">
+              {{ 'collection-1' | placeholder_svg_tag }}
+            </div>
+            <div class="ai-collection-category__empty-state-{{ ai_gen_id }}">
+              Select collection {{ i }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</collection-categories-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionCategories{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.initAccessibility();
+      }
+
+      initAccessibility() {
+        const links = this.querySelectorAll('.ai-collection-category-{{ ai_gen_id }}[href]');
+        links.forEach(link => {
+          const title = link.querySelector('.ai-collection-category__title-{{ ai_gen_id }}');
+          if (title) {
+            link.setAttribute('aria-label', `View ${title.textContent.trim()} collection`);
+          }
+        });
+      }
+    }
+
+    customElements.define('collection-categories-{{ ai_gen_id }}', CollectionCategories{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection categories",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Space between items (desktop)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_grid_gap",
+      "label": "Space between items (mobile)",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "100% = square, 75% = landscape, 125% = portrait"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection categories"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,847 @@
+{% doc %}
+  @prompt
+    <div class="bulk-sales-container form-align-{{ section.settings.form_alignment }}">
+      <h1>Bulk Sales Inquiry</h1>
+    
+      {% form 'contact' %}
+        
+        {% if form.posted_successfully? %}
+          <p class="success-message">
+            Thank you. Our supplier will contact you shortly regarding your bulk order.
+          </p>
+        {% endif %}
+    
+        {{ form.errors | default_errors }}
+    
+        <label>Full Name *</label>
+        <input type="text" name="contact[name]" required>
+    
+        <label>Company Name</label>
+        <input type="text" name="contact[Company]">
+    
+        <label>Email Address *</label>
+        <input type="email" name="contact[email]" required>
+    
+        <label>Phone Number *</label>
+        <input type="tel" name="contact[Phone]" required>
+    
+       {% capture all_books_options %}
+  {% paginate collections['books'].products by 500 %}
+    {% for product in collections['books'].products %}
+      {% if product.available %}
+        <option value="{{ product.title }}">
+          {{ product.title }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  {% endpaginate %}
+{% endcapture %}
+
+<label>Book Title *</label>
+<select name="contact[Book Title]" required>
+  <option value="">Select a Book</option>
+  {{ all_books_options }}
+</select>
+     
+        <label>Quantity *</label>
+        <input type="number" name="contact[Quantity]" min="1" required>
+    
+        <label>Additional Notes</label>
+        <textarea name="contact[Notes]"></textarea>
+    
+        <button type="submit">Submit Bulk Request</button>
+    
+      {% endform %}
+    </div>
+    
+    <style>
+    .bulk-sales-container{
+      max-width:600px;
+      padding:20px;
+    }
+    
+    .bulk-sales-container h1{
+      text-align:center;
+      margin-bottom:30px;
+    }
+    
+    .bulk-sales-container input,
+    .bulk-sales-container select,
+    .bulk-sales-container textarea{
+      width:100%;
+      padding:10px;
+      margin-bottom:15px;
+      box-sizing:border-box;
+    }
+    
+    .bulk-sales-container button{
+      width:100%;
+      padding:12px;
+      background:#000;
+      color:#fff;
+      border:none;
+      cursor:pointer;
+    }
+    
+    .success-message{
+      color:green;
+      font-weight:bold;
+      margin-bottom:20px;
+    }
+    
+    /* Alignment Options */
+    .form-align-left{
+      margin:40px 0 40px 0;
+    }
+    
+    .form-align-center{
+      margin:40px auto;
+    }
+    
+    .form-align-right{
+      margin:40px 0 40px auto;
+    }
+    </style>
+    
+    {% schema %}
+   "settings": [
+  {
+    "type": "select",
+    "id": "form_alignment",
+    "label": "Form Alignment",
+    "default": "center",
+    "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ]
+  },
+  {
+    "type": "select",
+    "id": "heading_alignment",
+    "label": "Heading Alignment",
+    "default": "center",
+    "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ]
+  }
+]
+    {% endschema %}
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-bulk-sales-form-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-bulk-sales-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.form_max_width }}px;
+    padding: {{ block.settings.form_padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    box-sizing: border-box;
+  }
+
+  .ai-bulk-sales-container-{{ ai_gen_id }}.ai-align-left-{{ ai_gen_id }} {
+    margin: {{ block.settings.vertical_spacing }}px 0;
+  }
+
+  .ai-bulk-sales-container-{{ ai_gen_id }}.ai-align-center-{{ ai_gen_id }} {
+    margin: {{ block.settings.vertical_spacing }}px auto;
+  }
+
+  .ai-bulk-sales-container-{{ ai_gen_id }}.ai-align-right-{{ ai_gen_id }} {
+    margin: {{ block.settings.vertical_spacing }}px 0 {{ block.settings.vertical_spacing }}px auto;
+  }
+
+  .ai-bulk-sales-heading-{{ ai_gen_id }} {
+    text-align: center;
+    margin: 0 0 {{ block.settings.heading_margin_bottom }}px 0;
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_font_size }}px;
+  }
+
+  .ai-bulk-sales-label-{{ ai_gen_id }} {
+    display: block;
+    margin-bottom: 8px;
+    color: {{ block.settings.label_color }};
+    font-size: {{ block.settings.label_font_size }}px;
+    font-weight: {{ block.settings.label_font_weight }};
+  }
+
+  .ai-bulk-sales-input-{{ ai_gen_id }},
+  .ai-bulk-sales-select-{{ ai_gen_id }},
+  .ai-bulk-sales-textarea-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.input_padding }}px;
+    margin-bottom: {{ block.settings.input_margin_bottom }}px;
+    box-sizing: border-box;
+    border: {{ block.settings.input_border_width }}px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    background-color: {{ block.settings.input_background_color }};
+    color: {{ block.settings.input_text_color }};
+    font-size: {{ block.settings.input_font_size }}px;
+  }
+
+  .ai-bulk-sales-input-{{ ai_gen_id }}:focus,
+  .ai-bulk-sales-select-{{ ai_gen_id }}:focus,
+  .ai-bulk-sales-textarea-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.input_focus_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-bulk-sales-textarea-{{ ai_gen_id }} {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .ai-bulk-sales-button-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    text-transform: {{ block.settings.button_text_transform }};
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-bulk-sales-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-bulk-sales-success-{{ ai_gen_id }} {
+    color: {{ block.settings.success_color }};
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: {{ block.settings.success_background }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+  }
+
+  .ai-bulk-sales-errors-{{ ai_gen_id }} {
+    color: {{ block.settings.error_color }};
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: {{ block.settings.error_background }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-bulk-sales-container-{{ ai_gen_id }} {
+      padding: {{ block.settings.form_padding | times: 0.7 }}px;
+    }
+
+    .ai-bulk-sales-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_font_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<bulk-sales-form-{{ ai_gen_id }} class="ai-bulk-sales-form-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-bulk-sales-container-{{ ai_gen_id }} ai-align-{{ block.settings.form_alignment }}-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-bulk-sales-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    {% form 'contact' %}
+      {% if form.posted_successfully? %}
+        <div class="ai-bulk-sales-success-{{ ai_gen_id }}">
+          {{ block.settings.success_message }}
+        </div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="ai-bulk-sales-errors-{{ ai_gen_id }}">
+          {{ form.errors | default_errors }}
+        </div>
+      {% endif %}
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-name-{{ ai_gen_id }}">
+        {{ block.settings.label_name }}
+      </label>
+      <input
+        type="text"
+        id="ai-name-{{ ai_gen_id }}"
+        name="contact[name]"
+        class="ai-bulk-sales-input-{{ ai_gen_id }}"
+        required
+      >
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-company-{{ ai_gen_id }}">
+        {{ block.settings.label_company }}
+      </label>
+      <input
+        type="text"
+        id="ai-company-{{ ai_gen_id }}"
+        name="contact[Company]"
+        class="ai-bulk-sales-input-{{ ai_gen_id }}"
+      >
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-email-{{ ai_gen_id }}">
+        {{ block.settings.label_email }}
+      </label>
+      <input
+        type="email"
+        id="ai-email-{{ ai_gen_id }}"
+        name="contact[email]"
+        class="ai-bulk-sales-input-{{ ai_gen_id }}"
+        required
+      >
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-phone-{{ ai_gen_id }}">
+        {{ block.settings.label_phone }}
+      </label>
+      <input
+        type="tel"
+        id="ai-phone-{{ ai_gen_id }}"
+        name="contact[Phone]"
+        class="ai-bulk-sales-input-{{ ai_gen_id }}"
+        required
+      >
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-book-{{ ai_gen_id }}">
+        {{ block.settings.label_book }}
+      </label>
+      <select
+        id="ai-book-{{ ai_gen_id }}"
+        name="contact[Book Title]"
+        class="ai-bulk-sales-select-{{ ai_gen_id }}"
+        required
+      >
+        <option value="">{{ block.settings.book_placeholder }}</option>
+        {% if block.settings.books_collection != blank %}
+          {% for product in block.settings.books_collection.products %}
+            {% if product.available %}
+              <option value="{{ product.title }}">{{ product.title }}</option>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </select>
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-quantity-{{ ai_gen_id }}">
+        {{ block.settings.label_quantity }}
+      </label>
+      <input
+        type="number"
+        id="ai-quantity-{{ ai_gen_id }}"
+        name="contact[Quantity]"
+        min="1"
+        class="ai-bulk-sales-input-{{ ai_gen_id }}"
+        required
+      >
+
+      <label class="ai-bulk-sales-label-{{ ai_gen_id }}" for="ai-notes-{{ ai_gen_id }}">
+        {{ block.settings.label_notes }}
+      </label>
+      <textarea
+        id="ai-notes-{{ ai_gen_id }}"
+        name="contact[Notes]"
+        class="ai-bulk-sales-textarea-{{ ai_gen_id }}"
+      ></textarea>
+
+      <button type="submit" class="ai-bulk-sales-button-{{ ai_gen_id }}">
+        {{ block.settings.button_text }}
+      </button>
+    {% endform %}
+  </div>
+</bulk-sales-form-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BulkSalesForm{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.form = this.querySelector('form');
+        if (this.form) {
+          this.form.addEventListener('submit', this.handleSubmit.bind(this));
+        }
+      }
+
+      handleSubmit(event) {
+        const requiredFields = this.form.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.style.borderColor = '{{ block.settings.error_color }}';
+          } else {
+            field.style.borderColor = '{{ block.settings.input_border_color }}';
+          }
+        });
+
+        if (!isValid) {
+          event.preventDefault();
+        }
+      }
+    }
+
+    customElements.define('bulk-sales-form-{{ ai_gen_id }}', BulkSalesForm{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Bulk sales form",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bulk Sales Inquiry"
+    },
+    {
+      "type": "collection",
+      "id": "books_collection",
+      "label": "Books collection"
+    },
+    {
+      "type": "text",
+      "id": "label_name",
+      "label": "Name label",
+      "default": "Full Name *"
+    },
+    {
+      "type": "text",
+      "id": "label_company",
+      "label": "Company label",
+      "default": "Company Name"
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "Email label",
+      "default": "Email Address *"
+    },
+    {
+      "type": "text",
+      "id": "label_phone",
+      "label": "Phone label",
+      "default": "Phone Number *"
+    },
+    {
+      "type": "text",
+      "id": "label_book",
+      "label": "Book title label",
+      "default": "Book Title *"
+    },
+    {
+      "type": "text",
+      "id": "book_placeholder",
+      "label": "Book dropdown placeholder",
+      "default": "Select a Book"
+    },
+    {
+      "type": "text",
+      "id": "label_quantity",
+      "label": "Quantity label",
+      "default": "Quantity *"
+    },
+    {
+      "type": "text",
+      "id": "label_notes",
+      "label": "Notes label",
+      "default": "Additional Notes"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Submit Bulk Request"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you. Our supplier will contact you shortly regarding your bulk order."
+    },
+    {
+      "type": "header",
+      "content": "Form layout"
+    },
+    {
+      "type": "select",
+      "id": "form_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "form_max_width",
+      "label": "Maximum width",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "form_padding",
+      "label": "Padding",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing",
+      "label": "Vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Input text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_color",
+      "label": "Input focus",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "success_color",
+      "label": "Success text",
+      "default": "#008060"
+    },
+    {
+      "type": "color",
+      "id": "success_background",
+      "label": "Success background",
+      "default": "#d4f4e8"
+    },
+    {
+      "type": "color",
+      "id": "error_color",
+      "label": "Error text",
+      "default": "#D82C0D"
+    },
+    {
+      "type": "color",
+      "id": "error_background",
+      "label": "Error background",
+      "default": "#fde8e4"
+    },
+    {
+      "type": "header",
+      "content": "Heading style"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Font size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "label": "Margin bottom",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Label style"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Input style"
+    },
+    {
+      "type": "range",
+      "id": "input_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "input_padding",
+      "label": "Padding",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "input_margin_bottom",
+      "label": "Margin bottom",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "input_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bulk sales form"
+    }
+  ]
+}
+{% endschema %}

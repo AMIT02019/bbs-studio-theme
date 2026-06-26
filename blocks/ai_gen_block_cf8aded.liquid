@@ -1,0 +1,603 @@
+{% doc %}
+  @prompt
+    {% comment %}
+    Horizontal Collection List – Book Cover Style
+    Fixed image fallback for Ella theme
+    {% endcomment %}
+    
+    <section class="book-collection-section">
+      <div class="book-collection-wrapper">
+        
+        {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.collection] %}
+          {% if collection != blank %}
+            
+            <div class="book-collection-card" {{ block.shopify_attributes }}>
+              
+              <a href="{{ collection.url }}" class="book-image-wrapper">
+                <div class="book-image-container">
+    
+                  {% if collection.image != blank %}
+                    <img 
+                      src="{{ collection.image | image_url: width: 600 }}"
+                      alt="{{ collection.title | escape }}"
+                      loading="lazy"
+                    >
+    
+                  {% elsif collection.products.first.featured_image != blank %}
+                    <img 
+                      src="{{ collection.products.first.featured_image | image_url: width: 600 }}"
+                      alt="{{ collection.title | escape }}"
+                      loading="lazy"
+                    >
+    
+                  {% else %}
+                    {{ 'collection-1' | placeholder_svg_tag }}
+                  {% endif %}
+    
+                </div>
+              </a>
+    
+              <!-- TEXT BELOW IMAGE -->
+              <div class="book-content">
+                <h3 class="book-title">
+                  <a href="{{ collection.url }}">
+                    {{ collection.title }}
+                  </a>
+                </h3>
+              </div>
+    
+            </div>
+    
+          {% endif %}
+        {% endfor %}
+    
+      </div>
+    </section>
+    
+    <style>
+    .book-collection-section {
+      padding: 40px 0;
+    }
+    
+    .book-collection-wrapper {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 20px;
+    }
+    
+    .book-collection-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* EXACTLY 6 ON DESKTOP */
+    .book-collection-card {
+      flex: 0 0 calc((100% - 100px) / 6);
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* 2:3 Book Ratio */
+    .book-image-container {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .book-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* Hover */
+    .book-collection-card:hover .book-image-container {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+    }
+    
+    /* TEXT */
+    .book-content {
+      margin-top: 14px;
+      text-align: center;
+    }
+    
+    .book-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .book-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* RESPONSIVE */
+    
+    @media (max-width: 1200px) {
+      .book-collection-card {
+        flex: 0 0 calc((100% - 60px) / 4);
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .book-collection-card {
+        flex: 0 0 calc((100% - 40px) / 3);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .book-collection-card {
+        flex: 0 0 calc((100% - 20px) / 2);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .book-collection-card {
+        flex: 0 0 85%;
+      }
+    }
+    </style>
+    
+    {% schema %}
+    {
+      "name": "Horizontal Collections (Book Style)",
+      "settings": [],
+      "blocks": [
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": [
+            {
+              "type": "collection",
+              "id": "collection",
+              "label": "Select collection"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Horizontal Collections (Book Style)",
+          "blocks": [
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" }
+          ]
+        }
+      ]
+    }
+    {% endschema %}
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-book-collection-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-book-collection-section-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-book-collection-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.gap }}px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 20px;
+  }
+
+  .ai-book-collection-wrapper-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-book-collection-card-{{ ai_gen_id }} {
+    flex: 0 0 calc((100% - ({{ block.settings.desktop_columns }} - 1) * {{ block.settings.gap }}px) / {{ block.settings.desktop_columns }});
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-book-image-wrapper-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-book-image-container-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-book-image-container-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-book-image-container-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  {% if block.settings.enable_hover_effect %}
+    .ai-book-collection-card-{{ ai_gen_id }}:hover .ai-book-image-container-{{ ai_gen_id }} {
+      transform: translateY(-{{ block.settings.hover_lift }}px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, {{ block.settings.hover_shadow_opacity }});
+    }
+  {% endif %}
+
+  .ai-book-content-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.title_spacing }}px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-book-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    margin: 0;
+    color: {{ block.settings.title_color }};
+  }
+
+  .ai-book-title-{{ ai_gen_id }} a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+
+  {% if block.settings.enable_title_hover %}
+    .ai-book-title-{{ ai_gen_id }} a:hover {
+      color: {{ block.settings.title_hover_color }};
+    }
+  {% endif %}
+
+  @media (max-width: 1200px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc((100% - ({{ block.settings.tablet_columns }} - 1) * {{ block.settings.gap }}px) / {{ block.settings.tablet_columns }});
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc((100% - ({{ block.settings.mobile_columns }} - 1) * {{ block.settings.gap }}px) / {{ block.settings.mobile_columns }});
+    }
+
+    .ai-book-collection-section-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.7 }}px 0 {{ block.settings.section_padding_bottom | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<book-collection-{{ ai_gen_id }} class="ai-book-collection-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-book-collection-section-{{ ai_gen_id }}">
+    <div class="ai-book-collection-wrapper-{{ ai_gen_id }}">
+      {% for i in (1..12) %}
+        {% assign collection_key = 'collection_' | append: i %}
+        {% assign collection = block.settings[collection_key] %}
+        
+        {% if collection != blank %}
+          <div class="ai-book-collection-card-{{ ai_gen_id }}">
+            <a href="{{ collection.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+              <div class="ai-book-image-container-{{ ai_gen_id }}">
+                {% if collection.image != blank %}
+                  <img 
+                    src="{{ collection.image | image_url: width: 600 }}"
+                    alt="{{ collection.title | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="900"
+                  >
+                {% elsif collection.products.first.featured_image != blank %}
+                  <img 
+                    src="{{ collection.products.first.featured_image | image_url: width: 600 }}"
+                    alt="{{ collection.title | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="900"
+                  >
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                {% endif %}
+              </div>
+            </a>
+
+            <div class="ai-book-content-{{ ai_gen_id }}">
+              <h3 class="ai-book-title-{{ ai_gen_id }}">
+                <a href="{{ collection.url }}">
+                  {{ collection.title }}
+                </a>
+              </h3>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</book-collection-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BookCollection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.wrapper = this.querySelector('.ai-book-collection-wrapper-{{ ai_gen_id }}');
+      }
+    }
+
+    customElements.define('book-collection-{{ ai_gen_id }}', BookCollection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Book collection list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Collection 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Collection 8"
+    },
+    {
+      "type": "collection",
+      "id": "collection_9",
+      "label": "Collection 9"
+    },
+    {
+      "type": "collection",
+      "id": "collection_10",
+      "label": "Collection 10"
+    },
+    {
+      "type": "collection",
+      "id": "collection_11",
+      "label": "Collection 11"
+    },
+    {
+      "type": "collection",
+      "id": "collection_12",
+      "label": "Collection 12"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "tablet_columns",
+      "label": "Tablet columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between items",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Image style"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_effect",
+      "label": "Enable hover effect",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "hover_lift",
+      "label": "Hover lift distance",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "hover_shadow_opacity",
+      "label": "Hover shadow opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.2
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Spacing above title",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_title_hover",
+      "label": "Enable title hover color",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "title_hover_color",
+      "label": "Hover color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Book collection list"
+    }
+  ]
+}
+{% endschema %}

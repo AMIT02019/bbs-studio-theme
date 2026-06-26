@@ -1,0 +1,76 @@
+<div class="sq-app">
+  <sq-config></sq-config>
+  <sq-url-manager></sq-url-manager>
+  <div class="sq-searchbox">
+    <sq-search-box placeholder="Search..."></sq-search-box>
+  </div>
+  <div class="sq-filter-main" style="visibility:hidden;" v-if="!store.noContent">
+    <div id="overlay" class="sq-overlay" onclick="removeClass()"></div>
+    <div class="sq-desktop-filter-header-title">Filter by</div>
+    <div class="sq-filter-header">
+      <div class="sq-filter-header-title">Filter by</div>
+      <div class="sq-filter-header-clear"   >
+        <sq-clear>
+          <button class="sq-clear-button">Clear all</button>
+        </sq-clear>
+
+        <span class="sq-cross" onclick="removeClass()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+                    d="M4.70703 3.29297L3.29297 4.70703L10.5859 12L3.29297 19.293L4.70703 20.707L12 13.4141L19.293 20.707L20.707 19.293L13.4141 12L20.707 4.70703L19.293 3.29297L12 10.5859L4.70703 3.29297Z"
+                    fill="#23263B" />
+          </svg>
+        </span>
+      </div>
+      <div class="sq-filter-bottom" onclick="removeClass()">
+        <span>Apply Filter</span>
+      </div>
+    </div>
+    <sq-applied-filter></sq-applied-filter>
+    <sq-clear v-if="store.filters?.flatMap(x=>x.items)?.filter(x=>!!x?.selected)?.length > 0">
+      <div class="sq-clear-button-desktop">Clear all</div>
+    </sq-clear>
+    <sq-filter-group v-if="store.results.length">
+      <template #header="filter">
+      </template>
+    </sq-filter-group>
+  </div>
+
+  <div class="sparq-container" :class="store.custom.listView ? '--list-view' : '--grid-view'" style="visibility:hidden;">
+    <div class="sparq-mobile-filter" >
+      <sq-sort></sq-sort>
+
+      <div class="sparq-mobile-filterby" onclick="toggleFilter()">
+        <span><span class="sq-filterby-icon"></span> Filter by</span>
+      </div>
+    </div>
+
+    <div class="sparq-row-base" v-if="!store.noContent">
+      <div class="sparq-product-number">
+
+        <span>Showing {% raw %} {{ store.pageSize * (store.currentPage-1) + 1 }} {% endraw %} - {% raw %} {{ Math.min(store.pageSize * store.currentPage, store.totalHits) }} {% endraw %} of {% raw %} {{store.totalHits}} {% endraw %} products</span>
+
+
+      </div>
+      <div class="sq-right-elements">
+        <div class="sq-dropdown">
+          <sq-sort></sq-sort>
+        </div>
+        <div class="sq-grid-view-container">
+          <div class="sq-grid-view" id="toggleButton" @click="store.custom.listView = false"><svg class="icon-grid" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 7V2H7V7H2ZM0 1C0 0.447715 0.447715 0 1 0H8C8.55229 0 9 0.447715 9 1V8C9 8.55229 8.55229 9 8 9H1C0.447715 9 0 8.55229 0 8V1ZM13 7V2H18V7H13ZM11 1C11 0.447715 11.4477 0 12 0H19C19.5523 0 20 0.447715 20 1V8C20 8.55229 19.5523 9 19 9H12C11.4477 9 11 8.55229 11 8V1ZM13 13V18H18V13H13ZM12 11C11.4477 11 11 11.4477 11 12V19C11 19.5523 11.4477 20 12 20H19C19.5523 20 20 19.5523 20 19V12C20 11.4477 19.5523 11 19 11H12ZM2 18V13H7V18H2ZM0 12C0 11.4477 0.447715 11 1 11H8C8.55229 11 9 11.4477 9 12V19C9 19.5523 8.55229 20 8 20H1C0.447715 20 0 19.5523 0 19V12Z" fill="currentColor"></path></svg></div>
+          <div class="sq-list-view" id="toggleButton" @click="store.custom.listView = true"><svg class="icon-list" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 2C0.223858 2 0 2.22386 0 2.5V3.5C0 3.77614 0.223858 4 0.5 4H1.5C1.77614 4 2 3.77614 2 3.5V2.5C2 2.22386 1.77614 2 1.5 2H0.5ZM5 2C4.44772 2 4 2.44772 4 3C4 3.55228 4.44772 4 5 4H19C19.5523 4 20 3.55228 20 3C20 2.44772 19.5523 2 19 2H5ZM5 9C4.44772 9 4 9.44772 4 10C4 10.5523 4.44772 11 5 11H19C19.5523 11 20 10.5523 20 10C20 9.44772 19.5523 9 19 9H5ZM4 17C4 16.4477 4.44772 16 5 16H19C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H5C4.44772 18 4 17.5523 4 17ZM0 9.5C0 9.22386 0.223858 9 0.5 9H1.5C1.77614 9 2 9.22386 2 9.5V10.5C2 10.7761 1.77614 11 1.5 11H0.5C0.223858 11 0 10.7761 0 10.5V9.5ZM0.5 16C0.223858 16 0 16.2239 0 16.5V17.5C0 17.7761 0.223858 18 0.5 18H1.5C1.77614 18 2 17.7761 2 17.5V16.5C2 16.2239 1.77614 16 1.5 16H0.5Z" fill="currentColor"></path></svg></div>
+        </div>
+      </div>
+    </div>
+    <sq-no-content></sq-no-content>
+    <sq-grid-loader></sq-grid-loader>
+    <sq-data-grid>
+      <template #tpl="item">
+        {% render 'sq-product' %}
+      </template>
+    </sq-data-grid>
+    <sq-sy-pager v-if="store.results.length || !store.noContent"></sq-sy-pager>
+  </div>
+
+
+</div>

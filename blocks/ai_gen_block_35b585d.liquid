@@ -1,0 +1,486 @@
+{% doc %}
+  @prompt
+    I am using Shopify (Ella theme).
+    I want to create a custom homepage section that displays multiple collections (Collection List) in a single horizontal scrolling row.
+    
+    Requirements:
+    
+    Show multiple collections (not products)
+    
+    Display 6 collections visible per row on desktop
+    
+    Enable horizontal scroll instead of multiple rows
+    
+    Smooth scrolling (mouse scroll + mobile swipe)
+    
+    Fully responsive:
+    
+    Desktop → 6 collections
+    
+    Tablet → 3–4 collections
+    
+    Mobile → 1–2 collections (swipe enabled)
+    
+    Each collection card should show:
+    
+    Collection image
+    
+    Collection title
+    
+    Add customizable settings in Theme Editor:
+    
+    Border on/off
+    
+    Border color
+    
+    Border radius
+    
+    Box shadow on/off
+    
+    Spacing between cards
+    
+    Add hover effect (lift + stronger shadow)
+    
+    Clean Liquid + CSS
+    
+    No third-party slider apps
+    
+    Compatible with Shopify 2.0 (JSON templates)
+    
+    Provide full section code including schema settings.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-scroll-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+  }
+
+  .ai-collection-scroll-container-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_spacing }}px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    padding: 10px 0;
+  }
+
+  .ai-collection-scroll-container-{{ ai_gen_id }}::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .ai-collection-scroll-container-{{ ai_gen_id }}::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .ai-collection-scroll-container-{{ ai_gen_id }}::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  .ai-collection-scroll-container-{{ ai_gen_id }}::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-collection-card-{{ ai_gen_id }} {
+    flex: 0 0 auto;
+    width: calc((100% - (5 * {{ block.settings.card_spacing }}px)) / 6);
+    min-width: 200px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    {% if block.settings.enable_border %}
+      border: 1px solid {{ block.settings.border_color }};
+    {% endif %}
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    {% if block.settings.enable_shadow %}
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    {% endif %}
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-8px);
+    {% if block.settings.enable_shadow %}
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    {% endif %}
+  }
+
+  .ai-collection-card-link-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .ai-collection-card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .ai-collection-card-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-card-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-card-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+
+  .ai-collection-card-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-card-content-{{ ai_gen_id }} {
+    padding: 15px;
+    background-color: {{ block.settings.card_background_color }};
+  }
+
+  .ai-collection-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0;
+    text-align: center;
+    text-transform: {{ block.settings.title_text_transform }};
+    line-height: 1.4;
+  }
+
+  .ai-collection-empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-collection-card-{{ ai_gen_id }} {
+      width: calc((100% - (3 * {{ block.settings.card_spacing }}px)) / 4);
+      min-width: 180px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-card-{{ ai_gen_id }} {
+      width: calc((100% - {{ block.settings.card_spacing }}px) / 2);
+      min-width: 150px;
+    }
+
+    .ai-collection-card-content-{{ ai_gen_id }} {
+      padding: 12px;
+    }
+
+    .ai-collection-card-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ai-collection-card-{{ ai_gen_id }} {
+      width: calc((100% - {{ block.settings.card_spacing }}px) / {{ block.settings.mobile_columns }});
+      min-width: 140px;
+    }
+  }
+{% endstyle %}
+
+<horizontal-collection-scroll-{{ ai_gen_id }}
+  class="ai-collection-scroll-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.collections.size > 0 %}
+    <div class="ai-collection-scroll-container-{{ ai_gen_id }}">
+      {% for collection in block.settings.collections %}
+        <div class="ai-collection-card-{{ ai_gen_id }}">
+          <a
+            href="{{ collection.url }}"
+            class="ai-collection-card-link-{{ ai_gen_id }}"
+            aria-label="{{ collection.title }}"
+          >
+            <div class="ai-collection-card-image-wrapper-{{ ai_gen_id }}">
+              {% if collection.image %}
+                <img
+                  src="{{ collection.image | image_url: width: 600 }}"
+                  alt="{{ collection.image.alt | escape }}"
+                  class="ai-collection-card-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif collection.products.first and collection.products.first.featured_image %}
+                <img
+                  src="{{ collection.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ collection.products.first.featured_image.alt | escape }}"
+                  class="ai-collection-card-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-collection-card-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-collection-card-content-{{ ai_gen_id }}">
+              <h3 class="ai-collection-card-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="ai-collection-empty-state-{{ ai_gen_id }}">
+      <p>Select collections to display in the Theme Editor</p>
+    </div>
+  {% endif %}
+</horizontal-collection-scroll-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class HorizontalCollectionScroll{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.container = null;
+        this.isDragging = false;
+        this.startX = 0;
+        this.scrollLeft = 0;
+      }
+
+      connectedCallback() {
+        this.container = this.querySelector('.ai-collection-scroll-container-{{ ai_gen_id }}');
+        if (!this.container) return;
+
+        this.setupMouseDrag();
+        this.setupWheelScroll();
+      }
+
+      setupMouseDrag() {
+        this.container.addEventListener('mousedown', (e) => {
+          this.isDragging = true;
+          this.startX = e.pageX - this.container.offsetLeft;
+          this.scrollLeft = this.container.scrollLeft;
+          this.container.style.cursor = 'grabbing';
+          this.container.style.userSelect = 'none';
+        });
+
+        this.container.addEventListener('mouseleave', () => {
+          this.isDragging = false;
+          this.container.style.cursor = 'grab';
+        });
+
+        this.container.addEventListener('mouseup', () => {
+          this.isDragging = false;
+          this.container.style.cursor = 'grab';
+        });
+
+        this.container.addEventListener('mousemove', (e) => {
+          if (!this.isDragging) return;
+          e.preventDefault();
+          const x = e.pageX - this.container.offsetLeft;
+          const walk = (x - this.startX) * 2;
+          this.container.scrollLeft = this.scrollLeft - walk;
+        });
+
+        this.container.style.cursor = 'grab';
+      }
+
+      setupWheelScroll() {
+        this.container.addEventListener('wheel', (e) => {
+          if (e.deltaY !== 0) {
+            e.preventDefault();
+            this.container.scrollLeft += e.deltaY;
+          }
+        }, { passive: false });
+      }
+    }
+
+    customElements.define('horizontal-collection-scroll-{{ ai_gen_id }}', HorizontalCollectionScroll{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection scroll",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 12
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Spacing between cards",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_border",
+      "label": "Enable border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shadow",
+      "label": "Enable box shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection scroll"
+    }
+  ]
+}
+{% endschema %}

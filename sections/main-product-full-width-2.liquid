@@ -1,0 +1,1094 @@
+{%- liquid
+    assign current_variant   = product.selected_or_first_available_variant
+    assign compare_price     = current_variant.compare_at_price
+    assign sale_price        = current_variant.price
+    assign vendor_handle     = product.vendor | handleize
+    assign form_id           = 'ppf-' | append: section.id
+    assign vendor_collection = collections[vendor_handle]
+    assign cond_levels       = 'Fair,Good,Very Good,Excellent,New' | split: ','
+    assign wa_number         = section.settings.wa_number   | default: '919136047270'
+    assign coupon_code       = section.settings.coupon_code | default: 'MYFIRST'
+    assign coupon_text       = section.settings.coupon_text | default: '₹2,000 off on your first order above ₹25,000'
+    assign sell_page         = section.settings.sell_page   | default: '/pages/sell-with-us'
+    assign return_days       = section.settings.return_days | default: '7'
+    assign wa_msg            = 'Hi! I am interested in ' | append: product.title | url_encode
+    assign wa_msg_full       = 'Hi! I need more info about ' | append: product.title | append: ' - ' | append: shop.url | append: product.url | url_encode
+  -%}
+
+  {%- assign condition_label = '' -%}
+  {%- for tag in product.tags -%}
+    {%- if tag contains 'Condition:' -%}
+      {%- assign condition_label = tag | remove: 'Condition:' | strip -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign current_cond_index = -1 -%}
+  {%- for lvl in cond_levels -%}
+    {%- if lvl == condition_label -%}
+      {%- assign current_cond_index = forloop.index0 -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign show_sale    = false -%}
+  {%- assign discount_pct = 0 -%}
+  {%- if compare_price > sale_price -%}
+    {%- assign show_sale   = true -%}
+    {%- assign disc_amount = compare_price | minus: sale_price -%}
+    {%- assign discount_pct = disc_amount | times: 100 | divided_by: compare_price -%}
+  {%- endif -%}
+
+  {%- assign product_images = product.media | where: 'media_type', 'image' -%}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+  #pp-{{ section.id }} *,
+  #pp-{{ section.id }} *::before,
+  #pp-{{ section.id }} *::after { box-sizing: border-box; }
+
+  #pp-{{ section.id }} {
+    background: #fff;
+    color: #0a0a0a;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15.36px;
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  #pp-{{ section.id }} .pp-hero {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  #pp-{{ section.id }} .pp-gallery {
+    width: 50%;
+    flex-shrink: 0;
+    padding: 40px 24px 48px;
+    align-self: flex-start;
+    will-change: transform;
+  }
+
+  #pp-{{ section.id }} .pp-frame {
+    aspect-ratio: 1 / 1;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  #pp-{{ section.id }} .pp-glass {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  #pp-{{ section.id }} .pp-glass-border {
+    position: absolute;
+    inset: 0;
+    border: 0.8px solid rgba(0,0,0,.07);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  #pp-{{ section.id }} .pp-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #pp-{{ section.id }} .pp-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.42s cubic-bezier(.25,.46,.45,.94);
+    will-change: transform;
+  }
+
+  #pp-{{ section.id }} .pp-slide {
+    flex: 0 0 100%;
+    height: 100%;
+  }
+
+  #pp-{{ section.id }} .pp-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  #pp-{{ section.id }} .pp-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    background: rgba(255,255,255,.88);
+    border: 0.8px solid rgba(0,0,0,.12);
+    border-radius: 0;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background .15s;
+  }
+  #pp-{{ section.id }} .pp-nav:hover { background: #fff; }
+  #pp-{{ section.id }} .pp-nav--prev { left: 10px; }
+  #pp-{{ section.id }} .pp-nav--next { right: 10px; }
+
+  #pp-{{ section.id }} .pp-zoom {
+    position: absolute;
+    bottom: 48px;
+    right: 12px;
+    z-index: 4;
+    background: rgba(255,255,255,.88);
+    border: 0.8px solid rgba(0,0,0,.12);
+    width: 32px;
+    height: 32px;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #pp-{{ section.id }} .pp-controls {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    z-index: 4;
+  }
+  #pp-{{ section.id }} .pp-counter {
+    font-size: 11px;
+    color: rgba(255,255,255,.85);
+    letter-spacing: .5px;
+    flex-shrink: 0;
+    min-width: 28px;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+  #pp-{{ section.id }} .pp-progress {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,.35);
+    position: relative;
+    overflow: hidden;
+  }
+  #pp-{{ section.id }} .pp-progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: #fff;
+    transition: width .35s ease;
+  }
+
+  #pp-{{ section.id }} .pp-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    z-index: 4;
+  }
+  #pp-{{ section.id }} .pp-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  #pp-{{ section.id }} .pp-dot.is-active {
+    background: #fff;
+    transform: scale(1.3);
+  }
+
+  #pp-{{ section.id }} .pp-info {
+    flex: 0 0 50%;
+    padding: 40px 52px 60px 48px;
+    min-width: 0;
+    max-width: 50%;
+  }
+  #pp-{{ section.id }} .pp-container { max-width: 640px; }
+
+  #pp-{{ section.id }} .pp-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11.52px;
+    text-decoration: none;
+    color: #0a0a0a;
+    margin-bottom: 15.36px;
+  }
+  #pp-{{ section.id }} .pp-brand__text {
+    font-size: 11.52px;
+    font-weight: 600;
+    color: rgb(58,58,58);
+    letter-spacing: 2.304px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  #pp-{{ section.id }} .pp-brand__line {
+    display: block;
+    width: 1px;
+    height: 11px;
+    background: #d0d0d0;
+  }
+
+  #pp-{{ section.id }} .pp-title {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 38.4px;
+    font-weight: 400;
+    color: #0a0a0a;
+    line-height: 46.08px;
+    margin: 0 0 38.4px;
+  }
+
+  #pp-{{ section.id }} .pp-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 23.04px;
+  }
+  #pp-{{ section.id }} .pp-price { font-size: 22px; font-weight: 400; color: #0a0a0a; line-height: 1.4; }
+  #pp-{{ section.id }} .pp-compare { font-size: 15.36px; color: #bbb; text-decoration: line-through; }
+  #pp-{{ section.id }} .pp-save { font-size: 11px; background: #f2f2f2; color: #555; padding: 2px 7px; letter-spacing: .4px; font-weight: 500; }
+
+  #pp-{{ section.id }} .pp-verified { margin-top: 23.04px; margin-bottom: 23.04px; }
+  #pp-{{ section.id }} .pp-verified__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7.68px;
+    border: 0.8px solid #0a0a0a;
+    border-radius: 30.72px;
+    padding: 7.68px 15.36px;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    color: #0a0a0a;
+  }
+
+  #pp-{{ section.id }} .pp-form-wrap { display: contents; }
+  #pp-{{ section.id }} .pp-buy-stack { display: grid; gap: 11.52px; margin-bottom: 0; }
+
+  #pp-{{ section.id }} .pp-atc {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    color: #fff;
+    border: 0.8px solid #0a0a0a;
+    border-radius: 0;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12.288px;
+    font-weight: 600;
+    padding: 12.288px 18.432px;
+    height: 46.4375px;
+    cursor: pointer;
+    letter-spacing: .3px;
+    transition: background .15s;
+  }
+  #pp-{{ section.id }} .pp-atc:hover { background: #222; border-color: #222; }
+  #pp-{{ section.id }} .pp-atc:disabled { background: #999; border-color: #999; cursor: not-allowed; }
+
+  #pp-{{ section.id }} .shopify-payment-button { margin: 0; }
+  #pp-{{ section.id }} .shopify-payment-button__button {
+    border-radius: 0 !important;
+    height: 46.4375px !important;
+    font-size: 12.288px !important;
+    font-weight: 600 !important;
+    padding: 0 18.432px !important;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  }
+  #pp-{{ section.id }} .shopify-payment-button__button--unbranded {
+    background: #fff !important;
+    color: #0a0a0a !important;
+    border: 0.8px solid #0a0a0a !important;
+  }
+  #pp-{{ section.id }} .shopify-payment-button__button--unbranded:hover { background: #f5f5f5 !important; }
+
+  #pp-{{ section.id }} .pp-wish {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7.68px;
+    border: 0.8px solid #ddd;
+    background: #fff;
+    font-size: 12.288px;
+    font-weight: 500;
+    color: #0a0a0a;
+    padding: 0 18px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 0;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    transition: border-color .15s;
+    margin-top: 8px;
+  }
+  #pp-{{ section.id }} .pp-wish:hover { border-color: #0a0a0a; }
+  #pp-{{ section.id }} .pp-wish.is-active { color: #c0392b; border-color: #c0392b; }
+
+  #pp-{{ section.id }} .pp-sku {
+    display: block;
+    font-size: 12.288px;
+    color: rgb(58,58,58);
+    margin-top: 20px;
+  }
+
+  #pp-{{ section.id }} .pp-concierge {
+    display: flex;
+    align-items: center;
+    gap: 15.36px;
+    padding: 15.36px 23.04px;
+    margin-top: 24px;
+    background: rgba(37,211,102,.05);
+    text-decoration: none;
+    color: rgb(42,42,42);
+    font-size: 15.36px;
+    transition: background .15s;
+  }
+  #pp-{{ section.id }} .pp-concierge:hover { background: rgba(37,211,102,.09); }
+
+  #pp-{{ section.id }} .pp-sell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 0.8px solid #e5e5e5;
+    padding: 15.36px 23.04px;
+    text-decoration: none;
+    color: rgb(42,42,42);
+    margin-top: 20px;
+    transition: border-color .15s;
+  }
+  #pp-{{ section.id }} .pp-sell:hover { border-color: #0a0a0a; }
+  #pp-{{ section.id }} .pp-sell__title { font-size: 15.36px; font-weight: 400; }
+  #pp-{{ section.id }} .pp-sell__sub { font-size: 12px; color: #888; text-decoration: underline; }
+
+  #pp-{{ section.id }} .pp-cond { margin: 24px 0; }
+  #pp-{{ section.id }} .pp-cond__hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  #pp-{{ section.id }} .pp-cond__label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #pp-{{ section.id }} .pp-cond__more {
+    font-size: 11px;
+    color: #888;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
+  #pp-{{ section.id }} .pp-cond__bar { display: flex; }
+  #pp-{{ section.id }} .pp-cond__step {
+    flex: 1;
+    padding: 5px 0 6px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: #ccc;
+    border-bottom: 1.5px solid #e8e8e8;
+  }
+  #pp-{{ section.id }} .pp-cond__step.is-past { color: #888; border-color: #888; }
+  #pp-{{ section.id }} .pp-cond__step.is-active { color: #0a0a0a; border-color: #0a0a0a; font-weight: 700; }
+
+  #pp-{{ section.id }} .pp-hr { border: none; border-top: 0.8px solid #e8e8e8; margin: 24px 0 0; }
+
+  #pp-{{ section.id }} .pp-desc-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    border-bottom: 0.8px solid #e8e8e8;
+    cursor: pointer;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #0a0a0a;
+  }
+  #pp-{{ section.id }} .pp-desc-btn__title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #pp-{{ section.id }} .pp-desc-btn__icon {
+    width: 14px; height: 14px;
+    color: #888;
+    flex-shrink: 0;
+    transition: transform .25s;
+  }
+  #pp-{{ section.id }} .pp-desc.is-open .pp-desc-btn__icon { transform: rotate(180deg); }
+  #pp-{{ section.id }} .pp-desc__body { display: none; padding: 16px 0; }
+  #pp-{{ section.id }} .pp-desc.is-open .pp-desc__body { display: block; }
+  #pp-{{ section.id }} .pp-desc__text { font-size: 13px; color: #555; line-height: 1.75; }
+  #pp-{{ section.id }} .pp-specs { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  #pp-{{ section.id }} .pp-specs tr { border-bottom: 0.8px solid #f0f0f0; }
+  #pp-{{ section.id }} .pp-specs td { padding: 7px 4px; vertical-align: top; }
+  #pp-{{ section.id }} .pp-specs td:first-child { color: #888; font-weight: 600; width: 38%; white-space: nowrap; }
+
+  #pp-{{ section.id }} .pp-accordion { border-top: 0.8px solid #e5e5e5; }
+  #pp-{{ section.id }} .pp-acc-item { border-bottom: 0.8px solid #e5e5e5; }
+  #pp-{{ section.id }} .pp-acc-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 18px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-align: left;
+    transition: background .12s;
+  }
+  #pp-{{ section.id }} .pp-acc-btn:hover { background: #fafafa; }
+  #pp-{{ section.id }} .pp-acc-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #0a0a0a; }
+  #pp-{{ section.id }} .pp-acc-icon { width: 14px; height: 14px; color: #888; flex-shrink: 0; transition: transform .25s; }
+  #pp-{{ section.id }} .pp-acc-item.is-open .pp-acc-icon { transform: rotate(180deg); }
+  #pp-{{ section.id }} .pp-acc-body { display: none; padding: 0 24px 22px; font-size: 13px; color: #555; line-height: 1.75; }
+  #pp-{{ section.id }} .pp-acc-item.is-open .pp-acc-body { display: block; }
+  #pp-{{ section.id }} .pp-acc-body h3 { font-size: 12px; font-weight: 700; color: #0a0a0a; margin: 12px 0 5px; text-transform: uppercase; letter-spacing: .5px; }
+  #pp-{{ section.id }} .pp-acc-body p { margin: 0 0 10px; }
+  #pp-{{ section.id }} .pp-acc-body ul { padding-left: 18px; margin: 0 0 10px; }
+  #pp-{{ section.id }} .pp-acc-body li { margin-bottom: 5px; }
+
+  #pp-{{ section.id }} .pp-related { padding: 52px 60px 60px; }
+  #pp-{{ section.id }} .pp-related__hd { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 28px; }
+  #pp-{{ section.id }} .pp-related__title { font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 26px; font-weight: 400; color: #0a0a0a; }
+  #pp-{{ section.id }} .pp-related__all { font-size: 12px; color: #888; text-decoration: underline; }
+  #pp-{{ section.id }} .pp-rel-wrap { position: relative; }
+  #pp-{{ section.id }} .pp-rel-overflow { overflow: hidden; }
+  #pp-{{ section.id }} .pp-rel-track { display: flex; gap: 16px; transition: transform .35s ease; }
+  #pp-{{ section.id }} .pp-rel-card { flex: 0 0 calc(25% - 12px); min-width: 0; text-decoration: none; color: inherit; display: block; }
+  #pp-{{ section.id }} .pp-rel-img-wrap { aspect-ratio: 3/4; overflow: hidden; background: #f9f8f6; margin-bottom: 12px; }
+  #pp-{{ section.id }} .pp-rel-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .2s; }
+  #pp-{{ section.id }} .pp-rel-card:hover .pp-rel-img { opacity: .85; }
+  #pp-{{ section.id }} .pp-rel-vendor { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
+  #pp-{{ section.id }} .pp-rel-name { font-size: 13px; color: #0a0a0a; line-height: 1.4; margin-bottom: 5px; }
+  #pp-{{ section.id }} .pp-rel-price { font-size: 13px; color: #0a0a0a; }
+  #pp-{{ section.id }} .pp-rel-was { font-size: 12px; color: #bbb; text-decoration: line-through; margin-left: 5px; }
+  #pp-{{ section.id }} .pp-rel-nav {
+    position: absolute; top: 35%; transform: translateY(-50%);
+    background: #fff; border: 0.8px solid #e0e0e0; border-radius: 0;
+    width: 36px; height: 36px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; z-index: 2;
+  }
+  #pp-{{ section.id }} .pp-rel-nav:hover { background: #f5f5f5; }
+  #pp-{{ section.id }} .pp-rel-nav--prev { left: -18px; }
+  #pp-{{ section.id }} .pp-rel-nav--next { right: -18px; }
+
+  #pp-{{ section.id }} .pp-cond-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 9999;
+    align-items: center; justify-content: center;
+  }
+  #pp-{{ section.id }} .pp-cond-modal.is-open { display: flex; }
+  #pp-{{ section.id }} .pp-modal {
+    background: #fff; padding: 32px 28px; max-width: 420px;
+    width: 92%; max-height: 80vh; overflow-y: auto; position: relative;
+  }
+  #pp-{{ section.id }} .pp-modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; font-size: 22px;
+    cursor: pointer; color: #888; line-height: 1; padding: 0;
+  }
+  #pp-{{ section.id }} .pp-modal h2 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px; font-weight: 400; margin: 0 0 20px; color: #0a0a0a;
+  }
+  #pp-{{ section.id }} .pp-modal-row { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 0.8px solid #f0f0f0; }
+  #pp-{{ section.id }} .pp-modal-row:last-child { border-bottom: none; margin-bottom: 0; }
+  #pp-{{ section.id }} .pp-modal-row__name { font-size: 13px; font-weight: 700; color: #0a0a0a; margin-bottom: 3px; }
+  #pp-{{ section.id }} .pp-modal-row__desc { font-size: 12px; color: #666; line-height: 1.6; }
+
+  #pp-{{ section.id }} .pp-float-wa {
+    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    background: #25D366; border-radius: 50%;
+    width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    text-decoration: none;
+    transition: transform .2s;
+  }
+  #pp-{{ section.id }} .pp-float-wa:hover { transform: scale(1.1); }
+
+  /* ── SCROLL ANIMATIONS ── */
+  #pp-{{ section.id }} .pp-anim {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  #pp-{{ section.id }} .pp-anim.is-visible { opacity: 1; transform: translateY(0); }
+  #pp-{{ section.id }} .pp-anim-left {
+    opacity: 0; transform: translateX(-24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  #pp-{{ section.id }} .pp-anim-left.is-visible { opacity: 1; transform: translateX(0); }
+  #pp-{{ section.id }} .pp-anim-scale {
+    opacity: 0; transform: scale(0.96);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #pp-{{ section.id }} .pp-anim-scale.is-visible { opacity: 1; transform: scale(1); }
+
+  @media(max-width:900px) {
+    #pp-{{ section.id }} .pp-hero { flex-direction: column; }
+    #pp-{{ section.id }} .pp-gallery { width: 100%; padding: 20px 20px 24px; transform: none !important; }
+    #pp-{{ section.id }} .pp-frame { width: 92%; }
+    #pp-{{ section.id }} .pp-info { padding: 24px 24px 40px; max-width: 100%; flex: 0 0 100%; }
+    #pp-{{ section.id }} .pp-related { padding: 32px 20px 40px; }
+    #pp-{{ section.id }} .pp-rel-card { flex: 0 0 calc(50% - 8px); }
+    #pp-{{ section.id }} .pp-title { font-size: 26px; line-height: 1.3; margin-bottom: 20px; }
+  }
+  @media(max-width:540px) {
+    #pp-{{ section.id }} .pp-gallery { padding: 16px 16px 20px; }
+    #pp-{{ section.id }} .pp-info { padding: 20px 16px 36px; }
+    #pp-{{ section.id }} .pp-acc-btn { padding: 14px 16px; }
+    #pp-{{ section.id }} .pp-acc-body { padding: 0 16px 16px; }
+  }
+  </style>
+
+  <div id="pp-{{ section.id }}">
+
+    <div class="pp-hero">
+
+      <!-- ── GALLERY ── -->
+      <div class="pp-gallery" id="pp-gallery-{{ section.id }}">
+        <div class="pp-frame">
+          <div class="pp-glass">
+            <div class="pp-glass-border"></div>
+
+            <div class="pp-viewport">
+              <div class="pp-track" id="pp-track-{{ section.id }}">
+                {%- for media in product.media limit: 20 -%}
+                  <div class="pp-slide{% if forloop.first %} is-active{% endif %}">
+                    <img
+                      class="pp-img"
+                      src="{{ media | img_url: '900x' }}"
+                      alt="{{ media.alt | default: product.title | escape }}"
+                      width="900" height="900"
+                      loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                      draggable="false"
+                    >
+                  </div>
+                {%- else -%}
+                  <div class="pp-slide is-active">
+                    <img class="pp-img" src="{{ product.featured_image | img_url: '900x' }}" alt="{{ product.title | escape }}" width="900" height="900" loading="eager">
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- if product.media.size > 1 -%}
+              <button type="button" class="pp-nav pp-nav--prev" id="pp-prev-{{ section.id }}" aria-label="Previous image">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button type="button" class="pp-nav pp-nav--next" id="pp-next-{{ section.id }}" aria-label="Next image">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+
+              <div class="pp-controls">
+                <span class="pp-counter" id="pp-counter-{{ section.id }}">1 / {{ product.media.size }}</span>
+                <div class="pp-progress">
+                  <div class="pp-progress-fill" id="pp-pfill-{{ section.id }}" style="width:{{ 100 | divided_by: product.media.size }}%"></div>
+                </div>
+              </div>
+
+              <div class="pp-dots" id="pp-dots-{{ section.id }}">
+                {%- for media in product.media limit: 20 -%}
+                  <button type="button" class="pp-dot{% if forloop.first %} is-active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}"></button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            <button type="button" class="pp-zoom" id="pp-zoom-{{ section.id }}" aria-label="Zoom image">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── INFO PANEL ── -->
+      <div class="pp-info">
+        <div class="pp-container">
+
+          {%- if vendor_collection != blank -%}
+            <a href="{{ vendor_collection.url }}" class="pp-brand">
+              <span class="pp-brand__text">{{ product.vendor }}</span>
+              <span class="pp-brand__line"></span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          {%- else -%}
+            <div class="pp-brand">
+              <span class="pp-brand__text">{{ product.vendor }}</span>
+            </div>
+          {%- endif -%}
+
+          <h1 class="pp-title">{{ product.title }}</h1>
+
+          <div class="pp-price-row" id="pp-price-{{ section.id }}">
+            <span class="pp-price" id="pp-amt-{{ section.id }}">{{ current_variant.price | money }}</span>
+            {%- if show_sale -%}
+              <span class="pp-compare" id="pp-cmp-{{ section.id }}">{{ compare_price | money }}</span>
+              <span class="pp-save" id="pp-sav-{{ section.id }}">{{ discount_pct }}% OFF</span>
+            {%- endif -%}
+          </div>
+
+          <div class="pp-verified">
+            <span class="pp-verified__badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Verified
+            </span>
+          </div>
+
+          {% form 'product', product, id: form_id, class: 'pp-form-wrap' %}
+
+            {%- unless product.has_only_default_variant -%}
+              <select name="id" id="pp-varsel-{{ section.id }}" style="display:none" aria-hidden="true">
+                {%- for variant in product.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant == current_variant %}selected{% endif %}
+                    data-price="{{ variant.price }}"
+                    data-compare="{{ variant.compare_at_price | default: 0 }}"
+                    data-available="{{ variant.available }}"
+                  >{{ variant.title }}</option>
+                {%- endfor -%}
+              </select>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ current_variant.id }}">
+            {%- endunless -%}
+            <input type="hidden" name="quantity" value="1">
+
+            <div class="pp-buy-stack">
+              <button type="submit" class="pp-atc" id="pp-atc-{{ section.id }}" {% unless current_variant.available %}disabled{% endunless %}>
+                {%- if current_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+              </button>
+              {{ form | payment_button }}
+            </div>
+
+          {% endform %}
+
+          <button type="button" class="pp-wish" id="pp-wish-{{ section.id }}" data-product="{{ product.id }}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            Add to Wishlist
+          </button>
+
+          {%- if current_variant.sku != blank -%}
+            <span class="pp-sku">SKU: {{ current_variant.sku }}</span>
+          {%- endif -%}
+
+          <a href="https://wa.me/{{ wa_number }}?text={{ wa_msg }}" target="_blank" rel="noopener noreferrer" class="pp-concierge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Need help? Contact us
+          </a>
+
+          {%- if sell_page != blank -%}
+            <a href="{{ sell_page }}" class="pp-sell">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              <div>
+                <div class="pp-sell__title">Do you have a similar item?</div>
+                <div class="pp-sell__sub">Sell with Us</div>
+              </div>
+            </a>
+          {%- endif -%}
+
+          {%- if condition_label != blank -%}
+            <div class="pp-cond">
+              <div class="pp-cond__hd">
+                <span class="pp-cond__label">Condition</span>
+                <button type="button" class="pp-cond__more" id="pp-cond-open-{{ section.id }}">Know More</button>
+              </div>
+              <div class="pp-cond__bar">
+                {%- for lvl in cond_levels -%}
+                  {%- assign li = forloop.index0 -%}
+                  <div class="pp-cond__step{% if li < current_cond_index %} is-past{% elsif li == current_cond_index %} is-active{% endif %}">{{ lvl }}</div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <hr class="pp-hr">
+
+          <div class="pp-desc is-open" id="pp-desc-{{ section.id }}">
+            <button type="button" class="pp-desc-btn" id="pp-desc-btn-{{ section.id }}">
+              <span class="pp-desc-btn__title">Description</span>
+              <svg class="pp-desc-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="pp-desc__body">
+              {%- if product.metafields.custom.material != blank or product.metafields.custom.color != blank or product.metafields.custom.hardware != blank or condition_label != blank -%}
+                <table class="pp-specs">
+                  {%- if product.metafields.custom.material != blank -%}<tr><td>Material</td><td>{{ product.metafields.custom.material }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.custom.color    != blank -%}<tr><td>Color</td><td>{{ product.metafields.custom.color }}</td></tr>{%- endif -%}
+                  {%- if product.metafields.custom.hardware != blank -%}<tr><td>Hardware</td><td>{{ product.metafields.custom.hardware }}</td></tr>{%- endif -%}
+                  {%- if condition_label != blank -%}<tr><td>Condition</td><td>{{ condition_label }}</td></tr>{%- endif -%}
+                </table>
+              {%- endif -%}
+              {%- if product.description != blank -%}
+                <div class="pp-desc__text">{{ product.description }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ACCORDION TABS ── -->
+    <div class="pp-accordion" id="pp-acc-{{ section.id }}">
+      <div class="pp-acc-item pp-anim">
+        <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Authentication</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pp-acc-body">
+          {%- if section.settings.auth_content != blank -%}
+            {{ section.settings.auth_content }}
+          {%- else -%}
+            <p>Authenticity is our utmost priority. Every item undergoes a rigorous verification process before being listed.</p>
+            <ul>
+              <li><strong>Legit Grails</strong> — Third-party authentication for luxury goods.</li>
+              <li><strong>Real Authentication</strong> — Independent verification with certificates provided.</li>
+            </ul>
+            <p>Every authenticated item is backed by a certificate of authenticity.</p>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="pp-acc-item pp-anim" style="transition-delay:.08s">
+        <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Shipping</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pp-acc-body">
+          {%- if section.settings.shipping_content != blank -%}
+            {{ section.settings.shipping_content }}
+          {%- else -%}
+            <p>All orders are carefully packaged and dispatched. Tracking details will be shared via email once shipped.</p>
+            <ul>
+              <li>For shipping queries contact <strong>begborrowstealstudio@gmail.com</strong> or WhatsApp <strong>+91 9136047270</strong>.</li>
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="pp-acc-item pp-anim" style="transition-delay:.16s">
+        <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Exchange &amp; Returns</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="pp-acc-body">
+          {%- if section.settings.cancellation_content != blank -%}
+            {{ section.settings.cancellation_content }}
+          {%- else -%}
+            <p>All sales are considered final due to the exclusive, one-of-a-kind nature of our inventory. Refunds are not offered.</p>
+            <p>Exchanges are only considered for items that are damaged, defective, or materially misrepresented. To request an exchange:</p>
+            <ul>
+              <li>Contact us within <strong>48 hours</strong> of receiving your order with photos and proof of purchase.</li>
+              <li>Item must be unused, unworn, and in the same condition as received.</li>
+              <li>All original components, tags, and documentation must be included.</li>
+            </ul>
+            <p>Change of mind, sizing concerns, or minor signs of ageing/patina consistent with vintage items do not qualify. Custom orders, limited editions, sale and promotional items are final sale.</p>
+            <p><strong>Contact:</strong> <strong>begborrowstealstudio@gmail.com</strong> or WhatsApp +91 9136047270</p>
+            <p><strong>Return Address:</strong> Flat No 1, New Shams Building CHS, 76 Turner Road, Bandra West, Mumbai 400050</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MORE FROM VENDOR ── -->
+    {%- if vendor_collection != blank and vendor_collection.products.size > 1 -%}
+      {%- assign rel_has = false -%}
+      {%- for rp in vendor_collection.products limit: 12 -%}
+        {%- unless rp.id == product.id -%}
+          {%- assign rel_has = true -%}
+          {%- break -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- if rel_has -%}
+        <div class="pp-related">
+          <div class="pp-related__hd pp-anim">
+            <h2 class="pp-related__title">More From {{ product.vendor }}</h2>
+            <a href="{{ vendor_collection.url }}" class="pp-related__all">View All</a>
+          </div>
+          <div class="pp-rel-wrap">
+            <div class="pp-rel-overflow">
+              <div class="pp-rel-track" id="pp-rel-track-{{ section.id }}">
+                {%- for rp in vendor_collection.products limit: 12 -%}
+                  {%- unless rp.id == product.id -%}
+                    <a href="{{ rp.url }}" class="pp-rel-card pp-anim-scale">
+                      <div class="pp-rel-img-wrap">
+                        {%- if rp.featured_image -%}
+                          <img class="pp-rel-img" src="{{ rp.featured_image | img_url: '400x' }}" alt="{{ rp.featured_image.alt | default: rp.title | escape }}" width="400" height="533" loading="lazy">
+                        {%- endif -%}
+                      </div>
+                      <div class="pp-rel-vendor">{{ rp.vendor }}</div>
+                      <div class="pp-rel-name">{{ rp.title | truncate: 52 }}</div>
+                      <div>
+                        <span class="pp-rel-price">{{ rp.price | money }}</span>
+                        {%- if rp.compare_at_price > rp.price -%}<span class="pp-rel-was">{{ rp.compare_at_price | money }}</span>{%- endif -%}
+                      </div>
+                    </a>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            <button type="button" class="pp-rel-nav pp-rel-nav--prev" id="pp-rprev-{{ section.id }}" aria-label="Previous"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button type="button" class="pp-rel-nav pp-rel-nav--next" id="pp-rnext-{{ section.id }}" aria-label="Next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- Floating WA -->
+    <a href="https://wa.me/{{ wa_number }}?text={{ wa_msg_full }}" class="pp-float-wa" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- ── CONDITION MODAL ── -->
+    <div class="pp-cond-modal" id="pp-cond-modal-{{ section.id }}" role="dialog" aria-modal="true">
+      <div class="pp-modal">
+        <button type="button" class="pp-modal-close" id="pp-cond-close-{{ section.id }}">&times;</button>
+        <h2>Condition Guide</h2>
+        <div class="pp-modal-row"><div class="pp-modal-row__name">Fair</div><div class="pp-modal-row__desc">Visible signs of heavy use. Still functional and presentable.</div></div>
+        <div class="pp-modal-row"><div class="pp-modal-row__name">Good</div><div class="pp-modal-row__desc">Noticeable signs of wear but in good overall condition.</div></div>
+        <div class="pp-modal-row"><div class="pp-modal-row__name">Very Good</div><div class="pp-modal-row__desc">Slight signs of use with no significant defects.</div></div>
+        <div class="pp-modal-row"><div class="pp-modal-row__name">Excellent</div><div class="pp-modal-row__desc">Near-perfect condition with minimal visible wear.</div></div>
+        <div class="pp-modal-row"><div class="pp-modal-row__name">New</div><div class="pp-modal-row__desc">Brand new and unused. Pristine, flawless condition.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  (function () {
+    var sid  = '{{ section.id }}';
+    var root = document.getElementById('pp-' + sid);
+    if (!root) return;
+
+    /* ── JS STICKY (translateY — works even with overflow:hidden parents) ── */
+    var gal  = document.getElementById('pp-gallery-' + sid);
+    var hero = gal && gal.closest('.pp-hero');
+    if (gal && hero && window.innerWidth > 900) {
+      function hdrH() {
+        var hg = document.querySelector('.shopify-section-group-header-group');
+        if (hg) return hg.getBoundingClientRect().bottom + 8;
+        var h = document.querySelector('header');
+        if (h) return h.getBoundingClientRect().bottom + 8;
+        return 80;
+      }
+      var ticking = false;
+      function doSticky() {
+        var T   = hdrH();
+        var top = hero.getBoundingClientRect().top;
+        var max = Math.max(0, hero.offsetHeight - gal.offsetHeight - 20);
+        gal.style.transform = 'translateY(' + Math.max(0, Math.min(T - top, max)) + 'px)';
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { requestAnimationFrame(doSticky); ticking = true; }
+      }, { passive: true });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth <= 900) { gal.style.transform = ''; }
+        else { requestAnimationFrame(doSticky); }
+      }, { passive: true });
+      doSticky();
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    if ('IntersectionObserver' in window) {
+      var animEls = root.querySelectorAll('.pp-anim, .pp-anim-left, .pp-anim-scale');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      animEls.forEach(function (el) { io.observe(el); });
+    } else {
+      root.querySelectorAll('.pp-anim, .pp-anim-left, .pp-anim-scale').forEach(function (el) {
+        el.classList.add('is-visible');
+      });
+    }
+
+    /* ── GALLERY SLIDER ── */
+    var track   = document.getElementById('pp-track-' + sid);
+    var counter = document.getElementById('pp-counter-' + sid);
+    var pfill   = document.getElementById('pp-pfill-' + sid);
+    var dotsEl  = document.getElementById('pp-dots-' + sid);
+    var dots    = dotsEl ? Array.from(dotsEl.querySelectorAll('.pp-dot')) : [];
+    var prevBtn = document.getElementById('pp-prev-' + sid);
+    var nextBtn = document.getElementById('pp-next-' + sid);
+    var zoomBtn = document.getElementById('pp-zoom-' + sid);
+    var total   = track ? track.children.length : 0;
+    var cur     = 0;
+
+    function goTo(idx) {
+      if (!total) return;
+      cur = ((idx % total) + total) % total;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      if (counter) counter.textContent = (cur + 1) + ' / ' + total;
+      if (pfill) pfill.style.width = ((cur + 1) / total * 100) + '%';
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === cur); });
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(cur - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(cur + 1); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { goTo(parseInt(d.getAttribute('data-idx'), 10)); });
+    });
+
+    if (track) {
+      var sx = null;
+      track.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) goTo(dx < 0 ? cur + 1 : cur - 1);
+        sx = null;
+      }, { passive: true });
+    }
+
+    if (zoomBtn && track) {
+      zoomBtn.addEventListener('click', function () {
+        var img = track.children[cur] && track.children[cur].querySelector('img');
+        if (!img) return;
+        var w = window.open('', '_blank', 'noopener');
+        w.document.write('<body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;cursor:zoom-out" onclick="window.close()"><img src="' + img.src + '" style="max-width:100vw;max-height:100vh;object-fit:contain"></body' + '>');
+      });
+    }
+
+    /* ── ATC (AJAX) ── */
+    var form   = document.getElementById('ppf-' + sid);
+    var atcBtn = document.getElementById('pp-atc-' + sid);
+    var varSel = document.getElementById('pp-varsel-' + sid);
+
+    if (form && atcBtn) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (atcBtn.disabled) return;
+        var vid = varSel ? varSel.value : (form.querySelector('[name="id"]') || {}).value;
+        if (!vid) return;
+        var orig = atcBtn.textContent;
+        atcBtn.textContent = 'Adding…'; atcBtn.disabled = true;
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify({ id: parseInt(vid, 10), quantity: 1 })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          atcBtn.textContent = 'Added!';
+          document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+          document.dispatchEvent(new CustomEvent('product:added', { bubbles: true, detail: d }));
+          setTimeout(function () { atcBtn.disabled = false; atcBtn.textContent = orig; }, 2000);
+        })
+        .catch(function () { atcBtn.textContent = 'Error'; atcBtn.disabled = false; });
+      });
+    }
+
+    /* ── VARIANT SWITCH ── */
+    if (varSel) {
+      varSel.addEventListener('change', function () {
+        var o  = varSel.options[varSel.selectedIndex];
+        var p  = parseInt(o.getAttribute('data-price'), 10) || 0;
+        var cp = parseInt(o.getAttribute('data-compare'), 10) || 0;
+        var av = o.getAttribute('data-available') === 'true';
+        var fmt = function (c) {
+          return '{{ cart.currency.symbol }}' + (c / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        };
+        var amt = document.getElementById('pp-amt-' + sid);
+        var cmp = document.getElementById('pp-cmp-' + sid);
+        var sav = document.getElementById('pp-sav-' + sid);
+        if (amt) amt.textContent = fmt(p);
+        if (cp > p) {
+          if (cmp) { cmp.style.display = ''; cmp.textContent = fmt(cp); }
+          if (sav) { sav.style.display = ''; sav.textContent = Math.round((cp - p) * 100 / cp) + '% OFF'; }
+        } else {
+          if (cmp) cmp.style.display = 'none';
+          if (sav) sav.style.display = 'none';
+        }
+        if (atcBtn) { atcBtn.disabled = !av; atcBtn.textContent = av ? 'Add to Cart' : 'Sold Out'; }
+      });
+    }
+
+    /* ── WISHLIST ── */
+    var wishBtn = document.getElementById('pp-wish-' + sid);
+    if (wishBtn) {
+      var pid = wishBtn.getAttribute('data-product');
+      var wl  = JSON.parse(localStorage.getItem('ma_wishlist') || '[]');
+      if (wl.indexOf(pid) > -1) wishBtn.classList.add('is-active');
+      wishBtn.addEventListener('click', function () {
+        var list = JSON.parse(localStorage.getItem('ma_wishlist') || '[]');
+        var idx  = list.indexOf(pid);
+        if (idx > -1) { list.splice(idx, 1); wishBtn.classList.remove('is-active'); }
+        else { list.push(pid); wishBtn.classList.add('is-active'); }
+        localStorage.setItem('ma_wishlist', JSON.stringify(list));
+      });
+    }
+
+    /* ── DESCRIPTION TOGGLE ── */
+    var descBtn = document.getElementById('pp-desc-btn-' + sid);
+    var descEl  = document.getElementById('pp-desc-' + sid);
+    if (descBtn && descEl) descBtn.addEventListener('click', function () { descEl.classList.toggle('is-open'); });
+
+    /* ── ACCORDION ── */
+    var acc = document.getElementById('pp-acc-' + sid);
+    if (acc) {
+      acc.querySelectorAll('.pp-acc-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item    = btn.closest('.pp-acc-item');
+          var wasOpen = item.classList.contains('is-open');
+          acc.querySelectorAll('.pp-acc-item').forEach(function (i) { i.classList.remove('is-open'); });
+          if (!wasOpen) item.classList.add('is-open');
+        });
+      });
+    }
+
+    /* ── RELATED CAROUSEL ── */
+    var relTrack = document.getElementById('pp-rel-track-' + sid);
+    var relPrev  = document.getElementById('pp-rprev-' + sid);
+    var relNext  = document.getElementById('pp-rnext-' + sid);
+    if (relTrack) {
+      var ri     = 0;
+      var rvis   = window.innerWidth < 900 ? 2 : 4;
+      var rcards = relTrack.querySelectorAll('.pp-rel-card');
+      var rmax   = Math.max(0, rcards.length - rvis);
+      function slideRel(dir) {
+        ri = Math.max(0, Math.min(rmax, ri + dir));
+        var cw = rcards[0] ? rcards[0].offsetWidth + 16 : 0;
+        relTrack.style.transform = 'translateX(-' + (ri * cw) + 'px)';
+      }
+      if (relPrev) relPrev.addEventListener('click', function () { slideRel(-1); });
+      if (relNext) relNext.addEventListener('click', function () { slideRel(1); });
+    }
+
+    /* ── CONDITION MODAL ── */
+    var modal     = document.getElementById('pp-cond-modal-' + sid);
+    var condOpen  = document.getElementById('pp-cond-open-' + sid);
+    var condClose = document.getElementById('pp-cond-close-' + sid);
+    if (modal) {
+      if (condOpen)  condOpen.addEventListener('click', function () { modal.classList.add('is-open'); });
+      if (condClose) condClose.addEventListener('click', function () { modal.classList.remove('is-open'); });
+      modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('is-open'); });
+    }
+
+  })();
+  </script>

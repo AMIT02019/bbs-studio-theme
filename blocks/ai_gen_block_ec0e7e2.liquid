@@ -1,0 +1,623 @@
+{% doc %}
+  @prompt
+    Create a premium “Our Story” section for a luxury vintage boutique Shopify website with a clean editorial layout and sophisticated minimalist aesthetic.
+    
+    SECTION STYLE:
+    - Elegant luxury fashion brand design
+    - Minimal editorial layout
+    - High-end boutique storytelling feel
+    - Soft neutral background
+    - Warm cinematic imagery
+    - Modern vintage aesthetic
+    - Calm, refined, and premium atmosphere
+    
+    LAYOUT:
+    - Two-column split layout
+    - Left side: text content
+    - Right side: large lifestyle image
+    - Full-width section
+    - Vertically centered alignment
+    - Large white/cream background space
+    - Spacious luxury composition
+    
+    LEFT CONTENT AREA:
+    Include:
+    - Large heading
+    - Paragraph description
+    - Luxury CTA button
+    
+    TEXT CONTENT:
+    Heading:
+    “OUR STORY”
+    
+    Body Text:
+    A high-end boutique thrift store based in Mumbai, known for curated vintage treasures, designer labels, luxury jewellery, and timeless collectibles. The brand blends vintage elegance with modern storytelling and showcases carefully sourced pieces from around the world.
+    
+    BUTTON:
+    Text:
+    “KNOW MORE →”
+    
+    TYPOGRAPHY:
+    - Heading:
+      - Large uppercase typography
+      - Dark brown / espresso color
+      - Bold luxury sans-serif
+      - Clean editorial spacing
+    - Paragraph:
+      - Soft gray text
+      - Medium line height
+      - Elegant readable font
+      - Minimal luxury style
+    - Button:
+      - Dark charcoal background
+      - White uppercase text
+      - Minimal rectangular shape
+      - Thin arrow icon
+      - Smooth hover transition
+    
+    RIGHT IMAGE AREA:
+    - Large portrait-style image
+    - Warm cinematic lighting
+    - Vintage luxury objects and jewellery
+    - Moody shadows
+    - Antique editorial aesthetic
+    - Full-height image crop
+    - Object-fit cover
+    - Soft luxury ambiance
+    
+    SPACING:
+    - Generous padding top and bottom
+    - Wide margins
+    - Balanced whitespace
+    - Luxury editorial proportions
+    - Image and text evenly aligned
+    
+    COLORS:
+    - Background: soft off-white / light beige
+    - Heading: dark brown
+    - Paragraph: muted gray
+    - Button: charcoal gray
+    - Overall warm vintage tones
+    
+    HOVER EFFECTS:
+    - Button slightly brightens on hover
+    - Smooth fade transition
+    - Optional subtle image zoom
+    
+    MOBILE VERSION:
+    - Stack image below text
+    - Center-align content
+    - Reduce heading size
+    - Maintain elegant spacing
+    - Full-width responsive image
+    
+    SHOPIFY REQUIREMENTS:
+    - Build as editable Shopify section
+    - Editable heading
+    - Editable paragraph
+    - Editable button text/link
+    - Editable image
+    - Adjustable spacing controls
+    - Optimized for Dawn theme
+    - Responsive and lightweight
+    
+    OVERALL GOAL:
+    The section should feel like a luxury editorial fashion boutique telling its brand story through elegant typography, spacious layout, and warm cinematic imagery — inspired by premium vintage and designer lifestyle brands.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-our-story-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-our-story-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-our-story-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ block.settings.column_gap }}px;
+    align-items: center;
+  }
+
+  .ai-our-story-content-{{ ai_gen_id }} {
+    padding-right: 40px;
+  }
+
+  .ai-our-story-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: {{ block.settings.heading_weight }};
+    color: {{ block.settings.heading_color }};
+    text-transform: uppercase;
+    letter-spacing: {{ block.settings.heading_letter_spacing }};
+    margin: 0 0 {{ block.settings.heading_margin_bottom }}px 0;
+    line-height: 1.2;
+  }
+
+  .ai-our-story-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: {{ block.settings.text_line_height }};
+    color: {{ block.settings.text_color }};
+    margin: 0 0 {{ block.settings.text_margin_bottom }}px 0;
+  }
+
+  .ai-our-story-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    letter-spacing: {{ block.settings.button_letter_spacing }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .ai-our-story-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    transform: translateY(-2px);
+  }
+
+  .ai-our-story-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-our-story-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  {% if block.settings.enable_image_zoom %}
+    .ai-our-story-image-wrapper-{{ ai_gen_id }}:hover .ai-our-story-image-{{ ai_gen_id }} {
+      transform: scale(1.05);
+    }
+  {% endif %}
+
+  .ai-our-story-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: {{ block.settings.image_aspect_ratio }};
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-our-story-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-our-story-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .ai-our-story-content-{{ ai_gen_id }} {
+      padding-right: 0;
+      text-align: {{ block.settings.mobile_text_align }};
+    }
+
+    .ai-our-story-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+
+    .ai-our-story-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-our-story-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-our-story-container-{{ ai_gen_id }}">
+    <div class="ai-our-story-grid-{{ ai_gen_id }}">
+      <div class="ai-our-story-content-{{ ai_gen_id }}">
+        {% if block.settings.heading != blank %}
+          <h2 class="ai-our-story-heading-{{ ai_gen_id }}">
+            {{ block.settings.heading }}
+          </h2>
+        {% endif %}
+
+        {% if block.settings.text != blank %}
+          <div class="ai-our-story-text-{{ ai_gen_id }}">
+            {{ block.settings.text }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.button_text != blank %}
+          <a 
+            href="{{ block.settings.button_link }}" 
+            class="ai-our-story-button-{{ ai_gen_id }}"
+          >
+            {{ block.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="ai-our-story-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1200 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-our-story-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-our-story-image-placeholder-{{ ai_gen_id }}">
+            {{ 'lifestyle-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Our story",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>A high-end boutique thrift store based in Mumbai, known for curated vintage treasures, designer labels, luxury jewellery, and timeless collectibles. The brand blends vintage elegance with modern storytelling and showcases carefully sourced pieces from around the world.</p>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "KNOW MORE →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_align",
+      "label": "Mobile text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF8F5"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#3E2723"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#6D6D6D"
+    },
+    {
+      "type": "header",
+      "content": "Heading style"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Size",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "text",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "default": "0.1em"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "label": "Margin bottom",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2.5,
+      "step": 0.1,
+      "default": 1.8
+    },
+    {
+      "type": "range",
+      "id": "text_margin_bottom",
+      "label": "Margin bottom",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background",
+      "default": "#3E2723"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "text",
+      "id": "button_letter_spacing",
+      "label": "Letter spacing",
+      "default": "0.1em"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Padding vertical",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Padding horizontal",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Image style"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "4/5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "3/4"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_zoom",
+      "label": "Enable hover zoom",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our story"
+    }
+  ]
+}
+{% endschema %}

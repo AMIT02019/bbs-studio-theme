@@ -1,0 +1,1144 @@
+{% doc %}
+  @prompt
+    🔹 Core Requirements
+    Multiple Collections
+    
+    Use section blocks.
+    
+    Each block allows selecting one collection.
+    
+    There must be no limit on blocks.
+    
+    Each block represents one author collection.
+    
+    Do NOT loop through products.
+    
+    Do NOT display product data.
+    
+    Only display:
+    
+    Collection image
+    
+    Collection title
+    
+    🔹 Infinite Horizontal Scroll (Important)
+    
+    Implement a true infinite horizontal scroll animation, not just overflow scroll.
+    
+    Requirements:
+    
+    Authors should scroll continuously from right to left.
+    
+    When the last item exits, it should seamlessly repeat.
+    
+    No visible jump or reset.
+    
+    Must duplicate the collection list in Liquid to create a smooth loop.
+    
+    Animation must be pure CSS (preferred) or minimal JS if necessary.
+    
+    Must pause on hover.
+    
+    Must work on all screen sizes.
+    
+    Must not break layout responsiveness.
+    
+    🔹 Redirect Logic
+    
+    When user clicks:
+    
+    Collection image OR
+    
+    Collection title
+    
+    Redirect dynamically to:
+    
+    /collections/{collection-handle}
+    
+    
+    Use collection.url dynamically.
+    Do NOT hardcode URLs.
+    
+    🔹 Section Settings
+    
+    Include:
+    
+    1️⃣ Section Title
+    
+    Text field
+    
+    Default: "Meet Our Authors"
+    
+    Output as <h2>
+    
+    2️⃣ Image Size
+    
+    Range slider (100px – 300px)
+    
+    3️⃣ Image Shape
+    Options:
+    
+    Circle (50%)
+    
+    Square (0)
+    
+    Rounded (12px)
+    
+    4️⃣ Scroll Speed
+    
+    Range slider (10–60 seconds animation duration)
+    
+    Controls animation speed
+    
+    5️⃣ Pause on Hover
+    
+    Checkbox toggle
+    
+    6️⃣ Padding Top
+    
+    Range (0–120px)
+    
+    7️⃣ Padding Bottom
+    
+    Range (0–120px)
+    
+    🔹 Layout & Design
+    
+    Clean modern design
+    
+    Items aligned horizontally
+    
+    Equal spacing between items
+    
+    Fully responsive
+    
+    No wrapping
+    
+    Overflow hidden
+    
+    Smooth animation
+    
+    🔹 Technical Requirements
+    
+    Shopify 2.0 compatible
+    
+    Proper JSON schema
+    
+    Uses image_url
+    
+    Uses loading="lazy"
+    
+    Accessible alt text
+    
+    CSS scoped only to section
+    
+    No global conflicts
+    
+    Must save without syntax errors
+    
+    Fully dynamic
+    
+    Production-ready
+    
+    🔹 Output
+    
+    Generate the complete .liquid section file including:
+    
+    HTML
+    
+    Liquid
+    
+    CSS (with keyframe animation)
+    
+    JSON schema
+    
+    Section blocks
+    
+    No errors
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-author-scroll-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    overflow: hidden;
+  }
+
+  .ai-author-scroll__title-{{ ai_gen_id }} {
+    text-align: center;
+    margin: 0 0 40px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  .ai-author-scroll__wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ai-author-scroll__track-{{ ai_gen_id }} {
+    display: flex;
+    gap: 30px;
+    animation: ai-author-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+  }
+
+  {% if block.settings.pause_on_hover %}
+    .ai-author-scroll__track-{{ ai_gen_id }}:hover {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  .ai-author-scroll__item-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-author-scroll__item-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+  }
+
+  .ai-author-scroll__image-wrapper-{{ ai_gen_id }} {
+    width: {{ block.settings.image_size }}px;
+    height: {{ block.settings.image_size }}px;
+    overflow: hidden;
+    {% if block.settings.image_shape == 'circle' %}
+      border-radius: 50%;
+    {% elsif block.settings.image_shape == 'rounded' %}
+      border-radius: 12px;
+    {% else %}
+      border-radius: 0;
+    {% endif %}
+  }
+
+  .ai-author-scroll__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-author-scroll__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-author-scroll__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-author-scroll__name-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    text-align: center;
+    max-width: {{ block.settings.image_size }}px;
+    word-wrap: break-word;
+  }
+
+  .ai-author-scroll__empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 16px;
+  }
+
+  @keyframes ai-author-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-author-scroll__title-{{ ai_gen_id }} {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .ai-author-scroll__image-wrapper-{{ ai_gen_id }} {
+      width: {{ block.settings.image_size | times: 0.8 }}px;
+      height: {{ block.settings.image_size | times: 0.8 }}px;
+    }
+
+    .ai-author-scroll__name-{{ ai_gen_id }} {
+      font-size: 14px;
+      max-width: {{ block.settings.image_size | times: 0.8 }}px;
+    }
+
+    .ai-author-scroll__track-{{ ai_gen_id }} {
+      gap: 20px;
+    }
+  }
+{% endstyle %}
+
+<author-scroll-{{ ai_gen_id }} class="ai-author-scroll-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.section_title != blank %}
+    <h2 class="ai-author-scroll__title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+  {% endif %}
+
+  {% assign collection_count = 0 %}
+  {% if block.settings.collection_1 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_2 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_3 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_4 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_5 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_6 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_7 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_8 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_9 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+  {% if block.settings.collection_10 != blank %}
+    {% assign collection_count = collection_count | plus: 1 %}
+  {% endif %}
+
+  {% if collection_count > 0 %}
+    <div class="ai-author-scroll__wrapper-{{ ai_gen_id }}">
+      <div class="ai-author-scroll__track-{{ ai_gen_id }}">
+        {% if block.settings.collection_1 != blank %}
+          <a href="{{ block.settings.collection_1.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_1.image %}
+                <img
+                  src="{{ block.settings.collection_1.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_1.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_1.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_1.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_1.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_1.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_2 != blank %}
+          <a href="{{ block.settings.collection_2.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_2.image %}
+                <img
+                  src="{{ block.settings.collection_2.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_2.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_2.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_2.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_2.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_2.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_3 != blank %}
+          <a href="{{ block.settings.collection_3.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_3.image %}
+                <img
+                  src="{{ block.settings.collection_3.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_3.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_3.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_3.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_3.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_3.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_4 != blank %}
+          <a href="{{ block.settings.collection_4.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_4.image %}
+                <img
+                  src="{{ block.settings.collection_4.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_4.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_4.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_4.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_4.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_4.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_5 != blank %}
+          <a href="{{ block.settings.collection_5.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_5.image %}
+                <img
+                  src="{{ block.settings.collection_5.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_5.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_5.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_5.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_5.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_5.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_6 != blank %}
+          <a href="{{ block.settings.collection_6.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_6.image %}
+                <img
+                  src="{{ block.settings.collection_6.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_6.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_6.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_6.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_6.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_6.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_7 != blank %}
+          <a href="{{ block.settings.collection_7.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_7.image %}
+                <img
+                  src="{{ block.settings.collection_7.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_7.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_7.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_7.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_7.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_7.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_8 != blank %}
+          <a href="{{ block.settings.collection_8.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_8.image %}
+                <img
+                  src="{{ block.settings.collection_8.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_8.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_8.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_8.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_8.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_8.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_9 != blank %}
+          <a href="{{ block.settings.collection_9.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_9.image %}
+                <img
+                  src="{{ block.settings.collection_9.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_9.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_9.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_9.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_9.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_9.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_10 != blank %}
+          <a href="{{ block.settings.collection_10.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_10.image %}
+                <img
+                  src="{{ block.settings.collection_10.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_10.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_10.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_10.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_10.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_10.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_1 != blank %}
+          <a href="{{ block.settings.collection_1.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_1.image %}
+                <img
+                  src="{{ block.settings.collection_1.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_1.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_1.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_1.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_1.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_1.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_2 != blank %}
+          <a href="{{ block.settings.collection_2.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_2.image %}
+                <img
+                  src="{{ block.settings.collection_2.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_2.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_2.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_2.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_2.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_2.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_3 != blank %}
+          <a href="{{ block.settings.collection_3.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_3.image %}
+                <img
+                  src="{{ block.settings.collection_3.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_3.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_3.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_3.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_3.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_3.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_4 != blank %}
+          <a href="{{ block.settings.collection_4.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_4.image %}
+                <img
+                  src="{{ block.settings.collection_4.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_4.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_4.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_4.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_4.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_4.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_5 != blank %}
+          <a href="{{ block.settings.collection_5.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_5.image %}
+                <img
+                  src="{{ block.settings.collection_5.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_5.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_5.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_5.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_5.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_5.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_6 != blank %}
+          <a href="{{ block.settings.collection_6.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_6.image %}
+                <img
+                  src="{{ block.settings.collection_6.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_6.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_6.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_6.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_6.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_6.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_7 != blank %}
+          <a href="{{ block.settings.collection_7.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_7.image %}
+                <img
+                  src="{{ block.settings.collection_7.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_7.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_7.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_7.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_7.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_7.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_8 != blank %}
+          <a href="{{ block.settings.collection_8.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_8.image %}
+                <img
+                  src="{{ block.settings.collection_8.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_8.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_8.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_8.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_8.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_8.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_9 != blank %}
+          <a href="{{ block.settings.collection_9.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_9.image %}
+                <img
+                  src="{{ block.settings.collection_9.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_9.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_9.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_9.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_9.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_9.title }}</div>
+          </a>
+        {% endif %}
+
+        {% if block.settings.collection_10 != blank %}
+          <a href="{{ block.settings.collection_10.url }}" class="ai-author-scroll__item-{{ ai_gen_id }}" aria-hidden="true">
+            <div class="ai-author-scroll__image-wrapper-{{ ai_gen_id }}">
+              {% if block.settings.collection_10.image %}
+                <img
+                  src="{{ block.settings.collection_10.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_10.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% elsif block.settings.collection_10.products.first.featured_image %}
+                <img
+                  src="{{ block.settings.collection_10.products.first.featured_image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_10.title | escape }}"
+                  class="ai-author-scroll__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                <div class="ai-author-scroll__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-author-scroll__name-{{ ai_gen_id }}">{{ block.settings.collection_10.title }}</div>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="ai-author-scroll__empty-{{ ai_gen_id }}">
+      Add author collections to display them here
+    </div>
+  {% endif %}
+</author-scroll-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AuthorScroll{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.adjustAnimation();
+      }
+
+      adjustAnimation() {
+        const track = this.querySelector('.ai-author-scroll__track-{{ ai_gen_id }}');
+        if (!track) return;
+
+        const items = track.querySelectorAll('.ai-author-scroll__item-{{ ai_gen_id }}:not([aria-hidden="true"])');
+        if (items.length === 0) return;
+
+        const totalWidth = Array.from(items).reduce((sum, item) => {
+          return sum + item.offsetWidth + 30;
+        }, 0);
+
+        const viewportWidth = this.offsetWidth;
+
+        if (totalWidth < viewportWidth) {
+          track.style.animation = 'none';
+        }
+      }
+    }
+
+    customElements.define('author-scroll-{{ ai_gen_id }}', AuthorScroll{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Author collections scroll",
+  "tag": null,
+  "class": "author-scroll-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Meet Our Authors"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "label": "Image size",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "label": "Image shape",
+      "options": [
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "rounded",
+          "label": "Rounded"
+        }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "header",
+      "content": "Scroll settings"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Collection 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Collection 8"
+    },
+    {
+      "type": "collection",
+      "id": "collection_9",
+      "label": "Collection 9"
+    },
+    {
+      "type": "collection",
+      "id": "collection_10",
+      "label": "Collection 10"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Author collections scroll"
+    }
+  ]
+}
+{% endschema %}

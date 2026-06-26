@@ -1,0 +1,920 @@
+{% doc %}
+  @prompt
+    <section
+      id="recent-purchased-{{ section.id }}"
+      class="recent-purchased-section"
+    >
+      <div class="page-width">
+    
+        <div class="recent-purchased-header reveal">
+          <h2>{{ section.settings.heading }}</h2>
+          <p>{{ section.settings.subtitle }}</p>
+        </div>
+    
+        <div class="recent-purchased-grid">
+    
+          {% for block in section.blocks %}
+            {% assign product = block.settings.product %}
+    
+            {% if product %}
+              <article
+                class="rp-card reveal"
+                {{ block.shopify_attributes }}
+              >
+    
+                <a href="{{ product.url }}" class="rp-card-link">
+    
+                  <div class="rp-image-wrapper">
+    
+                    {% if product.featured_image %}
+                      <img
+                        class="rp-image primary-image"
+                        src="{{ product.featured_image | image_url: width: 1200 }}"
+                        alt="{{ product.title }}"
+                        loading="lazy"
+                        width=""
+                        height=""
+                      >
+                    {% endif %}
+    
+                    {% if section.settings.enable_hover_image and product.images.size > 1 %}
+                      <img
+                        class="rp-image hover-image"
+                        src="{{ product.images[1] | image_url: width: 1200 }}"
+                        alt="{{ product.title }}"
+                        loading="lazy"
+                        width=""
+                        height=""
+                      >
+                    {% endif %}
+    
+                  </div>
+    
+                  <div class="rp-content">
+                    <h3>{{ product.title }}</h3>
+    
+                    <div class="rp-price">
+                      {{ product.price | money }}
+                    </div>
+                  </div>
+    
+                </a>
+    
+              </article>
+            {% endif %}
+          {% endfor %}
+    
+        </div>
+    
+        {% if section.settings.button_link != blank %}
+          <div class="rp-button-wrapper reveal">
+            <a
+              href="{{ section.settings.button_link }}"
+              class="rp-button"
+            >
+              {{ section.settings.button_text }}
+              <span>→</span>
+            </a>
+          </div>
+        {% endif %}
+    
+      </div>
+    </section>
+    
+    <style>
+    #recent-purchased-{{ section.id }}{
+      background: #f8f6f3;
+      padding: 110px 0;
+      overflow: hidden;
+    }
+    
+    #recent-purchased-{{ section.id }} .page-width{
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .recent-purchased-header{
+      text-align:center;
+      margin-bottom:70px;
+    }
+    
+    .recent-purchased-header h2{
+      margin:0;
+      font-size:48px;
+      line-height:1.1;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      font-weight:700;
+      color:#222;
+    }
+    
+    .recent-purchased-header p{
+      margin-top:16px;
+      color:#8c8c8c;
+      font-size:14px;
+      letter-spacing:0.06em;
+    }
+    
+    .recent-purchased-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:40px;
+    }
+    
+    .rp-card{
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
+      transition:all .45s ease;
+      height:100%;
+    }
+    
+    .rp-card:hover{
+      box-shadow:0 20px 50px rgba(0,0,0,.08);
+      transform:translateY(-4px);
+    }
+    
+    .rp-card-link{
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      flex-direction:column;
+      height:100%;
+    }
+    
+    .rp-image-wrapper{
+      position:relative;
+      overflow:hidden;
+      background:#fafafa;
+      aspect-ratio:1/1;
+    }
+    
+    .rp-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .8s ease, opacity .5s ease;
+    }
+    
+    .rp-card:hover .primary-image{
+      transform:scale(1.05);
+    }
+    
+    .hover-image{
+      position:absolute;
+      inset:0;
+      opacity:0;
+    }
+    
+    .rp-card:hover .hover-image{
+      opacity:1;
+      transform:scale(1.05);
+    }
+    
+    .rp-content{
+      padding:28px 24px 34px;
+      text-align:center;
+    }
+    
+    .rp-content h3{
+      margin:0;
+      font-size:18px;
+      line-height:1.5;
+      color:#222;
+      font-weight:500;
+      letter-spacing:.02em;
+    }
+    
+    .rp-price{
+      margin-top:10px;
+      font-size:15px;
+      color:#a38b63;
+      font-weight:500;
+      letter-spacing:.04em;
+    }
+    
+    .rp-button-wrapper{
+      text-align:center;
+      margin-top:70px;
+    }
+    
+    .rp-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:16px 34px;
+      background:#222;
+      color:#fff;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.15em;
+      font-size:13px;
+      font-weight:600;
+      transition:all .35s ease;
+    }
+    
+    .rp-button:hover{
+      background:#383838;
+      transform:translateY(-2px);
+    }
+    
+    .rp-button span{
+      transition:transform .3s ease;
+    }
+    
+    .rp-button:hover span{
+      transform:translateX(3px);
+    }
+    
+    .reveal{
+      opacity:0;
+      transform:translateY(35px);
+      transition:
+        opacity .8s ease,
+        transform .8s ease;
+    }
+    
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    
+    @media screen and (max-width: 989px){
+    
+      .recent-purchased-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:28px;
+      }
+    
+      .recent-purchased-header h2{
+        font-size:38px;
+      }
+    
+      #recent-purchased-{{ section.id }}{
+        padding:90px 0;
+      }
+    }
+    
+    @media screen and (max-width: 749px){
+    
+      .recent-purchased-grid{
+        grid-template-columns:1fr;
+        gap:24px;
+      }
+    
+      .recent-purchased-header{
+        margin-bottom:50px;
+      }
+    
+      .recent-purchased-header h2{
+        font-size:30px;
+        letter-s
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-recent-purchased-{{ ai_gen_id }} {
+    display: block;
+    background: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .ai-recent-purchased-container-{{ ai_gen_id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-recent-purchased-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.header_margin_bottom }}px;
+  }
+
+  .ai-recent-purchased-heading-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.1;
+    letter-spacing: {{ block.settings.heading_letter_spacing }};
+    text-transform: {{ block.settings.heading_text_transform }};
+    font-weight: {{ block.settings.heading_font_weight }};
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-recent-purchased-subtitle-{{ ai_gen_id }} {
+    margin-top: 16px;
+    color: {{ block.settings.subtitle_color }};
+    font-size: {{ block.settings.subtitle_size }}px;
+    letter-spacing: 0.06em;
+  }
+
+  .ai-recent-purchased-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-rp-card-{{ ai_gen_id }} {
+    background: {{ block.settings.card_background }};
+    border: 1px solid {{ block.settings.card_border_color }};
+    transition: all 0.45s ease;
+    height: 100%;
+  }
+
+  .ai-rp-card-{{ ai_gen_id }}:hover {
+    box-shadow: {{ block.settings.card_hover_shadow }};
+    transform: translateY(-4px);
+  }
+
+  .ai-rp-card-link-{{ ai_gen_id }} {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .ai-rp-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    background: #fafafa;
+    aspect-ratio: 1 / 1;
+  }
+
+  .ai-rp-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease, opacity 0.5s ease;
+  }
+
+  .ai-rp-card-{{ ai_gen_id }}:hover .ai-rp-primary-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-rp-hover-image-{{ ai_gen_id }} {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .ai-rp-card-{{ ai_gen_id }}:hover .ai-rp-hover-image-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .ai-rp-content-{{ ai_gen_id }} {
+    padding: 28px 24px 34px;
+    text-align: center;
+  }
+
+  .ai-rp-title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.product_title_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.product_title_color }};
+    font-weight: {{ block.settings.product_title_font_weight }};
+    letter-spacing: 0.02em;
+  }
+
+  .ai-rp-price-{{ ai_gen_id }} {
+    margin-top: 10px;
+    font-size: {{ block.settings.product_price_size }}px;
+    color: {{ block.settings.product_price_color }};
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .ai-rp-button-wrapper-{{ ai_gen_id }} {
+    text-align: center;
+    margin-top: {{ block.settings.button_margin_top }}px;
+  }
+
+  .ai-rp-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    text-transform: {{ block.settings.button_text_transform }};
+    letter-spacing: {{ block.settings.button_letter_spacing }};
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    transition: all 0.35s ease;
+  }
+
+  .ai-rp-button-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.button_hover_background }};
+    transform: translateY(-2px);
+  }
+
+  .ai-rp-button-arrow-{{ ai_gen_id }} {
+    transition: transform 0.3s ease;
+  }
+
+  .ai-rp-button-{{ ai_gen_id }}:hover .ai-rp-button-arrow-{{ ai_gen_id }} {
+    transform: translateX(3px);
+  }
+
+  .ai-rp-empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-recent-purchased-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+      gap: 28px;
+    }
+
+    .ai-recent-purchased-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+
+    .ai-recent-purchased-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.8 }}px 0 {{ block.settings.padding_bottom | times: 0.8 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-recent-purchased-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: 24px;
+    }
+
+    .ai-recent-purchased-header-{{ ai_gen_id }} {
+      margin-bottom: {{ block.settings.header_margin_bottom | times: 0.7 }}px;
+    }
+
+    .ai-recent-purchased-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
+    }
+  }
+{% endstyle %}
+
+<ai-recent-purchased-{{ ai_gen_id }}
+  class="ai-recent-purchased-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-recent-purchased-container-{{ ai_gen_id }}">
+    <div class="ai-recent-purchased-header-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-recent-purchased-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+      {% if block.settings.subtitle != blank %}
+        <p class="ai-recent-purchased-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    {% if block.settings.product_1 != blank or block.settings.product_2 != blank or block.settings.product_3 != blank %}
+      <div class="ai-recent-purchased-grid-{{ ai_gen_id }}">
+        {% for i in (1..3) %}
+          {% assign product_key = 'product_' | append: i %}
+          {% assign product = block.settings[product_key] %}
+
+          {% if product != blank %}
+            <article class="ai-rp-card-{{ ai_gen_id }}">
+              <a href="{{ product.url }}" class="ai-rp-card-link-{{ ai_gen_id }}">
+                <div class="ai-rp-image-wrapper-{{ ai_gen_id }}">
+                  {% if product.featured_image %}
+                    <img
+                      class="ai-rp-image-{{ ai_gen_id }} ai-rp-primary-image-{{ ai_gen_id }}"
+                      src="{{ product.featured_image | image_url: width: 1200 }}"
+                      alt="{{ product.title | escape }}"
+                      loading="lazy"
+                      width="{{ product.featured_image.width }}"
+                      height="{{ product.featured_image.height }}"
+                    >
+                  {% endif %}
+
+                  {% if block.settings.enable_hover_image and product.images.size > 1 %}
+                    <img
+                      class="ai-rp-image-{{ ai_gen_id }} ai-rp-hover-image-{{ ai_gen_id }}"
+                      src="{{ product.images[1] | image_url: width: 1200 }}"
+                      alt="{{ product.title | escape }}"
+                      loading="lazy"
+                      width="{{ product.images[1].width }}"
+                      height="{{ product.images[1].height }}"
+                    >
+                  {% endif %}
+                </div>
+
+                <div class="ai-rp-content-{{ ai_gen_id }}">
+                  <h3 class="ai-rp-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                  <div class="ai-rp-price-{{ ai_gen_id }}">
+                    {{ product.price | money }}
+                  </div>
+                </div>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if block.settings.button_link != blank and block.settings.button_text != blank %}
+        <div class="ai-rp-button-wrapper-{{ ai_gen_id }}">
+          <a href="{{ block.settings.button_link }}" class="ai-rp-button-{{ ai_gen_id }}">
+            {{ block.settings.button_text }}
+            <span class="ai-rp-button-arrow-{{ ai_gen_id }}">→</span>
+          </a>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="ai-rp-empty-state-{{ ai_gen_id }}">
+        Next, add products to display
+      </div>
+    {% endif %}
+  </div>
+</ai-recent-purchased-{{ ai_gen_id }}>
+
+{% schema %}
+{
+  "name": "Recent purchased",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recently Purchased"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover what others are loving"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Product 1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Product 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_image",
+      "label": "Enable hover image",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "label": "Header margin bottom",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top",
+      "label": "Button margin top",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f8f6f3"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#8c8c8c"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "rgba(0,0,0,0.08)"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product title",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "product_price_color",
+      "label": "Product price",
+      "default": "#a38b63"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#383838"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Heading transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "text",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "default": "0.18em"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "product_title_font_weight",
+      "label": "Product title weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "product_price_size",
+      "label": "Product price size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "text",
+      "id": "button_letter_spacing",
+      "label": "Button letter spacing",
+      "default": "0.15em"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Button padding vertical",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Button padding horizontal",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "text",
+      "id": "card_hover_shadow",
+      "label": "Card hover shadow",
+      "default": "0 20px 50px rgba(0,0,0,0.08)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recent purchased"
+    }
+  ]
+}
+{% endschema %}

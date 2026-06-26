@@ -1,0 +1,61 @@
+{% assign selected_collection = collections['authors'] %}
+
+<section class="author-section">
+  <div class="page-width">
+
+    <h2 class="author-title">Meet Our Authors</h2>
+
+    {% if selected_collection != blank %}
+      <div class="author-wrapper">
+
+        {% for product in selected_collection.products %}
+          <div class="author-item">
+            <a href="/collections/{{ product.handle }}">
+              
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                  class="author-image"
+                >
+              {% endif %}
+
+              <h3 class="author-name">{{ product.title }}</h3>
+            </a>
+          </div>
+        {% endfor %}
+
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+.author-section {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.author-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.author-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.author-name {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+</style>

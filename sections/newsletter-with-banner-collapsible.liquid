@@ -1,0 +1,177 @@
+{% comment %}
+  Submit Proposal – Newsletter Banner Collapsible (IndusSource Style)
+{% endcomment %}
+
+<style>
+  .proposal-section {
+    padding: 60px 15px;
+    background: #fff;
+  }
+
+  .proposal-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .proposal-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #111;
+  }
+
+  .proposal-form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .proposal-form-wrapper input,
+  .proposal-form-wrapper textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  .proposal-form-wrapper textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .proposal-form-wrapper input::placeholder,
+  .proposal-form-wrapper textarea::placeholder {
+    color: #777;
+  }
+
+  .proposal-submit-btn {
+    margin-top: 10px;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .proposal-submit-btn:hover {
+    background: #333;
+  }
+
+  .form-message--success {
+    margin-top: 20px;
+    text-align: center;
+    color: #2e7d32;
+    font-weight: 500;
+  }
+
+  .form-message--error {
+    margin-top: 10px;
+    color: #c62828;
+    font-size: 14px;
+  }
+
+  @media (max-width: 767px) {
+    .proposal-title {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<div class="proposal-section">
+  <div class="proposal-container">
+
+    {% if section.settings.section_title != blank %}
+      <h2 class="proposal-title">
+        {{ section.settings.section_title }}
+      </h2>
+    {% endif %}
+
+    {%- form 'contact', id: 'SubmitProposalForm', class: 'proposal-form' -%}
+
+      <input type="hidden" name="contact[tags]" value="submit-proposal">
+
+      <div class="proposal-form-wrapper">
+
+        <input
+          type="text"
+          name="contact[name]"
+          placeholder="Your Name*"
+          required
+        >
+
+        <input
+          type="email"
+          name="contact[email]"
+          placeholder="Your Email*"
+          required
+        >
+
+        <input
+          type="text"
+          name="contact[company]"
+          placeholder="Company Name"
+        >
+
+        <input
+          type="url"
+          name="contact[website]"
+          placeholder="Website URL"
+        >
+
+        <textarea
+          name="contact[body]"
+          placeholder="Tell us about your proposal*"
+          required
+        ></textarea>
+
+        <button type="submit" class="proposal-submit-btn">
+          Submit Proposal
+        </button>
+
+      </div>
+
+      {% if form.posted_successfully? %}
+        <p class="form-message--success">
+          Thank you! Your proposal has been submitted successfully.
+        </p>
+      {% endif %}
+
+      {% if form.errors %}
+        <p class="form-message--error">
+          {{ form.errors | default_errors }}
+        </p>
+      {% endif %}
+
+    {%- endform -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Submit Proposal Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Submit Your Proposal"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Submit Proposal Form"
+    }
+  ]
+}
+{% endschema %}

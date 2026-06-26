@@ -1,0 +1,107 @@
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+
+{% render 'product-page-full-width-2' %}
+
+{% schema %}
+{
+  "name": "Main Product",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "wa_number",
+      "label": "WhatsApp Number",
+      "info": "Include country code, no + or spaces. e.g. 919004435953",
+      "default": "919136047270"
+    },
+    {
+      "type": "header",
+      "content": "Offer / Coupon Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_coupon",
+      "label": "Show coupon box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Coupon Code",
+      "default": "MYFIRST"
+    },
+    {
+      "type": "text",
+      "id": "coupon_text",
+      "label": "Coupon Description",
+      "default": "₹2,000 off on your first order above ₹25,000"
+    },
+    {
+      "type": "header",
+      "content": "Buttons & Links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_now",
+      "label": "Show Buy it Now button",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "sell_page",
+      "label": "Sell With Us page link",
+      "info": "Leave blank to hide the sell block"
+    },
+    {
+      "type": "header",
+      "content": "Returns"
+    },
+    {
+      "type": "text",
+      "id": "return_days",
+      "label": "Return window (days)",
+      "default": "7"
+    },
+    {
+      "type": "header",
+      "content": "Authentication accordion"
+    },
+    {
+      "type": "richtext",
+      "id": "auth_content",
+      "label": "Authentication text",
+      "default": "<p>At My Almari, authenticity is our utmost priority. Every item undergoes a rigorous verification process before being listed.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Shipping accordion"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_content",
+      "label": "Shipping text",
+      "default": "<p>All shipments are dispatched via insured, tamper-proof packaging. Delivery within 14 days of payment. Expedited shipping available on request.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Cancellation accordion"
+    },
+    {
+      "type": "richtext",
+      "id": "cancellation_content",
+      "label": "Cancellation & Refund text",
+      "default": "<p>Contact <strong>contact@myalmari.in</strong> or WhatsApp to initiate a return within 3 days of receiving.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Product"
+    }
+  ]
+}
+{% endschema %}

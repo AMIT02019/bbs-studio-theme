@@ -1,0 +1,692 @@
+{% doc %}
+  @prompt
+    {% comment %}
+    Horizontal Collection List – Book Cover Style
+    Image (2:3) with text OUTSIDE image block
+    Shopify 2.0 Compatible
+    {% endcomment %}
+    
+    <section class="book-collection-section">
+      <div class="book-collection-wrapper">
+        
+        {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.collection] %}
+          {% if collection != blank %}
+            
+            <div class="book-collection-card" {{ block.shopify_attributes }}>
+              
+              <a href="{{ collection.url }}" class="book-image-wrapper">
+                <div class="book-image-container">
+                  {% if collection.image %}
+                    <img 
+                      src="{{ collection.image | image_url: width: 600 }}"
+                      alt="{{ collection.title }}"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {{ 'collection-1' | placeholder_svg_tag }}
+                  {% endif %}
+                </div>
+              </a>
+    
+              <!-- TEXT OUTSIDE IMAGE -->
+              <div class="book-content">
+                <h3 class="book-title">
+                  <a href="{{ collection.url }}">{{ collection.title }}</a>
+                </h3>
+              </div>
+    
+            </div>
+    
+          {% endif %}
+        {% endfor %}
+    
+      </div>
+    </section>
+    
+    <style>
+    .book-collection-section {
+      padding: 40px 0;
+    }
+    
+    .book-collection-wrapper {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 20px;
+    }
+    
+    .book-collection-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Card */
+    .book-collection-card {
+      flex: 0 0 calc(16.66% - 16px);
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Image wrapper */
+    .book-image-wrapper {
+      text-decoration: none;
+    }
+    
+    /* 2:3 Book Ratio */
+    .book-image-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .book-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    /* Hover effect */
+    .book-collection-card:hover .book-image-container {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    }
+    
+    /* TEXT OUTSIDE IMAGE */
+    .book-content {
+      margin-top: 14px;
+      text-align: center;
+      padding: 0 5px;
+    }
+    
+    .book-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .book-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    /* RESPONSIVE */
+    
+    /* Desktop default = 6 */
+    @media (max-width: 1200px) {
+      .book-collection-card {
+        flex: 0 0 calc(25% - 15px); /* 4 per row */
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .book-collection-card {
+        flex: 0 0 calc(33.33% - 14px); /* 3 per row */
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .book-collection-card {
+        flex: 0 0 50%; /* 2 per row */
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .book-collection-card {
+        flex: 0 0 75%; /* 1–2 swipe feel */
+      }
+    }
+    </style>
+    
+    {% schema %}
+    {
+      "name": "Horizontal Collections (Book Style)",
+      "settings": [],
+      "blocks": [
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": [
+            {
+              "type": "collection",
+              "id": "collection",
+              "label": "Select collection"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Horizontal Collections (Book Style)",
+          "blocks": [
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" },
+            { "type": "collection" }
+          ]
+        }
+      ]
+    }
+    {% endschema %}
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-book-collection-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-book-collection-section-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-book-collection-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_gap }}px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 20px;
+  }
+
+  .ai-book-collection-wrapper-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-book-collection-card-{{ ai_gen_id }} {
+    flex: 0 0 calc({{ block.settings.desktop_columns_percent }}% - {{ block.settings.card_gap }}px);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-book-image-wrapper-{{ ai_gen_id }} {
+    text-decoration: none;
+  }
+
+  .ai-book-image-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-book-image-container-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-book-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-book-image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  {% if block.settings.enable_hover_effect %}
+    .ai-book-collection-card-{{ ai_gen_id }}:hover .ai-book-image-container-{{ ai_gen_id }} {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, {{ block.settings.shadow_opacity | times: 2 }});
+    }
+  {% endif %}
+
+  .ai-book-content-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.title_margin_top }}px;
+    text-align: {{ block.settings.text_alignment }};
+    padding: 0 5px;
+  }
+
+  .ai-book-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    margin: 0;
+    color: {{ block.settings.title_color }};
+  }
+
+  .ai-book-title-{{ ai_gen_id }} a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+
+  .ai-book-title-{{ ai_gen_id }} a:hover {
+    color: {{ block.settings.title_hover_color }};
+  }
+
+  @media (max-width: 1200px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc(25% - {{ block.settings.card_gap }}px);
+    }
+  }
+
+  @media (max-width: 992px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc(33.33% - {{ block.settings.card_gap }}px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc(50% - {{ block.settings.card_gap }}px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ai-book-collection-card-{{ ai_gen_id }} {
+      flex: 0 0 calc({{ block.settings.mobile_width_percent }}% - {{ block.settings.card_gap }}px);
+    }
+  }
+{% endstyle %}
+
+<book-collection-{{ ai_gen_id }} class="ai-book-collection-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-book-collection-section-{{ ai_gen_id }}">
+    <div class="ai-book-collection-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.collection_1 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_1.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_1.image %}
+                <img
+                  src="{{ block.settings.collection_1.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_1.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_1.url }}">{{ block.settings.collection_1.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.collection_2 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_2.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_2.image %}
+                <img
+                  src="{{ block.settings.collection_2.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_2.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_2.url }}">{{ block.settings.collection_2.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.collection_3 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_3.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_3.image %}
+                <img
+                  src="{{ block.settings.collection_3.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_3.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_3.url }}">{{ block.settings.collection_3.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.collection_4 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_4.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_4.image %}
+                <img
+                  src="{{ block.settings.collection_4.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_4.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_4.url }}">{{ block.settings.collection_4.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.collection_5 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_5.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_5.image %}
+                <img
+                  src="{{ block.settings.collection_5.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_5.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_5.url }}">{{ block.settings.collection_5.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.collection_6 != blank %}
+        <div class="ai-book-collection-card-{{ ai_gen_id }}">
+          <a href="{{ block.settings.collection_6.url }}" class="ai-book-image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-book-image-container-{{ ai_gen_id }}">
+              {% if block.settings.collection_6.image %}
+                <img
+                  src="{{ block.settings.collection_6.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.collection_6.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="900"
+                >
+              {% else %}
+                <div class="ai-book-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="ai-book-content-{{ ai_gen_id }}">
+            <h3 class="ai-book-title-{{ ai_gen_id }}">
+              <a href="{{ block.settings.collection_6.url }}">{{ block.settings.collection_6.title }}</a>
+            </h3>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</book-collection-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BookCollection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+    customElements.define('book-collection-{{ ai_gen_id }}', BookCollection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Book collection list",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns_percent",
+      "label": "Desktop columns width",
+      "min": 10,
+      "max": 25,
+      "step": 1,
+      "unit": "%",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_width_percent",
+      "label": "Mobile card width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Image style"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_effect",
+      "label": "Enable hover effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_top",
+      "label": "Top margin",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "title_hover_color",
+      "label": "Title hover color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Book collection list"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,314 @@
+{% doc %}
+  @prompt
+    Create a Shopify product metafield system called "Marketplace Links".
+    
+    Requirements:
+    
+    1. Create two product metafields:
+       - Amazon Link
+       - Flipkart Link
+    
+    2. Metafield details:
+       Namespace: custom
+       Keys:
+       - custom.amazon_link
+       - custom.flipkart_link
+       Type: URL
+    
+    3. Build a product page section that:
+       - Automatically reads these metafields
+       - Displays Amazon and Flipkart icons if links exist
+       - Hides the icon if the metafield is empty
+       - Opens the marketplace product page in a new tab
+    
+    4. Design requirements:
+       - Icons aligned horizontally
+       - Clean spacing between icons
+       - Mobile responsive
+       - Smooth hover animation
+       - Compatible with Shopify Online Store 2.0 themes (Ella theme)
+    
+    5. Output:
+       - Liquid code for product template/section
+       - CSS included
+       - Ready-to-paste implementation
+    
+    Goal:
+    Allow store admins to paste marketplace product links inside metafields and automatically show external buying options on the product page.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% assign amazon_link = product.metafields.custom.amazon_link %}
+{% assign flipkart_link = product.metafields.custom.flipkart_link %}
+
+{% style %}
+  .ai-marketplace-links-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-marketplace-links-container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.icon_spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-marketplace-links-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_font_size }}px;
+    font-weight: {{ block.settings.label_font_weight }};
+    color: {{ block.settings.label_color }};
+    margin: 0;
+  }
+
+  .ai-marketplace-links-icons-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.icon_spacing }}px;
+  }
+
+  .ai-marketplace-link-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    background-color: {{ block.settings.icon_background }};
+    border-radius: {{ block.settings.icon_border_radius }}px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: {{ block.settings.icon_padding }}px;
+  }
+
+  .ai-marketplace-link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.icon_hover_background }};
+    transform: translateY(-2px);
+  }
+
+  .ai-marketplace-link-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-marketplace-links-container-{{ ai_gen_id }} {
+      gap: {{ block.settings.icon_spacing | times: 0.8 }}px;
+    }
+
+    .ai-marketplace-link-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.9 }}px;
+      height: {{ block.settings.icon_size | times: 0.9 }}px;
+    }
+
+    .ai-marketplace-links-label-{{ ai_gen_id }} {
+      font-size: {{ block.settings.label_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-marketplace-links-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if amazon_link != blank or flipkart_link != blank %}
+    <div class="ai-marketplace-links-container-{{ ai_gen_id }}">
+      {% if block.settings.show_label %}
+        <p class="ai-marketplace-links-label-{{ ai_gen_id }}">{{ block.settings.label_text }}</p>
+      {% endif %}
+
+      <div class="ai-marketplace-links-icons-{{ ai_gen_id }}">
+        {% if amazon_link != blank %}
+          <a
+            href="{{ amazon_link }}"
+            class="ai-marketplace-link-{{ ai_gen_id }} ai-marketplace-link-amazon-{{ ai_gen_id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buy on Amazon"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.5 11.5C14.5 13.433 12.933 15 11 15C9.067 15 7.5 13.433 7.5 11.5C7.5 9.567 9.067 8 11 8C12.933 8 14.5 9.567 14.5 11.5Z" fill="{{ block.settings.amazon_icon_color }}"/>
+              <path d="M20.5 17.5C20.5 17.776 20.276 18 20 18H4C3.724 18 3.5 17.776 3.5 17.5C3.5 17.224 3.724 17 4 17H20C20.276 17 20.5 17.224 20.5 17.5Z" fill="{{ block.settings.amazon_icon_color }}"/>
+              <path d="M21.5 19.5C21.5 19.776 21.276 20 21 20C18.5 20 16.5 18.5 15 17C13.5 18.5 11.5 20 9 20C8.724 20 8.5 19.776 8.5 19.5C8.5 19.224 8.724 19 9 19C11 19 12.5 17.8 14 16.5C15.5 17.8 17 19 19 19H21C21.276 19 21.5 19.224 21.5 19.5Z" fill="{{ block.settings.amazon_icon_color }}"/>
+              <path d="M11 14C12.381 14 13.5 12.881 13.5 11.5C13.5 10.119 12.381 9 11 9C9.619 9 8.5 10.119 8.5 11.5C8.5 12.881 9.619 14 11 14Z" fill="{{ block.settings.amazon_icon_color }}"/>
+            </svg>
+          </a>
+        {% endif %}
+
+        {% if flipkart_link != blank %}
+          <a
+            href="{{ flipkart_link }}"
+            class="ai-marketplace-link-{{ ai_gen_id }} ai-marketplace-link-flipkart-{{ ai_gen_id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buy on Flipkart"
+          >
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 3H21V21H3V3Z" fill="{{ block.settings.flipkart_icon_color }}"/>
+              <path d="M7 8H10V10H7V8Z" fill="white"/>
+              <path d="M7 12H17V14H7V12Z" fill="white"/>
+              <path d="M7 16H14V18H7V16Z" fill="white"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Marketplace links",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Show label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label text",
+      "default": "Also available on:"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Label font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_font_weight",
+      "label": "Label font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "icon_spacing",
+      "label": "Icon spacing",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "icon_padding",
+      "label": "Icon padding",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "icon_border_radius",
+      "label": "Icon border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Icon background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "icon_hover_background",
+      "label": "Icon hover background",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Amazon"
+    },
+    {
+      "type": "color",
+      "id": "amazon_icon_color",
+      "label": "Amazon icon color",
+      "default": "#FF9900"
+    },
+    {
+      "type": "header",
+      "content": "Flipkart"
+    },
+    {
+      "type": "color",
+      "id": "flipkart_icon_color",
+      "label": "Flipkart icon color",
+      "default": "#2874F0"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marketplace links"
+    }
+  ]
+}
+{% endschema %}

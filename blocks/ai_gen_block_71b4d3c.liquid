@@ -1,0 +1,649 @@
+{% doc %}
+  @prompt
+    SCROLL EFFECTS:
+    
+    * Fixed image while scrolling
+    * Smooth parallax movement
+    * Slight zoom effect on background
+    * Fade-in text animation
+    * Luxury cinematic scrolling feel
+    
+    SLIDER CONTROLS:
+    
+    * Minimal elegant arrows
+    * Small black/gold navigation icons
+    * Positioned center-bottom
+    * Smooth hover transitions
+    
+    SHOPIFY REQUIREMENTS:
+    
+    * Build as editable Shopify section
+    * Liquid schema support
+    * Editable testimonials
+    * Editable background image
+    * Adjustable overlay opacity
+    * Toggle parallax on/off
+    * Fully responsive
+    
+    CUSTOM CSS:
+    
+    * background-size: cover
+    * background-position: center
+    * background-attachment: fixed
+    * padding: 60px 55px
+    * mobile padding: 20px
+    * max-width container
+    * maintain image clarity and visibility
+    
+    STYLE REFERENCE:
+    Luxury fashion campaign, cinematic jewelry editorial, Vogue-style testimonial section, premium boutique homepage with visible luxury photography.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-testimonial-slider-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+  }
+
+  .ai-testimonial-slider__background-{{ ai_gen_id }} {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    {% if block.settings.enable_parallax %}
+      background-attachment: fixed;
+    {% endif %}
+    padding: 60px 55px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  {% if block.settings.background_image %}
+    .ai-testimonial-slider__background-{{ ai_gen_id }} {
+      background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
+    }
+  {% endif %}
+
+  .ai-testimonial-slider__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.overlay_color }};
+    opacity: {{ block.settings.overlay_opacity }};
+    pointer-events: none;
+  }
+
+  .ai-testimonial-slider__container-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 2;
+    max-width: {{ block.settings.content_max_width }}px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-testimonial-slider__slides-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-testimonial-slider__slide-{{ ai_gen_id }} {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    text-align: center;
+  }
+
+  .ai-testimonial-slider__slide-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+  }
+
+  .ai-testimonial-slider__quote-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.quote_font_size }}px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-style: italic;
+  }
+
+  .ai-testimonial-slider__author-{{ ai_gen_id }} {
+    color: {{ block.settings.author_color }};
+    font-size: {{ block.settings.author_font_size }}px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .ai-testimonial-slider__role-{{ ai_gen_id }} {
+    color: {{ block.settings.role_color }};
+    font-size: {{ block.settings.role_font_size }}px;
+    opacity: 0.8;
+  }
+
+  .ai-testimonial-slider__controls-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .ai-testimonial-slider__arrow-{{ ai_gen_id }} {
+    width: 40px;
+    height: 40px;
+    border: 1px solid {{ block.settings.arrow_color }};
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+  }
+
+  .ai-testimonial-slider__arrow-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.arrow_hover_bg }};
+    border-color: {{ block.settings.arrow_hover_bg }};
+  }
+
+  .ai-testimonial-slider__arrow-{{ ai_gen_id }} svg {
+    width: 16px;
+    height: 16px;
+    stroke: {{ block.settings.arrow_color }};
+    transition: stroke 0.3s ease;
+  }
+
+  .ai-testimonial-slider__arrow-{{ ai_gen_id }}:hover svg {
+    stroke: {{ block.settings.arrow_hover_color }};
+  }
+
+  .ai-testimonial-slider__dots-{{ ai_gen_id }} {
+    display: flex;
+    gap: 10px;
+  }
+
+  .ai-testimonial-slider__dot-{{ ai_gen_id }} {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: {{ block.settings.dot_color }};
+    opacity: 0.4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+  }
+
+  .ai-testimonial-slider__dot-{{ ai_gen_id }}.active {
+    opacity: 1;
+    background-color: {{ block.settings.dot_active_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-testimonial-slider__background-{{ ai_gen_id }} {
+      padding: 40px 20px;
+      min-height: 400px;
+      {% if block.settings.enable_parallax %}
+        background-attachment: scroll;
+      {% endif %}
+    }
+
+    .ai-testimonial-slider__quote-{{ ai_gen_id }} {
+      font-size: {{ block.settings.quote_font_size | times: 0.8 }}px;
+    }
+
+    .ai-testimonial-slider__author-{{ ai_gen_id }} {
+      font-size: {{ block.settings.author_font_size | times: 0.9 }}px;
+    }
+
+    .ai-testimonial-slider__role-{{ ai_gen_id }} {
+      font-size: {{ block.settings.role_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<luxury-testimonial-slider-{{ ai_gen_id }}
+  class="ai-testimonial-slider-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-testimonial-slider__background-{{ ai_gen_id }}">
+    <div class="ai-testimonial-slider__overlay-{{ ai_gen_id }}"></div>
+    
+    <div class="ai-testimonial-slider__container-{{ ai_gen_id }}">
+      <div class="ai-testimonial-slider__slides-{{ ai_gen_id }}">
+        {% for i in (1..5) %}
+          {% liquid
+            assign quote_key = 'testimonial_' | append: i | append: '_quote'
+            assign author_key = 'testimonial_' | append: i | append: '_author'
+            assign role_key = 'testimonial_' | append: i | append: '_role'
+            
+            assign quote = block.settings[quote_key]
+            assign author = block.settings[author_key]
+            assign role = block.settings[role_key]
+          %}
+          
+          {% if quote != blank or author != blank %}
+            <div class="ai-testimonial-slider__slide-{{ ai_gen_id }} {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}">
+              {% if quote != blank %}
+                <div class="ai-testimonial-slider__quote-{{ ai_gen_id }}">
+                  {{ quote }}
+                </div>
+              {% endif %}
+              
+              {% if author != blank %}
+                <div class="ai-testimonial-slider__author-{{ ai_gen_id }}">
+                  {{ author }}
+                </div>
+              {% endif %}
+              
+              {% if role != blank %}
+                <div class="ai-testimonial-slider__role-{{ ai_gen_id }}">
+                  {{ role }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="ai-testimonial-slider__controls-{{ ai_gen_id }}">
+        <button class="ai-testimonial-slider__arrow-{{ ai_gen_id }} ai-testimonial-slider__prev-{{ ai_gen_id }}" aria-label="Previous testimonial">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="ai-testimonial-slider__dots-{{ ai_gen_id }}">
+          {% for i in (1..5) %}
+            {% liquid
+              assign quote_key = 'testimonial_' | append: i | append: '_quote'
+              assign author_key = 'testimonial_' | append: i | append: '_author'
+              
+              assign quote = block.settings[quote_key]
+              assign author = block.settings[author_key]
+            %}
+            
+            {% if quote != blank or author != blank %}
+              <button class="ai-testimonial-slider__dot-{{ ai_gen_id }} {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to testimonial {{ forloop.index }}"></button>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <button class="ai-testimonial-slider__arrow-{{ ai_gen_id }} ai-testimonial-slider__next-{{ ai_gen_id }}" aria-label="Next testimonial">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</luxury-testimonial-slider-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LuxuryTestimonialSlider{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentSlide = 0;
+        this.slides = [];
+        this.dots = [];
+        this.autoplayInterval = null;
+      }
+
+      connectedCallback() {
+        this.slides = Array.from(this.querySelectorAll('.ai-testimonial-slider__slide-{{ ai_gen_id }}'));
+        this.dots = Array.from(this.querySelectorAll('.ai-testimonial-slider__dot-{{ ai_gen_id }}'));
+        this.prevBtn = this.querySelector('.ai-testimonial-slider__prev-{{ ai_gen_id }}');
+        this.nextBtn = this.querySelector('.ai-testimonial-slider__next-{{ ai_gen_id }}');
+
+        if (this.slides.length === 0) return;
+
+        this.setupEventListeners();
+        {% if block.settings.enable_autoplay %}
+          this.startAutoplay();
+        {% endif %}
+      }
+
+      setupEventListeners() {
+        this.prevBtn.addEventListener('click', () => this.goToPrevSlide());
+        this.nextBtn.addEventListener('click', () => this.goToNextSlide());
+
+        this.dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => this.goToSlide(index));
+        });
+      }
+
+      goToSlide(index) {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.dots[this.currentSlide].classList.remove('active');
+
+        this.currentSlide = index;
+
+        this.slides[this.currentSlide].classList.add('active');
+        this.dots[this.currentSlide].classList.add('active');
+
+        {% if block.settings.enable_autoplay %}
+          this.resetAutoplay();
+        {% endif %}
+      }
+
+      goToNextSlide() {
+        const nextIndex = (this.currentSlide + 1) % this.slides.length;
+        this.goToSlide(nextIndex);
+      }
+
+      goToPrevSlide() {
+        const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.goToSlide(prevIndex);
+      }
+
+      startAutoplay() {
+        this.autoplayInterval = setInterval(() => {
+          this.goToNextSlide();
+        }, {{ block.settings.autoplay_speed }} * 1000);
+      }
+
+      resetAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.startAutoplay();
+        }
+      }
+
+      disconnectedCallback() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+        }
+      }
+    }
+
+    customElements.define('luxury-testimonial-slider-{{ ai_gen_id }}', LuxuryTestimonialSlider{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Luxury testimonial slider",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Quote color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size",
+      "label": "Quote font size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "author_color",
+      "label": "Author color",
+      "default": "#d4af37"
+    },
+    {
+      "type": "range",
+      "id": "author_font_size",
+      "label": "Author font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "role_color",
+      "label": "Role color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "role_font_size",
+      "label": "Role font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Controls"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#d4af37"
+    },
+    {
+      "type": "color",
+      "id": "arrow_hover_bg",
+      "label": "Arrow hover background",
+      "default": "#d4af37"
+    },
+    {
+      "type": "color",
+      "id": "arrow_hover_color",
+      "label": "Arrow hover color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Active dot color",
+      "default": "#d4af37"
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 1"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial_1_quote",
+      "label": "Quote",
+      "default": "<p>Exquisite craftsmanship and timeless elegance. Every piece tells a story of luxury and sophistication.</p>"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_author",
+      "label": "Author name",
+      "default": "Isabella Laurent"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_role",
+      "label": "Role",
+      "default": "Fashion Editor, Vogue"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 2"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial_2_quote",
+      "label": "Quote",
+      "default": "<p>A masterclass in refined design. These pieces elevate any collection with their unparalleled beauty.</p>"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_author",
+      "label": "Author name",
+      "default": "Sophia Chen"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_role",
+      "label": "Role",
+      "default": "Creative Director"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 3"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial_3_quote",
+      "label": "Quote",
+      "default": "<p>The attention to detail is extraordinary. A true testament to artisanal excellence and modern luxury.</p>"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_author",
+      "label": "Author name",
+      "default": "Victoria Ashford"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_role",
+      "label": "Role",
+      "default": "Luxury Lifestyle Curator"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 4"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial_4_quote",
+      "label": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_4_author",
+      "label": "Author name"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_4_role",
+      "label": "Role"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 5"
+    },
+    {
+      "type": "richtext",
+      "id": "testimonial_5_quote",
+      "label": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_5_author",
+      "label": "Author name"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_5_role",
+      "label": "Role"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury testimonial slider"
+    }
+  ]
+}
+{% endschema %}

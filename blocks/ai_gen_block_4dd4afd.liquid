@@ -1,0 +1,729 @@
+{% doc %}
+  @prompt
+    Create a Shopify 2.0 custom section that displays collections in a horizontally scrollable row with left/right arrow buttons.
+    
+    Requirements:
+    
+    Smooth scroll animation
+    
+    Hide default scrollbar (optional setting)
+    
+    Arrow buttons positioned outside the scroll container
+    
+    Mobile swipe enabled
+    
+    Customizable card styling (border, shadow, radius, spacing)
+    
+    Hover animation
+    
+    Fully responsive
+    
+    Clean, optimized code for Ella theme
+    
+    Include full Liquid section file with schema
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-scrollable-collections-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-scrollable-collections__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-scrollable-collections__header-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.header_spacing }}px;
+    text-align: {{ block.settings.heading_alignment }};
+  }
+
+  .ai-scrollable-collections__heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0;
+    text-transform: {{ block.settings.heading_transform }};
+  }
+
+  .ai-scrollable-collections__wrapper-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-scrollable-collections__scroll-container-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_spacing }}px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0;
+    {% if block.settings.hide_scrollbar %}
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    {% endif %}
+  }
+
+  {% if block.settings.hide_scrollbar %}
+    .ai-scrollable-collections__scroll-container-{{ ai_gen_id }}::-webkit-scrollbar {
+      display: none;
+    }
+  {% endif %}
+
+  .ai-scrollable-collections__card-{{ ai_gen_id }} {
+    flex: 0 0 {{ block.settings.card_width }}px;
+    min-width: {{ block.settings.card_width }}px;
+    background-color: {{ block.settings.card_background }};
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    {% if block.settings.enable_card_shadow %}
+      box-shadow: 0 {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity }});
+    {% endif %}
+  }
+
+  .ai-scrollable-collections__card-{{ ai_gen_id }}:hover {
+    transform: translateY(-{{ block.settings.hover_lift }}px);
+    {% if block.settings.enable_card_shadow %}
+      box-shadow: 0 {{ block.settings.shadow_vertical | plus: 4 }}px {{ block.settings.shadow_blur | plus: 8 }}px rgba(0, 0, 0, {{ block.settings.shadow_opacity | plus: 0.1 }});
+    {% endif %}
+  }
+
+  .ai-scrollable-collections__card-link-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ai-scrollable-collections__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-scrollable-collections__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-scrollable-collections__card-{{ ai_gen_id }}:hover .ai-scrollable-collections__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-scrollable-collections__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-scrollable-collections__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-scrollable-collections__content-{{ ai_gen_id }} {
+    padding: {{ block.settings.card_padding }}px;
+  }
+
+  .ai-scrollable-collections__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+
+  .ai-scrollable-collections__count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.count_size }}px;
+    color: {{ block.settings.count_color }};
+    margin: 0;
+  }
+
+  .ai-scrollable-collections__arrow-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: {{ block.settings.arrow_size }}px;
+    height: {{ block.settings.arrow_size }}px;
+    background-color: {{ block.settings.arrow_background }};
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-scrollable-collections__arrow-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.arrow_hover_background }};
+  }
+
+  .ai-scrollable-collections__arrow-{{ ai_gen_id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .ai-scrollable-collections__arrow--left-{{ ai_gen_id }} {
+    left: -{{ block.settings.arrow_offset }}px;
+  }
+
+  .ai-scrollable-collections__arrow--right-{{ ai_gen_id }} {
+    right: -{{ block.settings.arrow_offset }}px;
+  }
+
+  .ai-scrollable-collections__arrow-{{ ai_gen_id }} svg {
+    width: 20px;
+    height: 20px;
+    fill: {{ block.settings.arrow_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-scrollable-collections__card-{{ ai_gen_id }} {
+      flex: 0 0 {{ block.settings.card_width_mobile }}px;
+      min-width: {{ block.settings.card_width_mobile }}px;
+    }
+
+    .ai-scrollable-collections__arrow-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-scrollable-collections__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<scrollable-collections-{{ ai_gen_id }} class="ai-scrollable-collections-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-scrollable-collections__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <div class="ai-scrollable-collections__header-{{ ai_gen_id }}">
+        <h2 class="ai-scrollable-collections__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="ai-scrollable-collections__wrapper-{{ ai_gen_id }}">
+      <button
+        class="ai-scrollable-collections__arrow-{{ ai_gen_id }} ai-scrollable-collections__arrow--left-{{ ai_gen_id }}"
+        aria-label="Scroll left"
+        data-direction="left"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+
+      <div class="ai-scrollable-collections__scroll-container-{{ ai_gen_id }}">
+        {% if block.settings.collections.size > 0 %}
+          {% for collection in block.settings.collections %}
+            <div class="ai-scrollable-collections__card-{{ ai_gen_id }}">
+              <a href="{{ collection.url }}" class="ai-scrollable-collections__card-link-{{ ai_gen_id }}">
+                <div class="ai-scrollable-collections__image-wrapper-{{ ai_gen_id }}">
+                  {% if collection.featured_image %}
+                    <img
+                      src="{{ collection.featured_image | image_url: width: 600 }}"
+                      alt="{{ collection.featured_image.alt | escape }}"
+                      class="ai-scrollable-collections__image-{{ ai_gen_id }}"
+                      loading="lazy"
+                      width="600"
+                      height="{{ 600 | times: block.settings.image_aspect_ratio | divided_by: 100 }}"
+                    >
+                  {% else %}
+                    <div class="ai-scrollable-collections__placeholder-{{ ai_gen_id }}">
+                      {{ 'collection-1' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="ai-scrollable-collections__content-{{ ai_gen_id }}">
+                  <h3 class="ai-scrollable-collections__title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+                  {% if block.settings.show_product_count %}
+                    <p class="ai-scrollable-collections__count-{{ ai_gen_id }}">
+                      {{ collection.products_count }} 
+                      {% if collection.products_count == 1 %}
+                        product
+                      {% else %}
+                        products
+                      {% endif %}
+                    </p>
+                  {% endif %}
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..6) %}
+            <div class="ai-scrollable-collections__card-{{ ai_gen_id }}">
+              <div class="ai-scrollable-collections__card-link-{{ ai_gen_id }}">
+                <div class="ai-scrollable-collections__image-wrapper-{{ ai_gen_id }}">
+                  <div class="ai-scrollable-collections__placeholder-{{ ai_gen_id }}">
+                    {{ 'collection-1' | placeholder_svg_tag }}
+                  </div>
+                </div>
+                <div class="ai-scrollable-collections__content-{{ ai_gen_id }}">
+                  <h3 class="ai-scrollable-collections__title-{{ ai_gen_id }}">Collection {{ i }}</h3>
+                  {% if block.settings.show_product_count %}
+                    <p class="ai-scrollable-collections__count-{{ ai_gen_id }}">0 products</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <button
+        class="ai-scrollable-collections__arrow-{{ ai_gen_id }} ai-scrollable-collections__arrow--right-{{ ai_gen_id }}"
+        aria-label="Scroll right"
+        data-direction="right"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</scrollable-collections-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ScrollableCollections{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.scrollContainer = null;
+        this.leftArrow = null;
+        this.rightArrow = null;
+        this.scrollAmount = {{ block.settings.scroll_amount }};
+      }
+
+      connectedCallback() {
+        this.scrollContainer = this.querySelector('.ai-scrollable-collections__scroll-container-{{ ai_gen_id }}');
+        this.leftArrow = this.querySelector('[data-direction="left"]');
+        this.rightArrow = this.querySelector('[data-direction="right"]');
+
+        if (!this.scrollContainer || !this.leftArrow || !this.rightArrow) return;
+
+        this.leftArrow.addEventListener('click', () => this.scroll('left'));
+        this.rightArrow.addEventListener('click', () => this.scroll('right'));
+        this.scrollContainer.addEventListener('scroll', () => this.updateArrows());
+
+        this.updateArrows();
+      }
+
+      scroll(direction) {
+        const scrollDistance = this.scrollAmount;
+        const currentScroll = this.scrollContainer.scrollLeft;
+        const targetScroll = direction === 'left' 
+          ? currentScroll - scrollDistance 
+          : currentScroll + scrollDistance;
+
+        this.scrollContainer.scrollTo({
+          left: targetScroll,
+          behavior: 'smooth'
+        });
+      }
+
+      updateArrows() {
+        const maxScroll = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+        const currentScroll = this.scrollContainer.scrollLeft;
+
+        this.leftArrow.disabled = currentScroll <= 0;
+        this.rightArrow.disabled = currentScroll >= maxScroll - 1;
+      }
+    }
+
+    customElements.define('scrollable-collections-{{ ai_gen_id }}', ScrollableCollections{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scrollable collections",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by collection"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_transform",
+      "label": "Heading text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width (desktop)",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width (mobile)",
+      "min": 150,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Card spacing",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_shadow",
+      "label": "Enable shadow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical",
+      "label": "Shadow vertical offset",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "label": "Shadow blur",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "range",
+      "id": "hover_lift",
+      "label": "Hover lift",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Scroll settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_scrollbar",
+      "label": "Hide scrollbar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "scroll_amount",
+      "label": "Scroll distance",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Arrow buttons"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow size",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "arrow_offset",
+      "label": "Arrow offset",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Arrow background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_hover_background",
+      "label": "Arrow hover background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Collection title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "count_color",
+      "label": "Product count color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "count_size",
+      "label": "Count size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrollable collections"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,541 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 section featuring a clean, modern, and minimal Contact Us layout.
+    
+    ### Layout Requirements
+    
+    * Maximum content width: 1200px.
+    * Section padding: 60px top and bottom.
+    * Fully responsive across desktop, tablet, and mobile devices.
+    * No footer elements, social media icons, or additional content below the section.
+    * Desktop layout should use a two-column structure:
+    
+      * Contact Form on one side.
+      * Image Block directly opposite the form.
+    * Both columns should be vertically centered.
+    * Recommended desktop ratio: 50/50 or 55/45.
+    * On mobile, stack the image and form vertically with appropriate spacing.
+    
+    ### Image Block
+    
+    Add an image block opposite the contact form.
+    
+    Requirements:
+    
+    * Image selectable through Shopify theme editor using an image_picker setting.
+    * Optional image alt text setting.
+    * Image should fill its container while maintaining aspect ratio.
+    * Rounded corners (optional setting or default 8px).
+    * Responsive behavior with no distortion.
+    * If no image is selected, display a subtle placeholder.
+    
+    ### Section Settings (Schema)
+    
+    Add the following customizable settings:
+    
+    1. Section Title (text)
+    2. Background Color (color picker)
+    3. Contact Image (image_picker)
+    4. Image Alt Text (text)
+    5. Button Label (text, default: "Send")
+    6. Content Alignment (select)
+    
+       * Left
+       * Center (default)
+       * Right
+    
+    ### Alignment Behavior
+    
+    The Content Alignment setting should:
+    
+    * Control text alignment for:
+    
+      * Section title
+      * Form labels
+      * Success/error messages
+      * Submit button
+    * Control horizontal positioning of the form container using flexbox:
+    
+      * Left → justify-content: flex-start
+      * Center → justify-content: center
+      * Right → justify-content: flex-end
+    
+    ### Contact Form
+    
+    Use Shopify native form functionality:
+    
+    {% form 'contact' %}
+    
+    ### Form Fields
+    
+    1. Your Name (required)
+    2. Your Email (required, email type)
+    3. Subject
+    4. Your Message (textarea, minimum height 180px)
+    5. File Upload (single file input)
+    6. Submit Button (uses editable button label)
+    
+    ### Form Functionality
+    
+    * Display Shopify validation errors.
+    * Display success confirmation message after submission.
+    * Use accessible labels for all fields.
+    * Proper form field associations using for/id attributes.
+    * Mobile-friendly and keyboard accessible.
+    
+    ### Styling
+    
+    #### Inputs
+    
+    * Full width
+    * 1px solid #ccc border
+    * 6px border radius
+    * 12px padding
+    * 15px spacing between fields
+    * Clean, minimal appearance
+    
+    #### Textarea
+    
+    * Minimum height: 180px
+    * Resizable vertically
+    
+    #### Button
+    
+    * Background: #000
+    * Text color: #fff
+    * Padding: 10px 24px
+    * Border radius: 6px
+    * Hover background: #333
+    * Alignment follows Content Alignment setting
+    
+    ### Responsive Behavior
+    
+    Desktop:
+    
+    * Two-column layout with image opposite the form.
+    * Equal height columns where possible.
+    
+    Tablet:
+    
+    * Reduced spacing while maintaining two-column layout if space permits.
+    
+    Mobile:
+    
+    * Single-column stacked layout.
+    * Image displayed above the form.
+    * Full-width inputs and button.
+    
+    ### Code Requirements
+    
+    * Use semantic HTML.
+    * Use Shopify Liquid best practices.
+    * Include complete schema.
+    * No external libraries or dependencies.
+    * Optimized, clean, production-ready code.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-contact-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 60px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-contact-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-contact-title-{{ ai_gen_id }} {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 40px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .ai-contact-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .ai-contact-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .ai-contact-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-contact-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-contact-form-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    {% if block.settings.content_alignment == 'left' %}
+      justify-content: flex-start;
+    {% elsif block.settings.content_alignment == 'right' %}
+      justify-content: flex-end;
+    {% else %}
+      justify-content: center;
+    {% endif %}
+  }
+
+  .ai-contact-form-inner-{{ ai_gen_id }} {
+    width: 100%;
+  }
+
+  .ai-contact-form-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ai-contact-field-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-contact-label-{{ ai_gen_id }} {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-input-{{ ai_gen_id }},
+  .ai-contact-textarea-{{ ai_gen_id }},
+  .ai-contact-file-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .ai-contact-textarea-{{ ai_gen_id }} {
+    min-height: 180px;
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .ai-contact-button-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    {% if block.settings.content_alignment == 'left' %}
+      justify-content: flex-start;
+    {% elsif block.settings.content_alignment == 'right' %}
+      justify-content: flex-end;
+    {% else %}
+      justify-content: center;
+    {% endif %}
+  }
+
+  .ai-contact-button-{{ ai_gen_id }} {
+    padding: 10px 24px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-contact-button-{{ ai_gen_id }}:hover {
+    background-color: #333;
+  }
+
+  .ai-contact-success-{{ ai_gen_id }} {
+    padding: 12px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-error-{{ ai_gen_id }} {
+    padding: 12px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-contact-section-{{ ai_gen_id }} {
+      padding: 40px 20px;
+    }
+
+    .ai-contact-title-{{ ai_gen_id }} {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .ai-contact-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .ai-contact-image-wrapper-{{ ai_gen_id }} {
+      min-height: 300px;
+    }
+
+    .ai-contact-image-placeholder-{{ ai_gen_id }} {
+      min-height: 300px;
+    }
+  }
+{% endstyle %}
+
+<contact-section-{{ ai_gen_id }} class="ai-contact-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-contact-container-{{ ai_gen_id }}">
+    {% if block.settings.section_title != blank %}
+      <h2 class="ai-contact-title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+    {% endif %}
+
+          <div class="ai-contact-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.contact_image %}
+          <img
+            src="{{ block.settings.contact_image | image_url: width: 800 }}"
+            alt="{{ block.settings.image_alt_text | escape }}"
+            loading="lazy"
+            width="{{ block.settings.contact_image.width }}"
+            height="{{ block.settings.contact_image.height }}"
+            class="ai-contact-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-contact-image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}<div class="ai-contact-grid-{{ ai_gen_id }}">
+
+      </div>
+
+      <div class="ai-contact-form-wrapper-{{ ai_gen_id }}">
+        <div class="ai-contact-form-inner-{{ ai_gen_id }}">
+          {% form 'contact' %}
+            <div class="ai-contact-form-{{ ai_gen_id }}">
+              {% if form.posted_successfully? %}
+                <div
+                  class="ai-contact-success-{{ ai_gen_id }}"
+                  id="ai-contact-success-{{ ai_gen_id }}"
+                >
+                  Thank you for contacting us. We'll get back to you as soon as possible.
+                </div>
+              {% endif %}
+
+              {% if form.errors %}
+                <div
+                  class="ai-contact-error-{{ ai_gen_id }}"
+                  id="ai-contact-error-{{ ai_gen_id }}"
+                >
+                  Please correct the errors below and try again.
+                </div>
+              {% endif %}
+
+              <div class="ai-contact-field-{{ ai_gen_id }}">
+                <label for="ai-contact-name-{{ ai_gen_id }}" class="ai-contact-label-{{ ai_gen_id }}">
+                  Your Name <span aria-label="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="ai-contact-name-{{ ai_gen_id }}"
+                  name="contact[name]"
+                  class="ai-contact-input-{{ ai_gen_id }}"
+                  value="{{ form.name }}"
+                  required
+                  {% if form.errors contains 'name' %}
+                    aria-invalid="true"
+                    aria-describedby="ai-contact-error-{{ ai_gen_id }}"
+                  {% endif %}
+                >
+              </div>
+
+              <div class="ai-contact-field-{{ ai_gen_id }}">
+                <label for="ai-contact-email-{{ ai_gen_id }}" class="ai-contact-label-{{ ai_gen_id }}">
+                  Your Email <span aria-label="required">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="ai-contact-email-{{ ai_gen_id }}"
+                  name="contact[email]"
+                  class="ai-contact-input-{{ ai_gen_id }}"
+                  value="{{ form.email }}"
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  required
+                  {% if form.errors contains 'email' %}
+                    aria-invalid="true"
+                    aria-describedby="ai-contact-error-{{ ai_gen_id }}"
+                  {% endif %}
+                >
+              </div>
+
+              <div class="ai-contact-field-{{ ai_gen_id }}">
+                <label for="ai-contact-subject-{{ ai_gen_id }}" class="ai-contact-label-{{ ai_gen_id }}">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  id="ai-contact-subject-{{ ai_gen_id }}"
+                  name="contact[subject]"
+                  class="ai-contact-input-{{ ai_gen_id }}"
+                  value="{{ form.subject }}"
+                >
+              </div>
+
+              <div class="ai-contact-field-{{ ai_gen_id }}">
+                <label for="ai-contact-message-{{ ai_gen_id }}" class="ai-contact-label-{{ ai_gen_id }}">
+                  Your Message
+                </label>
+                <textarea
+                  id="ai-contact-message-{{ ai_gen_id }}"
+                  name="contact[body]"
+                  class="ai-contact-textarea-{{ ai_gen_id }}"
+                >{{ form.body }}</textarea>
+              </div>
+
+              <div class="ai-contact-field-{{ ai_gen_id }}">
+                <label for="ai-contact-file-{{ ai_gen_id }}" class="ai-contact-label-{{ ai_gen_id }}">
+                  File Upload
+                </label>
+                <input
+                  type="file"
+                  id="ai-contact-file-{{ ai_gen_id }}"
+                  name="contact[file]"
+                  class="ai-contact-file-{{ ai_gen_id }}"
+                >
+              </div>
+
+              <div class="ai-contact-button-wrapper-{{ ai_gen_id }}">
+                <button type="submit" class="ai-contact-button-{{ ai_gen_id }}">
+                  {{ block.settings.button_label }}
+                </button>
+              </div>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+</contact-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ContactSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const successMessage = this.querySelector('#ai-contact-success-{{ ai_gen_id }}');
+        if (successMessage) {
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+
+    customElements.define('contact-section-{{ ai_gen_id }}', ContactSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Contact us",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "contact_image",
+      "label": "Contact image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt_text",
+      "label": "Image alt text"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact us"
+    }
+  ]
+}
+{% endschema %}

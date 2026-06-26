@@ -1,0 +1,815 @@
+{% doc %}
+  @prompt
+    Layout Structure (Desktop)
+    
+    Create a two-column layout inside a centered container:
+    
+    Left Column:
+    
+    Contact form
+    
+    Fields:
+    
+    Your Name (required)
+    
+    Your Email (required, email type)
+    
+    Your Message (textarea)
+    
+    Checkbox: “Send a copy of this email to you”
+    
+    Submit button
+    
+    Use Shopify’s native:
+    
+    {% form 'contact' %}
+    
+    Right Column:
+    
+    Display contact information:
+    
+    Heading: “Our Postal Address”
+    
+    Address text (editable rich text)
+    
+    Heading: “Our Address”
+    
+    Address text (editable rich text)
+    
+    Email list (editable rich text)
+    
+    Location Map (Google Map iframe or dynamic embed)
+    
+    Mobile Layout
+    
+    Stack columns vertically
+    
+    Contact form first
+    
+    Contact details + map below
+    
+    Proper spacing between sections
+    
+    Section Settings (Schema)
+    Content Settings:
+    
+    Page Title (text)
+    
+    Left Column Title (text)
+    
+    Postal Address (rich text)
+    
+    Office Address (rich text)
+    
+    Email Information (rich text)
+    
+    Google Map Embed Code (textarea – allow iframe paste)
+    
+    Enable Map Toggle (checkbox)
+    
+    Layout Settings:
+    
+    Desktop Column Width (select):
+    
+    50% / 50%
+    
+    60% / 40%
+    
+    40% / 60%
+    
+    Content Alignment (select):
+    
+    Left
+    
+    Center
+    
+    Right
+    
+    Vertical Alignment (Top / Center / Bottom)
+    
+    Spacing Controls (Important)
+    
+    Add adjustable spacing options:
+    
+    Section Spacing:
+    
+    Section Padding Top (0–150px)
+    
+    Section Padding Bottom (0–150px)
+    
+    Section Margin Top (0–150px)
+    
+    Section Margin Bottom (0–150px)
+    
+    Inner Spacing:
+    
+    Column Gap (0–80px)
+    
+    Form Field Spacing (0–30px)
+    
+    Map Margin Top (0–50px)
+    
+    All spacing must apply dynamically via CSS variables or inline styles.
+    
+    Styling Requirements
+    
+    Light grey background option (color picker)
+    
+    White card container
+    
+    Rounded corners (adjustable radius slider 0–30px)
+    
+    Soft shadow toggle
+    
+    Button:
+    
+    Background color picker
+    
+    Text color picker
+    
+    Border radius slider
+    
+    Input fields:
+    
+    Full width
+    
+    Rounded corners
+    
+    Padding control
+    
+    Border color picker
+    
+    Map Behavior
+    
+    If map toggle enabled:
+    
+    Show embedded Google Map
+    
+    Responsive (100% width)
+    
+    Fixed height (adjustable slider 200–500px)
+    
+    If disabled:
+    
+    Hide map completely
+    
+    Functional Requirements
+    
+    Display success message after submission
+    
+    Display validation errors
+    
+    Fully responsive
+    
+    Accessible labels
+    
+    Clean semantic HTML
+    
+    Use Flexbox or CSS Grid
+    
+    No external libraries
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-contact-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_background_color }};
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+  }
+
+  .ai-contact-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-contact-title-{{ ai_gen_id }} {
+    text-align: {{ block.settings.content_alignment }};
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  .ai-contact-columns-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.column_gap }}px;
+    align-items: {{ block.settings.vertical_alignment }};
+  }
+
+  .ai-contact-left-{{ ai_gen_id }} {
+    {% if block.settings.desktop_column_width == '50-50' %}
+      flex: 1 1 50%;
+    {% elsif block.settings.desktop_column_width == '60-40' %}
+      flex: 1 1 60%;
+    {% elsif block.settings.desktop_column_width == '40-60' %}
+      flex: 1 1 40%;
+    {% endif %}
+  }
+
+  .ai-contact-right-{{ ai_gen_id }} {
+    {% if block.settings.desktop_column_width == '50-50' %}
+      flex: 1 1 50%;
+    {% elsif block.settings.desktop_column_width == '60-40' %}
+      flex: 1 1 40%;
+    {% elsif block.settings.desktop_column_width == '40-60' %}
+      flex: 1 1 60%;
+    {% endif %}
+  }
+
+  .ai-contact-form-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    padding: 40px;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    {% if block.settings.enable_card_shadow %}
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    {% endif %}
+  }
+
+  .ai-contact-form-title-{{ ai_gen_id }} {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form-field-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.form_field_spacing }}px;
+  }
+
+  .ai-contact-form-label-{{ ai_gen_id }} {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .ai-contact-form-input-{{ ai_gen_id }},
+  .ai-contact-form-textarea-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.input_padding }}px;
+    border: 1px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .ai-contact-form-input-{{ ai_gen_id }}:focus,
+  .ai-contact-form-textarea-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.button_background_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-contact-form-textarea-{{ ai_gen_id }} {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .ai-contact-form-checkbox-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: {{ block.settings.form_field_spacing }}px;
+  }
+
+  .ai-contact-form-checkbox-{{ ai_gen_id }} {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .ai-contact-form-checkbox-label-{{ ai_gen_id }} {
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .ai-contact-form-button-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 14px 24px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-contact-form-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-contact-form-success-{{ ai_gen_id }} {
+    padding: 16px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: {{ block.settings.input_border_radius }}px;
+    margin-bottom: {{ block.settings.form_field_spacing }}px;
+  }
+
+  .ai-contact-form-error-{{ ai_gen_id }} {
+    padding: 16px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: {{ block.settings.input_border_radius }}px;
+    margin-bottom: {{ block.settings.form_field_spacing }}px;
+  }
+
+  .ai-contact-info-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    padding: 40px;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    {% if block.settings.enable_card_shadow %}
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    {% endif %}
+  }
+
+  .ai-contact-info-section-{{ ai_gen_id }} {
+    margin-bottom: 30px;
+  }
+
+  .ai-contact-info-section-{{ ai_gen_id }}:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-contact-info-heading-{{ ai_gen_id }} {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .ai-contact-info-text-{{ ai_gen_id }} {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .ai-contact-map-wrapper-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.map_margin_top }}px;
+    border-radius: {{ block.settings.input_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-contact-map-{{ ai_gen_id }} {
+    width: 100%;
+    height: {{ block.settings.map_height }}px;
+    border: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-contact-columns-{{ ai_gen_id }} {
+      flex-direction: column;
+    }
+
+    .ai-contact-left-{{ ai_gen_id }},
+    .ai-contact-right-{{ ai_gen_id }} {
+      flex: 1 1 100%;
+    }
+
+    .ai-contact-form-card-{{ ai_gen_id }},
+    .ai-contact-info-card-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-contact-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-contact-container-{{ ai_gen_id }}">
+    {% if block.settings.page_title != blank %}
+      <h1 class="ai-contact-title-{{ ai_gen_id }}">{{ block.settings.page_title }}</h1>
+    {% endif %}
+
+    <div class="ai-contact-columns-{{ ai_gen_id }}">
+      <div class="ai-contact-left-{{ ai_gen_id }}">
+        <div class="ai-contact-form-card-{{ ai_gen_id }}">
+          {% if block.settings.left_column_title != blank %}
+            <h2 class="ai-contact-form-title-{{ ai_gen_id }}">{{ block.settings.left_column_title }}</h2>
+          {% endif %}
+
+          {% form 'contact' %}
+            {% if form.posted_successfully? %}
+              <div class="ai-contact-form-success-{{ ai_gen_id }}">
+                Thank you for contacting us. We'll get back to you as soon as possible.
+              </div>
+            {% endif %}
+
+            {% if form.errors %}
+              <div class="ai-contact-form-error-{{ ai_gen_id }}">
+                <p>Please correct the following errors:</p>
+                <ul>
+                  {% for field in form.errors %}
+                    <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            <div class="ai-contact-form-field-{{ ai_gen_id }}">
+              <label for="contact-name-{{ ai_gen_id }}" class="ai-contact-form-label-{{ ai_gen_id }}">
+                Your Name <span style="color: #d82c0d;">*</span>
+              </label>
+              <input
+                type="text"
+                id="contact-name-{{ ai_gen_id }}"
+                name="contact[name]"
+                class="ai-contact-form-input-{{ ai_gen_id }}"
+                value="{% if form.name %}{{ form.name }}{% endif %}"
+                required
+                aria-required="true"
+              >
+            </div>
+
+            <div class="ai-contact-form-field-{{ ai_gen_id }}">
+              <label for="contact-email-{{ ai_gen_id }}" class="ai-contact-form-label-{{ ai_gen_id }}">
+                Your Email <span style="color: #d82c0d;">*</span>
+              </label>
+              <input
+                type="email"
+                id="contact-email-{{ ai_gen_id }}"
+                name="contact[email]"
+                class="ai-contact-form-input-{{ ai_gen_id }}"
+                value="{% if form.email %}{{ form.email }}{% endif %}"
+                required
+                aria-required="true"
+                autocomplete="email"
+              >
+            </div>
+
+            <div class="ai-contact-form-field-{{ ai_gen_id }}">
+              <label for="contact-message-{{ ai_gen_id }}" class="ai-contact-form-label-{{ ai_gen_id }}">
+                Your Message
+              </label>
+              <textarea
+                id="contact-message-{{ ai_gen_id }}"
+                name="contact[body]"
+                class="ai-contact-form-textarea-{{ ai_gen_id }}"
+              >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            </div>
+
+            <div class="ai-contact-form-checkbox-wrapper-{{ ai_gen_id }}">
+              <input
+                type="checkbox"
+                id="contact-copy-{{ ai_gen_id }}"
+                name="contact[send_copy]"
+                class="ai-contact-form-checkbox-{{ ai_gen_id }}"
+              >
+              <label for="contact-copy-{{ ai_gen_id }}" class="ai-contact-form-checkbox-label-{{ ai_gen_id }}">
+                Send a copy of this email to you
+              </label>
+            </div>
+
+            <button type="submit" class="ai-contact-form-button-{{ ai_gen_id }}">
+              Submit
+            </button>
+          {% endform %}
+        </div>
+      </div>
+
+      <div class="ai-contact-right-{{ ai_gen_id }}">
+        <div class="ai-contact-info-card-{{ ai_gen_id }}">
+          {% if block.settings.postal_address != blank %}
+            <div class="ai-contact-info-section-{{ ai_gen_id }}">
+              <h3 class="ai-contact-info-heading-{{ ai_gen_id }}">Our Postal Address</h3>
+              <div class="ai-contact-info-text-{{ ai_gen_id }}">
+                {{ block.settings.postal_address }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if block.settings.office_address != blank %}
+            <div class="ai-contact-info-section-{{ ai_gen_id }}">
+              <h3 class="ai-contact-info-heading-{{ ai_gen_id }}">Our Address</h3>
+              <div class="ai-contact-info-text-{{ ai_gen_id }}">
+                {{ block.settings.office_address }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if block.settings.email_information != blank %}
+            <div class="ai-contact-info-section-{{ ai_gen_id }}">
+              <div class="ai-contact-info-text-{{ ai_gen_id }}">
+                {{ block.settings.email_information }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if block.settings.enable_map and block.settings.map_embed_code != blank %}
+            <div class="ai-contact-map-wrapper-{{ ai_gen_id }}">
+              {{ block.settings.map_embed_code }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact section",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "left_column_title",
+      "label": "Left column title",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "richtext",
+      "id": "postal_address",
+      "label": "Postal address",
+      "default": "<p>123 Main Street<br>City, State 12345<br>Country</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "office_address",
+      "label": "Office address",
+      "default": "<p>456 Business Avenue<br>Suite 100<br>City, State 12345</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "email_information",
+      "label": "Email information",
+      "default": "<p><strong>Email:</strong> info@example.com<br><strong>Phone:</strong> +1 (555) 123-4567</p>"
+    },
+    {
+      "type": "header",
+      "content": "Map settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_map",
+      "label": "Enable map",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "map_embed_code",
+      "label": "Map embed code",
+      "info": "Paste your Google Maps iframe embed code here"
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "label": "Map height",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "map_margin_top",
+      "label": "Map margin top",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_column_width",
+      "label": "Desktop column width",
+      "options": [
+        {
+          "value": "50-50",
+          "label": "50% / 50%"
+        },
+        {
+          "value": "60-40",
+          "label": "60% / 40%"
+        },
+        {
+          "value": "40-60",
+          "label": "40% / 60%"
+        }
+      ],
+      "default": "50-50"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Inner spacing"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "form_field_spacing",
+      "label": "Form field spacing",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_shadow",
+      "label": "Enable card shadow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "label": "Input border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "input_padding",
+      "label": "Input padding",
+      "min": 8,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact section"
+    }
+  ]
+}
+{% endschema %}

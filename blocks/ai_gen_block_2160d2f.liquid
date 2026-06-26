@@ -1,0 +1,857 @@
+{% doc %}
+  @prompt
+    Create a luxury vintage collection grid section for a Shopify store inspired by premium editorial fashion and antique collectible boutiques.
+    
+    SECTION STYLE:
+    - Elegant luxury aesthetic
+    - Editorial vintage marketplace design
+    - High-end boutique feel
+    - Dark cinematic photography
+    - Minimal and sophisticated UI
+    - Premium storytelling atmosphere
+    
+    LAYOUT:
+    - 2-row responsive category grid
+    - 4 columns on desktop
+    - 2 columns on tablet
+    - 1 column on mobile
+    - Equal-height image cards
+    - Small spacing/gutters between cards
+    - Full-width section
+    
+    CARD DESIGN:
+    Each card should contain:
+    - Full-cover background image
+    - Dark gradient overlay for readability
+    - Large centered category title
+    - CTA button below title
+    - Smooth hover zoom effect
+    - Elegant fade transition
+    
+    CATEGORIES:
+    1. Vintage Designer Jewellery
+    2. Vintage Jewellery
+    3. Vintage Watches
+    4. Sunglasses
+    5. Vintage Clothing
+    6. Vintage Bags
+    7. Home Décor Curios
+    8. Vintage Textiles
+    
+    TYPOGRAPHY:
+    - White uppercase text
+    - Bold modern luxury sans-serif
+    - Large heading size
+    - Tight spacing
+    - Clean editorial look
+    - CTA text slightly smaller
+    
+    BUTTON STYLE:
+    - Text: “VIEW PRODUCT →”
+    - Minimal transparent button
+    - White typography
+    - Thin arrow icon
+    - Smooth hover animation
+    - Slight underline or fade effect on hover
+    
+    IMAGE STYLE:
+    - Rich warm vintage tones
+    - Luxury antique atmosphere
+    - High contrast photography
+    - Editorial boutique aesthetic
+    - Cinematic shadows
+    - Slight dark overlay
+    
+    HOVER EFFECTS:
+    - Background image zooms slightly
+    - Overlay darkens smoothly
+    - Text moves slightly upward
+    - Button arrow animates subtly
+    
+    SPACING:
+    - Large centered content
+    - Balanced padding inside cards
+    - Generous whitespace
+    - Premium luxury composition
+    
+    MOBILE OPTIMIZATION:
+    - Stack cards vertically
+    - Maintain centered typography
+    - Keep text readable
+    - Reduce heading size slightly
+    - Preserve hover feel with tap animations
+    
+    SHOPIFY REQUIREMENTS:
+    - Build as customizable Shopify section
+    - Editable category titles
+    - Editable links
+    - Editable background images
+    - Adjustable overlay opacity
+    - Responsive controls
+    - Optimized for Dawn theme
+    
+    ADVANCED FEATURES:
+    - Optional entrance fade-up animation on scroll
+    - Lazy-loaded images
+    - Smooth transitions
+    - High performance
+    
+    OVERALL GOAL:
+    The section should feel like a curated luxury vintage marketplace featuring rare fashion, antiques, jewellery, textiles, and collectible pieces — similar to a premium editorial ecommerce brand with cinematic storytelling visuals.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-vintage-grid-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ai-vintage-grid__container-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    width: 100%;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: {{ block.settings.card_aspect_ratio }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-vintage-grid__card-link-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 2;
+  }
+
+  .ai-vintage-grid__image-wrapper-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .ai-vintage-grid__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform {{ block.settings.hover_transition_duration }}s ease;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }}:hover .ai-vintage-grid__image-{{ ai_gen_id }} {
+    transform: scale({{ block.settings.hover_zoom_scale }});
+  }
+
+  .ai-vintage-grid__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity_top }}),
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity_bottom }})
+    );
+    transition: background {{ block.settings.hover_transition_duration }}s ease;
+    z-index: 1;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }}:hover .ai-vintage-grid__overlay-{{ ai_gen_id }} {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity_top | plus: 0.1 }}),
+      rgba(0, 0, 0, {{ block.settings.overlay_opacity_bottom | plus: 0.1 }})
+    );
+  }
+
+  .ai-vintage-grid__content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: {{ block.settings.content_padding }}px;
+    transition: transform {{ block.settings.hover_transition_duration }}s ease;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }}:hover .ai-vintage-grid__content-{{ ai_gen_id }} {
+    transform: translateY(-{{ block.settings.hover_lift_distance }}px);
+  }
+
+  .ai-vintage-grid__title-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    text-transform: uppercase;
+    letter-spacing: {{ block.settings.title_letter_spacing }}em;
+    line-height: 1.2;
+    margin: 0 0 {{ block.settings.title_margin_bottom }}px 0;
+  }
+
+  .ai-vintage-grid__button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: {{ block.settings.button_text_color }};
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: {{ block.settings.button_font_weight }};
+    text-transform: uppercase;
+    letter-spacing: {{ block.settings.button_letter_spacing }}em;
+    background: transparent;
+    border: none;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    border-bottom: {{ block.settings.button_underline_width }}px solid transparent;
+    transition: border-color {{ block.settings.hover_transition_duration }}s ease, opacity {{ block.settings.hover_transition_duration }}s ease;
+    pointer-events: none;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }}:hover .ai-vintage-grid__button-{{ ai_gen_id }} {
+    border-bottom-color: {{ block.settings.button_text_color }};
+    opacity: {{ block.settings.button_hover_opacity }};
+  }
+
+  .ai-vintage-grid__arrow-{{ ai_gen_id }} {
+    display: inline-block;
+    transition: transform {{ block.settings.hover_transition_duration }}s ease;
+  }
+
+  .ai-vintage-grid__card-{{ ai_gen_id }}:hover .ai-vintage-grid__arrow-{{ ai_gen_id }} {
+    transform: translateX({{ block.settings.arrow_hover_distance }}px);
+  }
+
+  .ai-vintage-grid__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-vintage-grid__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-vintage-grid__container-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ai-vintage-grid__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_font_size }}px * 0.85);
+    }
+
+    .ai-vintage-grid__button-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.button_font_size }}px * 0.9);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-vintage-grid__container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-vintage-grid__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_font_size }}px * 0.75);
+    }
+
+    .ai-vintage-grid__button-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.button_font_size }}px * 0.85);
+    }
+
+    .ai-vintage-grid__card-{{ ai_gen_id }} {
+      aspect-ratio: {{ block.settings.mobile_aspect_ratio }};
+    }
+  }
+
+  {% if block.settings.enable_scroll_animation %}
+    @keyframes ai-vintage-fade-up-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ai-vintage-grid__card-{{ ai_gen_id }} {
+      opacity: 0;
+      animation: ai-vintage-fade-up-{{ ai_gen_id }} 0.8s ease forwards;
+    }
+
+    {% for i in (1..8) %}
+      .ai-vintage-grid__card-{{ ai_gen_id }}:nth-child({{ i }}) {
+        animation-delay: {{ i | times: 0.1 }}s;
+      }
+    {% endfor %}
+  {% endif %}
+{% endstyle %}
+
+<vintage-collection-grid-{{ ai_gen_id }} class="ai-vintage-grid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-vintage-grid__container-{{ ai_gen_id }}">
+    {% for i in (1..8) %}
+      {% liquid
+        assign category_title_key = 'category_' | append: i | append: '_title'
+        assign category_link_key = 'category_' | append: i | append: '_link'
+        assign category_image_key = 'category_' | append: i | append: '_image'
+        
+        assign category_title = block.settings[category_title_key]
+        assign category_link = block.settings[category_link_key]
+        assign category_image = block.settings[category_image_key]
+      %}
+
+      <div class="ai-vintage-grid__card-{{ ai_gen_id }}">
+        <div class="ai-vintage-grid__image-wrapper-{{ ai_gen_id }}">
+          {% if category_image %}
+            <img
+              src="{{ category_image | image_url: width: 800 }}"
+              alt="{{ category_title | escape }}"
+              class="ai-vintage-grid__image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="800"
+              height="800"
+            >
+          {% else %}
+            <div class="ai-vintage-grid__placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-vintage-grid__overlay-{{ ai_gen_id }}"></div>
+
+        {% if category_link != blank %}
+          <a href="{{ category_link }}" class="ai-vintage-grid__card-link-{{ ai_gen_id }}" aria-label="{{ category_title }}">
+            <div class="ai-vintage-grid__content-{{ ai_gen_id }}">
+              {% if category_title != blank %}
+                <h3 class="ai-vintage-grid__title-{{ ai_gen_id }}">{{ category_title }}</h3>
+              {% endif %}
+              <div class="ai-vintage-grid__button-{{ ai_gen_id }}">
+                {{ block.settings.button_text }}
+                <span class="ai-vintage-grid__arrow-{{ ai_gen_id }}">→</span>
+              </div>
+            </div>
+          </a>
+        {% else %}
+          <div class="ai-vintage-grid__content-{{ ai_gen_id }}">
+            {% if category_title != blank %}
+              <h3 class="ai-vintage-grid__title-{{ ai_gen_id }}">{{ category_title }}</h3>
+            {% endif %}
+            <div class="ai-vintage-grid__button-{{ ai_gen_id }}">
+              {{ block.settings.button_text }}
+              <span class="ai-vintage-grid__arrow-{{ ai_gen_id }}">→</span>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</vintage-collection-grid-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VintageCollectionGrid{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        {% if block.settings.enable_scroll_animation %}
+          this.setupIntersectionObserver();
+        {% endif %}
+      }
+
+      setupIntersectionObserver() {
+        const cards = this.querySelectorAll('.ai-vintage-grid__card-{{ ai_gen_id }}');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = 'running';
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        cards.forEach(card => {
+          card.style.animationPlayState = 'paused';
+          observer.observe(card);
+        });
+      }
+    }
+
+    customElements.define('vintage-collection-grid-{{ ai_gen_id }}', VintageCollectionGrid{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Vintage collection grid",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid spacing",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "label": "Card aspect ratio (desktop)",
+      "options": [
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "5/4", "label": "Landscape (5:4)" },
+        { "value": "16/9", "label": "Landscape (16:9)" }
+      ],
+      "default": "4/5"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Card aspect ratio (mobile)",
+      "options": [
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "5/4", "label": "Landscape (5:4)" },
+        { "value": "16/9", "label": "Landscape (16:9)" }
+      ],
+      "default": "3/4"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Title letter spacing",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title bottom spacing",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "VIEW PRODUCT →"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Button letter spacing",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Button vertical padding",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Button horizontal padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_underline_width",
+      "label": "Button underline width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_hover_opacity",
+      "label": "Button hover opacity",
+      "min": 0.5,
+      "max": 1,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_top",
+      "label": "Overlay opacity (top)",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.3
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_bottom",
+      "label": "Overlay opacity (bottom)",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.6
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Hover effects"
+    },
+    {
+      "type": "range",
+      "id": "hover_zoom_scale",
+      "label": "Image zoom scale",
+      "min": 1,
+      "max": 1.5,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "range",
+      "id": "hover_lift_distance",
+      "label": "Content lift distance",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "arrow_hover_distance",
+      "label": "Arrow movement",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "hover_transition_duration",
+      "label": "Transition duration",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.4
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_animation",
+      "label": "Enable scroll animation",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Category 1"
+    },
+    {
+      "type": "text",
+      "id": "category_1_title",
+      "label": "Title",
+      "default": "Vintage Designer Jewellery"
+    },
+    {
+      "type": "url",
+      "id": "category_1_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 2"
+    },
+    {
+      "type": "text",
+      "id": "category_2_title",
+      "label": "Title",
+      "default": "Vintage Jewellery"
+    },
+    {
+      "type": "url",
+      "id": "category_2_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 3"
+    },
+    {
+      "type": "text",
+      "id": "category_3_title",
+      "label": "Title",
+      "default": "Vintage Watches"
+    },
+    {
+      "type": "url",
+      "id": "category_3_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 4"
+    },
+    {
+      "type": "text",
+      "id": "category_4_title",
+      "label": "Title",
+      "default": "Sunglasses"
+    },
+    {
+      "type": "url",
+      "id": "category_4_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 5"
+    },
+    {
+      "type": "text",
+      "id": "category_5_title",
+      "label": "Title",
+      "default": "Vintage Clothing"
+    },
+    {
+      "type": "url",
+      "id": "category_5_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 6"
+    },
+    {
+      "type": "text",
+      "id": "category_6_title",
+      "label": "Title",
+      "default": "Vintage Bags"
+    },
+    {
+      "type": "url",
+      "id": "category_6_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 7"
+    },
+    {
+      "type": "text",
+      "id": "category_7_title",
+      "label": "Title",
+      "default": "Home Décor Curios"
+    },
+    {
+      "type": "url",
+      "id": "category_7_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_7_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 8"
+    },
+    {
+      "type": "text",
+      "id": "category_8_title",
+      "label": "Title",
+      "default": "Vintage Textiles"
+    },
+    {
+      "type": "url",
+      "id": "category_8_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_8_image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vintage collection grid"
+    }
+  ]
+}
+{% endschema %}

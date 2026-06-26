@@ -1,0 +1,815 @@
+{% doc %}
+  @prompt
+    Section Header
+    
+    Title: “BEST SELLER”
+    Left-aligned
+    Bold, uppercase
+    Subtle divider line below
+    
+    Right side:
+    
+    “VIEW ALL” button
+    Links automatically to selected collection page
+    Blue accent color
+    Clean, minimal button style
+    
+    ⭐ Add Decorative Center Image Between Title & Button
+    
+    Add a decorative highlight image positioned in the center between the title and the “VIEW ALL” button.
+    
+    Requirements:
+    
+    • Image must sit between title (left) and button (right)
+    • Layout must use flex
+    • Image container must expand to fill remaining space
+    • The image should repeat horizontally to create a continuous line effect
+    • Use background-repeat: repeat-x
+    • Image vertically centered
+    • Height around 6–10px
+    • Should scale nicely on all screen sizes
+    
+    Add setting options:
+    
+    ✔ Upload decorative image (image picker)
+    ✔ Control image height (range slider)
+    ✔ Toggle decorative image on/off
+    
+    On mobile:
+    
+    • Header stacks vertically
+    • Decorative image moves below title
+    • Button stays aligned properly
+    • Maintain clean spacing
+    
+    Header Layout
+    
+    display: flex
+    justify-content: space-between
+    align-items: center
+    gap between elements
+    
+    Structure:
+    
+    [ Title ] [ Decorative Image – flexible width ] [ View All Button ]
+    
+    Collection Integration (Dynamic)
+    
+    Add a Collection Picker option
+    
+    Products must dynamically load from selected collection
+    
+    No manual product selection
+    
+    Add setting to control number of products displayed
+    
+    Reusable for:
+    
+    BEST SELLER
+    NEW ARRIVAL
+    TRENDING
+    Any other collection-based section
+    
+    Layout
+    Desktop
+    
+    Horizontal carousel/grid
+    5 product cards per row
+    Left and right arrow navigation
+    
+    Tablet
+    
+    2–3 cards per row
+    
+    Mobile
+    
+    Swipeable layout
+    1–2 cards per row
+    
+    Product Card Design
+    
+    White card
+    Soft shadow
+    Rounded corners
+    Entire card clickable
+    Hover effect: slight lift or shadow increase
+    Consistent spacing and alignment
+    
+    Book Cover Image
+    
+    Centered inside card
+    Proper aspect ratio
+    
+    Image container must have:
+    
+    position: relative
+    
+    Badge / Tag (Top Corner)
+    
+    Rectangle shape (NOT circular)
+    Positioned at top-left of image
+    Inside image container
+    
+    position: absolute
+    top: 12px
+    left: 12px
+    
+    Bold uppercase text
+    Red background
+    White text
+    Padding: 6px 10px
+    Small border-radius (4–6px)
+    High z-index
+    
+    Add setting options:
+    
+    ✔ Toggle badge on/off
+    ✔ Custom badge text field
+    
+    Product Title (Optional)
+    
+    Below image
+    
+    Blue link-style text
+    Clean bookstore-style typography
+    
+    Add toggle setting:
+    ✔ Show / Hide Product Title
+    
+    If disabled, title must not render in HTML
+    
+    Pricing (Optional)
+    
+    Below title
+    
+    Bold dark text
+    Currency formatted
+    
+    Add toggle setting:
+    ✔ Show / Hide Price
+    
+    If disabled, price must not render in HTML
+    
+    Styling
+    
+    Clean, minimal bookstore UI
+    White background
+    Subtle gray separators
+    Blue accent color for links and buttons
+    Red highlight for badge
+    Accessible font sizes and contrast
+    
+    Customization Settings Summary
+    
+    Include:
+    
+    • Section title (editable text)
+    • Collection picker
+    • Product limit control
+    • Desktop column option (up to 5 columns)
+    • Toggle: Show badge
+    • Badge text field
+    • Toggle: Show product title
+    • Toggle: Show product price
+    • “View All” button label
+    • Decorative image upload
+    • Decorative image height control
+    • Decorative image toggle
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-collection-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .ai-collection-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .ai-collection-divider-{{ ai_gen_id }} {
+    border-bottom: {{ block.settings.divider_height }}px solid {{ block.settings.divider_color }};
+    width: 100%;
+    margin-top: 10px;
+  }
+
+.ai-collection-decorative-{{ ai_gen_id }} {
+  flex: 1 1 auto;
+  height: {{ block.settings.decorative_height }}px;
+  margin: 0 20px;
+
+  background-image: url('{{ block.settings.decorative_image | image_url }}');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
+
+  .ai-collection-view-all-{{ ai_gen_id }} {
+ 
+  flex-shrink: 0;
+  padding: 10px 20px;
+  background-color: #E95144;
+  color: #ffffff !important;
+  border: 2px solid #E95144;
+  border-radius: 4px;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* STRONG HOVER OVERRIDE */
+.ai-collection-view-all-{{ ai_gen_id }}:hover,
+.ai-collection-view-all-{{ ai_gen_id }}:focus {
+  background-color: #ffffff !important;
+  color: #E95144 !important;
+  border-color: # !important;
+}
+
+
+  .ai-collection-view-all-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_color }};
+    color: #ffffff;
+  }
+
+  .ai-collection-carousel-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-collection-products-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.desktop_columns }}, 1fr);
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  .ai-collection-products-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }} {
+    background-color: #ffffff;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .ai-collection-card-link-{{ ai_gen_id }} {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .ai-collection-image-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-top: 140%;
+    overflow: hidden;
+  }
+
+  .ai-collection-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-collection-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: {{ block.settings.badge_bg_color }};
+    color: {{ block.settings.badge_text_color }};
+    padding: 6px 10px;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 2;
+    display: {% if block.settings.show_badge %}block{% else %}none{% endif %};
+  }
+
+  .ai-collection-card-content-{{ ai_gen_id }} {
+    padding: 16px;
+  }
+
+  .ai-collection-product-title-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 400;
+    color: {{ block.settings.title_link_color }};
+    margin: 0 0 8px 0;
+    display: {% if block.settings.show_title %}block{% else %}none{% endif %};
+  }
+
+  .ai-collection-product-price-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 700;
+    color: {{ block.settings.price_color }};
+    margin: 0;
+    display: {% if block.settings.show_price %}block{% else %}none{% endif %};
+  }
+
+  .ai-collection-nav-button-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+
+  .ai-collection-nav-button-{{ ai_gen_id }}:hover {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-nav-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .ai-collection-nav-prev-{{ ai_gen_id }} {
+    left: -20px;
+  }
+
+  .ai-collection-nav-next-{{ ai_gen_id }} {
+    right: -20px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-collection-products-{{ ai_gen_id }} {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-header-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .ai-collection-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.8 }}px;
+    }
+
+    .ai-collection-decorative-{{ ai_gen_id }} {
+      order: 2;
+      width: 100%;
+    }
+
+    .ai-collection-view-all-{{ ai_gen_id }} {
+      order: 3;
+      align-self: flex-start;
+    }
+
+    .ai-collection-products-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.mobile_columns }}, 1fr);
+      gap: 10px;
+    }
+
+    .ai-collection-nav-button-{{ ai_gen_id }} {
+      display: none;
+    }
+   
+
+  .ai-collection-badge-{{ ai_gen_id }} {
+    top: 0px;
+    left: 0px;
+    font-size: 6px;
+    padding: 1px 2px;
+  }
+
+}
+  
+{% endstyle %}
+
+<collection-carousel-{{ ai_gen_id }} class="ai-collection-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-header-{{ ai_gen_id }}">
+    <h2 class="ai-collection-title-{{ ai_gen_id }}">
+      {{ block.settings.section_title }}
+      <div class="ai-collection-divider-{{ ai_gen_id }}"></div>
+    </h2>
+    
+    {% if block.settings.show_decorative and block.settings.decorative_image != blank %}
+  <div 
+    class="ai-collection-decorative-{{ ai_gen_id }}"
+    style="background-image: url('{{ block.settings.decorative_image | image_url }}');">
+  </div>
+{% endif %}
+
+    
+    {% if block.settings.collection %}
+      <a href="{{ block.settings.collection.url }}" class="ai-collection-view-all-{{ ai_gen_id }}">
+        {{ block.settings.view_all_text }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="ai-collection-carousel-{{ ai_gen_id }}">
+    <button class="ai-collection-nav-button-{{ ai_gen_id }} ai-collection-nav-prev-{{ ai_gen_id }}" aria-label="Previous products">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="ai-collection-products-{{ ai_gen_id }}">
+      {% if block.settings.collection %}
+        {% for product in block.settings.collection.products limit: block.settings.product_limit %}
+          <div class="ai-collection-card-{{ ai_gen_id }}">
+            <a href="{{ product.url }}" class="ai-collection-card-link-{{ ai_gen_id }}">
+              <div class="ai-collection-image-container-{{ ai_gen_id }}">
+                {% if block.settings.show_badge and block.settings.badge_text != blank %}
+                  <div class="ai-collection-badge-{{ ai_gen_id }}">{{ block.settings.badge_text }}</div>
+                {% endif %}
+                
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-collection-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="600"
+                    height="840"
+                  >
+                {% else %}
+                  <div class="ai-collection-image-placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+              
+              <div class="ai-collection-card-content-{{ ai_gen_id }}">
+                {% if block.settings.show_title %}
+                  <h3 class="ai-collection-product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                {% endif %}
+                
+                {% if block.settings.show_price %}
+                  <div class="ai-collection-product-price-{{ ai_gen_id }}">
+                    {{ product.price | money }}
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..block.settings.product_limit) %}
+          <div class="ai-collection-card-{{ ai_gen_id }}">
+            <div class="ai-collection-image-container-{{ ai_gen_id }}">
+              <div class="ai-collection-image-placeholder-{{ ai_gen_id }}">
+                {{ 'product-1' | placeholder_svg_tag }}
+              </div>
+            </div>
+            <div class="ai-collection-card-content-{{ ai_gen_id }}">
+              {% if block.settings.show_title %}
+                <h3 class="ai-collection-product-title-{{ ai_gen_id }}">Product title</h3>
+              {% endif %}
+              {% if block.settings.show_price %}
+                <div class="ai-collection-product-price-{{ ai_gen_id }}">₹0.00</div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <button class="ai-collection-nav-button-{{ ai_gen_id }} ai-collection-nav-next-{{ ai_gen_id }}" aria-label="Next products">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</collection-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.productsContainer = this.querySelector('.ai-collection-products-{{ ai_gen_id }}');
+        this.prevButton = this.querySelector('.ai-collection-nav-prev-{{ ai_gen_id }}');
+        this.nextButton = this.querySelector('.ai-collection-nav-next-{{ ai_gen_id }}');
+        
+        if (this.prevButton && this.nextButton) {
+          this.setupNavigation();
+        }
+      }
+
+      setupNavigation() {
+        this.prevButton.addEventListener('click', () => {
+          this.scroll('left');
+        });
+
+        this.nextButton.addEventListener('click', () => {
+          this.scroll('right');
+        });
+
+        this.productsContainer.addEventListener('scroll', () => {
+          this.updateButtonStates();
+        });
+
+        this.updateButtonStates();
+      }
+
+      scroll(direction) {
+        const scrollAmount = this.productsContainer.offsetWidth;
+        const currentScroll = this.productsContainer.scrollLeft;
+        
+        if (direction === 'left') {
+          this.productsContainer.scrollTo({
+            left: currentScroll - scrollAmount,
+            behavior: 'smooth'
+          });
+        } else {
+          this.productsContainer.scrollTo({
+            left: currentScroll + scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      updateButtonStates() {
+        const maxScroll = this.productsContainer.scrollWidth - this.productsContainer.offsetWidth;
+        const currentScroll = this.productsContainer.scrollLeft;
+
+        this.prevButton.disabled = currentScroll <= 0;
+        this.nextButton.disabled = currentScroll >= maxScroll - 1;
+      }
+    }
+
+    customElements.define('collection-carousel-{{ ai_gen_id }}', CollectionCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "BEST SELLER"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "divider_height",
+      "label": "Divider height",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Decorative image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorative",
+      "label": "Show decorative image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "decorative_image",
+      "label": "Decorative image"
+    },
+   {
+  "type": "range",
+  "id": "decorative_height",
+  "label": "Image height",
+  "min": 4,
+  "max": 80,
+  "step": 2,
+  "unit": "px",
+  "default": 20
+}
+,
+    {
+      "type": "header",
+      "content": "View all button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Button text",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#0066cc"
+    },
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Products to show",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "NEW"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge background",
+      "default": "#ff0000"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Badge border radius",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Product information"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show product title",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "title_link_color",
+      "label": "Title color",
+      "default": "#0066cc"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show product price",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection showcase"
+    }
+  ]
+}
+{% endschema %}

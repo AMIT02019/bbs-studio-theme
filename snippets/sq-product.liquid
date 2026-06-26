@@ -1,0 +1,62 @@
+<div class="sparq-card" :product-handle="item.handle" :product-id="item.id">
+    <div
+            class="discount-label"
+            v-if="item.compare_at_price && item.price && item.compare_at_price > item.price && item.in_stock >=1"
+    >
+        {% raw %} {{ (((item.compare_at_price - item.price)/item.compare_at_price)*100).toFixed(0) }} {% endraw %}% OFF
+    </div>
+    <div class="sparq-thumbnail-wrap">
+        <a
+                :href="'/products/' + item.handle"
+                class="sparq-loop-product"
+                :class="item.images.length >1 && item.images[1].src ? 'sq-class':''"
+        >
+            <sq-sy-image :size="300" :item="item" :show-secondary-image="true"></sq-sy-image>
+        </a>
+        <div class="sq-add-to-cart grid-view">
+            <sq-sy-atc :item="item">
+                add to cart
+                <template #loading>
+                    <div class="">Adding ...</div>
+                </template>
+
+                <template #error>
+                    <div class="">ERROR</div>
+                </template>
+
+                <template #success>
+                    <div class="">Added SucessFully</div>
+                </template>
+            </sq-sy-atc>
+        </div>
+    </div>
+    <div class="sparq-bottom">
+        <div class="sparq-bottom-items">
+            <div class="sparq-vendor"> {% raw %} {{ item.vendor }} {% endraw %} </div>
+            <div class="sparq-product-title">
+                <a :href="'/products/' + item.handle" class="sparq-title">
+                    {% raw %} {{ item.title }} {% endraw %}
+                </a>
+            </div>
+            <div class="sq-product-price">
+                <sq-sy-price :item="item" :decimal-count="2"></sq-sy-price>
+            </div>
+        </div>
+        <div class="sparq-bottom-step list-view">
+            <sq-sy-atc :item="item">
+                add to cart
+                <template #loading>
+                    <div class="">Adding ...</div>
+                </template>
+
+                <template #error>
+                    <div class="">ERROR</div>
+                </template>
+
+                <template #success>
+                    <div class="">Added SucessFully</div>
+                </template>
+            </sq-sy-atc>
+        </div>
+    </div>
+</div>

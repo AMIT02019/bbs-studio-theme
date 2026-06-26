@@ -1,0 +1,419 @@
+{% doc %}
+  @prompt
+    Create a **Shopify Online Store 2.0 custom section** called **Author Collection Grid** using **Liquid, HTML, CSS, and schema**.
+    
+    Main Requirement:
+    The section should allow the merchant to **select multiple collections at once** using a **collection_list setting** in the schema.
+    
+    Layout:
+    
+    * Display collections as **author cards in a responsive grid**
+    * **4 cards per row on desktop**
+    * **2 cards per row on tablet**
+    * **1 card per row on mobile**
+    
+    Data Source:
+    
+    * Use the **selected collections from the collection_list setting**
+    * Loop through the selected collections using Liquid.
+    
+    Each Card Must Include:
+    
+    * Collection Image (as Author Image)
+    * Collection Title (as Author Name)
+    * Collection Description (truncate to 3 lines)
+    * CTA Button **“View All Books”** linking to the collection page
+    
+    Design Requirements:
+    
+    * Card layout with **rounded corners**
+    * **Subtle shadow**
+    * Image on top
+    * Centered content
+    * Equal height cards
+    * Description limited to **3 lines with ellipsis**
+    
+    Section Settings:
+    
+    * Section Heading (text)
+    * Collection List (multiple collections selectable)
+    * Button Text (default: "View All Books")
+    
+    Technical Requirements:
+    
+    * Use **Liquid loop over the collection_list**
+    * Use **responsive CSS grid**
+    * Compatible with **Shopify Online Store 2.0**
+    * Clean and optimized code
+    
+    Output should include:
+    
+    * Full **Liquid section markup**
+    * **Responsive CSS**
+    * **Schema JSON with collection_list setting**
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-author-collection-grid-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-author-collection-grid__heading-{{ ai_gen_id }} {
+    text-align: center;
+    margin: 0 0 40px;
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: {{ settings.type_heading_text_transform }};
+  }
+
+  .ai-author-collection-grid__container-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-author-collection-card-{{ ai_gen_id }} {
+    background: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-author-collection-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-author-collection-card__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-author-collection-card__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-author-collection-card__image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-author-collection-card__image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-author-collection-card__content-{{ ai_gen_id }} {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-author-collection-card__title-{{ ai_gen_id }} {
+    margin: 0 0 12px;
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    line-height: 1.3;
+  }
+
+  .ai-author-collection-card__description-{{ ai_gen_id }} {
+    margin: 0 0 20px;
+    font-size: {{ block.settings.description_font_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  .ai-author-collection-card__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  .ai-author-collection-card__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+  }
+
+  .ai-author-collection-grid__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-author-collection-grid__container-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .ai-author-collection-grid__heading-{{ ai_gen_id }} {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-author-collection-grid__container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .ai-author-collection-grid__heading-{{ ai_gen_id }} {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .ai-author-collection-grid-{{ ai_gen_id }} {
+      padding: 30px 15px;
+    }
+  }
+{% endstyle %}
+
+<author-collection-grid-{{ ai_gen_id }} class="ai-author-collection-grid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.section_heading != blank %}
+    <h2 class="ai-author-collection-grid__heading-{{ ai_gen_id }}">
+      {{ block.settings.section_heading }}
+    </h2>
+  {% endif %}
+
+  {% if block.settings.selected_collections != blank and block.settings.selected_collections.size > 0 %}
+    <div class="ai-author-collection-grid__container-{{ ai_gen_id }}">
+      {% for collection in block.settings.selected_collections %}
+        <div class="ai-author-collection-card-{{ ai_gen_id }}">
+          <div class="ai-author-collection-card__image-wrapper-{{ ai_gen_id }}">
+            {% if collection.featured_image %}
+              <img
+                src="{{ collection.featured_image | image_url: width: 600 }}"
+                alt="{{ collection.featured_image.alt | escape }}"
+                class="ai-author-collection-card__image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="600"
+                height="600"
+              >
+            {% else %}
+              <div class="ai-author-collection-card__image-placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="ai-author-collection-card__content-{{ ai_gen_id }}">
+            <h3 class="ai-author-collection-card__title-{{ ai_gen_id }}">
+              {{ collection.title }}
+            </h3>
+
+            {% if collection.description != blank %}
+              <div class="ai-author-collection-card__description-{{ ai_gen_id }}">
+                {{ collection.description | strip_html }}
+              </div>
+            {% endif %}
+
+            <a
+              href="{{ collection.url }}"
+              class="ai-author-collection-card__button-{{ ai_gen_id }}"
+            >
+              {{ block.settings.button_text }}
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="ai-author-collection-grid__empty-state-{{ ai_gen_id }}">
+      Next, select collections to display as author cards
+    </div>
+  {% endif %}
+</author-collection-grid-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AuthorCollectionGrid{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('author-collection-grid-{{ ai_gen_id }}', AuthorCollectionGrid{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Author collection grid",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Featured Authors"
+    },
+    {
+      "type": "collection_list",
+      "id": "selected_collections",
+      "label": "Collections",
+      "limit": 12
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View All Books"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Author collection grid"
+    }
+  ]
+}
+{% endschema %}

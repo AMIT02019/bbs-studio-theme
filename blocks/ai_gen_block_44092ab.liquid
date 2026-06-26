@@ -1,0 +1,489 @@
+{% doc %}
+  @prompt
+    create a collection list i want to call all the authores in one row i want four crds in this card first i wnt image and then name about author and them view all books button, no i have one specific collection i want to call the collection so all the collection wil automeacaly come i don't want to manualy  select the collection each time.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-author-list-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-author-list__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-author-list__heading-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-author-list__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: {{ block.settings.card_spacing }}px;
+  }
+
+  .ai-author-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_bg_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: {{ block.settings.card_padding }}px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid {{ block.settings.card_border_color }};
+  }
+
+  .ai-author-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-author-card__image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    margin-bottom: {{ block.settings.image_spacing }}px;
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-author-card__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-author-card__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-author-card__image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-author-card__name-{{ ai_gen_id }} {
+    font-size: {{ block.settings.name_size }}px;
+    font-weight: {{ block.settings.name_weight }};
+    color: {{ block.settings.name_color }};
+    margin: 0 0 {{ block.settings.name_spacing }}px;
+  }
+
+  .ai-author-card__about-{{ ai_gen_id }} {
+    font-size: {{ block.settings.about_size }}px;
+    color: {{ block.settings.about_color }};
+    margin: 0 0 {{ block.settings.about_spacing }}px;
+    line-height: 1.5;
+  }
+
+  .ai-author-card__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_size }}px;
+    font-weight: {{ block.settings.button_weight }};
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .ai-author-card__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_bg_hover_color }};
+    color: {{ block.settings.button_text_hover_color }};
+  }
+
+  .ai-author-list__empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666666;
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-author-list__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-author-list__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstyle %}
+
+<author-list-{{ ai_gen_id }} class="ai-author-list-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-author-list__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-author-list__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    {% if block.settings.author_collections != blank %}
+      <div class="ai-author-list__grid-{{ ai_gen_id }}">
+        {% for collection in block.settings.author_collections limit: block.settings.collections_limit %}
+          <div class="ai-author-card-{{ ai_gen_id }}">
+            <div class="ai-author-card__image-wrapper-{{ ai_gen_id }}">
+              {% if collection.image %}
+                <img
+                  src="{{ collection.image | image_url: width: 400 }}"
+                  alt="{{ collection.title | escape }}"
+                  class="ai-author-card__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {% else %}
+                <div class="ai-author-card__image-placeholder-{{ ai_gen_id }}">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+
+            <h3 class="ai-author-card__name-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            
+            {% if collection.description != blank %}
+              <div class="ai-author-card__about-{{ ai_gen_id }}">
+                {{ collection.description | strip_html | truncate: 100 }}
+              </div>
+            {% else %}
+              <div class="ai-author-card__about-{{ ai_gen_id }}">
+                {{ block.settings.default_about_text }}
+              </div>
+            {% endif %}
+
+            <a href="{{ collection.url }}" class="ai-author-card__button-{{ ai_gen_id }}">
+              {{ block.settings.button_text }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ai-author-list__empty-{{ ai_gen_id }}">
+        Select a collection list to display authors
+      </div>
+    {% endif %}
+  </div>
+</author-list-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AuthorList{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('author-list-{{ ai_gen_id }}', AuthorList{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Author collection list",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Authors"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "author_collections",
+      "label": "Author collections"
+    },
+    {
+      "type": "range",
+      "id": "collections_limit",
+      "label": "Maximum collections to show",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "default_about_text",
+      "label": "Default about text",
+      "default": "Discover books by this author"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_spacing",
+      "label": "Spacing between cards",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "image_spacing",
+      "label": "Spacing below image",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Author name"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Font size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "name_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "name_spacing",
+      "label": "Spacing below name",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "About text"
+    },
+    {
+      "type": "range",
+      "id": "about_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "about_color",
+      "label": "Color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "about_spacing",
+      "label": "Spacing below text",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View all books"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_hover_color",
+      "label": "Hover background color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Author collection list"
+    }
+  ]
+}
+{% endschema %}

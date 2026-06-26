@@ -1,0 +1,395 @@
+{% doc %}
+  @prompt
+    Layout:
+    
+    Clean, minimal contact form section
+    
+    Max width: 700px
+    
+    60px padding top and bottom
+    
+    Fully responsive
+    
+    No footer or social media section
+    
+    Section Settings (Schema):
+    
+    Add the following customizable settings:
+    
+    Section Title (text)
+    
+    Background Color (color picker)
+    
+    Button Label (text, default: "Send")
+    
+    Content Alignment (select dropdown)
+    
+    Left
+    
+    Center (default)
+    
+    Right
+    
+    The alignment setting should:
+    
+    Control text alignment of labels and button
+    
+    Control horizontal positioning of the form container using flexbox:
+    
+    Left → justify-content: flex-start
+    
+    Center → justify-content: center
+    
+    Right → justify-content: flex-end
+    
+    Form:
+    
+    Use Shopify’s native {% form 'contact' %} functionality.
+    
+    Fields:
+    
+    Your Name (required)
+    
+    Your Email (required, type email)
+    
+    Subject
+    
+    Your Message (textarea, minimum height 180px)
+    
+    File Upload (single file input)
+    
+    Submit Button (uses editable button label)
+    
+    Styling:
+    
+    Inputs:
+    
+    Full width
+    
+    1px solid #ccc
+    
+    6px border radius
+    
+    12px padding
+    
+    15px spacing between fields
+    
+    Button:
+    
+    Background: #000
+    
+    Text color: #fff
+    
+    Padding: 10px 24px
+    
+    Border radius: 6px
+    
+    Hover: #333
+    
+    Alignment follows selected content alignment
+    
+    Functionality:
+    
+    Display validation errors
+    
+    Display success message after submission
+    
+    Accessible labels
+    
+    Mobile-friendly layout
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-contact-form-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 60px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-contact-form__wrapper-{{ ai_gen_id }} {
+    display: flex;
+    {% if block.settings.content_alignment == 'left' %}
+      justify-content: flex-start;
+    {% elsif block.settings.content_alignment == 'right' %}
+      justify-content: flex-end;
+    {% else %}
+      justify-content: center;
+    {% endif %}
+  }
+
+  .ai-contact-form__container-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .ai-contact-form__title-{{ ai_gen_id }} {
+    margin: 0 0 30px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form__field-{{ ai_gen_id }} {
+    margin-bottom: 15px;
+  }
+
+  .ai-contact-form__label-{{ ai_gen_id }} {
+    display: block;
+    margin-bottom: 8px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form__input-{{ ai_gen_id }},
+  .ai-contact-form__textarea-{{ ai_gen_id }},
+  .ai-contact-form__file-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .ai-contact-form__textarea-{{ ai_gen_id }} {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  .ai-contact-form__button-wrapper-{{ ai_gen_id }} {
+    margin-top: 20px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form__button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-contact-form__button-{{ ai_gen_id }}:hover {
+    background-color: #333;
+  }
+
+  .ai-contact-form__success-{{ ai_gen_id }} {
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form__error-{{ ai_gen_id }} {
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-contact-form__error-list-{{ ai_gen_id }} {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-contact-form-{{ ai_gen_id }} {
+      padding: 40px 15px;
+    }
+  }
+{% endstyle %}
+
+<contact-form-{{ ai_gen_id }} class="ai-contact-form-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-contact-form__wrapper-{{ ai_gen_id }}">
+    <div class="ai-contact-form__container-{{ ai_gen_id }}">
+      {% if block.settings.section_title != blank %}
+        <h2 class="ai-contact-form__title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+      {% endif %}
+
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <div class="ai-contact-form__success-{{ ai_gen_id }}" id="ai-contact-form-success-{{ ai_gen_id }}">
+            Thank you for contacting us. We'll get back to you as soon as possible.
+          </div>
+        {% endif %}
+
+        {% if form.errors %}
+          <div class="ai-contact-form__error-{{ ai_gen_id }}" id="ai-contact-form-error-{{ ai_gen_id }}">
+            <p>Please correct the following errors:</p>
+            <ul class="ai-contact-form__error-list-{{ ai_gen_id }}">
+              {% for field in form.errors %}
+                <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <div class="ai-contact-form__field-{{ ai_gen_id }}">
+          <label for="ai-contact-name-{{ ai_gen_id }}" class="ai-contact-form__label-{{ ai_gen_id }}">
+            Your Name <span aria-label="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="ai-contact-name-{{ ai_gen_id }}"
+            name="contact[name]"
+            class="ai-contact-form__input-{{ ai_gen_id }}"
+            value="{% if form.name %}{{ form.name }}{% endif %}"
+            required
+            {% if form.errors contains 'name' %}
+              aria-invalid="true"
+              aria-describedby="ai-contact-form-error-{{ ai_gen_id }}"
+            {% endif %}
+          >
+        </div>
+
+        <div class="ai-contact-form__field-{{ ai_gen_id }}">
+          <label for="ai-contact-email-{{ ai_gen_id }}" class="ai-contact-form__label-{{ ai_gen_id }}">
+            Your Email <span aria-label="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="ai-contact-email-{{ ai_gen_id }}"
+            name="contact[email]"
+            class="ai-contact-form__input-{{ ai_gen_id }}"
+            value="{% if form.email %}{{ form.email }}{% endif %}"
+            autocomplete="email"
+            required
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="ai-contact-form-error-{{ ai_gen_id }}"
+            {% endif %}
+          >
+        </div>
+
+        <div class="ai-contact-form__field-{{ ai_gen_id }}">
+          <label for="ai-contact-subject-{{ ai_gen_id }}" class="ai-contact-form__label-{{ ai_gen_id }}">
+            Subject
+          </label>
+          <input
+            type="text"
+            id="ai-contact-subject-{{ ai_gen_id }}"
+            name="contact[subject]"
+            class="ai-contact-form__input-{{ ai_gen_id }}"
+            value="{% if form.subject %}{{ form.subject }}{% endif %}"
+          >
+        </div>
+
+        <div class="ai-contact-form__field-{{ ai_gen_id }}">
+          <label for="ai-contact-message-{{ ai_gen_id }}" class="ai-contact-form__label-{{ ai_gen_id }}">
+            Your Message
+          </label>
+          <textarea
+            id="ai-contact-message-{{ ai_gen_id }}"
+            name="contact[body]"
+            class="ai-contact-form__textarea-{{ ai_gen_id }}"
+          >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <div class="ai-contact-form__field-{{ ai_gen_id }}">
+          <label for="ai-contact-file-{{ ai_gen_id }}" class="ai-contact-form__label-{{ ai_gen_id }}">
+            File Upload
+          </label>
+          <input
+            type="file"
+            id="ai-contact-file-{{ ai_gen_id }}"
+            name="contact[file]"
+            class="ai-contact-form__file-{{ ai_gen_id }}"
+          >
+        </div>
+
+        <div class="ai-contact-form__button-wrapper-{{ ai_gen_id }}">
+          <button type="submit" class="ai-contact-form__button-{{ ai_gen_id }}">
+            {{ block.settings.button_label }}
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</contact-form-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ContactForm{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const successMessage = this.querySelector('#ai-contact-form-success-{{ ai_gen_id }}');
+        const errorMessage = this.querySelector('#ai-contact-form-error-{{ ai_gen_id }}');
+
+        if (successMessage) {
+          successMessage.setAttribute('role', 'status');
+          successMessage.setAttribute('aria-live', 'polite');
+        }
+
+        if (errorMessage) {
+          errorMessage.setAttribute('role', 'alert');
+          errorMessage.setAttribute('aria-live', 'assertive');
+        }
+      }
+    }
+
+    customElements.define('contact-form-{{ ai_gen_id }}', ContactForm{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Contact us"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}

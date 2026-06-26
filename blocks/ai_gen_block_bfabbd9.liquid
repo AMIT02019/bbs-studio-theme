@@ -1,0 +1,529 @@
+{% doc %}
+  @prompt
+    Create a Shopify Online Store 2.0 section named "Contact Us with Image".
+    
+    Requirements:
+    
+    Layout:
+    
+    * Maximum width: 1200px.
+    * Section padding: 60px top and bottom.
+    * Clean, modern, premium design.
+    * Fully responsive.
+    * Desktop layout: two columns (50/50 split).
+    * Contact Form on the LEFT side.
+    * Image on the RIGHT side.
+    * Vertically center both columns.
+    * Mobile layout: image stacked above form.
+    * No footer content, social icons, maps, or extra sections.
+    
+    Image Block:
+    
+    * Add Shopify image_picker setting.
+    * Add image alt text setting.
+    * Image fills container using object-fit: cover.
+    * Rounded corners (8px).
+    * Responsive with no distortion.
+    * If no image is selected, display a subtle placeholder.
+    
+    Section Settings:
+    
+    1. Section Title (text)
+    2. Background Color (color)
+    3. Contact Image (image_picker)
+    4. Image Alt Text (text)
+    5. Button Label (text)
+    6. Content Alignment (Left / Center / Right)
+    7. Layout Position (Image Left / Image Right)
+    
+    Layout Position Behavior:
+    
+    * Image Left = image left, form right.
+    * Image Right = form left, image right.
+    * Switch layout dynamically using Liquid.
+    
+    Contact Form:
+    Use Shopify native form:
+    
+    {% form 'contact' %}
+    
+    Fields:
+    
+    * Name (required)
+    * Email (required)
+    * Subject
+    * Message (textarea, min-height 180px)
+    * File Upload
+    * Submit Button
+    
+    Form Requirements:
+    
+    * Shopify validation errors.
+    * Success message after submission.
+    * Accessible labels.
+    * Proper id/for associations.
+    * Keyboard accessible.
+    * Mobile friendly.
+    
+    Input Styling:
+    
+    * Full width.
+    * 1px solid #ccc.
+    * Border radius 6px.
+    * Padding 12px.
+    * 15px spacing between fields.
+    
+    Textarea:
+    
+    * Minimum height 180px.
+    * Resizable vertically.
+    
+    Button:
+    
+    * Background #000.
+    * Text color #fff.
+    * Padding 10px 24px.
+    * Border radius 6px.
+    * Hover color #333.
+    
+    Responsive:
+    Desktop:
+    
+    * Two-column layout.
+    * Equal-height columns.
+    
+    Tablet:
+    
+    * Maintain two columns if space allows.
+    
+    Mobile:
+    
+    * Single-column layout.
+    * Image above form.
+    * Full-width inputs and button.
+    
+    Code Requirements:
+    
+    * Shopify Online Store 2.0 compatible.
+    * Use semantic HTML.
+    * Use Liquid best practices.
+    * Include complete {% schema %}.
+    * No external libraries.
+    * Production-ready code.
+    * Generate the complete section file with HTML, Liquid, CSS, JavaScript, and schema.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-contact-image-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: 60px 20px;
+  }
+
+  .ai-contact-image-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-contact-image-title-{{ ai_gen_id }} {
+    text-align: {{ block.settings.content_alignment }};
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .ai-contact-image-wrapper-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  {% if block.settings.layout_position == 'image_left' %}
+    .ai-contact-image-form-{{ ai_gen_id }} {
+      order: 2;
+    }
+    .ai-contact-image-img-wrapper-{{ ai_gen_id }} {
+      order: 1;
+    }
+  {% else %}
+    .ai-contact-image-form-{{ ai_gen_id }} {
+      order: 1;
+    }
+    .ai-contact-image-img-wrapper-{{ ai_gen_id }} {
+      order: 2;
+    }
+  {% endif %}
+
+  .ai-contact-image-img-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .ai-contact-image-img-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .ai-contact-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-contact-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    opacity: 0.3;
+  }
+
+  .ai-contact-image-form-{{ ai_gen_id }} {
+    width: 100%;
+  }
+
+  .ai-contact-image-field-{{ ai_gen_id }} {
+    margin-bottom: 15px;
+  }
+
+  .ai-contact-image-label-{{ ai_gen_id }} {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .ai-contact-image-input-{{ ai_gen_id }},
+  .ai-contact-image-textarea-{{ ai_gen_id }},
+  .ai-contact-image-file-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .ai-contact-image-input-{{ ai_gen_id }}:focus,
+  .ai-contact-image-textarea-{{ ai_gen_id }}:focus,
+  .ai-contact-image-file-{{ ai_gen_id }}:focus {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .ai-contact-image-textarea-{{ ai_gen_id }} {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  .ai-contact-image-button-{{ ai_gen_id }} {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-contact-image-button-{{ ai_gen_id }}:hover {
+    background-color: #333;
+  }
+
+  .ai-contact-image-success-{{ ai_gen_id }} {
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  .ai-contact-image-error-{{ ai_gen_id }} {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-contact-image-wrapper-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .ai-contact-image-form-{{ ai_gen_id }},
+    .ai-contact-image-img-wrapper-{{ ai_gen_id }} {
+      order: unset !important;
+    }
+
+    .ai-contact-image-img-wrapper-{{ ai_gen_id }} {
+      min-height: 300px;
+    }
+
+    .ai-contact-image-title-{{ ai_gen_id }} {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+  }
+{% endstyle %}
+
+<contact-image-{{ ai_gen_id }} class="ai-contact-image-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-contact-image-container-{{ ai_gen_id }}">
+    {% if block.settings.section_title != blank %}
+      <h2 class="ai-contact-image-title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+    {% endif %}
+
+    <div class="ai-contact-image-wrapper-{{ ai_gen_id }}">
+      <div class="ai-contact-image-form-{{ ai_gen_id }}">
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <div class="ai-contact-image-success-{{ ai_gen_id }}" role="status">
+              Thank you for contacting us. We'll get back to you as soon as possible.
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="ai-contact-image-error-{{ ai_gen_id }}" role="alert">
+              <p>Please correct the following errors:</p>
+              <ul>
+                {% for field in form.errors %}
+                  <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <div class="ai-contact-image-field-{{ ai_gen_id }}">
+            <label for="contact-name-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
+              Name <span aria-label="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="contact-name-{{ ai_gen_id }}"
+              name="contact[name]"
+              class="ai-contact-image-input-{{ ai_gen_id }}"
+              value="{% if form.name %}{{ form.name }}{% endif %}"
+              required
+              aria-required="true"
+            >
+          </div>
+
+          <div class="ai-contact-image-field-{{ ai_gen_id }}">
+            <label for="contact-email-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
+              Email <span aria-label="required">*</span>
+            </label>
+            <input
+              type="email"
+              id="contact-email-{{ ai_gen_id }}"
+              name="contact[email]"
+              class="ai-contact-image-input-{{ ai_gen_id }}"
+              value="{% if form.email %}{{ form.email }}{% endif %}"
+              required
+              aria-required="true"
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="ai-contact-image-field-{{ ai_gen_id }}">
+            <label for="contact-subject-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
+              Subject
+            </label>
+            <input
+              type="text"
+              id="contact-subject-{{ ai_gen_id }}"
+              name="contact[subject]"
+              class="ai-contact-image-input-{{ ai_gen_id }}"
+              value="{% if form.subject %}{{ form.subject }}{% endif %}"
+            >
+          </div>
+
+          <div class="ai-contact-image-field-{{ ai_gen_id }}">
+            <label for="contact-message-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
+              Message
+            </label>
+            <textarea
+              id="contact-message-{{ ai_gen_id }}"
+              name="contact[body]"
+              class="ai-contact-image-textarea-{{ ai_gen_id }}"
+            >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+
+          <div class="ai-contact-image-field-{{ ai_gen_id }}">
+            <label for="contact-file-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
+              Attach file
+            </label>
+            <input
+              type="file"
+              id="contact-file-{{ ai_gen_id }}"
+              name="contact[file]"
+              class="ai-contact-image-file-{{ ai_gen_id }}"
+            >
+          </div>
+
+          <button type="submit" class="ai-contact-image-button-{{ ai_gen_id }}">
+            {{ block.settings.button_label }}
+          </button>
+        {% endform %}
+      </div>
+
+      <div class="ai-contact-image-img-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.contact_image %}
+          <img
+            src="{{ block.settings.contact_image | image_url: width: 1200 }}"
+            alt="{{ block.settings.image_alt_text | escape }}"
+            class="ai-contact-image-img-{{ ai_gen_id }}"
+            loading="lazy"
+            width="{{ block.settings.contact_image.width }}"
+            height="{{ block.settings.contact_image.height }}"
+          >
+        {% else %}
+          <div class="ai-contact-image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</contact-image-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ContactImage{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const form = this.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', function(e) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(function(field) {
+              if (!field.value.trim()) {
+                isValid = false;
+                field.setAttribute('aria-invalid', 'true');
+              } else {
+                field.removeAttribute('aria-invalid');
+              }
+            });
+
+            if (!isValid) {
+              e.preventDefault();
+            }
+          });
+        }
+      }
+    }
+
+    customElements.define('contact-image-{{ ai_gen_id }}', ContactImage{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Contact us with image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Get in touch"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "contact_image",
+      "label": "Contact image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt_text",
+      "label": "Image alt text",
+      "default": "Contact us"
+    },
+    {
+      "type": "select",
+      "id": "layout_position",
+      "label": "Layout position",
+      "options": [
+        {
+          "value": "image_left",
+          "label": "Image left"
+        },
+        {
+          "value": "image_right",
+          "label": "Image right"
+        }
+      ],
+      "default": "image_right"
+    },
+    {
+      "type": "header",
+      "content": "Form settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send message"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact us with image"
+    }
+  ]
+}
+{% endschema %}

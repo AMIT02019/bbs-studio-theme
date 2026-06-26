@@ -1,0 +1,584 @@
+{% doc %}
+  @prompt
+    Create a premium luxury vintage-style Shopify hero section inspired by an antique treasure archive aesthetic.
+    
+    SECTION DESIGN:
+    
+    * Full-screen hero section (100vh)
+    * Dark cinematic luxury mood
+    * Editorial fashion + vintage jewelry boutique style
+    * Deep navy blue and black textured background
+    * Rich warm lighting with gold reflections
+    * Vintage objects artistically scattered:
+      embroidered handbags, antique purses, gold jewelry, velvet ring boxes, pearls, lockets, old photo frames, chains, vintage accessories
+    * High-end Pinterest-inspired composition
+    * Museum/archive atmosphere
+    * Soft vignette around edges
+    * Subtle grain texture for cinematic feel
+    
+    LAYOUT:
+    
+    * Content aligned left center
+    * Large spacious layout
+    * 55px left and right spacing on desktop
+    * Mobile responsive layout
+    * Elegant whitespace
+    
+    TEXT:
+    Main heading:
+    “STEP INTO OUR TREASURE TROVE, WHERE EVERY PIECE TELLS A STORY…”
+    
+    TEXT STYLE:
+    
+    * Large bold uppercase typography
+    * Luxury serif font mixed with modern sans-serif
+    * White text color
+    * Large line spacing
+    * Premium editorial typography
+    
+    BUTTON:
+    
+    * Minimal luxury button
+    * Transparent background
+    * White underline border
+    * Small arrow icon →
+    * Smooth hover animation
+    * Gold hover effect
+    * Hover underline expansion
+    
+    SCROLL EFFECTS:
+    
+    * Fixed background attachment
+    * Parallax scrolling effect
+    * Smooth zoom background on scroll
+    * Fade-in animation on content
+    * Floating decorative movement
+    * Cinematic smooth scrolling experience
+    
+    SHOPIFY REQUIREMENTS:
+    
+    * Build as customizable Shopify section
+    * Include liquid schema settings
+    * Editable background image
+    * Editable heading text
+    * Editable button text and link
+    * Overlay opacity control
+    * Enable/disable parallax option
+    * Fully responsive
+    * Optimized for desktop and mobile
+    
+    CUSTOM CSS:
+    
+    * Add 55px padding left and right on desktop
+    * 20px spacing on mobile
+    * Use box-sizing:border-box
+    * Maintain clean luxury alignment
+    
+    STYLE REFERENCE:
+    Luxury antique archive, cinematic vintage boutique, premium editorial fashion homepage, luxury collectible showcase.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-vintage-hero-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .ai-vintage-hero-bg-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    {% if block.settings.enable_parallax %}
+      background-attachment: fixed;
+    {% endif %}
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease-out;
+  }
+
+  .ai-vintage-hero-bg-{{ ai_gen_id }}::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 15, 40, {{ block.settings.overlay_opacity }}), rgba(10, 20, 50, {{ block.settings.overlay_opacity }}));
+    z-index: 2;
+  }
+
+  .ai-vintage-hero-bg-{{ ai_gen_id }}::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .ai-vintage-hero-grain-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    opacity: {{ block.settings.grain_opacity }};
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .ai-vintage-hero-content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 55px;
+    padding-right: 55px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: ai-vintage-hero-fade-in-{{ ai_gen_id }} 1s ease-out 0.3s forwards;
+  }
+
+  @keyframes ai-vintage-hero-fade-in-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-vintage-hero-text-wrapper-{{ ai_gen_id }} {
+    max-width: {{ block.settings.content_max_width }}px;
+  }
+
+  .ai-vintage-hero-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: {{ block.settings.heading_line_height }};
+    font-weight: {{ block.settings.heading_weight }};
+    text-transform: uppercase;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 {{ block.settings.heading_spacing }}px 0;
+    letter-spacing: {{ block.settings.heading_letter_spacing }};
+    word-spacing: 0.1em;
+  }
+
+  .ai-vintage-hero-button-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: {{ block.settings.button_size }}px;
+    font-weight: {{ block.settings.button_weight }};
+    text-transform: uppercase;
+    color: {{ block.settings.button_color }};
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    letter-spacing: 0.15em;
+    transition: color 0.4s ease;
+  }
+
+  .ai-vintage-hero-button-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-vintage-hero-button-underline-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: {{ block.settings.button_color }};
+    transform-origin: left;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-vintage-hero-button-{{ ai_gen_id }}:hover .ai-vintage-hero-button-underline-{{ ai_gen_id }} {
+    background: {{ block.settings.button_hover_color }};
+    transform: scaleX(1.2);
+  }
+
+  .ai-vintage-hero-button-arrow-{{ ai_gen_id }} {
+    display: inline-flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-vintage-hero-button-{{ ai_gen_id }}:hover .ai-vintage-hero-button-arrow-{{ ai_gen_id }} {
+    transform: translateX(8px);
+  }
+
+  .ai-vintage-hero-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a1428 0%, #1a2438 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .ai-vintage-hero-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 600px;
+    opacity: 0.3;
+  }
+
+  .ai-vintage-hero-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 32px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-vintage-hero-{{ ai_gen_id }} {
+      height: 100vh;
+      min-height: 500px;
+    }
+
+    .ai-vintage-hero-content-{{ ai_gen_id }} {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .ai-vintage-hero-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.5 }}px;
+      line-height: 1.2;
+    }
+
+    .ai-vintage-hero-button-{{ ai_gen_id }} {
+      font-size: {{ block.settings.button_size | times: 0.85 }}px;
+    }
+
+    .ai-vintage-hero-bg-{{ ai_gen_id }} {
+      background-attachment: scroll;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .ai-vintage-hero-content-{{ ai_gen_id }} {
+      padding-left: 35px;
+      padding-right: 35px;
+    }
+
+    .ai-vintage-hero-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<ai-vintage-hero-{{ ai_gen_id }} class="ai-vintage-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.hero_image %}
+    <div 
+      class="ai-vintage-hero-bg-{{ ai_gen_id }}"
+      style="background-image: url('{{ block.settings.hero_image | image_url: width: 2400 }}');"
+      data-scroll-speed="{{ block.settings.parallax_speed }}"
+    ></div>
+  {% else %}
+    <div class="ai-vintage-hero-placeholder-{{ ai_gen_id }}">
+      {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      <div class="ai-vintage-hero-empty-state-{{ ai_gen_id }}">
+        Add a background image to bring your vintage treasure trove to life
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="ai-vintage-hero-grain-{{ ai_gen_id }}"></div>
+
+  <div class="ai-vintage-hero-content-{{ ai_gen_id }}">
+    <div class="ai-vintage-hero-text-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h1 class="ai-vintage-hero-heading-{{ ai_gen_id }}">
+          {{ block.settings.heading }}
+        </h1>
+      {% endif %}
+
+      {% if block.settings.button_text != blank %}
+        <a 
+          href="{{ block.settings.button_link }}" 
+          class="ai-vintage-hero-button-{{ ai_gen_id }}"
+        >
+          <span>{{ block.settings.button_text }}</span>
+          <span class="ai-vintage-hero-button-arrow-{{ ai_gen_id }}">→</span>
+          <span class="ai-vintage-hero-button-underline-{{ ai_gen_id }}"></span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</ai-vintage-hero-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiVintageHero{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.parallaxEnabled = {{ block.settings.enable_parallax | json }};
+        this.parallaxSpeed = parseFloat('{{ block.settings.parallax_speed }}');
+      }
+
+      connectedCallback() {
+        this.bgElement = this.querySelector('.ai-vintage-hero-bg-{{ ai_gen_id }}');
+        
+        if (this.parallaxEnabled && this.bgElement && window.innerWidth > 749) {
+          this.setupParallax();
+        }
+
+        this.setupScrollZoom();
+      }
+
+      setupParallax() {
+        this.handleScroll = () => {
+          const scrolled = window.pageYOffset;
+          const heroHeight = this.offsetHeight;
+          
+          if (scrolled < heroHeight) {
+            const yPos = scrolled * this.parallaxSpeed;
+            this.bgElement.style.transform = `translate3d(0, ${yPos}px, 0)`;
+          }
+        };
+
+        window.addEventListener('scroll', this.handleScroll, { passive: true });
+      }
+
+      setupScrollZoom() {
+        this.handleZoom = () => {
+          const scrolled = window.pageYOffset;
+          const heroHeight = this.offsetHeight;
+          
+          if (scrolled < heroHeight && this.bgElement) {
+            const scale = 1 + (scrolled / heroHeight) * 0.1;
+            this.bgElement.style.transform = `scale(${scale})`;
+          }
+        };
+
+        if (!this.parallaxEnabled) {
+          window.addEventListener('scroll', this.handleZoom, { passive: true });
+        }
+      }
+
+      disconnectedCallback() {
+        if (this.handleScroll) {
+          window.removeEventListener('scroll', this.handleScroll);
+        }
+        if (this.handleZoom) {
+          window.removeEventListener('scroll', this.handleZoom);
+        }
+      }
+    }
+
+    customElements.define('ai-vintage-hero-{{ ai_gen_id }}', AiVintageHero{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Vintage treasure hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.6
+    },
+    {
+      "type": "range",
+      "id": "grain_opacity",
+      "label": "Film grain opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.1
+    },
+    {
+      "type": "header",
+      "content": "Parallax effects"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax scrolling",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "parallax_speed",
+      "label": "Parallax speed",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "STEP INTO OUR TREASURE TROVE, WHERE EVERY PIECE TELLS A STORY…"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "text",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "default": "0.02em"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "label": "Spacing below heading",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Explore Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "button_weight",
+      "label": "Button weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#d4af37"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vintage treasure hero"
+    }
+  ]
+}
+{% endschema %}

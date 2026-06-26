@@ -1,0 +1,695 @@
+{% doc %}
+  @prompt
+    Layout Structure
+    
+    Create a two-column responsive layout:
+    
+    Left Column:
+    
+    Large heading: “What is reSource+ ?”
+    
+    Image (book cover style)
+    
+    Multiple paragraphs of rich text content
+    
+    Right Column:
+    
+    Small heading: “QR Codes :”
+    
+    Rich text content
+    
+    QR Code image
+    
+    Email text at bottom
+    
+    On mobile:
+    
+    Stack columns vertically
+    
+    Left column first, right column below
+    
+    Section Settings (Schema)
+    
+    Add the following customizable options:
+    
+    Content Settings:
+    
+    Left Heading (text)
+    
+    Left Image (image picker)
+    
+    Left Content (rich text)
+    
+    Right Heading (text)
+    
+    Right Content (rich text)
+    
+    QR Code Image (image picker)
+    
+    Email Text (text)
+    
+    Layout Settings:
+    
+    Desktop Column Layout (select):
+    
+    50% / 50%
+    
+    60% / 40%
+    
+    40% / 60%
+    
+    Content Alignment (select):
+    
+    Left
+    
+    Center
+    
+    Right
+    
+    Vertical Alignment (select):
+    
+    Top
+    
+    Center
+    
+    Bottom
+    
+    Spacing Controls (Important)
+    
+    Add full margin & padding adjustment options:
+    
+    Section Spacing:
+    
+    Section Padding Top (range 0–150px)
+    
+    Section Padding Bottom (range 0–150px)
+    
+    Section Margin Top (range 0–150px)
+    
+    Section Margin Bottom (range 0–150px)
+    
+    Inner Content Spacing:
+    
+    Column Gap (range 0–100px)
+    
+    Content Padding (range 0–60px)
+    
+    All spacing should dynamically apply via inline style or CSS variables.
+    
+    Styling Requirements:
+    
+    Background color picker
+    
+    Heading font size control (range slider)
+    
+    Text size control (range slider)
+    
+    Clean minimal typography
+    
+    Proper line height (1.6–1.8)
+    
+    Max width container (1200px)
+    
+    Center container automatically
+    
+    Image Behavior:
+    
+    Left image should:
+    
+    Have optional border toggle
+    
+    Optional shadow toggle
+    
+    Adjustable max width slider (100–400px)
+    
+    QR code image:
+    
+    Fixed square ratio
+    
+    Adjustable size slider (100–250px)
+    
+    Responsive Behavior:
+    
+    Stack columns on mobile
+    
+    Mobile spacing adjustment sliders:
+    
+    Mobile padding top
+    
+    Mobile padding bottom
+    
+    Mobile column gap
+    
+    Technical Requirements:
+    
+    Use Shopify section schema
+    
+    Use CSS flexbox or grid
+    
+    No external libraries
+    
+    Fully responsive
+    
+    Clean Liquid structure
+    
+    Proper semantic HTML
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-two-column-layout-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+  }
+
+  .ai-two-column-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-two-column-grid-{{ ai_gen_id }} {
+    display: grid;
+    gap: {{ block.settings.column_gap }}px;
+    align-items: {{ block.settings.vertical_alignment }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-two-column-grid-{{ ai_gen_id }} {
+      {% if block.settings.desktop_layout == '50-50' %}
+        grid-template-columns: 1fr 1fr;
+      {% elsif block.settings.desktop_layout == '60-40' %}
+        grid-template-columns: 60% 40%;
+      {% elsif block.settings.desktop_layout == '40-60' %}
+        grid-template-columns: 40% 60%;
+      {% endif %}
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-two-column-layout-{{ ai_gen_id }} {
+      padding-top: {{ block.settings.mobile_padding_top }}px;
+      padding-bottom: {{ block.settings.mobile_padding_bottom }}px;
+    }
+
+    .ai-two-column-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ block.settings.mobile_column_gap }}px;
+    }
+  }
+
+  .ai-two-column-left-{{ ai_gen_id }},
+  .ai-two-column-right-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px;
+  }
+
+  .ai-two-column-left-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.left_heading_size }}px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-two-column-right-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.right_heading_size }}px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-two-column-left-image-wrapper-{{ ai_gen_id }} {
+    margin: 0 0 20px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-two-column-left-image-{{ ai_gen_id }} {
+    max-width: {{ block.settings.left_image_max_width }}px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    {% if block.settings.left_image_border %}
+      border: 1px solid #e0e0e0;
+    {% endif %}
+    {% if block.settings.left_image_shadow %}
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    {% endif %}
+  }
+
+  .ai-two-column-left-image-placeholder-{{ ai_gen_id }} {
+    max-width: {{ block.settings.left_image_max_width }}px;
+    width: 100%;
+    display: inline-block;
+    background-color: #f4f4f4;
+    {% if block.settings.left_image_border %}
+      border: 1px solid #e0e0e0;
+    {% endif %}
+    {% if block.settings.left_image_shadow %}
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    {% endif %}
+  }
+
+  .ai-two-column-left-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .ai-two-column-left-content-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.7;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-two-column-left-content-{{ ai_gen_id }} p {
+    margin: 0 0 16px;
+  }
+
+  .ai-two-column-left-content-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-two-column-right-content-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.7;
+    text-align: {{ block.settings.content_alignment }};
+    margin-bottom: 20px;
+  }
+
+  .ai-two-column-right-content-{{ ai_gen_id }} p {
+    margin: 0 0 16px;
+  }
+
+  .ai-two-column-right-content-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-two-column-qr-wrapper-{{ ai_gen_id }} {
+    margin: 0 0 20px;
+    text-align: {{ block.settings.content_alignment }};
+  }
+
+  .ai-two-column-qr-image-{{ ai_gen_id }} {
+    width: {{ block.settings.qr_code_size }}px;
+    height: {{ block.settings.qr_code_size }}px;
+    display: inline-block;
+  }
+
+  .ai-two-column-qr-placeholder-{{ ai_gen_id }} {
+    width: {{ block.settings.qr_code_size }}px;
+    height: {{ block.settings.qr_code_size }}px;
+    display: inline-block;
+    background-color: #f4f4f4;
+  }
+
+  .ai-two-column-qr-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-two-column-email-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.7;
+    text-align: {{ block.settings.content_alignment }};
+    margin: 0;
+  }
+{% endstyle %}
+
+<div class="ai-two-column-layout-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-two-column-container-{{ ai_gen_id }}">
+    <div class="ai-two-column-grid-{{ ai_gen_id }}">
+      <div class="ai-two-column-left-{{ ai_gen_id }}">
+        {% if block.settings.left_heading != blank %}
+          <h2 class="ai-two-column-left-heading-{{ ai_gen_id }}">{{ block.settings.left_heading }}</h2>
+        {% endif %}
+
+        <div class="ai-two-column-left-image-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.left_image %}
+            <img
+              src="{{ block.settings.left_image | image_url: width: 800 }}"
+              alt="{{ block.settings.left_image.alt | escape }}"
+              class="ai-two-column-left-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.left_image.width }}"
+              height="{{ block.settings.left_image.height }}"
+            >
+          {% else %}
+            <div class="ai-two-column-left-image-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if block.settings.left_content != blank %}
+          <div class="ai-two-column-left-content-{{ ai_gen_id }}">
+            {{ block.settings.left_content }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="ai-two-column-right-{{ ai_gen_id }}">
+        {% if block.settings.right_heading != blank %}
+          <h3 class="ai-two-column-right-heading-{{ ai_gen_id }}">{{ block.settings.right_heading }}</h3>
+        {% endif %}
+
+        {% if block.settings.right_content != blank %}
+          <div class="ai-two-column-right-content-{{ ai_gen_id }}">
+            {{ block.settings.right_content }}
+          </div>
+        {% endif %}
+
+        <div class="ai-two-column-qr-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.qr_code_image %}
+            <img
+              src="{{ block.settings.qr_code_image | image_url: width: 500 }}"
+              alt="QR Code"
+              class="ai-two-column-qr-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.qr_code_image.width }}"
+              height="{{ block.settings.qr_code_image.height }}"
+            >
+          {% else %}
+            <div class="ai-two-column-qr-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if block.settings.email_text != blank %}
+          <p class="ai-two-column-email-{{ ai_gen_id }}">{{ block.settings.email_text }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Two column layout",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left column content"
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Heading",
+      "default": "What is reSource+ ?"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Image"
+    },
+    {
+      "type": "richtext",
+      "id": "left_content",
+      "label": "Content",
+      "default": "<p>Add your content here. You can include multiple paragraphs of text to describe your product or service.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Right column content"
+    },
+    {
+      "type": "text",
+      "id": "right_heading",
+      "label": "Heading",
+      "default": "QR Codes :"
+    },
+    {
+      "type": "richtext",
+      "id": "right_content",
+      "label": "Content",
+      "default": "<p>Scan the QR code below to access more information.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "qr_code_image",
+      "label": "QR code image"
+    },
+    {
+      "type": "text",
+      "id": "email_text",
+      "label": "Email text",
+      "default": "contact@example.com"
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Column layout",
+      "options": [
+        {
+          "value": "50-50",
+          "label": "50% / 50%"
+        },
+        {
+          "value": "60-40",
+          "label": "60% / 40%"
+        },
+        {
+          "value": "40-60",
+          "label": "40% / 60%"
+        }
+      ],
+      "default": "50-50"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Inner content spacing"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "left_heading_size",
+      "label": "Left heading size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "right_heading_size",
+      "label": "Right heading size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Left image style"
+    },
+    {
+      "type": "range",
+      "id": "left_image_max_width",
+      "label": "Max width",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "checkbox",
+      "id": "left_image_border",
+      "label": "Show border",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "left_image_shadow",
+      "label": "Show shadow",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "QR code style"
+    },
+    {
+      "type": "range",
+      "id": "qr_code_size",
+      "label": "Size",
+      "min": 100,
+      "max": 250,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two column layout"
+    }
+  ]
+}
+{% endschema %}

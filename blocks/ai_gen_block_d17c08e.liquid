@@ -1,0 +1,336 @@
+{% doc %}
+  @prompt
+    Create a Shopify OS 2.0 custom section called “Collection Categories” with the following features:
+    
+    Display up to 5 collection category cards in a responsive grid
+    Each card should allow selecting a Shopify collection
+    Add optional custom image override
+    Add optional Shopify-hosted video upload option
+    If video exists, show video instead of image
+    If no video, show custom image
+    If no custom image, show collection featured image
+    Entire card should be clickable
+    Add smooth hover animation with slight lift and shadow
+    Video should autoplay, muted, loop, playsinline, and cover full card area
+    Responsive layout:
+    Desktop: 5 columns
+    Tablet: 2 columns
+    Mobile: 1 column
+    Use clean modern styling with rounded corners
+    Use Shopify Liquid best practices
+    Include complete schema with:
+    collection picker
+    image_picker
+    video picker
+    Include full HTML, Liquid, CSS, and schema in one complete section file
+    Ensure lazy loading for images
+    Ensure object-fit: cover for both images and videos
+    Add proper fallback placeholder if no media exists
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-categories-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  .ai-collection-categories-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    width: 100%;
+  }
+
+  .ai-collection-category-card-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-collection-category-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-category-media-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ai-collection-category-media-{{ ai_gen_id }} img,
+  .ai-collection-category-media-{{ ai_gen_id }} video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-collection-category-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collection-category-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-category-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 20px;
+    color: #ffffff;
+  }
+
+  .ai-collection-category-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: {{ block.settings.title_text_transform }};
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-collection-categories-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-categories-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-collection-category-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-collection-categories-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-categories-grid-{{ ai_gen_id }}">
+    {% for i in (1..5) %}
+      {% liquid
+        assign collection_key = 'collection_' | append: i
+        assign image_key = 'custom_image_' | append: i
+        assign video_key = 'custom_video_' | append: i
+
+        assign collection = block.settings[collection_key]
+        assign custom_image = block.settings[image_key]
+        assign custom_video = block.settings[video_key]
+      %}
+
+      {% if collection != blank %}
+        <a
+          href="{{ collection.url }}"
+          class="ai-collection-category-card-{{ ai_gen_id }}"
+        >
+          <div class="ai-collection-category-media-{{ ai_gen_id }}">
+            {% if custom_video != blank %}
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              >
+                <source src="{{ custom_video.sources[1].url }}" type="{{ custom_video.sources[1].mime_type }}">
+              </video>
+            {% elsif custom_image != blank %}
+              <img
+                src="{{ custom_image | image_url: width: 800 }}"
+                alt="{{ custom_image.alt | escape }}"
+                loading="lazy"
+                width="{{ custom_image.width }}"
+                height="{{ custom_image.height }}"
+              >
+            {% elsif collection.featured_image != blank %}
+              <img
+                src="{{ collection.featured_image | image_url: width: 800 }}"
+                alt="{{ collection.featured_image.alt | escape }}"
+                loading="lazy"
+                width="{{ collection.featured_image.width }}"
+                height="{{ collection.featured_image.height }}"
+              >
+            {% else %}
+              <div class="ai-collection-category-placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="ai-collection-category-overlay-{{ ai_gen_id }}">
+            <h3 class="ai-collection-category-title-{{ ai_gen_id }}">
+              {{ collection.title }}
+            </h3>
+          </div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection categories",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_1",
+      "label": "Custom image 1"
+    },
+    {
+      "type": "video",
+      "id": "custom_video_1",
+      "label": "Custom video 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_2",
+      "label": "Custom image 2"
+    },
+    {
+      "type": "video",
+      "id": "custom_video_2",
+      "label": "Custom video 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_3",
+      "label": "Custom image 3"
+    },
+    {
+      "type": "video",
+      "id": "custom_video_3",
+      "label": "Custom video 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_4",
+      "label": "Custom image 4"
+    },
+    {
+      "type": "video",
+      "id": "custom_video_4",
+      "label": "Custom video 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_5",
+      "label": "Custom image 5"
+    },
+    {
+      "type": "video",
+      "id": "custom_video_5",
+      "label": "Custom video 5"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Title text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection categories"
+    }
+  ]
+}
+{% endschema %}

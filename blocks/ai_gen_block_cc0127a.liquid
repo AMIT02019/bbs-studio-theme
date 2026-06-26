@@ -1,0 +1,456 @@
+{% doc %}
+  @prompt
+    I want to create a section on my Shopify homepage that displays 5 categories.
+    
+    Each category should display 1 selected collection.
+    
+    Requirements:
+    
+    * Show 5 category blocks in one row (desktop).
+    * On tablet/mobile, the layout should become responsive:
+    
+      * Tablet: 2 categories per row
+      * Mobile: 1 category per row
+    
+    Each category block should:
+    
+    * Display the Collection Image
+    * Display the Collection Title
+    * Be fully clickable and link to that collection page
+    
+    Each category should allow me to select a different collection from the Shopify Theme Customizer.
+    
+    The section should be fully dynamic so I can change the collections anytime from:
+    Customize → Theme Editor
+    
+    Structure example:
+    
+    * Category 1 → Collection A
+    * Category 2 → Collection B
+    * Category 3 → Collection C
+    * Category 4 → Collection D
+    * Category 5 → Collection E
+    
+    Design Requirements:
+    
+    * Clean and modern layout
+    * Responsive across desktop, tablet, and mobile
+    * Equal spacing between category blocks
+    * Collection images should maintain consistent aspect ratio
+    * Smooth hover effect on desktop (optional but preferred)
+    
+    Please create this as a Shopify section using Liquid, HTML, CSS, and schema settings so it works directly inside the Shopify theme editor.
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-categories-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .ai-collection-categories__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    width: 100%;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-category__link-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-collection-category__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    background-color: {{ block.settings.placeholder_bg_color }};
+  }
+
+  .ai-collection-category__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }}:hover .ai-collection-category__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-category__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: {{ block.settings.placeholder_bg_color }};
+  }
+
+  .ai-collection-category__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-category__title-wrapper-{{ ai_gen_id }} {
+    padding: {{ block.settings.title_padding }}px;
+    background-color: {{ block.settings.title_bg_color }};
+    text-align: {{ block.settings.title_alignment }};
+  }
+
+  .ai-collection-category__title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: {{ block.settings.title_font_weight }};
+    color: {{ block.settings.title_color }};
+    text-transform: {{ block.settings.title_text_transform }};
+    transition: color 0.3s ease;
+  }
+
+  .ai-collection-category-{{ ai_gen_id }}:hover .ai-collection-category__title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_hover_color }};
+  }
+
+  @media screen and (max-width: 989px) and (min-width: 750px) {
+    .ai-collection-categories__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-categories__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-collection-category__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<collection-categories-{{ ai_gen_id }} class="ai-collection-categories-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-categories__grid-{{ ai_gen_id }}">
+    {% for i in (1..5) %}
+      {% liquid
+        assign collection_key = 'collection_' | append: i
+        assign collection = block.settings[collection_key]
+      %}
+      
+      <div class="ai-collection-category-{{ ai_gen_id }}">
+        {% if collection != blank %}
+          <a href="{{ collection.url }}" class="ai-collection-category__link-{{ ai_gen_id }}">
+            <div class="ai-collection-category__image-wrapper-{{ ai_gen_id }}">
+              {% if collection.featured_image %}
+                <img
+                  src="{{ collection.featured_image | image_url: width: 600 }}"
+                  alt="{{ collection.featured_image.alt | escape }}"
+                  class="ai-collection-category__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="{{ 600 | times: block.settings.image_aspect_ratio | divided_by: 100 }}"
+                >
+              {% else %}
+                <div class="ai-collection-category__placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-collection-category__title-wrapper-{{ ai_gen_id }}">
+              <h3 class="ai-collection-category__title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            </div>
+          </a>
+        {% else %}
+          <div class="ai-collection-category__link-{{ ai_gen_id }}">
+            <div class="ai-collection-category__image-wrapper-{{ ai_gen_id }}">
+              <div class="ai-collection-category__placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+            </div>
+            <div class="ai-collection-category__title-wrapper-{{ ai_gen_id }}">
+              <h3 class="ai-collection-category__title-{{ ai_gen_id }}">Category {{ i }}</h3>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</collection-categories-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionCategories{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        const links = this.querySelectorAll('.ai-collection-category__link-{{ ai_gen_id }}');
+        links.forEach(link => {
+          if (!link.getAttribute('href')) {
+            link.setAttribute('role', 'presentation');
+          }
+        });
+      }
+    }
+
+    customElements.define('collection-categories-{{ ai_gen_id }}', CollectionCategories{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection categories",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Category 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Category 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Category 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Category 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Category 5"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Space between items",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Aspect ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "placeholder_bg_color",
+      "label": "Placeholder background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_padding",
+      "label": "Padding",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "title_bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "title_hover_color",
+      "label": "Hover text color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection categories"
+    }
+  ]
+}
+{% endschema %}
