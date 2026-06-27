@@ -366,7 +366,7 @@
                 </a>
 
                 <div class="cpg-badges">
-                  {%- unless item.available -%}<span class="cpg-badge cpg-badge--soldout">Sold Out</span>{%- endunless -%}
+                  {%- unless item.available -%}<span class="cpg-badge cpg-badge--soldout">Sold</span>{%- endunless -%}
                   {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
                   {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
                 </div>
