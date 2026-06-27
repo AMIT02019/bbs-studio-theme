@@ -55,6 +55,7 @@
         assign show_sorting = section.settings.show_sorting
         assign show_view_as = section.settings.show_view_as
     endif
+    assign show_item_per_page = section.settings.show_item_per_page
     assign show_infinite_scrolling = section.settings.show_infinite_scrolling
     if settings.search_type == 'all'
         assign article_page_per_load = section.settings.article_page_per_load
@@ -108,231 +109,7 @@
     }
 </style>
 
-<div data-section-id="{{ section.id }}" data-section-type="search" id="SearchSection-{{ section.id }}" data-section="{{ section.id }}"  data-search-count="{{ search.results_count }}">
-    <div class="search-container {% if container == '1170' %}container-1170{% elsif container == '1770' %}container-1770{% elsif container == 'fullwidth'%}container-full{% else %}container{% endif %}">
-        {%- if show_breadcrumb -%}
-            {% render 'breadcrumb', alignment: breadcrumb_alignment %}
-        {%- endif -%}
-        {%- if show_page_title -%}
-            <h1 class="page-header text-{{ page_title_alignment }}{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}">
-                {%- if search.performed -%}
-                    {{ 'templates.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-                {%- else -%}
-                    {{ 'templates.search.title' | t }}
-                {%- endif -%}
-            </h1>
-        {%- endif -%}
-        <div class="halo-search-content halo-grid-content sidebar--layout_{{ sidebar_type }}">
-            {%- if search.performed and search.results.size > 0 -%}
-                {%- if has_sidebar -%}
-                    {{ 'component-main-sidebar.css' | asset_url | stylesheet_tag }}
-                    <div class="page-sidebar page-sidebar-{{ sidebar_position }} page-sidebar--{{ sidebar_type }} sidebar--{{ sidebar_layout }}{% if enable_sticky %} has-sticky{% endif %}" id="halo-sidebar">
-                        <a href="javascript:void(0)" class="halo-sidebar-close" data-close-sidebar role="button">
-                            <span class="visually-hidden">{{ 'general.common.close' | t }}</span>
-                            {% render 'icon-close' %}
-                        </a>
-                        <div class="halo-sidebar-header text-left{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}">
-                            <span class="title">
-                                {{ 'sections.sidebar.title' | t }}
-                            </span>
-                        </div>
-                        <div class="halo-sidebar-wrapper custom-scrollbar{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}">
-                            {% render 'collection-sidebar',
-                                results: search,
-                                section: section,
-                                sort_by: sort_by,
-                                sidebar_type: sidebar_type,
-                                show_filter: show_filter,
-                                show_sorting: show_sorting,
-                                show_collapse: sidebar_collapse,
-                                sidebar_collapse: sidebar_collapse_default,
-                                filter_swatch: filter_swatch,
-                                filter_swatch_type: filter_swatch_type,
-                                filter_rectangle: filter_rectangle
-                            %}
-                        </div>
-                    </div>
-                {%- endif -%}
-            {%- endif -%}
-            <div class="page-content {{search.results.size}}" id="CollectionProductGrid">
-                {%- if search.performed -%}
-                    {%- if search.results.size > 0 -%}
-                        {%- paginate search.results by products_per_page -%}
-                            {%- if show_toolbar -%}
-                                {% render 'toolbar',
-                                    has_sidebar: has_sidebar,
-                                    show_sorting: show_sorting,
-                                    show_view_as: show_view_as,
-                                    products_per_page: products_per_page,
-                                    layout: layout,
-                                    sort_by: sort_by,
-                                    sort_options: sort_options
-                                %}
-                            {%- endif -%}
-                            <div class="collection resultListing">
-                                <ul class="productListing{% if section.settings.collection_results_per_row == 1 %} productList{% else %} productGrid column-{{ layout }} {% endif %} list-{{ layout }} list-unstyled" id="main-collection-product-grid" data-id="{{ section.id }}"
-                                    style="
-                                    --space-between-vert-desk: {{product_space_between_vert_desk}}px; 
-                                    --space-between-vert-mb: {{product_space_between_vert_mb}}px;
-                                    --space-between-horiz-desk: {{product_space_between_horiz_desk}}px; 
-                                    --space-between-horiz-mb: {{product_space_between_horiz_mb}}px;
-                                    "
-                                >
-                                    {%- for item in search.results -%}
-                                        {%- if item.object_type == 'product'-%}
-                                            <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>    
-                                                {% render 'product-grid-layout',
-                                                    product_card_product: item,
-                                                    complementary_product_button_atc: true,
-                                                    serial: forloop.index,
-                                                    sectionId: section.id,
-                                                    show_list: true,
-                                                    loading: true
-                                                %}
-                                            </li>   
-                                        {%- endif -%}
-                                    {%- endfor -%}
-                                </ul>
-                                {% render 'pagination-listing',
-                                    paginate: paginate,
-                                    show_infinite_scrolling: show_infinite_scrolling,
-                                    anchor: '',
-                                    class: 'pagination-wrapper text-center' 
-                                %}
-                            </div>
-                            {%- if settings.search_type == 'all' -%}
-                                <div class="page-article resultListing{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}" id="main-page-article-grid" data-url="{{'?q=' | append: search.terms | append: '&type=article,page&options%5Bprefix%5D=last&sort_by=' | append: sort_by }}&type=article,page" data-id="{{ section.id }}">
-                                    <template>
-                                        <div{% if paginate.pages > 1 and paginate.next %} data-next-page="{{ paginate.current_page | plus: 1 }}"{% endif %}>
-                                            {%- if search.results_count > 0 %}
-                                                {%- paginate search.results by 50 -%}
-                                                    <div class="halo-block-header">
-                                                        <h4 class="title resultTitle text-{{ page_title_alignment }}">
-                                                            <span class="text page-subheader">{{ 'templates.search.search_result_title_2' | t: terms: search.terms, count: search.results_count }}</span>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="halo-block-content">
-                                                        <ul class="resultTable list-unstyled">
-                                                            {%- for item in search.results %}
-                                                                <li class="item" data-listed-article-or-page>
-                                                                    <div class="item-wrapper">
-                                                                        <h6 class="title card-title">
-                                                                            <a class="link-underline" href="{{ item.url }}">
-                                                                                <span class="text">{{ item.title }}</span>
-                                                                            </a>
-                                                                        </h6>
-                                                                        <div class="summary">
-                                                                            {%- if item.object_type == 'article' -%}
-                                                                                {{ item.excerpt_or_content | strip_html | truncatewords: 21 }}
-                                                                            {%- else -%}
-                                                                                {%- if item.content != blank -%}
-                                                                                    {{ item.content | strip_html | truncatewords: 21 }}
-                                                                                {%- else -%}
-                                                                                    {{ page_description }}
-                                                                                {%- endif -%}
-                                                                            {%- endif -%}
-                                                                        </div>
-                                                                        <a href="{{ item.url }}" class="button button--primary">
-                                                                            <span class="text">{{ 'templates.search.view' | t: type: item.object_type }}</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </li>
-                                                            {%- endfor -%}
-                                                        </ul>
-                                                        <div class="pagination-page-item pagination-page-infinite">
-                                                            <a class="button plus-button" id="article-page-load-btn" data-items-per-page="{{ article_page_per_load }}" data-total="{{ search.results_count }}">
-                                                                {% render 'icon-plus' %} 
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                {%- endpaginate -%}
-                                            {%- endif -%}
-                                        </div>
-                                    </template>
-                                </div>
-                            {%- endif -%}
-                        {%- endpaginate -%}
-                    {%- else -%}
-                        <div class="collection collection--empty{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}" id="main-collection-product-grid" data-id="{{ section.id }}">
-                            <p class="collection-product-count ">
-                                {{ 'templates.search.no_results' | t: terms: search.terms }}
-                            </p>
-                            <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-                                <input type="hidden" name="type" value="{{ search.terms | escape }}">
-                                <input type="hidden" name="options[prefix]" value="last" />
-                                <div class="form-field form-fieldInline">
-                                    <label class="form-label hiddenLabels" for="Search-In-Template" aria-hidden="true">
-                                        {{ 'general.search.search' | t }}
-                                    </label>
-                                    <input
-                                        class="search__input form-input form-input-placeholder"
-                                        id="Search-In-Template"
-                                        type="search"
-                                        name="q"
-                                        value="{{ search.terms | escape}}"
-                                        {% if search.performed %}
-                                            autofocus
-                                        {% endif %}
-                                        placeholder="{{ 'general.search.search' | t }}"
-                                    >
-                                    <button type="submit" class="search__button field__button button button--primary" aria-label="{{ 'general.search.search' | t }}">
-                                        {% render 'icon-search' %}
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    {%- endif -%}
-                {%- else -%}
-                    <div class="collection collection--empty{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}" id="main-collection-product-grid" data-id="{{ section.id }}">
-                        <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-                            <input type="hidden" name="type" value="{{ search.terms | escape }}">
-                            <input type="hidden" name="options[prefix]" value="last"/>
-                            <div class="form-field form-fieldInline">
-                                <label class="form-label hiddenLabels" for="Search-In-Template" aria-hidden="true">
-                                    {{ 'general.search.search' | t }}
-                                </label>
-                                <input
-                                    class="search__input form-input form-input-placeholder"
-                                    id="Search-In-Template"
-                                    type="search"
-                                    name="q"
-                                    value="{{ search.terms | escape}}"
-                                    {% if search.performed %}
-                                        autofocus
-                                    {% endif %}
-                                    placeholder="{{ 'general.search.search' | t }}"
-                                >
-                                <button type="submit" class="search__button field__button button button--primary" aria-label="{{ 'general.search.search' | t }}">
-                                    {% render 'icon-search' %}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                {%- endif -%}
-            </div>
-        </div>
-    </div>
-    <div class="loading-overlay loading-overlay--custom">
-        <div class="loading-overlay__spinner">
-            <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-            </svg>
-        </div>
-    </div>
-</div>
-
-{%- if settings.search_type == 'all' -%}
-    {{ 'halo.search-by-all-types.js' | asset_url | script_tag }}
-    <script type="text/javascript">
-        Shopify.SearchByAllTypes.renderResultTable({
-            sectionId: 'main-page-article-grid'
-        });
-
-        window.addEventListener('load', () => {
-            
-        })
-    </script>
-{%- endif -%}
+{% render 'search-product-grid' %}
 
 {% schema %}
 {
@@ -716,6 +493,12 @@
             "type": "checkbox",
             "default": false,
             "label": "t:sections.main-toolbar.settings.general.label__2"
+        },
+        {
+            "id": "show_item_per_page",
+            "type": "checkbox",
+            "default": true,
+            "label": "Show items per page"
         },
         {
             "id": "show_view_as",
