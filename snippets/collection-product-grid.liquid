@@ -188,6 +188,7 @@
 }
 .cpg-badge--sale { background: #e8000d; color: #fff; }
 .cpg-badge--new  { background: #1a1a1a; color: #fff; }
+.cpg-badge--soldout { background: #1a1a1a; color: #fff; }
 .cpg-badge--condition {
   background: rgba(255,255,255,0.92); color: #333;
   border: 1px solid rgba(0,0,0,0.1);
@@ -609,6 +610,7 @@
                 </a>
 
                 <div class="cpg-badges">
+                  {%- unless product.available -%}<span class="cpg-badge cpg-badge--soldout">Sold Out</span>{%- endunless -%}
                   {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
                   {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
                 </div>
@@ -616,10 +618,6 @@
                 {%- if product.available -%}
                   <button class="cpg-quick-add" data-variant="{{ product.variants.first.id }}" onclick="cpgAddToCart(this)">
                     Add to Cart
-                  </button>
-                {%- else -%}
-                  <button class="cpg-quick-add" disabled style="background:rgba(100,100,100,0.8);transform:translateY(0);">
-                    Sold Out
                   </button>
                 {%- endif -%}
 

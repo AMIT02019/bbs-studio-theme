@@ -95,6 +95,7 @@
 .cpg-badges { position: absolute; top: 8px; left: 8px; display: flex; flex-direction: column; gap: 4px; z-index: 2; }
 .cpg-badge { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; line-height: 1.6; }
 .cpg-badge--sale { background: #e8000d; color: #fff; }
+.cpg-badge--soldout { background: #1a1a1a; color: #fff; }
 .cpg-badge--condition { background: rgba(255,255,255,0.92); color: #333; border: 1px solid rgba(0,0,0,0.1); }
 .cpg-quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(26,26,26,0.88); color: #fff; border: none; padding: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer; transform: translateY(100%); transition: transform 0.25s ease; }
 .cpg-card:hover .cpg-quick-add { transform: translateY(0); }
@@ -365,14 +366,13 @@
                 </a>
 
                 <div class="cpg-badges">
+                  {%- unless item.available -%}<span class="cpg-badge cpg-badge--soldout">Sold Out</span>{%- endunless -%}
                   {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
                   {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
                 </div>
 
                 {%- if item.available -%}
                   <button class="cpg-quick-add" data-variant="{{ item.variants.first.id }}" onclick="cpgAddToCart(this)">Add to Cart</button>
-                {%- else -%}
-                  <button class="cpg-quick-add" disabled style="background:rgba(100,100,100,0.8);transform:translateY(0);">Sold Out</button>
                 {%- endif -%}
 
                 <div class="cpg-card-body">
