@@ -1,0 +1,114 @@
+{%- comment -%}
+    Renders one native storefront facet (a collection.filters item) for the
+    collection grid. Extracted from collection-product-grid.liquid so facets
+    can be rendered in a custom order (e.g. Brand/Vendor before Product type).
+
+    Accepts:
+      filter  - a collection.filters item
+      index   - unique value used for element ids
+      csd     - collapse-default flag ('close' = start collapsed)
+      section - the section (for settings)
+{%- endcomment -%}
+{%- assign limit = section.settings.max_item_per_filter -%}
+{%- assign fl = filter.label | downcase -%}
+{%- assign sw_label = section.settings.filter_swatch | downcase -%}
+{%- assign sz_label = section.settings.filter_rectangle | downcase -%}
+{%- assign cur = currency | default: '₹' -%}
+<div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{{ index }}">
+  <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{{ index }}')">
+    <span>{{ filter.label }}</span>
+    <span class="cpg-toggle-icon">{% if csd == 'close' %}+{% else %}−{% endif %}</span>
+  </div>
+  <div class="cpg-filter-body">
+
+    {%- if filter.type == 'price_range' -%}
+      <div class="cpg-price-inputs">
+        <div class="cpg-price-field">
+          <span>{{ cur }}</span>
+          <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
+            value="{{ filter.min_value.value | default: '' }}"
+            min="0" max="{{ filter.range_max }}" placeholder="0">
+        </div>
+        <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
+        <div class="cpg-price-field">
+          <span>{{ cur }}</span>
+          <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
+            value="{{ filter.max_value.value | default: '' }}"
+            min="0" max="{{ filter.range_max }}" placeholder="{{ filter.range_max }}">
+        </div>
+      </div>
+      <button type="button" class="cpg-price-apply" onclick="cpgApplyPrice()">Apply</button>
+
+    {%- elsif filter.type == 'boolean' -%}
+      {%- for v in filter.values -%}
+        <label class="cpg-filter-option">
+          <input type="checkbox" {% if v.active %}checked{% endif %}
+            onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
+          {{ v.label }}
+          <span class="cpg-filter-count">({{ v.count }})</span>
+        </label>
+      {%- endfor -%}
+
+    {%- elsif filter.type == 'list' -%}
+
+      {%- if fl == sw_label -%}
+        {%- comment -%} Color swatches {%- endcomment -%}
+        {%- assign sw_layout = section.settings.filter_swatch_layout -%}
+        {%- if sw_layout == 'name' or sw_layout == 'count' -%}
+          {%- for v in filter.values -%}
+            <label class="cpg-filter-option">
+              <input type="checkbox" {% if v.active %}checked{% endif %}
+                onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
+              {{ v.label }}{% if sw_layout == 'count' %} <span class="cpg-filter-count">({{ v.count }})</span>{% endif %}
+            </label>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="cpg-swatches">
+            {%- for v in filter.values -%}
+              <a href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}"
+                title="{{ v.label }} ({{ v.count }})">
+                {%- if section.settings.filter_swatch_type == 'png' -%}
+                  <span class="cpg-swatch {% if v.active %}is-active{% endif %}"
+                    style="background-image:url({{ v.label | handle | append: '.png' | file_url }});background-size:cover;">
+                  </span>
+                {%- else -%}
+                  <span class="cpg-swatch {% if v.active %}is-active{% endif %}"
+                    style="background-color:{{ v.label | downcase }};">
+                  </span>
+                {%- endif -%}
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+      {%- elsif fl == sz_label -%}
+        {%- comment -%} Size buttons {%- endcomment -%}
+        <div class="cpg-sizes">
+          {%- for v in filter.values -%}
+            <a class="cpg-size-btn {% if v.active %}is-active{% endif %}"
+              href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}">
+              {{ v.label }}
+            </a>
+          {%- endfor -%}
+        </div>
+
+      {%- else -%}
+        {%- comment -%} Default checkbox list {%- endcomment -%}
+        {%- assign display_type = section.settings.filter_display_type -%}
+        {%- for v in filter.values -%}
+          <label class="cpg-filter-option{% if forloop.index > limit %} cpg-extra{% endif %}"
+            {% if forloop.index > limit and display_type == 'show-more' %}style="display:none"{% endif %}>
+            <input type="checkbox" {% if v.active %}checked{% endif %}
+              onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
+            {{ v.label }}
+            <span class="cpg-filter-count">({{ v.count }})</span>
+          </label>
+        {%- endfor -%}
+        {%- if display_type == 'show-more' and filter.values.size > limit -%}
+          <span class="cpg-filter-show-more" onclick="cpgShowMore(this)">+ {{ filter.values.size | minus: limit }} more</span>
+        {%- endif -%}
+      {%- endif -%}
+
+    {%- endif -%}
+  </div>
+</div>

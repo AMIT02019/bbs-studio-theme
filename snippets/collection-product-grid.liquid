@@ -383,136 +383,99 @@
         <div class="cpg-sidebar-inner">
           <div class="cpg-sidebar-title">Filters</div>
 
+          {%- liquid
+            comment
+              Build a lookup of native storefront filter labels so block-based
+              tag filters (e.g. the "Brand" block) can render alongside native
+              facets without duplicating a filter that already exists natively.
+            endcomment
+            assign native_labels = ''
+            for f in collection.filters
+              assign f_label = f.label | downcase | strip
+              assign native_labels = native_labels | append: '|' | append: f_label | append: '|'
+            endfor
+            comment
+              Filters to hide for now (pipe-delimited, lowercase). Clear this
+              string to bring Color/Size back. Applies to both native facets
+              and block-based tag filters.
+            endcomment
+            assign hidden_filters = '|color|size|'
+            comment
+              Explicit filter order (lowercase labels, comma-separated). Filters
+              listed here render first in this order (from either a tag block or
+              a native facet); anything not listed renders after, in its default
+              order. Edit this to reorder the sidebar.
+            endcomment
+            assign filter_order = 'price,availability,brand,category,product type,more filters'
+            assign filter_order_list = filter_order | split: ','
+            assign filter_order_str = filter_order | prepend: '|' | append: '|' | replace: ',', '|'
+          -%}
           {%- if collection.filters.size > 0 -%}
-            {%- for filter in collection.filters -%}
-              {%- assign limit = section.settings.max_item_per_filter -%}
-              {%- assign fl = filter.label | downcase -%}
-              {%- assign sw_label = section.settings.filter_swatch | downcase -%}
-              {%- assign sz_label = section.settings.filter_rectangle | downcase -%}
-
-              <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{{ forloop.index }}">
-                <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{{ forloop.index }}')">
-                  <span>{{ filter.label }}</span>
-                  <span class="cpg-toggle-icon">{% if csd == 'close' %}+{% else %}−{% endif %}</span>
-                </div>
-                <div class="cpg-filter-body">
-
-                  {%- if filter.type == 'price_range' -%}
-                    <div class="cpg-price-inputs">
-                      <div class="cpg-price-field">
-                        <span>₹</span>
-                        <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
-                          value="{{ filter.min_value.value | default: '' }}"
-                          min="0" max="{{ filter.range_max }}" placeholder="0">
-                      </div>
-                      <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
-                      <div class="cpg-price-field">
-                        <span>₹</span>
-                        <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
-                          value="{{ filter.max_value.value | default: '' }}"
-                          min="0" max="{{ filter.range_max }}" placeholder="{{ filter.range_max }}">
-                      </div>
-                    </div>
-                    <button type="button" class="cpg-price-apply" onclick="cpgApplyPrice()">Apply</button>
-
-                  {%- elsif filter.type == 'boolean' -%}
-                    {%- for v in filter.values -%}
-                      <label class="cpg-filter-option">
-                        <input type="checkbox" {% if v.active %}checked{% endif %}
-                          onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
-                        {{ v.label }}
-                        <span class="cpg-filter-count">({{ v.count }})</span>
-                      </label>
-                    {%- endfor -%}
-
-                  {%- elsif filter.type == 'list' -%}
-
-                    {%- if fl == sw_label -%}
-                      {%- comment -%} Color swatches {%- endcomment -%}
-                      {%- assign sw_layout = section.settings.filter_swatch_layout -%}
-                      {%- if sw_layout == 'name' or sw_layout == 'count' -%}
-                        {%- for v in filter.values -%}
-                          <label class="cpg-filter-option">
-                            <input type="checkbox" {% if v.active %}checked{% endif %}
-                              onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
-                            {{ v.label }}{% if sw_layout == 'count' %} <span class="cpg-filter-count">({{ v.count }})</span>{% endif %}
-                          </label>
-                        {%- endfor -%}
-                      {%- else -%}
-                        <div class="cpg-swatches">
-                          {%- for v in filter.values -%}
-                            <a href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}"
-                              title="{{ v.label }} ({{ v.count }})">
-                              {%- if section.settings.filter_swatch_type == 'png' -%}
-                                <span class="cpg-swatch {% if v.active %}is-active{% endif %}"
-                                  style="background-image:url({{ v.label | handle | append: '.png' | file_url }});background-size:cover;">
-                                </span>
-                              {%- else -%}
-                                <span class="cpg-swatch {% if v.active %}is-active{% endif %}"
-                                  style="background-color:{{ v.label | downcase }};">
-                                </span>
-                              {%- endif -%}
-                            </a>
-                          {%- endfor -%}
-                        </div>
-                      {%- endif -%}
-
-                    {%- elsif fl == sz_label -%}
-                      {%- comment -%} Size buttons {%- endcomment -%}
-                      <div class="cpg-sizes">
-                        {%- for v in filter.values -%}
-                          <a class="cpg-size-btn {% if v.active %}is-active{% endif %}"
-                            href="{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}">
-                            {{ v.label }}
-                          </a>
-                        {%- endfor -%}
-                      </div>
-
-                    {%- else -%}
-                      {%- comment -%} Default checkbox list {%- endcomment -%}
-                      {%- assign display_type = section.settings.filter_display_type -%}
-                      {%- for v in filter.values -%}
-                        <label class="cpg-filter-option{% if forloop.index > limit %} cpg-extra{% endif %}"
-                          {% if forloop.index > limit and display_type == 'show-more' %}style="display:none"{% endif %}>
-                          <input type="checkbox" {% if v.active %}checked{% endif %}
-                            onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
-                          {{ v.label }}
-                          <span class="cpg-filter-count">({{ v.count }})</span>
-                        </label>
-                      {%- endfor -%}
-                      {%- if display_type == 'show-more' and filter.values.size > limit -%}
-                        <span class="cpg-filter-show-more" onclick="cpgShowMore(this)">+ {{ filter.values.size | minus: limit }} more</span>
-                      {%- endif -%}
-                    {%- endif -%}
-
+            {%- comment -%} 1) Render filters in the explicit order (block or native source) {%- endcomment -%}
+            {%- for ord in filter_order_list -%}
+              {%- assign ord_label = ord | strip | downcase -%}
+              {%- assign ord_check = '|' | append: ord_label | append: '|' -%}
+              {%- if hidden_filters contains ord_check -%}{%- continue -%}{%- endif -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'filter' -%}
+                  {%- assign bh = block.settings.heading | downcase | strip -%}
+                  {%- if bh == ord_label -%}
+                    {% render 'cpg-block-tag-filter', block: block, native_labels: native_labels, hidden_filters: hidden_filters, csd: csd %}
                   {%- endif -%}
-                </div>
-              </div>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- for filter in collection.filters -%}
+                {%- assign nfl = filter.label | downcase | strip -%}
+                {%- comment -%} Treat a native Vendor facet as "brand" so it slots into filter_order {%- endcomment -%}
+                {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+                {%- if nfl == ord_label -%}
+                  {% render 'cpg-native-filter', filter: filter, index: filter.label | handle, csd: csd, section: section %}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+
+            {%- comment -%} 2) Remaining tag blocks not in the explicit order {%- endcomment -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'filter' -%}
+                {%- assign bh = block.settings.heading | downcase | strip -%}
+                {%- assign bh_check = '|' | append: bh | append: '|' -%}
+                {%- unless filter_order_str contains bh_check -%}
+                  {% render 'cpg-block-tag-filter', block: block, native_labels: native_labels, hidden_filters: hidden_filters, csd: csd %}
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- comment -%} 3) Remaining native facets not in the explicit order {%- endcomment -%}
+            {%- for filter in collection.filters -%}
+              {%- assign nfl = filter.label | downcase | strip -%}
+              {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+              {%- assign nfl_check = '|' | append: nfl | append: '|' -%}
+              {%- if hidden_filters contains nfl_check -%}{%- continue -%}{%- endif -%}
+              {%- unless filter_order_str contains nfl_check -%}
+                {% render 'cpg-native-filter', filter: filter, index: filter.label | handle, csd: csd, section: section %}
+              {%- endunless -%}
             {%- endfor -%}
 
           {%- else -%}
-            {%- comment -%} Fallback: manual block-based tag filters {%- endcomment -%}
+            {%- comment -%} Fallback: manual block-based tag filters, in the explicit order first {%- endcomment -%}
+            {%- for ord in filter_order_list -%}
+              {%- assign ord_label = ord | strip | downcase -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'filter' -%}
+                  {%- assign bh = block.settings.heading | downcase | strip -%}
+                  {%- if bh == ord_label -%}
+                    {% render 'cpg-block-tag-filter', block: block, native_labels: native_labels, hidden_filters: hidden_filters, csd: csd %}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'filter' -%}
-                <div class="cpg-filter-group" id="cpg-blk-{{ forloop.index }}" {{ block.shopify_attributes }}>
-                  <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-blk-{{ forloop.index }}')">
-                    <span>{{ block.settings.heading }}</span>
-                    <span class="cpg-toggle-icon">−</span>
-                  </div>
-                  <div class="cpg-filter-body">
-                    {%- assign tag_list = block.settings.list_tags | newline_to_br | strip_html | split: '<br />' -%}
-                    {%- for tag in tag_list -%}
-                      {%- assign tag_clean = tag | strip -%}
-                      {%- if tag_clean != blank -%}
-                        <label class="cpg-filter-option">
-                          <input type="checkbox" {% if current_tags contains tag_clean %}checked{% endif %}
-                            onchange="{% if current_tags contains tag_clean %}window.location='{{ collection.url }}'{% else %}window.location='{{ collection.url }}/{{ tag_clean | handle }}'{% endif %}">
-                          {{ tag_clean }}
-                        </label>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
-                </div>
+                {%- assign bh = block.settings.heading | downcase | strip -%}
+                {%- assign bh_check = '|' | append: bh | append: '|' -%}
+                {%- unless filter_order_str contains bh_check -%}
+                  {% render 'cpg-block-tag-filter', block: block, native_labels: native_labels, hidden_filters: hidden_filters, csd: csd %}
+                {%- endunless -%}
               {%- elsif block.type == 'image' and block.settings.image != blank -%}
                 <div class="cpg-filter-group" {{ block.shopify_attributes }}>
                   {%- if block.settings.heading != blank -%}
