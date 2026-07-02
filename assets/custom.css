@@ -44,3 +44,25 @@
     overflow-y: auto !important;
   }
 }
+
+
+/* Ensure Sticky Scroll works by preventing parent overflow hidden */
+body.layout_default .body-content-wrapper,
+.halo-collection-content,
+.halo-collection-content .row,
+.halo-sidebar-left {
+  overflow: visible !important;
+  overflow-x: clip !important;
+}
+
+/* Hide scrollbar for cleaner look like myalmari */
+.cpg-sidebar--sticky::-webkit-scrollbar,
+.halo-sidebar-wrapper::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+.cpg-sidebar--sticky,
+.halo-sidebar-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
