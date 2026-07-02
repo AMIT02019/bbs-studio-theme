@@ -426,6 +426,8 @@
               {%- endfor -%}
               {%- for filter in collection.filters -%}
                 {%- assign nfl = filter.label | downcase | strip -%}
+                {%- comment -%} Treat a native Vendor facet as "brand" so it slots into filter_order {%- endcomment -%}
+                {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
                 {%- if nfl == ord_label -%}
                   {% render 'cpg-native-filter', filter: filter, index: filter.label | handle, csd: csd, section: section %}
                 {%- endif -%}
@@ -446,6 +448,7 @@
             {%- comment -%} 3) Remaining native facets not in the explicit order {%- endcomment -%}
             {%- for filter in collection.filters -%}
               {%- assign nfl = filter.label | downcase | strip -%}
+              {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
               {%- assign nfl_check = '|' | append: nfl | append: '|' -%}
               {%- if hidden_filters contains nfl_check -%}{%- continue -%}{%- endif -%}
               {%- unless filter_order_str contains nfl_check -%}
