@@ -1,0 +1,55 @@
+{%- comment -%}
+    Renders one section block as a tag-based filter group for the collection grid
+    (snippets/collection-product-grid.liquid).
+
+    Only tags that actually exist in the current collection (collection.all_tags)
+    are shown, so brand / tag names stay connected to the collection. If none of
+    the block's tags are present in the collection, the whole group is skipped.
+    Multi-select via link_to_add_tag / link_to_remove_tag.
+
+    Accepts:
+      block          - the section block (type 'filter')
+      native_labels  - '|label|label|' of native facet labels to avoid duplicating
+      hidden_filters - '|label|label|' of filters to hide (e.g. '|color|size|')
+      csd            - collapse-default flag ('close' = start collapsed)
+{%- endcomment -%}
+{%- if block.type == 'filter' -%}
+    {%- assign block_heading = block.settings.heading | downcase | strip -%}
+    {%- assign block_heading_check = '|' | append: block_heading | append: '|' -%}
+    {%- unless native_labels contains block_heading_check or hidden_filters contains block_heading_check -%}
+        {%- assign tag_list = block.settings.list_tags | newline_to_br | replace: '<br />', ',' | split: ',' -%}
+        {%- comment -%} Keep only the tags that exist in this collection {%- endcomment -%}
+        {%- assign present_tags = '' -%}
+        {%- for tag in tag_list -%}
+            {%- assign tag_clean = tag | strip -%}
+            {%- if tag_clean != blank and collection.all_tags contains tag_clean -%}
+                {%- assign present_tags = present_tags | append: tag_clean | append: '~|~' -%}
+            {%- endif -%}
+        {%- endfor -%}
+        {%- assign present_tags = present_tags | split: '~|~' -%}
+        {%- if present_tags.size > 0 -%}
+            <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-blk-{{ block.id }}" {{ block.shopify_attributes }}>
+                <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-blk-{{ block.id }}')">
+                    <span>{{ block.settings.heading }}</span>
+                    <span class="cpg-toggle-icon">{% if csd == 'close' %}+{% else %}−{% endif %}</span>
+                </div>
+                <div class="cpg-filter-body">
+                    {%- for tag_clean in present_tags -%}
+                        {%- comment -%} link_to_(add|remove)_tag combines with current tags, so multiple values can be selected at once {%- endcomment -%}
+                        {%- if current_tags contains tag_clean -%}
+                            {%- capture tag_link -%}{{ tag_clean | link_to_remove_tag: tag_clean }}{%- endcapture -%}
+                        {%- else -%}
+                            {%- capture tag_link -%}{{ tag_clean | link_to_add_tag: tag_clean }}{%- endcapture -%}
+                        {%- endif -%}
+                        {%- assign tag_url = tag_link | split: 'href="' | last | split: '"' | first -%}
+                        <label class="cpg-filter-option">
+                            <input type="checkbox" {% if current_tags contains tag_clean %}checked{% endif %}
+                                onchange="window.location='{{ tag_url }}'">
+                            {{ tag_clean }}
+                        </label>
+                    {%- endfor -%}
+                </div>
+            </div>
+        {%- endif -%}
+    {%- endunless -%}
+{%- endif -%}
