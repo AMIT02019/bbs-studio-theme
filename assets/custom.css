@@ -9,3 +9,38 @@
 // Please use only CSS to style the layout.
 //
 // =============================================================================*/
+
+
+/* Added for Sticky Sidebar on Collection & Search Pages */
+@media (min-width: 1025px) {
+  .page-sidebar {
+    position: sticky !important;
+    top: 80px !important;
+    height: max-content !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+    align-self: flex-start !important;
+  }
+  .halo-sidebar-content {
+    position: sticky !important;
+    top: 80px !important;
+    height: max-content !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+  }
+  .halo-sidebar-wrapper {
+    position: sticky !important;
+    top: 80px !important;
+    height: max-content !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+  }
+  /* The innermost sidebar container */
+  .cpg-sidebar--sticky {
+    position: sticky !important;
+    top: 80px !important;
+    height: max-content !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+  }
+}
