@@ -406,7 +406,7 @@
               a native facet); anything not listed renders after, in its default
               order. Edit this to reorder the sidebar.
             endcomment
-            assign filter_order = 'category,brand,product type'
+            assign filter_order = 'price,availability,brand,category,product type,more filters'
             assign filter_order_list = filter_order | split: ','
             assign filter_order_str = filter_order | prepend: '|' | append: '|' | replace: ',', '|'
           -%}

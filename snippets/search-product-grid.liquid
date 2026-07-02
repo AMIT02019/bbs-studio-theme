@@ -246,7 +246,7 @@
               Native-facet rendering is shared via snippets/cpg-native-filter.
             endcomment
             assign hidden_filters = '|color|size|'
-            assign filter_order = 'category,brand,product type'
+            assign filter_order = 'price,availability,brand,category,product type,more filters'
             assign filter_order_list = filter_order | split: ','
             assign filter_order_str = filter_order | prepend: '|' | append: '|' | replace: ',', '|'
           -%}
