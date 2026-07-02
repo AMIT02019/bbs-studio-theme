@@ -383,12 +383,32 @@
         <div class="cpg-sidebar-inner">
           <div class="cpg-sidebar-title">Filters</div>
 
+          {%- liquid
+            comment
+              Build a lookup of native storefront filter labels so block-based
+              tag filters (e.g. the "Brand" block) can render alongside native
+              facets without duplicating a filter that already exists natively.
+            endcomment
+            assign native_labels = ''
+            for f in collection.filters
+              assign f_label = f.label | downcase | strip
+              assign native_labels = native_labels | append: '|' | append: f_label | append: '|'
+            endfor
+            comment
+              Filters to hide for now (pipe-delimited, lowercase). Clear this
+              string to bring Color/Size back. Applies to both native facets
+              and block-based tag filters.
+            endcomment
+            assign hidden_filters = '|color|size|'
+          -%}
           {%- if collection.filters.size > 0 -%}
             {%- for filter in collection.filters -%}
               {%- assign limit = section.settings.max_item_per_filter -%}
               {%- assign fl = filter.label | downcase -%}
               {%- assign sw_label = section.settings.filter_swatch | downcase -%}
               {%- assign sz_label = section.settings.filter_rectangle | downcase -%}
+              {%- assign fl_check = '|' | append: fl | strip | append: '|' -%}
+              {%- if hidden_filters contains fl_check -%}{%- continue -%}{%- endif -%}
 
               <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{{ forloop.index }}">
                 <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{{ forloop.index }}')">
@@ -490,23 +510,68 @@
               </div>
             {%- endfor -%}
 
+            {%- comment -%} Block-based tag filters (e.g. Brand) that aren't native facets {%- endcomment -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'filter' -%}
+                {%- assign block_heading = block.settings.heading | downcase | strip -%}
+                {%- assign block_heading_check = '|' | append: block_heading | append: '|' -%}
+                {%- unless native_labels contains block_heading_check or hidden_filters contains block_heading_check -%}
+                  <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-blk-{{ forloop.index }}" {{ block.shopify_attributes }}>
+                    <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-blk-{{ forloop.index }}')">
+                      <span>{{ block.settings.heading }}</span>
+                      <span class="cpg-toggle-icon">{% if csd == 'close' %}+{% else %}−{% endif %}</span>
+                    </div>
+                    <div class="cpg-filter-body">
+                      {%- assign tag_list = block.settings.list_tags | newline_to_br | replace: '<br />', ',' | split: ',' -%}
+                      {%- for tag in tag_list -%}
+                        {%- assign tag_clean = tag | strip -%}
+                        {%- if tag_clean != blank -%}
+                          {%- comment -%} link_to_(add|remove)_tag combines with current tags, so multiple brands can be selected at once {%- endcomment -%}
+                          {%- if current_tags contains tag_clean -%}
+                            {%- capture tag_link -%}{{ tag_clean | link_to_remove_tag: tag_clean }}{%- endcapture -%}
+                          {%- else -%}
+                            {%- capture tag_link -%}{{ tag_clean | link_to_add_tag: tag_clean }}{%- endcapture -%}
+                          {%- endif -%}
+                          {%- assign tag_url = tag_link | split: 'href="' | last | split: '"' | first -%}
+                          <label class="cpg-filter-option">
+                            <input type="checkbox" {% if current_tags contains tag_clean %}checked{% endif %}
+                              onchange="window.location='{{ tag_url }}'">
+                            {{ tag_clean }}
+                          </label>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+
           {%- else -%}
             {%- comment -%} Fallback: manual block-based tag filters {%- endcomment -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'filter' -%}
+                {%- assign block_heading_check = '|' | append: block.settings.heading | downcase | strip | append: '|' -%}
+                {%- if hidden_filters contains block_heading_check -%}{%- continue -%}{%- endif -%}
                 <div class="cpg-filter-group" id="cpg-blk-{{ forloop.index }}" {{ block.shopify_attributes }}>
                   <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-blk-{{ forloop.index }}')">
                     <span>{{ block.settings.heading }}</span>
                     <span class="cpg-toggle-icon">−</span>
                   </div>
                   <div class="cpg-filter-body">
-                    {%- assign tag_list = block.settings.list_tags | newline_to_br | strip_html | split: '<br />' -%}
+                    {%- assign tag_list = block.settings.list_tags | newline_to_br | replace: '<br />', ',' | split: ',' -%}
                     {%- for tag in tag_list -%}
                       {%- assign tag_clean = tag | strip -%}
                       {%- if tag_clean != blank -%}
+                        {%- comment -%} link_to_(add|remove)_tag combines with current tags, so multiple brands can be selected at once {%- endcomment -%}
+                        {%- if current_tags contains tag_clean -%}
+                          {%- capture tag_link -%}{{ tag_clean | link_to_remove_tag: tag_clean }}{%- endcapture -%}
+                        {%- else -%}
+                          {%- capture tag_link -%}{{ tag_clean | link_to_add_tag: tag_clean }}{%- endcapture -%}
+                        {%- endif -%}
+                        {%- assign tag_url = tag_link | split: 'href="' | last | split: '"' | first -%}
                         <label class="cpg-filter-option">
                           <input type="checkbox" {% if current_tags contains tag_clean %}checked{% endif %}
-                            onchange="{% if current_tags contains tag_clean %}window.location='{{ collection.url }}'{% else %}window.location='{{ collection.url }}/{{ tag_clean | handle }}'{% endif %}">
+                            onchange="window.location='{{ tag_url }}'">
                           {{ tag_clean }}
                         </label>
                       {%- endif -%}
