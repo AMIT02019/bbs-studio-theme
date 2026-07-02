@@ -13,6 +13,7 @@
 {%- assign fl = filter.label | downcase -%}
 {%- assign sw_label = section.settings.filter_swatch | downcase -%}
 {%- assign sz_label = section.settings.filter_rectangle | downcase -%}
+{%- assign cur = currency | default: '₹' -%}
 <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{{ index }}">
   <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{{ index }}')">
     <span>{{ filter.label }}</span>
@@ -23,14 +24,14 @@
     {%- if filter.type == 'price_range' -%}
       <div class="cpg-price-inputs">
         <div class="cpg-price-field">
-          <span>₹</span>
+          <span>{{ cur }}</span>
           <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
             value="{{ filter.min_value.value | default: '' }}"
             min="0" max="{{ filter.range_max }}" placeholder="0">
         </div>
         <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
         <div class="cpg-price-field">
-          <span>₹</span>
+          <span>{{ cur }}</span>
           <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
             value="{{ filter.max_value.value | default: '' }}"
             min="0" max="{{ filter.range_max }}" placeholder="{{ filter.range_max }}">
