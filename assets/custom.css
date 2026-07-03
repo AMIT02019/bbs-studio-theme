@@ -128,11 +128,19 @@ body.layout_default .body-content-wrapper,
   width: 0 !important;
 }
 
-/* Fix any parent overflow issues breaking sticky */
-body,
-html,
-.body-content-wrapper,
-#MainContent,
+
+
+.halo-collection-content, 
+.cpg-layout {
+  overflow-y: visible !important;
+}
+
+
+/* Fix any parent overflow issues breaking sticky, scoped to collections ONLY */
+body.template-collection,
+html:has(body.template-collection),
+body.template-collection .body-content-wrapper,
+body.template-collection #MainContent,
 .cpg-layout,
 .halo-collection-content {
   overflow-x: clip !important;
