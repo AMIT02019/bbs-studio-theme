@@ -72,3 +72,12 @@ body.layout_default .body-content-wrapper,
 .footer .footer-block__item {
   text-transform: uppercase;
 }
+
+
+/* Make ALL footer text uppercase strictly */
+.footer-block__list *,
+.footer-block__list .text,
+.footer-block__subheading p,
+.footer-block__newsletter-item ::placeholder {
+  text-transform: uppercase !important;
+}
