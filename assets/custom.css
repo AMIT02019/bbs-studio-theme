@@ -66,3 +66,9 @@ body.layout_default .body-content-wrapper,
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+/* Make footer uppercase */
+.footer .footer-block__item {
+  text-transform: uppercase;
+}
