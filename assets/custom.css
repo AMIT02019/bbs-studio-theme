@@ -109,3 +109,36 @@ body.layout_default .body-content-wrapper,
 .halo-collection-content {
   overflow: visible !important;
 }
+
+
+/* MyAlmari style sticky sidebar with hidden scrollbar */
+.cpg-sidebar--sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 120px !important; 
+  height: calc(100vh - 140px) !important; /* Make sure it has a defined height to scroll within */
+  overflow-y: auto !important;
+  align-self: flex-start !important;
+  -ms-overflow-style: none !important;  
+  scrollbar-width: none !important;  
+}
+
+.cpg-sidebar--sticky::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* Fix any parent overflow issues breaking sticky */
+body,
+html,
+.body-content-wrapper,
+#MainContent,
+.cpg-layout,
+.halo-collection-content {
+  overflow-x: clip !important;
+}
+
+.halo-collection-content, 
+.cpg-layout {
+  overflow-y: visible !important;
+}
