@@ -150,3 +150,17 @@ body.template-collection #MainContent,
 .cpg-layout {
   overflow-y: visible !important;
 }
+
+
+/* Reorder sidebar filters */
+.cpg-sidebar-inner {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cpg-sidebar-title { order: 0; }
+#cpg-fg-Price { order: 1; }
+#cpg-fg-Availability { order: 2; }
+#cpg-fg-Brands { order: 3; }
+#cpg-fg-Category { order: 4; }
+[id="cpg-fg-Product type"] { order: 5; }
