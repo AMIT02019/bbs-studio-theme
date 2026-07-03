@@ -81,3 +81,12 @@ body.layout_default .body-content-wrapper,
 .footer-block__newsletter-item ::placeholder {
   text-transform: uppercase !important;
 }
+
+
+/* Make sidebar filters uppercase */
+.cpg-filter-title span,
+.cpg-filter-option,
+.cpg-filter-group button,
+.cpg-filter-group .button {
+  text-transform: uppercase !important;
+}
