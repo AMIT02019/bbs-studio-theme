@@ -107,6 +107,9 @@ body.layout_default .body-content-wrapper,
 .page-collection,
 .page-collection .container,
 .page-collection .row,
+.page-search,
+.page-search .container,
+.page-search .row,
 .cpg-sidebar-container,
 .halo-collection-content {
   overflow: visible !important;
@@ -144,6 +147,10 @@ body.template-collection,
 html:has(body.template-collection),
 body.template-collection .body-content-wrapper,
 body.template-collection #MainContent,
+body.template-search,
+html:has(body.template-search),
+body.template-search .body-content-wrapper,
+body.template-search #MainContent,
 .cpg-layout,
 .halo-collection-content {
   overflow-x: clip !important;
