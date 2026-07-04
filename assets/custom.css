@@ -174,3 +174,14 @@ body.template-search #MainContent,
 #cpg-fg-Brands { order: 3; }
 #cpg-fg-Category { order: 4; }
 [id="cpg-fg-Product type"] { order: 5; }
+
+
+/* Vintage Designer Jewellery Page Grid Text */
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw *,
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw h3,
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw h4,
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw span,
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw a,
+.ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw p {
+  text-transform: uppercase !important;
+}
