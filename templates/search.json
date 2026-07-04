@@ -53,7 +53,43 @@
         "mg_bottom_desktop": 0,
         "mg_bottom_tablet": 0,
         "mg_bottom_mobile": 0
-      }
+      },
+      "blocks": {
+        "ce351101-2c54-4627-b740-b2c592067b4a": {
+          "type": "filter",
+          "settings": {
+            "heading": "Color",
+            "list_tags": "White,Black,Blue,Invory,Beige,Brown,Silver,Olive,Gainsboro,DimGray,Burlywood,Lightblue,Salmon,LightPink,LightCoral"
+          }
+        },
+        "6684d566-6940-4457-9cf9-f1a8a6e80573": {
+          "type": "filter",
+          "settings": {
+            "heading": "Size",
+            "list_tags": "S,XS,M,L,XL"
+          }
+        },
+        "brand-filter-block-001": {
+          "type": "filter",
+          "settings": {
+            "heading": "Brand",
+            "list_tags": "Chanel,Gucci,Louis Vuitton,Prada,Dior"
+          }
+        },
+        "category-filter-block-001": {
+          "type": "filter",
+          "settings": {
+            "heading": "Category",
+            "list_tags": "Bags,Shoes,Jewellery,Watches,Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "ce351101-2c54-4627-b740-b2c592067b4a",
+        "6684d566-6940-4457-9cf9-f1a8a6e80573",
+        "brand-filter-block-001",
+        "category-filter-block-001"
+      ]
     },
     "sparq-filter": {
       "type": "sparq-filter",
