@@ -1,4 +1,9 @@
 {%- comment -%} snippets/collection-product-grid.liquid {%- endcomment -%}
+<script>
+  if (window.location.pathname === '/collections/all' && !window.location.search.includes('sort_by')) {
+    window.location.replace('/collections/all?sort_by=created-descending');
+  }
+</script>
 
 {%- liquid
   assign products_per_page = section.settings.products_per_page | plus: 0
