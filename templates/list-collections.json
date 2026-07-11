@@ -348,6 +348,7 @@
         "3caf9594-d59f-4fcb-aa49-ca70fc027cc9",
         "5355789e-c611-4e6a-9282-a3f2ec77001c"
       ],
+      "disabled": true,
       "settings": {
         "container": "container",
         "padding_full_width": 0,
