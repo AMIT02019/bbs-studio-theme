@@ -73,6 +73,9 @@
     - Pinterest-worthy composition
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{%- if block.settings.background_image != blank -%}
+  <link rel="preload" as="image" href="{{ block.settings.background_image | image_url: width: 2000 }}" fetchpriority="high">
+{%- endif -%}
 
 {% style %}
   .ai-vintage-hero-{{ ai_gen_id }} {

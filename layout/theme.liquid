@@ -40,9 +40,6 @@
             <meta name="description" content="{{ page_description | escape }}">
         {%- endif -%}
         {% render 'meta-tags' %}
-        {%- if template == 'index' -%}
-            <link rel="preload" as="image" href="{{ 'jpg_1-2_1.webp' | file_url }}" fetchpriority="high">
-        {%- endif -%}
         {{ content_for_header }}
         {% render 'variable' %}
         {% render 'global-style' %}
