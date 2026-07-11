@@ -458,17 +458,16 @@
       "blocks": {
         "instafeed_app_block_tcrgiY": {
           "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
-          "disabled": true,
           "settings": {
             "title": "FOLLOW US ON INSTAGRAM",
             "title_color": "",
             "title_size_v2": 24,
             "alignment": "left",
-            "instafeed_margin_top": 50,
-            "instafeed_margin_bottom": 60,
-            "instafeed_margin_sides": 80,
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 30,
+            "instafeed_margin_sides": 30,
             "show_instagram_link": false,
-            "link_alignment": "left",
+            "link_alignment": "center",
             "link_color": "#000000",
             "background_color": "#f8f6f3",
             "feed_id": "",
