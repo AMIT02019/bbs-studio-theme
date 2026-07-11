@@ -234,18 +234,17 @@
       {%- assign bg_image = block.settings.background_image -%}
       <img
         srcset="
-          {{ bg_image | image_url: width: 400 }} 400w,
-          {{ bg_image | image_url: width: 800 }} 800w,
-          {{ bg_image | image_url: width: 1200 }} 1200w,
-          {{ bg_image | image_url: width: 2000 }} 2000w
+          {{ block.settings.background_image | image_url: width: 400, height: 800, crop: 'center' }} 400w,
+          {{ block.settings.background_image | image_url: width: 600, height: 1200, crop: 'center' }} 600w,
+          {{ block.settings.background_image | image_url: width: 800, height: 1600, crop: 'center' }} 800w
         "
         sizes="100vw"
-        src="{{ bg_image | image_url: width: 1200 }}"
-        alt="{{ bg_image.alt | escape }}"
+        src="{{ block.settings.background_image | image_url: width: 600, height: 1200, crop: 'center' }}"
+        alt="{{ block.settings.background_image.alt | escape }}"
         loading="eager"
         fetchpriority="high"
-        width="{{ bg_image.width }}"
-        height="{{ bg_image.height }}"
+        width="600"
+        height="1200"
         class="{% if block.settings.enable_parallax %}mobile-only-img-{{ ai_gen_id }}{% endif %}"
       >
     {% else %}
