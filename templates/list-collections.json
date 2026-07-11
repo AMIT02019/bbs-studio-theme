@@ -380,7 +380,7 @@
         "sidebar_heading_text_transform": "uppercase",
         "type": "custom",
         "sort": "alphabetical",
-        "item_per_row": "1",
+        "item_per_row": "3",
         "item_per_row_mb": "1",
         "padding_top_collection_list": 15,
         "padding_bottom_collection_list": 80,
