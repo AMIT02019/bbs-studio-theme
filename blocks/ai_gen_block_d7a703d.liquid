@@ -137,14 +137,6 @@
 
   .ai-vintage-hero-text-container-{{ ai_gen_id }} {
     max-width: 500px;
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .ai-vintage-hero-{{ ai_gen_id }}.loaded .ai-vintage-hero-text-container-{{ ai_gen_id }} {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 1s ease-out 0.3s, transform 1s ease-out 0.3s;
   }
 
   .ai-vintage-hero-heading-{{ ai_gen_id }} {
@@ -286,23 +278,7 @@
   </div>
 </vintage-hero-{{ ai_gen_id }}>
 
-<script>
-  (function() {
-    class VintageHero{{ ai_gen_id }} extends HTMLElement {
-      constructor() {
-        super();
-      }
 
-      connectedCallback() {
-        setTimeout(() => {
-          this.classList.add('loaded');
-        }, 100);
-      }
-    }
-
-    customElements.define('vintage-hero-{{ ai_gen_id }}', VintageHero{{ ai_gen_id }});
-  })();
-</script>
 
 {% schema %}
 {
