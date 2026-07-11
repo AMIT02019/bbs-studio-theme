@@ -165,7 +165,7 @@
         {%- endif -%}
 
         {%- if settings.use_custom_js -%}
-            {{ 'custom.js' | asset_url | script_tag }}
+            <script src="{{ 'custom.js' | asset_url }}" defer></script>
         {%- endif -%}
 
         <div class="background-overlay">

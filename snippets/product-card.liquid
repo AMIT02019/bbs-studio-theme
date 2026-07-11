@@ -157,7 +157,7 @@
                             <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
                             {%- if vendor_img != blank -%}
                                 <a class="vendor-image" href="/collections/vendors?q={{ product_card_product.vendor }}" title="{{ product_card_product.vendor }}">
-                                    <img src="{{ vendor_img | file_url }}" alt="{{ product_card_product.vendor }}">
+                                    <img src="{{ vendor_img | file_url }}" alt="{{ product_card_product.vendor }}" loading="lazy">
                                 </a>
                             {%- else -%}
                                 {{ product_card_product.vendor | link_to_vendor: class: 'vendor-text' }}
