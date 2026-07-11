@@ -73,9 +73,6 @@
     - Pinterest-worthy composition
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
-{%- if block.settings.background_image != blank -%}
-  <link rel="preload" as="image" href="{{ block.settings.background_image | image_url: width: 2000 }}" fetchpriority="high">
-{%- endif -%}
 
 {% style %}
   .ai-vintage-hero-{{ ai_gen_id }} {
@@ -97,20 +94,25 @@
   }
 
   {% if block.settings.enable_parallax %}
-    .ai-vintage-hero-background-{{ ai_gen_id }} {
-      background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-    }
-  {% else %}
-    .ai-vintage-hero-background-{{ ai_gen_id }} img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    @media (min-width: 750px) {
+      .ai-vintage-hero-background-{{ ai_gen_id }} {
+        background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      .mobile-only-img-{{ ai_gen_id }} {
+        display: none !important;
+      }
     }
   {% endif %}
+
+  .ai-vintage-hero-background-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   .ai-vintage-hero-overlay-{{ ai_gen_id }} {
     position: absolute;
@@ -237,15 +239,23 @@
 <vintage-hero-{{ ai_gen_id }} class="ai-vintage-hero-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-vintage-hero-background-{{ ai_gen_id }}">
     {% if block.settings.background_image %}
-      {% unless block.settings.enable_parallax %}
-        <img
-          src="{{ block.settings.background_image | image_url: width: 2000 }}"
-          alt="{{ block.settings.background_image.alt | escape }}"
-          loading="eager"
-          width="{{ block.settings.background_image.width }}"
-          height="{{ block.settings.background_image.height }}"
-        >
-      {% endunless %}
+      {%- assign bg_image = block.settings.background_image -%}
+      <img
+        srcset="
+          {{ bg_image | image_url: width: 400 }} 400w,
+          {{ bg_image | image_url: width: 800 }} 800w,
+          {{ bg_image | image_url: width: 1200 }} 1200w,
+          {{ bg_image | image_url: width: 2000 }} 2000w
+        "
+        sizes="100vw"
+        src="{{ bg_image | image_url: width: 1200 }}"
+        alt="{{ bg_image.alt | escape }}"
+        loading="eager"
+        fetchpriority="high"
+        width="{{ bg_image.width }}"
+        height="{{ bg_image.height }}"
+        class="{% if block.settings.enable_parallax %}mobile-only-img-{{ ai_gen_id }}{% endif %}"
+      >
     {% else %}
       <div style="width: 100%; height: 100%; background-color: #1a1a2e; display: flex; align-items: center; justify-content: center;">
         {{ 'hero-apparel-1' | placeholder_svg_tag }}
