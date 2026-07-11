@@ -1,4 +1,4 @@
-<newsletter-popup class="halo-popup halo-newsletter-popup {% if settings.show_newsletter_popup_image %} customPopup-banner custom-scrollbar{% endif %}" data-newsletter-popup data-delay="{{ settings.newsletter_popup_delay | times:1000 }}" data-expire="{{ settings.newsletter_popup_expire }}" id="halo-newsletter-popup">
+<newsletter-popup class="halo-popup halo-newsletter-popup {% if settings.show_newsletter_popup_image %} customPopup-banner custom-scrollbar{% endif %}" data-newsletter-popup data-delay="15000" data-expire="{{ settings.newsletter_popup_expire }}" id="halo-newsletter-popup">
     {%- if settings.show_newsletter_popup_image -%}
         <div class="halo-popup-banner">
             {%- if settings.newsletter_popup_image != blank -%}
@@ -6,7 +6,7 @@
                 {%- if settings.popup_newsletter_link_image != blank -%}
                     <a {% if settings.popup_newsletter_link_image == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.popup_newsletter_link_image }}"{% endif %} target="_blank">
                 {%- endif -%}
-                    <img srcset="{{ image | img_url: 'master' }}" src="{{ image | img_url: 'master' }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} alt="{{ image.alt | default: shop.name | escape }}">
+                    <img srcset="{{ image | img_url: 'master' }}" src="{{ image | img_url: 'master' }}" loading="lazy" alt="{{ image.alt | default: shop.name | escape }}">
                 {%- if settings.popup_newsletter_link_image != blank -%}
                     </a>
                 {%- endif -%}
