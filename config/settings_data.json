@@ -158,6 +158,7 @@
     "badge_postion": "left",
     "new_badge_type": "manual",
     "sale_badge_type": "text",
+    "show_sold_out_badge": true,
     "point_product_swatch_custom": "30px",
     "show_action": true,
     "lange_1": "en",
@@ -295,7 +296,6 @@
     "product_action_color_hover": "#ffffff",
     "product_action_border_hover": "#232323",
     "product_action_bg_hover": "#232323",
-    "show_sold_out_badge": true,
     "new_badge_color": "#232323",
     "sale_badge_color": "#ffffff",
     "sale_badge_bg": "#e95144",
@@ -339,9 +339,11 @@
     "btn_1_bg_hover": "#000000",
     "btn_2_color": "#232323",
     "btn_2_border": "#727272",
+    "btn_2_bg": "#ffffff",
     "btn_2_color_hover": "#ffffff",
     "btn_2_border_hover": "#232323",
     "btn_2_bg_hover": "#232323",
+    "btn_3_color": "#ffffff",
     "btn_3_border": "#e9514b",
     "btn_3_bg": "#e9514b",
     "btn_3_color_hover": "#ffffff",
@@ -446,6 +448,8 @@
     "customer_login_type": "sidebar",
     "body_line_height": 50,
     "body_letter_spacing": ".02em",
+    "color_link": "#232323",
+    "color_link_hover": "#000000",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
@@ -499,6 +503,7 @@
           },
           "f4af0dce-6553-449a-9db4-4720a4836ef7": {
             "type": "link",
+            "disabled": true,
             "settings": {
               "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 384.97 384.97\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\">\n<g>\n\t<g id=\"Grid\">\n\t\t<path d=\"M144.364,0H24.061C10.767,0,0,10.767,0,24.061v120.303c0,13.281,10.767,24.061,24.061,24.061h120.303    c13.293,0,24.061-10.779,24.061-24.061V24.061C168.424,10.767,157.657,0,144.364,0z M144.364,144.364H24.061V24.061h120.303    V144.364z\"></path>\n\t\t<path d=\"M360.909,0H240.606c-13.293,0-24.061,10.767-24.061,24.061v120.303c0,13.281,10.767,24.061,24.061,24.061h120.303    c13.281,0,24.061-10.779,24.061-24.061V24.061C384.97,10.767,374.191,0,360.909,0z M360.909,144.364H240.606V24.061h120.303    V144.364z\"></path>\n\t\t<path d=\"M360.909,216.545H240.606c-13.293,0-24.061,10.779-24.061,24.061v120.303c0,13.293,10.767,24.061,24.061,24.061h120.303    c13.281,0,24.061-10.767,24.061-24.061V240.606C384.97,227.313,374.191,216.545,360.909,216.545z M360.909,360.909H240.606    V240.606h120.303V360.909z\"></path>\n\t\t<path d=\"M144.364,216.545H24.061C10.767,216.545,0,227.325,0,240.606v120.303c0,13.293,10.767,24.061,24.061,24.061h120.303    c13.293,0,24.061-10.767,24.061-24.061V240.606C168.424,227.313,157.657,216.545,144.364,216.545z M144.364,360.909H24.061    V240.606h120.303V360.909z\"></path>\n\t</g>\n\t<g>\n\t</g>\n\t<g>\n\t</g>\n\t<g>\n\t</g>\n\t<g>\n\t</g>\n\t<g>\n\t</g>\n\t<g>\n\t</g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n<g>\n</g>\n</svg>",
               "text": "Collection",
@@ -548,11 +553,7 @@
         "disabled": false,
         "settings": {}
       }
-    },
-    "btn_2_bg": "#ffffff",
-    "btn_3_color": "#ffffff",
-    "color_link": "#232323",
-    "color_link_hover": "#000000"
+    }
   },
   "platform_customizations": {
     "custom_css": []
