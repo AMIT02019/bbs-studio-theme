@@ -324,3 +324,21 @@
       document.cookie = `currentCollection=${currentCollection}; path=/`;
     </script>
 {%- endif -%}
+
+<script data-id="reduce-title-size">
+document.addEventListener('DOMContentLoaded', function() {
+    const pageTitles = document.querySelectorAll('.page-header h1, .page-header .title, .main-page-title, .page-title, h1.title, h1.page-title');
+    pageTitles.forEach(function(title) {
+        if (!title.dataset.sizeReduced) {
+            const currentSizeStr = window.getComputedStyle(title).fontSize;
+            const currentSize = parseFloat(currentSizeStr);
+            if (currentSize && !isNaN(currentSize)) {
+                title.style.fontSize = (currentSize - 2) + 'px';
+                // Also set it as important just in case
+                title.style.setProperty('font-size', (currentSize - 2) + 'px', 'important');
+            }
+            title.dataset.sizeReduced = "true";
+        }
+    });
+});
+</script>
