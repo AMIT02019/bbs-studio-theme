@@ -192,11 +192,13 @@
 
           function sendToGoogleAnalytics({name, delta, id}) {
             if (typeof window.gtag !== 'undefined') {
+              window.gtag('config', 'G-WK7MWFGG9D');
               window.gtag('event', name, {
                 event_category: 'Web Vitals',
                 event_label: id,
                 value: Math.round(name === 'CLS' ? delta * 1000 : delta),
                 non_interaction: true,
+                send_to: 'G-WK7MWFGG9D'
               });
             }
           }
