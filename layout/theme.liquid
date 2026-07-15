@@ -186,5 +186,27 @@
             {% render 'halo-currency-js' %}
         {% endif %}
         
+        <!-- Core Web Vitals Tracking -->
+        <script type="module">
+          import {onCLS, onFID, onLCP, onINP, onTTFB} from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
+
+          function sendToGoogleAnalytics({name, delta, id}) {
+            if (typeof window.gtag !== 'undefined') {
+              window.gtag('event', name, {
+                event_category: 'Web Vitals',
+                event_label: id,
+                value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+                non_interaction: true,
+              });
+            }
+          }
+
+          onCLS(sendToGoogleAnalytics);
+          onFID(sendToGoogleAnalytics);
+          onLCP(sendToGoogleAnalytics);
+          onINP(sendToGoogleAnalytics);
+          onTTFB(sendToGoogleAnalytics);
+        </script>
+        <!-- End Core Web Vitals Tracking -->
     </body>
 </html>
