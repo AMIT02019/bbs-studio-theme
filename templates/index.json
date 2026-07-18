@@ -23,7 +23,7 @@
             "heading_size": 30,
             "heading_weight": "700",
             "button_text": "START SHOPPING",
-            "button_link": "shopify://collections",
+            "button_link": "https://begborrowstealstudio.com/collections/all?sort_by=created-descending",
             "button_text_color": "#ffffff",
             "button_border_color": "#ffffff",
             "button_hover_color": "#d4af37",
