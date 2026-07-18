@@ -271,9 +271,9 @@
   .cpg-grid { grid-template-columns: repeat({% if col_count >= 4 %}3{% else %}{{ col_count }}{% endif %}, 1fr); gap: {{ gap_v_mb }}px {{ gap_h_mb }}px; }
 }
 @media (max-width: 480px) {
-  .cpg-container { padding: 0 5px; }
+  .cpg-container, .cpg-container--full { padding: 0 2px !important; }
   .cpg-section { margin-top: {{ section.settings.mg_top_mobile }}px; margin-bottom: {{ section.settings.mg_bottom_mobile }}px; }
-  .cpg-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+  .cpg-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
   .cpg-card-body { padding: 8px 10px 10px; }
   .cpg-title { font-size: 12px; }
   .cpg-price-sale, .cpg-price-reg { font-size: 13px; }
