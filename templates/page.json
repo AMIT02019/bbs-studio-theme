@@ -186,7 +186,7 @@
             "hover_shadow_color": "#0000001f",
             "content_padding": 16,
             "text_align": "center",
-            "title_font_size": 14,
+            "title_font_size": 20,
             "title_font_weight": "600",
             "title_color": "#000000"
           },
