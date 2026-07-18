@@ -39,8 +39,8 @@
         "ai_gen_block_d7a703d_QthMnU"
       ],
       "custom_css": [
-        "@media (min-width: 768px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 55px; width: calc(100% - 110px); transition: all 0.4s ease; } .collection-card {transition: transform 0.3s ease, opacity 0.3s ease; } .collection-card:hover {transform: translateY(-5px); opacity: 0.95; }}",
-        "@media (max-width: 767px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 10px; width: calc(100% - 20px); transition: all 0.4s ease; }}",
+        "@media (min-width: 768px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 55px; width: calc(100% - 110px); margin-bottom: 10px; transition: all 0.4s ease; } .collection-card {transition: transform 0.3s ease, opacity 0.3s ease; } .collection-card:hover {transform: translateY(-5px); opacity: 0.95; }}",
+        "@media (max-width: 767px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 10px; width: calc(100% - 20px); margin-bottom: 10px; transition: all 0.4s ease; }}",
         "html {scroll-behavior: smooth;}"
       ],
       "settings": {}
@@ -156,7 +156,7 @@
       "disabled": true,
       "custom_css": [],
       "settings": {
-        "container": "1470",
+        "container": "fullwidth",
         "padding_full_width": 0,
         "slideshow_background": "",
         "slideshow_background_gradient": "",
@@ -216,10 +216,10 @@
         "number_desktop_size": 24,
         "number_mobile_size": 16,
         "lookbook_truncate": "1",
-        "mg_top_desktop": 0,
+        "mg_top_desktop": 10,
         "mg_top_tablet": 0,
         "mg_top_mobile": 0,
-        "mg_bottom_desktop": 0,
+        "mg_bottom_desktop": 10,
         "mg_bottom_tablet": 0,
         "mg_bottom_mobile": 0
       }
