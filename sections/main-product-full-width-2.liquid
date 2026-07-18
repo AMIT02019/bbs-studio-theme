@@ -43,18 +43,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-  /* Custom PP Frame Aspect Ratio Fix */
-  .pp-frame {
-    aspect-ratio: 1/1 !important; 
-    display: flex !important; 
-    justify-content: center !important; 
-    align-items: center !important;
-  }
-  .pp-img {
-    max-width: 100% !important; 
-    max-height: 100% !important;
-  }
-  
   #pp-{{ section.id }} *,
   #pp-{{ section.id }} *::before,
   #pp-{{ section.id }} *::after { box-sizing: border-box; }
@@ -720,15 +708,7 @@
             Need help? Contact us
           </a>
 
-          {%- if sell_page != blank -%}
-            <a href="{{ sell_page }}" class="pp-sell">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-              <div>
-                <div class="pp-sell__title">Do you have a similar item?</div>
-                <div class="pp-sell__sub">Sell with Us</div>
-              </div>
-            </a>
-          {%- endif -%}
+
 
           {%- if condition_label != blank -%}
             <div class="pp-cond">
