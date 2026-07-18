@@ -560,17 +560,17 @@
                 <a class="cpg-card-img" href="{{ product.url | within: collection }}">
                   {%- if product.images[0] -%}
                     <img class="cpg-img-primary"
-                      src="{{ product.images[0] | image_url: width: 480 }}"
+                      src="{{ product.images[0] | image_url: width: 3293 }}"
                       alt="{{ product.images[0].alt | escape }}"
-                      width="480" height="640" loading="lazy">
+                      width="3293" height="3293" loading="lazy">
                   {%- else -%}
                     {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
                   {%- endif -%}
                   {%- if product.images[1] -%}
                     <img class="cpg-img-secondary"
-                      src="{{ product.images[1] | image_url: width: 480 }}"
+                      src="{{ product.images[1] | image_url: width: 3293 }}"
                       alt="{{ product.images[1].alt | escape }}"
-                      width="480" height="640" loading="lazy">
+                      width="3293" height="3293" loading="lazy">
                   {%- endif -%}
                 </a>
 

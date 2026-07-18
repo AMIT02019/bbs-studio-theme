@@ -589,16 +589,16 @@
                   <div class="pp-slide{% if forloop.first %} is-active{% endif %}">
                     <img
                       class="pp-img"
-                      src="{{ media | img_url: '900x' }}"
+                      src="{{ media | img_url: '3293x' }}"
                       alt="{{ media.alt | default: product.title | escape }}"
-                      width="900" height="900"
+                      width="3293" height="3293"
                       loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
                       draggable="false"
                     >
                   </div>
                 {%- else -%}
                   <div class="pp-slide is-active">
-                    <img class="pp-img" src="{{ product.featured_image | img_url: '900x' }}" alt="{{ product.title | escape }}" width="900" height="900" loading="eager">
+                    <img class="pp-img" src="{{ product.featured_image | img_url: '3293x' }}" alt="{{ product.title | escape }}" width="3293" height="3293" loading="eager">
                   </div>
                 {%- endfor -%}
               </div>
