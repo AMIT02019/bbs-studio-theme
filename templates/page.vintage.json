@@ -167,6 +167,8 @@
             "collection_5": "bracelets",
             "page_link_5": "shopify://pages/coming-soon",
             "custom_image_5": "shopify://shop_images/JEWELLERY_4-2146_00393df7-0efc-4a07-a49d-f31dd7e547c3.jpg",
+            "collection_6": "",
+            "page_link_6": "",
             "desktop_width_percent": 100,
             "max_width": 1400,
             "columns_desktop": 3,
@@ -183,7 +185,7 @@
             "hover_shadow_color": "#0000001f",
             "content_padding": 16,
             "text_align": "center",
-            "title_font_size": 18,
+            "title_font_size": 20,
             "title_font_weight": "600",
             "title_color": "#000000"
           },
