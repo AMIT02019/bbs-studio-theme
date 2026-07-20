@@ -563,7 +563,7 @@
                     <img class="cpg-img-primary"
                       src="{{ product.images[0] | image_url: width: 3293 }}"
                       alt="{{ product.images[0].alt | escape }}"
-                      width="3293" height="3293" loading="lazy">
+                      width="3293" height="3293" {% if forloop.index <= 4 %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}>
                   {%- else -%}
                     {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
                   {%- endif -%}

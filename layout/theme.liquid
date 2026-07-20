@@ -14,15 +14,6 @@
 -%}
 <html class="no-js" lang="{{ request.locale.iso_code }}"{% if settings.enable_layout_rtl and enable_iso_rtl %} dir="rtl"{% endif %}>
     <head>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WK7MWFGG9D"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-WK7MWFGG9D');
-        </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -38,13 +29,17 @@
             <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}">
         {%- endif -%}
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-        <link rel="dns-prefetch" href="https://fonts.shopifycdn.com">
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
         <link rel="dns-prefetch" href="//www.googletagmanager.com">
         <link rel="dns-prefetch" href="//www.google-analytics.com">
         <title>{{ page_title }} {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%} {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%} {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}</title>
 
         {%- if page_description -%}
             <meta name="description" content="{{ page_description | escape }}">
+        {%- elsif shop.description != blank -%}
+            <meta name="description" content="{{ shop.description | escape }}">
+        {%- else -%}
+            <meta name="description" content="{{ page_title | escape }} - {{ shop.name | escape }}">
         {%- endif -%}
         {% render 'meta-tags' %}
         {{ content_for_header }}
@@ -132,10 +127,6 @@
     {% render 'sq-assets' %}
  {% render 'sq-dropdown' %} 
  {% render 'schema' %}
-
-  {% if template == 'list-collections' %}
-    <script>window.location.replace('/');</script>
-  {% endif %}
 </head>
 
     <body class="template-{{ request.page_type }} {{layout_body}} {{style_dots}} {{style_text_size_varriant}} {{style_arrows}} {{product_card_layout}} {% if settings.enable_button_disable_arrows %} enable_button_disable_arrows{% endif %}{% if settings.display_text_color_title %} enable_text_color_title{% if settings.style_text_color_varriant == '02' %} style_2_text_color_varriant{% endif %}{% endif %}{% if settings.hide_compare_homepage %} hide_compare_homepage{% endif %} {{ quick_shop_type }}{% if settings.show_image_loading %} show_image_loading{% endif %}{% if settings.show_effect_close %} show_effect_close{% endif %}{% if settings.enable_layout_rtl and enable_iso_rtl %} layout_rtl{% endif %}{% if request.design_mode %} shopify-design-mode{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if settings.enable_following_cursor and settings.following_cursor_style == 'default' %} cursor-fixed__show{% endif %}{% unless settings.enable_currencies %} disable_currencies{% endunless %}{% if settings.enable_button_1_border_outside %} btn_1_br_outside{% endif %}{% if settings.enable_button_2_border_outside %} btn_2_br_outside{% endif %}{% if settings.enable_button_3_border_outside %} btn_3_br_outside{% endif %}{% if settings.show_price_percent %} show_price_percent{% endif %}{% if settings.show_wishlist_full_icon %} icon_wishlist_full{% endif %}{% if settings.discount_calculator_free_shipping == 'setup_shipping_delivery' %} setup_shipping_delivery{% endif %}{% if settings.badge_style == 'leaf' %} badge-leaf{% endif %}" allow-transparency>
@@ -172,7 +163,7 @@
         {%- endif -%}
 
         {%- if settings.use_custom_js -%}
-            <script src="{{ 'custom.js' | asset_url }}" defer></script>
+            {{ 'custom.js' | asset_url | script_tag }}
         {%- endif -%}
 
         <div class="background-overlay">
@@ -195,29 +186,5 @@
             {% render 'halo-currency-js' %}
         {% endif %}
         
-        <!-- Core Web Vitals Tracking -->
-        <script type="module">
-          import {onCLS, onFID, onLCP, onINP, onTTFB} from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
-
-          function sendToGoogleAnalytics({name, delta, id}) {
-            if (typeof window.gtag !== 'undefined') {
-              window.gtag('config', 'G-WK7MWFGG9D');
-              window.gtag('event', name, {
-                event_category: 'Web Vitals',
-                event_label: id,
-                value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-                non_interaction: true,
-                send_to: 'G-WK7MWFGG9D'
-              });
-            }
-          }
-
-          onCLS(sendToGoogleAnalytics);
-          onFID(sendToGoogleAnalytics);
-          onLCP(sendToGoogleAnalytics);
-          onINP(sendToGoogleAnalytics);
-          onTTFB(sendToGoogleAnalytics);
-        </script>
-        <!-- End Core Web Vitals Tracking -->
     </body>
 </html>

@@ -592,13 +592,13 @@
                       src="{{ media | img_url: '3293x' }}"
                       alt="{{ media.alt | default: product.title | escape }}"
                       width="3293" height="3293"
-                      loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                      {% if forloop.first %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}
                       draggable="false"
                     >
                   </div>
                 {%- else -%}
                   <div class="pp-slide is-active">
-                    <img class="pp-img" src="{{ product.featured_image | img_url: '3293x' }}" alt="{{ product.title | escape }}" width="3293" height="3293" loading="eager">
+                    <img class="pp-img" src="{{ product.featured_image | img_url: '3293x' }}" alt="{{ product.title | escape }}" width="3293" height="3293" fetchpriority="high" loading="eager">
                   </div>
                 {%- endfor -%}
               </div>
