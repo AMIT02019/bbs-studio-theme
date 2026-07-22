@@ -180,8 +180,10 @@
 }
 .cpg-card-img .cpg-img-primary { opacity: 1; position: relative; }
 .cpg-card-img .cpg-img-secondary { opacity: 0; }
-.cpg-card:hover .cpg-img-primary { opacity: 0; }
-.cpg-card:hover .cpg-img-secondary { opacity: 1; }
+@media (min-width: 1025px) and (hover: hover) {
+  .cpg-card:hover .cpg-img-primary { opacity: 0; }
+  .cpg-card:hover .cpg-img-secondary { opacity: 1; }
+}
 .cpg-badges {
   position: absolute; top: 8px; left: 8px;
   display: flex; flex-direction: column; gap: 4px; z-index: 2;

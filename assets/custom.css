@@ -256,11 +256,36 @@ body.template-search #MainContent,
 }
 
 
+
+
 /* =============================================================================
-   Disable Product Image Hover / Swap Effect in Phone & Mobile View
+   Disable Product Image Hover / Swap Effect in Phone & Mobile View (CPG & Standard)
    ============================================================================= */
-@media (max-width: 1024px) {
-  /* Hide 2nd/secondary hover image or video completely on mobile/phone */
+@media (max-width: 1024px), (hover: none) {
+  /* 1. Custom Product Grid (CPG) */
+  .cpg-card:hover .cpg-img-primary,
+  .cpg-card-img:hover .cpg-img-primary,
+  .cpg-card-img .cpg-img-primary,
+  .cpg-card:focus .cpg-img-primary,
+  .cpg-card:active .cpg-img-primary {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+  }
+
+  .cpg-card:hover .cpg-img-secondary,
+  .cpg-card-img:hover .cpg-img-secondary,
+  .cpg-card-img .cpg-img-secondary,
+  .cpg-card:focus .cpg-img-secondary,
+  .cpg-card:active .cpg-img-secondary {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
+
+  /* 2. Theme Standard Product Cards */
   .card-media.media--hover-effect > img + img,
   .card-media.media--hover-effect > img:nth-child(2),
   .card-media.media--hover-effect > img:last-child,
@@ -270,7 +295,10 @@ body.template-search #MainContent,
   .media--hover-effect > img:last-child,
   .media--hover-effect > video,
   .card-media .media-image-secondary,
-  .card-media .media-has-hover {
+  .card-media .media-has-hover,
+  .product-image .hover-image,
+  .product-item:hover .hover-image,
+  .grid-view-item__image-secondary {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -278,24 +306,25 @@ body.template-search #MainContent,
     transition: none !important;
   }
 
-  /* Keep primary product image 100% visible and untouched on mobile hover/touch */
   .card-media.media--hover-effect > img:first-child,
   .media--hover-effect > img:first-child,
   .card-media > img:first-child,
   .card-media .media-image-primary,
-  .card-media img {
+  .card-media img:first-child,
+  .product-image img:first-child {
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
     transition: none !important;
   }
 
-  /* Disable image scale/zoom transforms on mobile card hover */
+  /* Disable any hover zoom/scale transforms on mobile */
   .card-media:hover img,
   .card:hover .card-media img,
   .product-item:hover .card-media img,
-  .media--hover-effect:hover img {
+  .media--hover-effect:hover img,
+  .cpg-card:hover img,
+  .cpg-card-img:hover img {
     transform: none !important;
-    opacity: 1 !important;
   }
 }
