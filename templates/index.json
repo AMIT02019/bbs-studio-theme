@@ -23,7 +23,7 @@
             "heading_size": 30,
             "heading_weight": "700",
             "button_text": "START SHOPPING",
-            "button_link": "https://begborrowstealstudio.com/collections/all?sort_by=created-descending",
+            "button_link": "#shopify-section-template--21441418494123__1779380741144866fb",
             "button_text_color": "#ffffff",
             "button_border_color": "#ffffff",
             "button_hover_color": "#d4af37",
@@ -39,8 +39,8 @@
         "ai_gen_block_d7a703d_QthMnU"
       ],
       "custom_css": [
-        "@media (min-width: 768px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 55px; width: calc(100% - 110px); margin-bottom: 10px; transition: all 0.4s ease; } .collection-card {transition: transform 0.3s ease, opacity 0.3s ease; } .collection-card:hover {transform: translateY(-5px); opacity: 0.95; }}",
-        "@media (max-width: 767px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 10px; width: calc(100% - 20px); margin-bottom: 10px; transition: all 0.4s ease; }}",
+        "@media (min-width: 768px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 55px; width: calc(100% - 110px); transition: all 0.4s ease; } .collection-card {transition: transform 0.3s ease, opacity 0.3s ease; } .collection-card:hover {transform: translateY(-5px); opacity: 0.95; }}",
+        "@media (max-width: 767px) {.ai-vintage-hero-background-am0dfbhjxmwr5r1ltmaigenblockd7a703dqthmnu {left: 10px; width: calc(100% - 20px); transition: all 0.4s ease; }}",
         "html {scroll-behavior: smooth;}"
       ],
       "settings": {}
@@ -156,7 +156,7 @@
       "disabled": true,
       "custom_css": [],
       "settings": {
-        "container": "fullwidth",
+        "container": "1470",
         "padding_full_width": 0,
         "slideshow_background": "",
         "slideshow_background_gradient": "",
@@ -216,10 +216,10 @@
         "number_desktop_size": 24,
         "number_mobile_size": 16,
         "lookbook_truncate": "1",
-        "mg_top_desktop": 10,
+        "mg_top_desktop": 0,
         "mg_top_tablet": 0,
         "mg_top_mobile": 0,
-        "mg_bottom_desktop": 10,
+        "mg_bottom_desktop": 0,
         "mg_bottom_tablet": 0,
         "mg_bottom_mobile": 0
       }
@@ -317,8 +317,8 @@
             "header_margin_bottom": 70,
             "button_margin_top": 70,
             "background_color": "#f8f6f3",
-            "heading_color": "#3e2723",
-            "subtitle_color": "#a38b63",
+            "heading_color": "#222222",
+            "subtitle_color": "#8c8c8c",
             "card_background": "#ffffff",
             "card_border_color": "#00000014",
             "product_title_color": "#222222",
@@ -370,8 +370,8 @@
             "heading_color": "#3e2723",
             "text_color": "#6d6d6d",
             "button_bg_color": "#2c2c2c",
-            "button_bg_hover_color": "#A38B63",
-            "button_text_color": "#FFFFFF",
+            "button_bg_hover_color": "#3e2723",
+            "button_text_color": "#ffffff",
             "heading_size": 48,
             "heading_weight": "700",
             "heading_letter_spacing": "0.05em",
@@ -569,3 +569,4 @@
     "17793899179af5c3d9"
   ]
 }
+
