@@ -234,17 +234,17 @@
       {%- assign bg_image = block.settings.background_image -%}
       <img
         srcset="
-          {{ block.settings.background_image | image_url: width: 400, height: 800, crop: 'center' }} 400w,
-          {{ block.settings.background_image | image_url: width: 600, height: 1200, crop: 'center' }} 600w,
-          {{ block.settings.background_image | image_url: width: 800, height: 1600, crop: 'center' }} 800w
+          {{ block.settings.background_image | image_url: width: 375 }} 375w,
+          {{ block.settings.background_image | image_url: width: 600 }} 600w,
+          {{ block.settings.background_image | image_url: width: 750 }} 750w
         "
         sizes="100vw"
-        src="{{ block.settings.background_image | image_url: width: 600, height: 1200, crop: 'center' }}"
-        alt="{{ block.settings.background_image.alt | escape }}"
+        src="{{ block.settings.background_image | image_url: width: 600 }}"
+        alt="{{ block.settings.background_image.alt | default: 'Beg Borrow Steal Studio Vintage Luxury Collection' | escape }}"
         loading="eager"
         fetchpriority="high"
         width="600"
-        height="1200"
+        height="600"
         class="{% if block.settings.enable_parallax %}mobile-only-img-{{ ai_gen_id }}{% endif %}"
       >
     {% else %}
