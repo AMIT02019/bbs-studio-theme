@@ -254,3 +254,48 @@ body.template-search #MainContent,
   box-shadow: none !important;
   border: none !important;
 }
+
+
+/* =============================================================================
+   Disable Product Image Hover / Swap Effect in Phone & Mobile View
+   ============================================================================= */
+@media (max-width: 1024px) {
+  /* Hide 2nd/secondary hover image or video completely on mobile/phone */
+  .card-media.media--hover-effect > img + img,
+  .card-media.media--hover-effect > img:nth-child(2),
+  .card-media.media--hover-effect > img:last-child,
+  .card-media.media--hover-effect > video,
+  .media--hover-effect > img + img,
+  .media--hover-effect > img:nth-child(2),
+  .media--hover-effect > img:last-child,
+  .media--hover-effect > video,
+  .card-media .media-image-secondary,
+  .card-media .media-has-hover {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
+
+  /* Keep primary product image 100% visible and untouched on mobile hover/touch */
+  .card-media.media--hover-effect > img:first-child,
+  .media--hover-effect > img:first-child,
+  .card-media > img:first-child,
+  .card-media .media-image-primary,
+  .card-media img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Disable image scale/zoom transforms on mobile card hover */
+  .card-media:hover img,
+  .card:hover .card-media img,
+  .product-item:hover .card-media img,
+  .media--hover-effect:hover img {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
