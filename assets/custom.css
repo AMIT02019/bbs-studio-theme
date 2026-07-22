@@ -185,3 +185,61 @@ body.template-search #MainContent,
 .ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw p {
   text-transform: uppercase !important;
 }
+
+
+/* =============================================================================
+   MyAlmari Product Image Card Style (White Background + Soft Drop Shadow + Rounded Corners)
+   ============================================================================= */
+.productView-images,
+.productView-image-wrapper,
+.productView-nav,
+.productView-media,
+.productView-image,
+.productView-img-container,
+.pp-viewport,
+.pp-track,
+.product-single__media,
+.product-single__photos,
+.product-media-wrapper,
+.productView-for,
+.productView-nav-inner,
+.pp-slide {
+  background-color: #ffffff !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07), 0 3px 12px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+  padding: 16px !important;
+}
+
+@media (min-width: 768px) {
+  .productView-images,
+  .productView-image-wrapper,
+  .productView-nav,
+  .productView-media,
+  .productView-image,
+  .productView-img-container,
+  .pp-viewport,
+  .pp-track,
+  .product-single__media,
+  .product-single__photos,
+  .product-media-wrapper,
+  .productView-for,
+  .productView-nav-inner,
+  .pp-slide {
+    padding: 24px !important;
+    border-radius: 28px !important;
+  }
+}
+
+.productView-images img,
+.productView-image img,
+.productView-media img,
+.productView-img-container img,
+.pp-img,
+.product-single__media img,
+.productView-image-wrapper img {
+  background-color: #ffffff !important;
+  object-fit: contain !important;
+  border-radius: 16px !important;
+}
