@@ -266,7 +266,7 @@
             "category_3_link": "shopify://collections/watches",
             "category_3_image": "shopify://shop_images/VINTAGE-WATCHES--scaled_1.jpg",
             "category_4_title": "Sunglasses",
-            "category_4_link": "shopify://pages/coming-soon",
+            "category_4_link": "shopify://collections/sunglasses",
             "category_4_image": "shopify://shop_images/DSCF2973-scaled_1.jpg",
             "category_5_title": "Vintage Clothing",
             "category_5_link": "shopify://pages/coming-soon",
@@ -569,4 +569,3 @@
     "17793899179af5c3d9"
   ]
 }
-
