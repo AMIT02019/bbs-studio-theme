@@ -328,3 +328,131 @@ body.template-search #MainContent,
     transform: none !important;
   }
 }
+
+/* =============================================================================
+   MyAlmari Style Circular Hover Arrow Buttons for Product Gallery Slider
+   ============================================================================= */
+
+/* 1. Circular Arrow Base Styling */
+.pp-nav,
+.productView-images .slick-arrow,
+.productView-image-wrapper .slick-arrow,
+.productView-nav .slick-arrow,
+.productView-for .slick-arrow,
+.product-single__photos .slick-arrow,
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  color: #111111 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  
+  /* Hidden by default, appear on container hover */
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Left / Right Positions */
+.pp-nav--prev,
+.productView-images .slick-prev,
+.productView-image-wrapper .slick-prev,
+.productView-nav .slick-prev,
+.slick-prev {
+  left: 16px !important;
+}
+
+.pp-nav--next,
+.productView-images .slick-next,
+.productView-image-wrapper .slick-next,
+.productView-nav .slick-next,
+.slick-next {
+  right: 16px !important;
+}
+
+/* 2. Show Arrow Buttons on Hover of Image Slider / Card Container */
+.pp-frame:hover .pp-nav,
+.pp-glass:hover .pp-nav,
+.productView-images:hover .slick-arrow,
+.productView-images:hover .pp-nav,
+.productView-image-wrapper:hover .slick-arrow,
+.productView-image-wrapper:hover .pp-nav,
+.productView-nav:hover .slick-arrow,
+.productView-for:hover .slick-arrow,
+.product-single__photos:hover .slick-arrow,
+.product-single__photos:hover .pp-nav,
+.productView-image:hover .slick-arrow {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* 3. Button Hover State */
+.pp-nav:hover,
+.slick-prev:hover,
+.slick-next:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
+/* 4. Arrow SVG Icon Formatting */
+.pp-nav svg,
+.slick-arrow svg,
+.slick-prev svg,
+.slick-next svg {
+  width: 14px !important;
+  height: 14px !important;
+  stroke: #111111 !important;
+  stroke-width: 2.5px !important;
+  fill: none !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  display: none !important;
+  content: '' !important;
+}
+
+/* 5. Mobile & Touch Screen Fallback */
+@media (max-width: 768px), (hover: none) {
+  .pp-nav,
+  .productView-images .slick-arrow,
+  .productView-image-wrapper .slick-arrow,
+  .slick-prev,
+  .slick-next {
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+  }
+  .pp-nav--prev,
+  .slick-prev {
+    left: 10px !important;
+  }
+  .pp-nav--next,
+  .slick-next {
+    right: 10px !important;
+  }
+}
+
