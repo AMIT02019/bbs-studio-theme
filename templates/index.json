@@ -218,7 +218,10 @@
         "title_hover_color": "#8b0000",
         "bg_color": "#ffffff",
         "padding_top": 30,
-        "padding_bottom": 30
+        "padding_bottom": 30,
+        "max_width": 1430,
+        "show_arrows": true,
+        "hide_scrollbar": true
       }
     },
     "1779387305e8440900": {
