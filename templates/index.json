@@ -45,6 +45,90 @@
       ],
       "settings": {}
     },
+    "category_circles_list": {
+      "type": "category-circles-list",
+      "blocks": {
+        "circle_pooja": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Pooja",
+            "link": ""
+          }
+        },
+        "circle_festive": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Festive",
+            "link": ""
+          }
+        },
+        "circle_mehendi": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Mehendi",
+            "link": ""
+          }
+        },
+        "circle_sangeet": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Sangeet",
+            "link": ""
+          }
+        },
+        "circle_wedding": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Wedding",
+            "link": ""
+          }
+        },
+        "circle_reception": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Reception",
+            "link": ""
+          }
+        },
+        "circle_top_picks": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "title": "Top Picks",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "circle_pooja",
+        "circle_festive",
+        "circle_mehendi",
+        "circle_sangeet",
+        "circle_wedding",
+        "circle_reception",
+        "circle_top_picks"
+      ],
+      "settings": {
+        "hide_section": true,
+        "heading": "",
+        "heading_size": 28,
+        "heading_color": "#232323",
+        "circle_size": 130,
+        "title_font_size": 14,
+        "title_font_weight": "500",
+        "title_color": "#232323",
+        "title_hover_color": "#8b0000",
+        "bg_color": "#ffffff",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
     "16321237356a896dad": {
       "type": "slide-show",
       "blocks": {
@@ -556,98 +640,6 @@
         "ai_gen_block_c582a29_RNpV9Q"
       ],
       "settings": {}
-    },
-    "category_circles_list": {
-      "type": "category-circles-list",
-      "disabled": true,
-      "settings": {
-        "hide_section": true,
-        "heading": "",
-        "heading_size": 28,
-        "heading_color": "#232323",
-        "circle_size": 130,
-        "title_font_size": 14,
-        "title_font_weight": "500",
-        "title_color": "#232323",
-        "title_hover_color": "#8b0000",
-        "bg_color": "#ffffff",
-        "padding_top": 30,
-        "padding_bottom": 30
-      },
-      "blocks": {
-        "circle_pooja": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Pooja",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_festive": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Festive",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_mehendi": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Mehendi",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_sangeet": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Sangeet",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_wedding": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Wedding",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_reception": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Reception",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        },
-        "circle_top_picks": {
-          "type": "collection_circle",
-          "settings": {
-            "title": "Top Picks",
-            "collection": "",
-            "image": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "circle_pooja",
-        "circle_festive",
-        "circle_mehendi",
-        "circle_sangeet",
-        "circle_wedding",
-        "circle_reception",
-        "circle_top_picks"
-      ]
     }
   },
   "order": [
