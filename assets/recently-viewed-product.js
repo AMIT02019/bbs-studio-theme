@@ -115,7 +115,7 @@ Shopify.Products = (function () {
         const sectionId = recentlyViewed.attr('sectionid');
 
         if (productHandleQueue.length && shownSection < config.howManyToShow) {
-            var url = window.routes.root + '/products/' + productHandleQueue[shownSection] + '?view=ajax_section_recently_viewed';
+            var rootUrl = (window.routes && window.routes.root) ? window.routes.root.replace(/\/$/, '') : ''; var url = rootUrl + '/products/' + productHandleQueue[shownSection] + '?view=ajax_section_recently_viewed';
 
             jQuery.ajax({
                 type: 'get',
@@ -155,12 +155,14 @@ Shopify.Products = (function () {
                         $qsButton.attr('data-form-id', ($qsButton.attr('data-form-id') || '') + sectionId);
                     });
                 },
-                error: function () {
-                    console.log($.parseJSON(xhr.responseText).description);
+                error: function (xhr, status, err) {
+                    shownSection++;
+                    doAlong(wrapperS);
                 }
             });
         } else {
             if (productHandleQueue.length == 0) {
+                wrapperS.find('.product-item--loadingNoInfo').parents('.product').remove();
                 recentlyViewed.hide();
                 return;
             }
@@ -313,25 +315,35 @@ Shopify.Products = (function () {
             // Update defaults.
             jQuery.extend(config, params);
 
-            // Read cookie.
+            // Read cookie / localStorage.
             productHandleQueue = cookie.read();
 
             // Template and element where to insert.
             template = config.templateId;
             wrapper = jQuery('#' + config.wrapperId);
 
-            // How many products to show.
-            config.howManyToShow = Math.min(productHandleQueue.length, config.howManyToShow);
+            // Filter out empty handles
+            productHandleQueue = productHandleQueue.filter(function(h) { return h && h.trim() !== ''; });
 
-            // If we have any to show.
-            if (config.howManyToShow && wrapper.length) {
-                // Getting each product with an Ajax call and rendering it on the page.
-                if (template == 'recently-viewed-product-popup') {
-                    const wrapperP = wrapper;
-                    moveAlong(wrapperP);
+            // How many products to show.
+            var desiredCount = params.howManyToShow || config.howManyToShow || 5;
+            config.howManyToShow = Math.min(productHandleQueue.length, desiredCount);
+
+            if (wrapper.length) {
+                if (config.howManyToShow > 0 && productHandleQueue.length > 0) {
+                    shownSection = 0;
+                    if (template == 'recently-viewed-product-popup') {
+                        moveAlong(wrapper);
+                    } else {
+                        doAlong(wrapper);
+                    }
                 } else {
-                    const wrapperS = wrapper;
-                    doAlong(wrapperS);
+                    // No recently viewed products in history yet
+                    wrapper.find('.product-item--loadingNoInfo').parents('.product').remove();
+                    var sectionBlock = wrapper.closest('.product-recently-viewed-block, .halo-recently-viewed-block, .product-recently-viewed');
+                    if (sectionBlock.length) {
+                        sectionBlock.hide();
+                    }
                 }
             }
         },
