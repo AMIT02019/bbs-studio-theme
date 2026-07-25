@@ -211,6 +211,7 @@
         "circle_wedding",
         "circle_top_picks"
       ],
+      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
