@@ -134,7 +134,7 @@
           "settings": {
             "collection": "",
             "category": "",
-            "vendor": "",
+            "vendor": "Chanel",
             "tag": "",
             "image": "shopify://shop_images/Jewellery-17_1_b03cbcd2-1e49-4972-b1c2-4947274e8b3f.jpg",
             "title": "CHANEL",
@@ -206,11 +206,10 @@
         "circle_reception",
         "circle_top_picks"
       ],
-      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
-        "max_width": 1430,
+        "max_width": 1440,
         "show_arrows": true,
         "hide_scrollbar": true,
         "heading_size": 28,
