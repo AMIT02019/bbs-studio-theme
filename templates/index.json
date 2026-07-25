@@ -211,118 +211,6 @@
         "circle_wedding",
         "circle_top_picks"
       ],
-      "disabled": true,
-      "settings": {
-        "hide_section": false,
-        "heading": "",
-        "max_width": 1550,
-        "show_arrows": true,
-        "hide_scrollbar": true,
-        "heading_size": 28,
-        "heading_color": "#232323",
-        "circle_size": 170,
-        "title_font_size": 15,
-        "title_font_weight": "500",
-        "title_color": "#232323",
-        "title_hover_color": "#8b0000",
-        "bg_color": "#ffffff",
-        "padding_top": 30,
-        "padding_bottom": 30
-      }
-    },
-    "category_circles_list_mJgVXb": {
-      "type": "category-circles-list",
-      "blocks": {
-        "collection_circle_fykxhK": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-1664.jpg",
-            "title": "CHANEL",
-            "link": ""
-          }
-        },
-        "collection_circle_kEAXXW": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "Chanel",
-            "tag": "",
-            "image": "shopify://shop_images/Jewellery-17_1_b03cbcd2-1e49-4972-b1c2-4947274e8b3f.jpg",
-            "title": "CHANEL",
-            "link": ""
-          }
-        },
-        "collection_circle_rDYGcw": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Mehendi",
-            "link": ""
-          }
-        },
-        "collection_circle_cmYULF": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Sangeet",
-            "link": ""
-          }
-        },
-        "collection_circle_VcrnKF": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Wedding",
-            "link": ""
-          }
-        },
-        "collection_circle_qADNzQ": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Reception",
-            "link": ""
-          }
-        },
-        "collection_circle_aV9ncf": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Top Picks",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_circle_fykxhK",
-        "collection_circle_kEAXXW",
-        "collection_circle_rDYGcw",
-        "collection_circle_cmYULF",
-        "collection_circle_VcrnKF",
-        "collection_circle_qADNzQ",
-        "collection_circle_aV9ncf"
-      ],
-      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
@@ -349,9 +237,9 @@
           "settings": {
             "heading": "OLD SOUL. NEW DROP.",
             "subtitle": "Fresh Finds From Another Era",
-            "product_1": "vintage-abstract-earrings",
-            "product_2": "vintage-art-nouveau-earrings",
-            "product_3": "vintage-basket-weave-earrings",
+            "product_1": "persian-carpet",
+            "product_2": "clothing-hanger",
+            "product_3": "table-decor",
             "enable_hover_image": true,
             "button_text": "View all",
             "button_link": "shopify://collections/all",
@@ -610,7 +498,6 @@
     "17793883445e128fae",
     "1779380741144866fb",
     "category_circles_list",
-    "category_circles_list_mJgVXb",
     "1779387305e8440900",
     "1779387469a3ae875b",
     "1779388174dfe2079f",
