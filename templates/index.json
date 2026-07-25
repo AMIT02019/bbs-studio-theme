@@ -121,6 +121,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Pooja",
             "link": ""
           }
@@ -129,6 +132,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Festive",
             "link": ""
           }
@@ -137,6 +143,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Mehendi",
             "link": ""
           }
@@ -145,6 +154,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Sangeet",
             "link": ""
           }
@@ -153,6 +165,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Wedding",
             "link": ""
           }
@@ -161,6 +176,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Reception",
             "link": ""
           }
@@ -169,6 +187,9 @@
           "type": "collection_circle",
           "settings": {
             "collection": "",
+            "category": "",
+            "vendor": "",
+            "tag": "",
             "title": "Top Picks",
             "link": ""
           }
@@ -183,6 +204,7 @@
         "circle_reception",
         "circle_top_picks"
       ],
+      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
