@@ -146,23 +146,32 @@
       {%- for block in section.blocks -%}
         {%- liquid
           assign collection_obj = collections[block.settings.collection]
+          assign vendor_name = block.settings.vendor | strip
           
+          # URL logic: 1) Custom link, 2) Collection URL, 3) Vendor URL filter
           assign item_url = block.settings.link
           if item_url == blank and collection_obj != blank
             assign item_url = collection_obj.url
+          elsif item_url == blank and vendor_name != blank
+            assign vendor_url_param = vendor_name | url_encode
+            assign item_url = "/collections/all?filter.p.vendor=" | append: vendor_url_param
           endif
           if item_url == blank
             assign item_url = "#"
           endif
 
+          # Title logic: 1) Custom title, 2) Collection title, 3) Vendor name
           assign item_title = block.settings.title
           if item_title == blank and collection_obj != blank
             assign item_title = collection_obj.title
+          elsif item_title == blank and vendor_name != blank
+            assign item_title = vendor_name
           endif
           if item_title == blank
-            assign item_title = "Collection"
+            assign item_title = "Category"
           endif
 
+          # Image logic: 1) Custom image, 2) Collection featured image / first product image
           assign item_image = block.settings.image
           if item_image == blank and collection_obj != blank
             if collection_obj.featured_image != blank
@@ -305,7 +314,7 @@
   "blocks": [
     {
       "type": "collection_circle",
-      "name": "Collection Item",
+      "name": "Circle Item",
       "settings": [
         {
           "type": "collection",
@@ -313,22 +322,28 @@
           "label": "Select Collection"
         },
         {
+          "type": "text",
+          "id": "vendor",
+          "label": "Vendor / Brand Name",
+          "info": "Enter vendor/brand name (e.g. Gucci, Chanel, Rolex, etc.)"
+        },
+        {
           "type": "image_picker",
           "id": "image",
           "label": "Custom Image",
-          "info": "Option to put a custom image for the collection item"
+          "info": "Option to put a custom image for the item"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Custom Label",
-          "info": "Overrides collection name (e.g. Pooja, Festive, Mehendi, Sangeet, Wedding, Reception, Top Picks)"
+          "info": "Overrides collection or vendor name"
         },
         {
           "type": "url",
           "id": "link",
           "label": "Custom Link",
-          "info": "Overrides collection URL"
+          "info": "Overrides collection or vendor filter URL"
         }
       ]
     }
