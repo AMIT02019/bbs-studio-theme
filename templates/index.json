@@ -206,10 +206,11 @@
         "circle_reception",
         "circle_top_picks"
       ],
+      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
-        "max_width": 1570,
+        "max_width": 1550,
         "show_arrows": true,
         "hide_scrollbar": true,
         "heading_size": 28,
