@@ -311,26 +311,18 @@ Shopify.Products = (function () {
 
         showRecentlyViewed: function (params) {
             var params = params || {};
-
-            // Update defaults.
             jQuery.extend(config, params);
 
-            // Read cookie / localStorage.
             productHandleQueue = cookie.read();
+            productHandleQueue = productHandleQueue.filter(function(h) { return h && h.trim() !== ''; });
 
-            // Template and element where to insert.
             template = config.templateId;
             wrapper = jQuery('#' + config.wrapperId);
 
-            // Filter out empty handles
-            productHandleQueue = productHandleQueue.filter(function(h) { return h && h.trim() !== ''; });
-
-            // How many products to show.
-            var desiredCount = params.howManyToShow || config.howManyToShow || 5;
-            config.howManyToShow = Math.min(productHandleQueue.length, desiredCount);
-
             if (wrapper.length) {
-                if (config.howManyToShow > 0 && productHandleQueue.length > 0) {
+                if (productHandleQueue.length > 0) {
+                    var desiredCount = params.howManyToShow || config.howManyToShow || 5;
+                    config.howManyToShow = Math.min(productHandleQueue.length, desiredCount);
                     shownSection = 0;
                     if (template == 'recently-viewed-product-popup') {
                         moveAlong(wrapper);
@@ -338,12 +330,27 @@ Shopify.Products = (function () {
                         doAlong(wrapper);
                     }
                 } else {
-                    // No recently viewed products in history yet
-                    wrapper.find('.product-item--loadingNoInfo').parents('.product').remove();
-                    var sectionBlock = wrapper.closest('.product-recently-viewed-block, .halo-recently-viewed-block, .product-recently-viewed');
-                    if (sectionBlock.length) {
-                        sectionBlock.hide();
-                    }
+                    // Fallback for new visitors: fetch store products so section is populated immediately
+                    var rootUrl = (window.routes && window.routes.root) ? window.routes.root.replace(/\/$/, '') : '';
+                    fetch(rootUrl + '/collections/all/products.json?limit=6')
+                        .then(function(r) { return r.json(); })
+                        .then(function(d) {
+                            if (d && d.products && d.products.length > 0) {
+                                productHandleQueue = d.products.map(function(p) { return p.handle; });
+                                config.howManyToShow = Math.min(productHandleQueue.length, 5);
+                                shownSection = 0;
+                                doAlong(wrapper);
+                            } else {
+                                wrapper.find('.product-item--loadingNoInfo').parents('.product').remove();
+                                var sectionBlock = wrapper.closest('.product-recently-viewed-block, .halo-recently-viewed-block, .product-recently-viewed');
+                                if (sectionBlock.length) sectionBlock.hide();
+                            }
+                        })
+                        .catch(function() {
+                            wrapper.find('.product-item--loadingNoInfo').parents('.product').remove();
+                            var sectionBlock = wrapper.closest('.product-recently-viewed-block, .halo-recently-viewed-block, .product-recently-viewed');
+                            if (sectionBlock.length) sectionBlock.hide();
+                        });
                 }
             }
         },

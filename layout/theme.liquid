@@ -219,5 +219,57 @@
           onTTFB(sendToGoogleAnalytics);
         </script>
         <!-- End Core Web Vitals Tracking -->
-    </body>
+    
+<!-- Recently Viewed Product & Category Tracker -->
+<script>
+  (function() {
+    try {
+      // 1. Record Product when viewing any product page
+      if (window.location.pathname.indexOf('/products/') !== -1) {
+        var match = window.location.pathname.match(/\/products\/([a-zA-Z0-9\-_]+)/);
+        if (match && match[1]) {
+          var productHandle = match[1];
+          var raw = localStorage.getItem('shopify_recently_viewed') || (typeof $.cookie === 'function' ? $.cookie('shopify_recently_viewed') : '') || '';
+          var list = raw ? raw.split(' ').filter(Boolean) : [];
+          list = list.filter(function(h) { return h !== productHandle; });
+          list.unshift(productHandle);
+          if (list.length > 10) list = list.slice(0, 10);
+          var str = list.join(' ');
+          localStorage.setItem('shopify_recently_viewed', str);
+          if (typeof $.cookie === 'function') {
+            $.cookie('shopify_recently_viewed', str, { expires: 90, path: '/' });
+          }
+        }
+      }
+      
+      // 2. Record Category Products when viewing any collection page
+      if (window.location.pathname.indexOf('/collections/') !== -1) {
+        var colPath = window.location.pathname.replace(/\/$/, '');
+        fetch(colPath + '/products.json?limit=6')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            if (data && data.products && data.products.length > 0) {
+              var raw = localStorage.getItem('shopify_recently_viewed') || (typeof $.cookie === 'function' ? $.cookie('shopify_recently_viewed') : '') || '';
+              var list = raw ? raw.split(' ').filter(Boolean) : [];
+              data.products.forEach(function(p) {
+                if (p.handle && list.indexOf(p.handle) === -1) {
+                  list.unshift(p.handle);
+                }
+              });
+              if (list.length > 10) list = list.slice(0, 10);
+              var str = list.join(' ');
+              localStorage.setItem('shopify_recently_viewed', str);
+              if (typeof $.cookie === 'function') {
+                $.cookie('shopify_recently_viewed', str, { expires: 90, path: '/' });
+              }
+            }
+          })
+          .catch(function(err) { console.error('Category tracking error:', err); });
+      }
+    } catch(e) { console.error(e); }
+  })();
+</script>
+<!-- End Recently Viewed Tracker -->
+
+</body>
 </html>
