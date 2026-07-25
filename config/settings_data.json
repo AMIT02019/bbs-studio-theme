@@ -206,7 +206,7 @@
     "gift_content": "Do you want a gift wrap?",
     "main_cart_gift_content": "DO YOU WANT A GIFT WRAP? <span style=\"font-weight: bold\">ONLY FOR $10.00<span></span></span>",
     "show_cart_shipping": true,
-    "show_quick_cart_popular_product": true,
+    "show_quick_cart_popular_product": false,
     "quick_cart_popular_product_title": "You May Also Like",
     "quick_cart_popular_product_collection": "suito",
     "quick_cart_popular_product_dots": false,

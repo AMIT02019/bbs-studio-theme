@@ -486,3 +486,14 @@ body.template-search #MainContent,
     aspect-ratio: 1 / 1 !important;
   }
 }
+
+
+/* Remove You May Also Like Quick Cart Widget */
+.quick-cart-popular-product,
+.cart-sidebar-popular-product,
+.halo-quick-cart-popular-product,
+.previewCart-popular-product,
+[id*="quick-cart-popular-product"],
+.cart-popular-product {
+  display: none !important;
+}
