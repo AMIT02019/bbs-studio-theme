@@ -456,3 +456,33 @@ body.template-search #MainContent,
   }
 }
 
+
+
+/* 541x541 Frame Dimension Rule */
+/* Set product image frame dimensions to 541px x 541px */
+.pp-frame,
+.productView-images,
+.productView-image-wrapper,
+.product-single__photos,
+.productView-media,
+.productView-img-container {
+  width: 541px !important;
+  height: 541px !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 600px) {
+  .pp-frame,
+  .productView-images,
+  .productView-image-wrapper,
+  .product-single__photos,
+  .productView-media,
+  .productView-img-container {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+}
