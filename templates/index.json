@@ -126,6 +126,18 @@
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-1664.jpg",
             "title": "CHANEL",
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHANEL&sort_by=created-descending"
+          }
+        },
+        "circle_mehendi": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "category": "",
+            "vendor": "CHIRSTIAN DIOR",
+            "tag": "",
+            "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
+            "title": "CHIRSTIAN DIOR",
             "link": ""
           }
         },
@@ -141,18 +153,6 @@
             "link": ""
           }
         },
-        "circle_mehendi": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "CHIRSTIAN DIOR",
-            "tag": "",
-            "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
-            "title": "CHIRSTIAN DIOR",
-            "link": ""
-          }
-        },
         "circle_sangeet": {
           "type": "collection_circle",
           "settings": {
@@ -162,6 +162,18 @@
             "tag": "",
             "image": "shopify://shop_images/BBS20-10-2024-3032_shopify.jpg",
             "title": "GIANNI VERSACE",
+            "link": ""
+          }
+        },
+        "circle_reception": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "category": "",
+            "vendor": "YSL",
+            "tag": "",
+            "image": "shopify://shop_images/JEWELLERY4-2302.jpg",
+            "title": "YSL",
             "link": ""
           }
         },
@@ -177,36 +189,26 @@
             "link": ""
           }
         },
-        "circle_reception": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "",
-            "tag": "",
-            "title": "Reception",
-            "link": ""
-          }
-        },
         "circle_top_picks": {
           "type": "collection_circle",
           "settings": {
             "collection": "",
             "category": "",
-            "vendor": "",
+            "vendor": "SCHIAPARELLI",
             "tag": "",
-            "title": "Top Picks",
+            "image": "shopify://shop_images/JEWELLERY4-2365.jpg",
+            "title": "SCHIAPARELLI",
             "link": ""
           }
         }
       },
       "block_order": [
         "circle_pooja",
-        "circle_festive",
         "circle_mehendi",
+        "circle_festive",
         "circle_sangeet",
-        "circle_wedding",
         "circle_reception",
+        "circle_wedding",
         "circle_top_picks"
       ],
       "settings": {
