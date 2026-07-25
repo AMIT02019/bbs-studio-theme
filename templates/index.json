@@ -115,7 +115,7 @@
         "circle_top_picks"
       ],
       "settings": {
-        "hide_section": true,
+        "hide_section": false,
         "heading": "",
         "heading_size": 28,
         "heading_color": "#232323",
