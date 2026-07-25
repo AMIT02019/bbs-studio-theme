@@ -206,9 +206,13 @@
         "circle_reception",
         "circle_top_picks"
       ],
+      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
+        "max_width": 1430,
+        "show_arrows": true,
+        "hide_scrollbar": true,
         "heading_size": 28,
         "heading_color": "#232323",
         "circle_size": 170,
@@ -218,10 +222,7 @@
         "title_hover_color": "#8b0000",
         "bg_color": "#ffffff",
         "padding_top": 30,
-        "padding_bottom": 30,
-        "max_width": 1430,
-        "show_arrows": true,
-        "hide_scrollbar": true
+        "padding_bottom": 30
       }
     },
     "1779387305e8440900": {
