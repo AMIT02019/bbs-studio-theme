@@ -206,7 +206,6 @@
         "circle_reception",
         "circle_top_picks"
       ],
-      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
