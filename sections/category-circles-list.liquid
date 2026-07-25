@@ -144,11 +144,11 @@
     color: {{ section.settings.title_hover_color }};
   }
 
-  /* Scroll Navigation Buttons */
+  /* Scroll Navigation Buttons - Hidden by default, visible on hover */
   .category-circle-arrow {
     position: absolute;
     top: calc(50% - 15px);
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(0.9);
     z-index: 10;
     width: 44px;
     height: 44px;
@@ -160,12 +160,24 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* Show arrows when user hovers over section wrapper / grid container */
+  .category-circles-container:hover .category-circle-arrow,
+  .category-circles-scroll-wrapper:hover .category-circle-arrow {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(-50%) scale(1);
   }
 
   .category-circle-arrow:hover {
     background-color: #f8f8f8;
-    transform: translateY(-50%) scale(1.08);
+    transform: translateY(-50%) scale(1.1) !important;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   }
 
@@ -178,6 +190,12 @@
   }
 
   @media screen and (max-width: 749px) {
+    .category-circle-arrow {
+      opacity: 0.95;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(-50%) scale(0.9);
+    }
     .category-circle-arrow-prev {
       left: 0px;
     }
