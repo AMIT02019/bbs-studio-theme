@@ -1006,3 +1006,42 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
     color: var(--color-text, #232323) !important;
     display: block !important;
 }
+
+
+/* Force visibility on predictive search items by overriding scroll-trigger opacity 0 */
+.predictive-search .product,
+.quickSearchResultsWrap .product,
+#predictive-search-results .product,
+#predictive-search-results-list .product,
+.predictive-search .scroll-trigger,
+.quickSearchResultsWrap .scroll-trigger {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    animation: none !important;
+    display: block !important;
+}
+
+#predictive-search-results-list .products-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#predictive-search-results-list .products-grid .product {
+    width: calc(33.333% - 10px) !important;
+    min-width: 150px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.quickSearchResultsBlock .card,
+.quickSearchResultsWrap .card,
+.quickSearchResultsBlock .card-information,
+.quickSearchResultsWrap .card-information {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
