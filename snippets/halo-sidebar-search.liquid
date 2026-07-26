@@ -13,14 +13,6 @@
                             <label class="field__label hiddenLabels" for="Search-In-Modal-Sidebar">{{ 'general.search.search' | t }}</label>
                             <button class="button search__button field__button focus-inset" aria-label="{{ 'general.search.search' | t }}">{% render 'icon-search' %}</button>
                         </div>
-                        {%- if settings.show_quick_search -%}
-                            {%- if settings.show_search_trending or settings.show_search_product -%}
-                                {%- render 'quick-searching-trending-products', sectionId: 'sidebar-search-list-result' -%}
-                            {%- endif -%}
-                            {%- if settings.show_quick_search -%}
-                                {%- render 'predictive-search-results' -%}
-                            {%- endif -%}
-                        {%- endif -%}
                     </form>
                 </summary>
                 <div class="search-modal modal__content{% if settings.show_quick_search %} quickSearch{% endif %}" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
