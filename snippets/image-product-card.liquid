@@ -3,7 +3,7 @@
         {%- if settings.quick_shop_type == '2' -%}
             {%- assign width = product_card_product.featured_media.width -%}
             {%- assign height = product_card_product.featured_media.width | divided_by: product_card_product.featured_media.aspect_ratio | round -%}
-            <img {% render 'lazyload',preview_img: product_card_product.featured_media, class: true, width: width, height: height, enable_rtl: settings.enable_layout_rtl %} />
+            <img src="{{ product_card_product.featured_media | img_url: '300x' }}" {% render 'lazyload',preview_img: product_card_product.featured_media, class: true, width: width, height: height, enable_rtl: settings.enable_layout_rtl %} />
         {%- else -%}
             {%- assign width = variant_img.width -%}
             {%- assign height = variant_img.width | divided_by: variant_img.aspect_ratio | round -%}
