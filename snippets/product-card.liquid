@@ -50,7 +50,9 @@
         endif
     endif
 
-    assign media_size = settings.product_block_image_ratio
+    if media_size == blank or media_size == nil
+        assign media_size = settings.product_block_image_ratio | default: 'portrait'
+    endif
     if media_size == 'portrait'
         assign portrait_aspect_ratio = settings.portrait_height
     endif 
@@ -96,7 +98,7 @@
                 {%- if settings.show_badge -%}
                     {% render 'product-badge', product: product_card_product, class: 'card__badge', badge_detail: true, serial: serial %}
                 {%- endif -%}
-                <div class="card-media card-media--{{ media_size }}{% if product_card_product.media[1] != nil and settings.show_image_swap %} media--hover-effect{% endif%}{% if settings.show_compare and settings.product_compare_type == 'default' %} has-compare{% endif %}{% if loading %} media--loading-effect{% endif %}"{% if product_card_product.featured_media %}{% if media_size == 'adapt' %} style="padding-bottom: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;"{% elsif media_size == 'square' %} style="padding-bottom: 100%;"{% elsif media_size == 'portrait' %}{% if portrait_aspect_ratio != blank %} style="padding-bottom: {{ portrait_aspect_ratio | append: '%' }};"{% endif %}{% endif %}{% endif %}>
+                <div class="card-media card-media--{{ media_size }}{% if product_card_product.media[1] != nil and settings.show_image_swap %} media--hover-effect{% endif%}{% if settings.show_compare and settings.product_compare_type == 'default' %} has-compare{% endif %}{% if loading %} media--loading-effect{% endif %}" style="min-height: 120px; {% if media_size == 'adapt' and product_card_product.featured_media %}padding-bottom: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;{% elsif media_size == 'portrait' %}padding-bottom: {{ portrait_aspect_ratio | default: '125' | append: '%' }};{% else %}padding-bottom: 100%;{% endif %}">
                     {% render 'image-product-card', product_card_product: product_card_product, variant_img: variant_img, has_video: has_video, loading: loading %}
                     <a class="card-link" href="{{ product_card_product.url }}" title="{{ product_card_product.title | escape }}"></a>
                 </div>
