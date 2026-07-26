@@ -39,7 +39,9 @@
                     {%- if predictive_search.resources.products.size > 0 -%} 
                         <div class="products-grid column-{{ settings.search_product_per_row }} disable-srollbar text-left">
                         {%- for product in predictive_search.resources.products -%}
-                            {%- if forloop.index <= settings.quick_search_to_show -%}
+                            {%- assign limit_to_show = settings.quick_search_to_show | default: 6 | plus: 0 -%}
+                            {%- if limit_to_show <= 0 -%}{%- assign limit_to_show = 6 -%}{%- endif -%}
+                            {%- if forloop.index <= limit_to_show -%}
                                 <div class="product {{forloop.index}} {% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>
                                     {% render 'product-grid-layout',
                                         product_card_product: product,
