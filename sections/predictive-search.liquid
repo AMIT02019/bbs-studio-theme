@@ -138,6 +138,30 @@
                     endif
                 %}
             </span>
-        </div>
+        
+<script>
+(function() {
+  function fixLazyImages() {
+    var container = document.getElementById('predictive-search-results');
+    if (!container) return;
+    var imgs = container.querySelectorAll('img');
+    imgs.forEach(function(img) {
+      var dSet = img.getAttribute('data-srcset');
+      var dSrc = img.getAttribute('data-src');
+      if (dSet) img.setAttribute('srcset', dSet);
+      if (dSrc) img.setAttribute('src', dSrc);
+      img.classList.remove('lazyload');
+      img.classList.add('lazyloaded');
+      img.style.opacity = '1';
+      img.style.visibility = 'visible';
+    });
+  }
+  fixLazyImages();
+  setTimeout(fixLazyImages, 50);
+  setTimeout(fixLazyImages, 200);
+})();
+</script>
+
+</div>
     </div>
 {%- endif -%}
