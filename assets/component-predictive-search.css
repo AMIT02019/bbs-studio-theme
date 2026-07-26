@@ -940,3 +940,69 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
         display: none;
     }
 }
+
+/* Enhanced Predictive Search Overlay & Product Grid Fixes */
+.quickSearchResultsWrap {
+    display: block !important;
+}
+
+#predictive-search-results-list .products-grid,
+.quickSearchResultsBlock .products-grid {
+    font-size: 0;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+    overflow: auto;
+    white-space: normal !important;
+    padding: 10px 0;
+}
+
+#predictive-search-results-list .products-grid .product,
+.quickSearchResultsBlock .products-grid .product {
+    width: calc(33.333% - 10px) !important;
+    min-width: 180px !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+    white-space: normal !important;
+    font-size: var(--font-body-size) !important;
+    margin: 0 !important;
+}
+
+@media screen and (max-width: 768px) {
+    #predictive-search-results-list .products-grid .product,
+    .quickSearchResultsBlock .products-grid .product {
+        width: calc(50% - 10px) !important;
+        min-width: 140px !important;
+    }
+}
+
+.quickSearchResultsBlock .product-card,
+.quickSearchResultsBlock .card,
+.quickSearchResultsWrap .card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.quickSearchResultsBlock .card-information,
+.quickSearchResultsWrap .card-information {
+    display: block !important;
+    visibility: visible !important;
+    padding-top: 8px;
+}
+
+.quickSearchResultsBlock .card-title,
+.quickSearchResultsWrap .card-title {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    color: var(--color-text, #232323) !important;
+    display: block !important;
+}
+
+.quickSearchResultsBlock .price,
+.quickSearchResultsWrap .price {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--color-text, #232323) !important;
+    display: block !important;
+}
