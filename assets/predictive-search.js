@@ -239,6 +239,15 @@ class PredictiveSearch extends SearchForm {
 
   renderSearchResults(resultsMarkup) {
     this.predictiveSearchResults.innerHTML = resultsMarkup;
+    
+    // Auto-process lazyloaded images in AJAX search results
+    const lazyImgs = this.predictiveSearchResults.querySelectorAll('img[data-srcset], img[data-src]');
+    lazyImgs.forEach(img => {
+      if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+      if (img.dataset.src) img.src = img.dataset.src;
+      img.classList.remove('lazyload');
+      img.classList.add('lazyloaded');
+    });
     this.setAttribute('results', true);
     this.setAttribute('open', true);
     this.setLiveRegionResults();
@@ -298,6 +307,13 @@ class PredictiveSearch extends SearchForm {
     if (!this.trendingAndProductsBlock) return 
     this.trendingAndProductsBlock.classList.add('is-show')
     this.trendingAndProductsBlock.classList.remove('hidden');
+    const lazyImgs = this.trendingAndProductsBlock.querySelectorAll('img[data-srcset], img[data-src]');
+    lazyImgs.forEach(img => {
+      if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+      if (img.dataset.src) img.src = img.dataset.src;
+      img.classList.remove('lazyload');
+      img.classList.add('lazyloaded');
+    });
   }
 
   hideTrendingAndProducts() {
