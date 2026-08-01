@@ -86,7 +86,7 @@
       {%- if logo != blank -%}
         <div class="image_logo" style="--margin-bottom: {{ logo_margin_bottom }}">
           {%- assign logo_height = logo.width | divided_by: logo.aspect_ratio | round -%}
-          <img data-srcset="{{ logo | img_url: '420x' }}" class="lazyload" alt="{{ logo.alt | default: shop.name | escape }}" width="{{ logo.width }}" height="{{ logo_height }}">
+          <img src="{{ logo | img_url: 'master' }}" data-srcset="{{ logo | img_url: 'master' }}" class="lazyloaded" alt="{{ logo.alt | default: shop.name | escape }}" width="{{ logo.width }}" height="{{ logo_height }}" style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; image-rendering: -webkit-optimize-contrast !important;">
         </div>
       {%- endif -%}
       <div class="rte">
