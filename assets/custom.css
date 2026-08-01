@@ -497,3 +497,16 @@ body.template-search #MainContent,
 .cart-popular-product {
   display: none !important;
 }
+
+
+/* =============================================================================
+   OUR STORY Section Button Text Color White on Hover
+   ============================================================================= */
+a[class*="ai-our-story-button"]:hover,
+button[class*="ai-our-story-button"]:hover,
+.ai-our-story-button:hover,
+[class*="ai-our-story-button"]:hover,
+[class*="ai-our-story-button"]:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
