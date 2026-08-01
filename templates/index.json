@@ -197,7 +197,7 @@
             "vendor": "SCHIAPARELLI",
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-2365.jpg",
-            "title": "SCHIAPARELLI",
+            "title": "",
             "link": ""
           }
         }
@@ -211,12 +211,13 @@
         "circle_wedding",
         "circle_top_picks"
       ],
+      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
         "max_width": 1550,
         "show_arrows": true,
-        "hide_scrollbar": true,
+        "hide_scrollbar": false,
         "heading_size": 28,
         "heading_color": "#232323",
         "circle_size": 170,
@@ -348,9 +349,9 @@
           "settings": {
             "heading": "OLD SOUL. NEW DROP.",
             "subtitle": "Fresh Finds From Another Era",
-            "product_1": "persian-carpet",
-            "product_2": "clothing-hanger",
-            "product_3": "table-decor",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
             "enable_hover_image": true,
             "button_text": "View all",
             "button_link": "shopify://collections/all",
