@@ -524,3 +524,31 @@ a[href*="mailto"],
 a[href*="begborrowstealstudio@gmail.com"] {
   text-transform: lowercase !important;
 }
+
+
+/* =============================================================================
+   High Resolution Crisp Footer Logo Styling
+   ============================================================================= */
+.footer-block__details .image_logo,
+.image_logo {
+  display: block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+}
+
+.footer-block__details .image_logo img,
+.image_logo img {
+  width: 220px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+@media (max-width: 767px) {
+  .footer-block__details .image_logo img,
+  .image_logo img {
+    width: 180px !important;
+  }
+}
