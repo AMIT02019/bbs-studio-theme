@@ -148,11 +148,13 @@
     margin: 0 0 {{ block.settings.text_margin_bottom }}px 0;
   }
 
-  .ai-our-story-button-{{ ai_gen_id }} {
+  .ai-our-story-button-{{ ai_gen_id }},
+  a.ai-our-story-button-{{ ai_gen_id }} {
     display: inline-block;
     padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
     background-color: {{ block.settings.button_bg_color }};
-    color: {{ block.settings.button_text_color }};
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
     text-decoration: none;
     text-transform: uppercase;
     font-size: {{ block.settings.button_text_size }}px;
@@ -162,8 +164,12 @@
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   }
 
+  .ai-our-story-button-{{ ai_gen_id }}:hover,
   a.ai-our-story-button-{{ ai_gen_id }}:hover,
-  .ai-our-story-button-{{ ai_gen_id }}:hover {
+  .ai-our-story-button-{{ ai_gen_id }}:focus,
+  a.ai-our-story-button-{{ ai_gen_id }}:focus,
+  .ai-our-story-button-{{ ai_gen_id }}:active,
+  a.ai-our-story-button-{{ ai_gen_id }}:active {
     background-color: {{ block.settings.button_bg_hover_color }} !important;
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
@@ -250,7 +256,7 @@
         {% endif %}
 
         {% if block.settings.button_text != blank %}
-          <a href="{{ block.settings.button_link }}" class="ai-our-story-button-{{ ai_gen_id }}">
+          <a href="{{ block.settings.button_link }}" class="ai-our-story-button-{{ ai_gen_id }}" style="color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;" onmouseenter="this.style.color='#ffffff'; this.style.webkitTextFillColor='#ffffff';" onmouseleave="this.style.color='#ffffff'; this.style.webkitTextFillColor='#ffffff';">
             {{ block.settings.button_text }}
           </a>
         {% endif %}
