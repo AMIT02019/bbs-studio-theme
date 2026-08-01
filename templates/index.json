@@ -15,7 +15,7 @@
         "ai_gen_block_d7a703d_QthMnU": {
           "type": "ai_gen_block_d7a703d",
           "settings": {
-            "background_image": "shopify://shop_images/jpg_1-2_1.webp",
+            "background_image": "shopify:\/\/shop_images\/jpg_1-2_1.webp",
             "enable_parallax": true,
             "overlay_opacity": 1,
             "heading": "STEP INTO OUR TREASURE TROVE, WHERE EVERY PIECE TELLS A STORY…",
@@ -23,7 +23,7 @@
             "heading_size": 30,
             "heading_weight": "700",
             "button_text": "START SHOPPING",
-            "button_link": "https://begborrowstealstudio.com/collections/all",
+            "button_link": "https:\/\/begborrowstealstudio.com\/collections\/all",
             "button_text_color": "#ffffff",
             "button_border_color": "#ffffff",
             "button_hover_color": "#FFFFFF",
@@ -52,8 +52,8 @@
           "type": "ai_gen_block_2160d2f",
           "settings": {
             "grid_gap": 8,
-            "card_aspect_ratio": "1/1",
-            "mobile_aspect_ratio": "1/1",
+            "card_aspect_ratio": "1\/1",
+            "mobile_aspect_ratio": "1\/1",
             "card_border_radius": 0,
             "title_font_size": 24,
             "title_font_weight": "700",
@@ -78,29 +78,29 @@
             "hover_transition_duration": 0.4,
             "enable_scroll_animation": true,
             "category_1_title": "Vintage Designer Jewellery",
-            "category_1_link": "shopify://pages/vintage-designer-jewellery",
-            "category_1_image": "shopify://shop_images/VINTAGE-DESIGNER-JEWELLERY-1-scaled_1.jpg",
+            "category_1_link": "shopify:\/\/pages\/vintage-designer-jewellery",
+            "category_1_image": "shopify:\/\/shop_images\/VINTAGE-DESIGNER-JEWELLERY-1-scaled_1.jpg",
             "category_2_title": "Vintage Jewellery",
-            "category_2_link": "shopify://pages/designer-jewellery",
-            "category_2_image": "shopify://shop_images/VINTAGE-NON-DESIGNER-JEWELLERY-scaled_1.jpg",
+            "category_2_link": "shopify:\/\/pages\/designer-jewellery",
+            "category_2_image": "shopify:\/\/shop_images\/VINTAGE-NON-DESIGNER-JEWELLERY-scaled_1.jpg",
             "category_3_title": "Vintage Watches",
-            "category_3_link": "shopify://collections/watches",
-            "category_3_image": "shopify://shop_images/VINTAGE-WATCHES--scaled_1.jpg",
+            "category_3_link": "shopify:\/\/collections\/watches",
+            "category_3_image": "shopify:\/\/shop_images\/VINTAGE-WATCHES--scaled_1.jpg",
             "category_4_title": "Sunglasses",
-            "category_4_link": "shopify://collections/sunglasses",
-            "category_4_image": "shopify://shop_images/DSCF2973-scaled_1.jpg",
+            "category_4_link": "shopify:\/\/collections\/sunglasses",
+            "category_4_image": "shopify:\/\/shop_images\/DSCF2973-scaled_1.jpg",
             "category_5_title": "Vintage Clothing",
-            "category_5_link": "shopify://pages/coming-soon",
-            "category_5_image": "shopify://shop_images/VINTAGE-CLOTHING--scaled.jpg",
+            "category_5_link": "shopify:\/\/pages\/coming-soon",
+            "category_5_image": "shopify:\/\/shop_images\/VINTAGE-CLOTHING--scaled.jpg",
             "category_6_title": "Vintage Bags",
-            "category_6_link": "shopify://collections/handbags",
-            "category_6_image": "shopify://shop_images/VINTAGE-BAGS-option-2-scaled.jpg",
+            "category_6_link": "shopify:\/\/collections\/handbags",
+            "category_6_image": "shopify:\/\/shop_images\/VINTAGE-BAGS-option-2-scaled.jpg",
             "category_7_title": "Home Décor Curios",
-            "category_7_link": "shopify://pages/coming-soon",
-            "category_7_image": "shopify://shop_images/HOME-DECOR-CURIOS-option-2-1-scaled.jpg",
+            "category_7_link": "shopify:\/\/pages\/coming-soon",
+            "category_7_image": "shopify:\/\/shop_images\/HOME-DECOR-CURIOS-option-2-1-scaled.jpg",
             "category_8_title": "Vintage Textiles",
-            "category_8_link": "shopify://pages/coming-soon",
-            "category_8_image": "shopify://shop_images/VINTAGE-TEXTILES-scaled.jpg"
+            "category_8_link": "shopify:\/\/pages\/coming-soon",
+            "category_8_image": "shopify:\/\/shop_images\/VINTAGE-TEXTILES-scaled.jpg"
           },
           "blocks": {}
         }
@@ -124,9 +124,9 @@
             "category": "",
             "vendor": "",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-1664.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-1664.jpg",
             "title": "CHANEL",
-            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHANEL&sort_by=created-descending"
+            "link": "https:\/\/begborrowstealstudio.com\/collections\/all?filter.p.vendor=CHANEL&sort_by=created-descending"
           }
         },
         "circle_mehendi": {
@@ -136,7 +136,7 @@
             "category": "",
             "vendor": "CHIRSTIAN DIOR",
             "tag": "",
-            "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
+            "image": "shopify:\/\/shop_images\/BBS20-10-2024-3116_shopify.jpg",
             "title": "CHIRSTIAN DIOR",
             "link": ""
           }
@@ -148,7 +148,7 @@
             "category": "",
             "vendor": "GUCCI",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2407.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-2407.jpg",
             "title": "GUCCI",
             "link": ""
           }
@@ -160,7 +160,7 @@
             "category": "",
             "vendor": "GIANNI VERSACE",
             "tag": "",
-            "image": "shopify://shop_images/BBS20-10-2024-3032_shopify.jpg",
+            "image": "shopify:\/\/shop_images\/BBS20-10-2024-3032_shopify.jpg",
             "title": "GIANNI VERSACE",
             "link": ""
           }
@@ -172,7 +172,7 @@
             "category": "",
             "vendor": "YSL",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2302.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-2302.jpg",
             "title": "YSL",
             "link": ""
           }
@@ -184,7 +184,7 @@
             "category": "",
             "vendor": "GIVENCHY",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2538.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-2538.jpg",
             "title": "GIVENCHY",
             "link": ""
           }
@@ -196,7 +196,7 @@
             "category": "",
             "vendor": "SCHIAPARELLI",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2365.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-2365.jpg",
             "title": "",
             "link": ""
           }
@@ -240,7 +240,7 @@
             "category": "",
             "vendor": "",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-1664.jpg",
+            "image": "shopify:\/\/shop_images\/JEWELLERY4-1664.jpg",
             "title": "CHANEL",
             "link": ""
           }
@@ -252,7 +252,7 @@
             "category": "",
             "vendor": "Chanel",
             "tag": "",
-            "image": "shopify://shop_images/Jewellery-17_1_b03cbcd2-1e49-4972-b1c2-4947274e8b3f.jpg",
+            "image": "shopify:\/\/shop_images\/Jewellery-17_1_b03cbcd2-1e49-4972-b1c2-4947274e8b3f.jpg",
             "title": "CHANEL",
             "link": ""
           }
@@ -354,7 +354,7 @@
             "product_3": "",
             "enable_hover_image": true,
             "button_text": "View all",
-            "button_link": "shopify://collections/all",
+            "button_link": "shopify:\/\/collections\/all",
             "columns_desktop": 3,
             "columns_tablet": "2",
             "columns_mobile": "1",
@@ -405,10 +405,10 @@
           "type": "ai_gen_block_d53f98a",
           "settings": {
             "heading": "OUR STORY",
-            "description": "<p>A high-end boutique thrift store based in Mumbai, known for curated vintage treasures, designer labels, luxury jewellery, and timeless collectibles. The brand blends vintage elegance with modern storytelling and showcases carefully sourced pieces from around the world.</p>",
+            "description": "<p>A high-end boutique thrift store based in Mumbai, known for curated vintage treasures, designer labels, luxury jewellery, and timeless collectibles. The brand blends vintage elegance with modern storytelling and showcases carefully sourced pieces from around the world.<\/p>",
             "button_text": "KNOW MORE →",
             "button_link": "",
-            "image": "shopify://shop_images/OUR-STORY-option-2-scaled.jpg",
+            "image": "shopify:\/\/shop_images\/OUR-STORY-option-2-scaled.jpg",
             "container_width": 1200,
             "column_gap": 80,
             "padding_top": 0,
@@ -453,7 +453,7 @@
         "ai_gen_block_765a450_zt6cic": {
           "type": "ai_gen_block_765a450",
           "settings": {
-            "banner_image": "shopify://shop_images/image00007-scaled.jpg",
+            "banner_image": "shopify:\/\/shop_images\/image00007-scaled.jpg",
             "background_attachment": "fixed",
             "section_height_desktop": 350,
             "section_height_mobile": 400,
@@ -505,7 +505,7 @@
       "type": "apps",
       "blocks": {
         "instafeed_app_block_tcrgiY": {
-          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "type": "shopify:\/\/apps\/instafeed\/blocks\/app-block\/c447db20-095d-4a10-9725-b5977662c9d5",
           "settings": {
             "title": "FOLLOW US ON INSTAGRAM",
             "title_color": "",
@@ -541,7 +541,7 @@
             "desktop_padding": 55,
             "mobile_padding": 20,
             "max_content_width": 1200,
-            "background_image": "shopify://shop_images/20-1.jpg",
+            "background_image": "shopify:\/\/shop_images\/20-1.jpg",
             "enable_parallax": true,
             "overlay_color": "#00000040",
             "vignette_opacity": 0.5,

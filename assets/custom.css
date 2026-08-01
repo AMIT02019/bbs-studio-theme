@@ -510,3 +510,17 @@ button[class*="ai-our-story-button"]:hover,
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+
+/* =============================================================================
+   Display Email Address in Normal Lowercase Format
+   ============================================================================= */
+.email-wrapper,
+.email-wrapper p,
+.email-wrapper div,
+.email-wrapper span,
+.email-wrapper a,
+a[href*="mailto"],
+a[href*="begborrowstealstudio@gmail.com"] {
+  text-transform: lowercase !important;
+}
