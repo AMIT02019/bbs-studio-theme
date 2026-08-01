@@ -85,8 +85,7 @@
     <div class="footer-block__details{% if block.settings.enable_custom_position_icon != blank %} enable_custom_position_icon{% endif %}{% if block.settings.phone_text != blank or block.settings.address_text != blank or block.settings.email_text != blank %} has-content-piece{% endif %}" style="--icon-color: {{ final_icon_color }}; --icon-size: {{ block.settings.icon_size | append: 'px' }}; --content-spacing: {{ block.settings.content_spacing | append: 'px' }}">
       {%- if logo != blank -%}
         <div class="image_logo" style="--margin-bottom: {{ logo_margin_bottom }}">
-          {%- assign logo_height = logo.width | divided_by: logo.aspect_ratio | round -%}
-          <img src="{{ logo | img_url: 'master' }}" data-srcset="{{ logo | img_url: 'master' }}" class="lazyloaded" alt="{{ logo.alt | default: shop.name | escape }}" width="{{ logo.width }}" height="{{ logo_height }}" style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; image-rendering: -webkit-optimize-contrast !important;">
+          <img src="//begborrowstealstudio.com/cdn/shop/files/Beg-Borrow-Steal-Studio-Logo.png" srcset="//begborrowstealstudio.com/cdn/shop/files/Beg-Borrow-Steal-Studio-Logo.png 2x" class="lazyloaded" alt="{{ logo.alt | default: shop.name | escape }}" width="220" height="254" style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: crisp-edges !important;">
         </div>
       {%- endif -%}
       <div class="rte">
