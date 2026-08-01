@@ -162,9 +162,11 @@
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   }
 
+  a.ai-our-story-button-{{ ai_gen_id }}:hover,
   .ai-our-story-button-{{ ai_gen_id }}:hover {
-    background-color: {{ block.settings.button_bg_hover_color }};
+    background-color: {{ block.settings.button_bg_hover_color }} !important;
     color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
     transform: translateY(-2px);
   }
 
