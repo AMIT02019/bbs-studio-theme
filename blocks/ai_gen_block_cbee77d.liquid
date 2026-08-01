@@ -474,7 +474,19 @@
       {% endif %}
     </div>
 
+    {% assign has_manual_products = false %}
     {% if block.settings.product_1 != blank or block.settings.product_2 != blank or block.settings.product_3 != blank %}
+      {% assign has_manual_products = true %}
+    {% endif %}
+
+    {% assign target_collection = block.settings.collection %}
+    {% if target_collection == blank %}
+      {% assign target_collection = collections.all %}
+    {% endif %}
+
+    {% assign limit_num = block.settings.columns_desktop | default: 3 %}
+
+    {% if has_manual_products %}
       <div class="ai-recent-purchased-grid-{{ ai_gen_id }}">
         {% for i in (1..3) %}
           {% assign product_key = 'product_' | append: i %}
@@ -518,18 +530,58 @@
           {% endif %}
         {% endfor %}
       </div>
+    {% elsif target_collection != blank and target_collection.products.size > 0 %}
+      <div class="ai-recent-purchased-grid-{{ ai_gen_id }}">
+        {% assign latest_products = target_collection.products | sort: 'created_at' | reverse %}
+        {% for product in latest_products limit: limit_num %}
+          <article class="ai-rp-card-{{ ai_gen_id }}">
+            <a href="{{ product.url }}" class="ai-rp-card-link-{{ ai_gen_id }}">
+              <div class="ai-rp-image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    class="ai-rp-image-{{ ai_gen_id }} ai-rp-primary-image-{{ ai_gen_id }}"
+                    src="{{ product.featured_image | image_url: width: 1200 }}"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                    width="{{ product.featured_image.width }}"
+                    height="{{ product.featured_image.height }}"
+                  >
+                {% endif %}
 
-      {% if block.settings.button_link != blank and block.settings.button_text != blank %}
-        <div class="ai-rp-button-wrapper-{{ ai_gen_id }}">
-          <a href="{{ block.settings.button_link }}" class="ai-rp-button-{{ ai_gen_id }}">
-            {{ block.settings.button_text }}
-            <span class="ai-rp-button-arrow-{{ ai_gen_id }}">→</span>
-          </a>
-        </div>
-      {% endif %}
+                {% if block.settings.enable_hover_image and product.images.size > 1 %}
+                  <img
+                    class="ai-rp-image-{{ ai_gen_id }} ai-rp-hover-image-{{ ai_gen_id }}"
+                    src="{{ product.images[1] | image_url: width: 1200 }}"
+                    alt="{{ product.title | escape }}"
+                    loading="lazy"
+                    width="{{ product.images[1].width }}"
+                    height="{{ product.images[1].height }}"
+                  >
+                {% endif %}
+              </div>
+
+              <div class="ai-rp-content-{{ ai_gen_id }}">
+                <h3 class="ai-rp-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                <div class="ai-rp-price-{{ ai_gen_id }}">
+                  {{ product.price | money }}
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
     {% else %}
       <div class="ai-rp-empty-state-{{ ai_gen_id }}">
         Next, add products to display
+      </div>
+    {% endif %}
+
+    {% if block.settings.button_link != blank and block.settings.button_text != blank %}
+      <div class="ai-rp-button-wrapper-{{ ai_gen_id }}">
+        <a href="{{ block.settings.button_link }}" class="ai-rp-button-{{ ai_gen_id }}">
+          {{ block.settings.button_text }}
+          <span class="ai-rp-button-arrow-{{ ai_gen_id }}">→</span>
+        </a>
       </div>
     {% endif %}
   </div>
@@ -558,6 +610,11 @@
     {
       "type": "header",
       "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection (defaults to All Products / New Drop)"
     },
     {
       "type": "product",
