@@ -159,11 +159,12 @@
     font-weight: {{ block.settings.button_font_weight }};
     letter-spacing: {{ block.settings.button_letter_spacing }};
     border-radius: {{ block.settings.button_border_radius }}px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   }
 
   .ai-our-story-button-{{ ai_gen_id }}:hover {
     background-color: {{ block.settings.button_bg_hover_color }};
+    color: #ffffff !important;
     transform: translateY(-2px);
   }
 
