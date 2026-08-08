@@ -594,3 +594,33 @@ a[href*="begborrowstealstudio@gmail.com"] {
     padding: 12px 10px !important;
   }
 }
+
+/* =============================================================================
+   Remove Recently Viewed Products Section & Popup
+   ============================================================================= */
+.recently-viewed-product,
+.recently-viewed-products,
+.recently-viewed-block,
+.product-recently-viewed-block,
+.recently-viewed-products-section,
+recently-viewed-products,
+recently-viewed-popup,
+.halo-recently-viewed-popup,
+.halo-recently-viewed-block,
+.recently-viewed-product-page,
+[id*="recently-viewed"],
+[class*="recently-viewed-product"],
+[class*="recently-viewed-block"],
+[data-recently-viewed],
+section[class*="recently-viewed"],
+div[class*="recently-viewed"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
