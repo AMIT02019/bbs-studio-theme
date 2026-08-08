@@ -749,39 +749,10 @@ input[type="email"]::placeholder {
 }
 
 /* =============================================================================
-   Footer Address Uppercase Styling
+   Footer Address Title Case Styling
    ============================================================================= */
 .footer-block__details-content p,
 .footer-block__details-content span,
 .site-footer p {
-  text-transform: uppercase !important;
-}
-
-/* =============================================================================
-   Newsletter Submit Button Smooth Hover Effect
-   ============================================================================= */
-.footer-block__newsletter button,
-.footer-block__newsletter input[type="submit"],
-.newsletter-form__button,
-.footer button[type="submit"],
-.newsletter-form__button .button {
-  background-color: #232323 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 1px solid #232323 !important;
-  transition: all 0.3s ease-in-out !important;
-  cursor: pointer !important;
-}
-
-.footer-block__newsletter button:hover,
-.footer-block__newsletter input[type="submit"]:hover,
-.newsletter-form__button:hover,
-.footer button[type="submit"]:hover,
-.newsletter-form__button:hover .button {
-  background-color: #543217 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border-color: #543217 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(84, 50, 23, 0.25) !important;
+  text-transform: none !important;
 }
