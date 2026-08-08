@@ -624,3 +624,70 @@ div[class*="recently-viewed"] {
   padding: 0 !important;
   overflow: hidden !important;
 }
+
+/* =============================================================================
+   Global Website Text Color - Rich Vintage Brown (#4A2E1B)
+   ============================================================================= */
+:root {
+  --color-body-text: #4A2E1B !important;
+  --color-heading: #4A2E1B !important;
+  --color-base-text: #4A2E1B !important;
+  --color-text: #4A2E1B !important;
+  --color-main: #4A2E1B !important;
+  --color-link: #4A2E1B !important;
+  --color-grey: #6D4C3B !important;
+}
+
+body,
+html,
+p,
+span,
+div,
+li,
+a,
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+label,
+input,
+select,
+textarea,
+button,
+td, th,
+.card-title,
+.card-title a,
+.card-price,
+.card-vendor,
+.card-vendor a,
+.productView-title,
+.productView-info,
+.productView-desc,
+.productView-property,
+.header__menu-item,
+.menu-drawer__menu-item,
+.footer-block__heading,
+.footer-block__details,
+.site-nav-link,
+.collection-title,
+.price,
+.price-item,
+.breadcrumbs__link,
+.filter-group-display__list-item,
+.sidebarBlock-heading,
+.widget-title,
+.pagination__item,
+.cart-item__name,
+.cart-item__price,
+.cart-discount,
+.totals__subtotal-value,
+.tax-note {
+  color: #4A2E1B !important;
+}
+
+/* Hover Accent Brown */
+a:hover,
+.header__menu-item:hover,
+.card-title:hover,
+.card-title a:hover,
+.footer-block__details a:hover {
+  color: #7A4E2D !important;
+}
