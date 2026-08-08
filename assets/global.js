@@ -256,8 +256,15 @@ Shopify.formatMoney = function(cents, format) {
         number = (number/100.0).toFixed(precision);
 
         var parts   = number.split('.'),
-            dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+            numStr  = parts[0],
+            dollars = numStr,
             cents   = parts[1] ? (decimal + parts[1]) : '';
+        
+        if (numStr.length > 3) {
+            var lastThree = numStr.substring(numStr.length - 3);
+            var otherDigits = numStr.substring(0, numStr.length - 3);
+            dollars = otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, thousands) + thousands + lastThree;
+        }
 
         return dollars + cents;
     }
@@ -1155,3 +1162,52 @@ class SearchForm extends HTMLElement {
     }
   }
   customElements.define('search-form', SearchForm);
+
+// ================= Global Indian Price Auto-Formatter =================
+(function() {
+  function formatIndianCurrencyStr(str) {
+    if (!str || typeof str !== 'string') return str;
+    return str.replace(/\b(\d{1,3})(?:,(\d{3}))+(\.\d{2})?\b/g, function(match) {
+      var rawDigits = match.replace(/,/g, '');
+      var parts = rawDigits.split('.');
+      var numStr = parts[0];
+      var dec = parts.length > 1 ? '.' + parts[1] : '';
+      if (numStr.length <= 3) return numStr + dec;
+      var lastThree = numStr.substring(numStr.length - 3);
+      var otherDigits = numStr.substring(0, numStr.length - 3);
+      return otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree + dec;
+    });
+  }
+
+  function applyIndianPriceFormatting() {
+    var selectors = [
+      '.price-item', '.price-item--regular', '.price-item--sale', '.price',
+      '.card-price', '.money', '.productView-price', '.cart-item__price',
+      '.totals__subtotal-value', '.tax-note', '.quick-cart-price', '[data-price]'
+    ];
+    selectors.forEach(function(sel) {
+      document.querySelectorAll(sel).forEach(function(el) {
+        if (el.children.length === 0 && el.textContent) {
+          var formatted = formatIndianCurrencyStr(el.textContent);
+          if (formatted !== el.textContent) {
+            el.textContent = formatted;
+          }
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyIndianPriceFormatting);
+  } else {
+    applyIndianPriceFormatting();
+  }
+
+  window.addEventListener('load', applyIndianPriceFormatting);
+
+  // MutationObserver for dynamic price updates (filters, quick view, cart update)
+  var observer = new MutationObserver(function(mutations) {
+    applyIndianPriceFormatting();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
