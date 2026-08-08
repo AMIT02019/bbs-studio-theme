@@ -289,20 +289,6 @@
   #pp-{{ section.id }} .pp-compare { font-size: 15.36px; color: #bbb; text-decoration: line-through; }
   #pp-{{ section.id }} .pp-save { font-size: 11px; background: #f2f2f2; color: #555; padding: 2px 7px; letter-spacing: .4px; font-weight: 500; }
 
-  #pp-{{ section.id }} .pp-verified { margin-top: 23.04px; margin-bottom: 23.04px; }
-  #pp-{{ section.id }} .pp-verified__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7.68px;
-    border: 0.8px solid #0a0a0a;
-    border-radius: 30.72px;
-    padding: 7.68px 15.36px;
-    background: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    color: #0a0a0a;
-  }
-
   #pp-{{ section.id }} .pp-form-wrap { display: contents; }
   #pp-{{ section.id }} .pp-buy-stack { display: grid; gap: 11.52px; margin-bottom: 0; }
 
@@ -679,13 +665,6 @@
               <span class="pp-compare" id="pp-cmp-{{ section.id }}">{{ compare_price | money }}</span>
               <span class="pp-save" id="pp-sav-{{ section.id }}">{{ discount_pct }}% OFF</span>
             {%- endif -%}
-          </div>
-
-          <div class="pp-verified">
-            <span class="pp-verified__badge">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Verified
-            </span>
           </div>
 
           {% form 'product', product, id: form_id, class: 'pp-form-wrap' %}
