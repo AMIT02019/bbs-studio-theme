@@ -814,3 +814,135 @@ li.x-twitter {
   height: auto !important;
   object-fit: contain !important;
 }
+
+/* =============================================================================
+   Master Website Text Color - Brand Logo Brown
+   ============================================================================= */
+
+:root {
+  --color-body-text: #543217 !important;
+  --color-heading: #543217 !important;
+  --color-base-text: #543217 !important;
+  --color-text: #543217 !important;
+  --color-main: #543217 !important;
+  --color-link: #543217 !important;
+}
+
+/* 1. All standard website text on light/white backgrounds -> Brand Brown (#543217) */
+body,
+html,
+p,
+div:not([class*="bg-black"]):not([class*="announcement"]):not([class*="button"]):not([class*="btn"]):not([class*="footer"]):not([class*="badge"]),
+span:not([class*="badge"]):not([class*="button"]):not([class*="btn"]):not([class*="footer"]),
+li:not([class*="footer"]),
+a:not([class*="button"]):not([class*="btn"]):not([class*="footer"]),
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+label,
+input:not([type="submit"]):not([type="button"]),
+select,
+textarea,
+td, th,
+.card-title,
+.card-title a,
+.card-price,
+.card-vendor,
+.card-vendor a,
+.productView-title,
+.productView-info,
+.productView-desc,
+.productView-property,
+.product-form__label,
+.header__menu-item,
+.menu-drawer__menu-item,
+.site-nav-link,
+.collection-title,
+.price,
+.price-item,
+.breadcrumbs__link,
+.filter-group-display__list-item,
+.sidebarBlock-heading,
+.widget-title,
+.pagination__item,
+.cart-item__name,
+.cart-item__price,
+.cart-discount,
+.totals__subtotal-value,
+.tax-note,
+.drawer__header,
+.cart-drawer * {
+  color: #543217 !important;
+}
+
+/* Hover Accent Color */
+a:hover,
+.header__menu-item:hover,
+.card-title:hover,
+.card-title a:hover {
+  color: #784719 !important;
+}
+
+/* 2. Preserve White Text (#FFFFFF) for elements on dark backgrounds */
+button,
+.button,
+.btn,
+input[type="submit"],
+input[type="button"],
+.product-form__submit,
+.product-form__submit *,
+.shopify-payment-button__button,
+.shopify-payment-button__button *,
+.action-button,
+.card-action button,
+.card-action a,
+.add-to-cart-btn,
+.cart__checkout-button,
+.quick-add__submit,
+.newsletter-form__button,
+.search__button,
+.header__search-button,
+.wishlist-btn,
+.compare-btn,
+.announcement-bar,
+.announcement-bar *,
+.announcement-bar a,
+.header-top,
+.header-top *,
+.header-top a,
+.badge,
+.badge *,
+.card-badge,
+.product-badge,
+.footer,
+.footer *,
+.footer-bottom,
+.footer-bottom *,
+.footer-bottom p,
+.footer-bottom span,
+.footer-bottom a,
+.footer__content-bottom,
+.footer__content-bottom *,
+.footer-block__copyright,
+.footer-block__copyright *,
+.copyright,
+.copyright *,
+.footer__copyright,
+.footer__copyright *,
+.footer-block,
+.footer-block *,
+footer,
+footer * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+button:hover,
+.button:hover,
+.btn:hover,
+.product-form__submit:hover,
+.product-form__submit:hover *,
+.shopify-payment-button__button:hover,
+.shopify-payment-button__button:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
