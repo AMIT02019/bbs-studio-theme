@@ -747,3 +747,12 @@ input[type="email"]::placeholder {
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
 }
+
+/* =============================================================================
+   Footer Address Uppercase Styling
+   ============================================================================= */
+.footer-block__details-content p,
+.footer-block__details-content span,
+.site-footer p {
+  text-transform: uppercase !important;
+}
