@@ -117,6 +117,18 @@
     "category_circles_list": {
       "type": "category-circles-list",
       "blocks": {
+        "circle_festive": {
+          "type": "collection_circle",
+          "settings": {
+            "collection": "",
+            "category": "",
+            "vendor": "GUCCI",
+            "tag": "",
+            "image": "shopify://shop_images/JEWELLERY4-2407.jpg",
+            "title": "GUCCI",
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=Gucci&sort_by=created-descending"
+          }
+        },
         "circle_pooja": {
           "type": "collection_circle",
           "settings": {
@@ -129,28 +141,16 @@
             "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHANEL&sort_by=created-descending"
           }
         },
-        "circle_mehendi": {
+        "circle_reception": {
           "type": "collection_circle",
           "settings": {
             "collection": "",
             "category": "",
-            "vendor": "CHIRSTIAN DIOR",
+            "vendor": "YSL",
             "tag": "",
-            "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
-            "title": "CHIRSTIAN DIOR",
-            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descendinghttps://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descending"
-          }
-        },
-        "circle_festive": {
-          "type": "collection_circle",
-          "settings": {
-            "collection": "",
-            "category": "",
-            "vendor": "GUCCI",
-            "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2407.jpg",
-            "title": "GUCCI",
-            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=Gucci&sort_by=created-descending"
+            "image": "shopify://shop_images/JEWELLERY4-2302.jpg",
+            "title": "YSL",
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=YSL&sort_by=created-descending"
           }
         },
         "circle_sangeet": {
@@ -165,16 +165,16 @@
             "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=GIANNI+VERSACE&sort_by=created-descending"
           }
         },
-        "circle_reception": {
+        "circle_mehendi": {
           "type": "collection_circle",
           "settings": {
             "collection": "",
             "category": "",
-            "vendor": "YSL",
+            "vendor": "CHIRSTIAN DIOR",
             "tag": "",
-            "image": "shopify://shop_images/JEWELLERY4-2302.jpg",
-            "title": "YSL",
-            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=YSL&sort_by=created-descending"
+            "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
+            "title": "CHIRSTIAN DIOR",
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descendinghttps://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descending"
           }
         },
         "circle_wedding": {
@@ -203,11 +203,11 @@
         }
       },
       "block_order": [
-        "circle_pooja",
-        "circle_mehendi",
         "circle_festive",
-        "circle_sangeet",
+        "circle_pooja",
         "circle_reception",
+        "circle_sangeet",
+        "circle_mehendi",
         "circle_wedding",
         "circle_top_picks"
       ],
