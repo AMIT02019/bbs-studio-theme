@@ -801,3 +801,16 @@ li.tumblr,
 li.x-twitter {
   display: none !important;
 }
+
+/* =============================================================================
+   Official Footer Logo Image Override
+   ============================================================================= */
+.footer-block__logo img,
+.footer-block__item--text img,
+.footer-logo img,
+.site-footer .logo img {
+  content: url("https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_footer_logo_official.png?v=1786191150") !important;
+  max-width: 180px !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
