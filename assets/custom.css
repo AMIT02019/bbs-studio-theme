@@ -780,3 +780,24 @@ input[type="email"]::placeholder {
   border-bottom: none !important;
   box-shadow: none !important;
 }
+
+/* =============================================================================
+   Keep ONLY Instagram Social Icon
+   ============================================================================= */
+.list-social__item:has(a[href*="facebook"]),
+.list-social__item:has(a[href*="twitter"]),
+.list-social__item:has(a[href*="x.com"]),
+.list-social__item:has(a[href*="linkedin"]),
+.list-social__item:has(a[href*="tumblr"]),
+.social-icons__item:has(a[href*="facebook"]),
+.social-icons__item:has(a[href*="twitter"]),
+.social-icons__item:has(a[href*="x.com"]),
+.social-icons__item:has(a[href*="linkedin"]),
+.social-icons__item:has(a[href*="tumblr"]),
+li.facebook,
+li.twitter,
+li.linkedin,
+li.tumblr,
+li.x-twitter {
+  display: none !important;
+}
