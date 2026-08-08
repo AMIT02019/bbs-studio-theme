@@ -626,22 +626,24 @@ div[class*="recently-viewed"] {
 }
 
 /* =============================================================================
-   1. GLOBAL TEXT COLOR FOR LIGHT BACKGROUNDS (#4A2E1B)
+   1. GLOBAL WEBSITE TEXT COLOR - LOGO BRAND BROWN (#543217)
    ============================================================================= */
 :root {
-  --color-body-text: #4A2E1B !important;
-  --color-heading: #4A2E1B !important;
-  --color-base-text: #4A2E1B !important;
-  --color-text: #4A2E1B !important;
-  --color-main: #4A2E1B !important;
-  --color-link: #4A2E1B !important;
+  --color-body-text: #543217 !important;
+  --color-heading: #543217 !important;
+  --color-base-text: #543217 !important;
+  --color-text: #543217 !important;
+  --color-main: #543217 !important;
+  --color-link: #543217 !important;
+  --color-grey: #784719 !important;
 }
 
 body,
+html,
 p,
-div:not([class*="bg-black"]):not([class*="announcement"]):not([class*="button"]),
-span:not([class*="badge"]):not([class*="button"]):not([class*="btn"]),
-li,
+div:not([class*="bg-black"]):not([class*="announcement"]):not([class*="button"]):not([class*="footer"]),
+span:not([class*="badge"]):not([class*="button"]):not([class*="btn"]):not([class*="footer"]),
+li:not([class*="footer"]),
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 label,
@@ -660,8 +662,6 @@ td, th,
 .productView-property,
 .header__menu-item,
 .menu-drawer__menu-item,
-.footer-block__heading,
-.footer-block__details,
 .site-nav-link,
 .collection-title,
 .price,
@@ -676,23 +676,20 @@ td, th,
 .cart-discount,
 .totals__subtotal-value,
 .tax-note {
-  color: #4A2E1B !important;
+  color: #543217 !important;
 }
 
 a:hover,
 .header__menu-item:hover,
 .card-title:hover,
-.card-title a:hover,
-.footer-block__details a:hover {
-  color: #7A4E2D !important;
+.card-title a:hover {
+  color: #784719 !important;
 }
 
 
 /* =============================================================================
    2. PURE WHITE TEXT COLOR FOR ALL DARK BACKGROUND ELEMENTS (#FFFFFF)
    ============================================================================= */
-
-/* Buttons, CTAs & Action Elements */
 button,
 .button,
 .btn,
@@ -716,63 +713,17 @@ input[type="button"],
 [class*="btn-primary"],
 [class*="button--primary"],
 [class*="bg-black"],
-[class*="bg-dark"] {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-button:hover,
-.button:hover,
-.btn:hover,
-.product-form__submit:hover,
-.product-form__submit:hover *,
-.shopify-payment-button__button:hover,
-.shopify-payment-button__button:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* Announcement Bar & Header Top Banners */
+[class*="bg-dark"],
 .announcement-bar,
 .announcement-bar *,
 .announcement-bar a,
 .header-top,
 .header-top *,
 .header-top a,
-[class*="announcement"] * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* Badges, Sale Tags, Labels on Dark Bgs */
 .badge,
 .badge *,
-.badge--sale,
-.badge--sold-out,
-.badge--hot,
 .card-badge,
 .product-badge,
-.tag--dark,
-.bg-black *,
-.bg-dark * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* Dark Popups, Tooltips & Cart Notifications */
-.tooltip,
-.tooltip *,
-.toast,
-.toast *,
-.cart-notification.dark,
-.cart-notification.dark * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* =============================================================================
-   Footer & Copyright Bar White Text (#FFFFFF)
-   ============================================================================= */
 .footer,
 .footer *,
 .footer-bottom,
@@ -790,20 +741,19 @@ button:hover,
 .footer__copyright *,
 .footer-block,
 .footer-block *,
-.footer-block__details,
-.footer-block__details *,
-.footer-block__heading,
-.footer-block__heading *,
 footer,
 footer * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
-.footer a:hover,
-.footer-bottom a:hover,
-.footer-block a:hover,
-.footer-block__details a:hover {
+button:hover,
+.button:hover,
+.btn:hover,
+.product-form__submit:hover,
+.product-form__submit:hover *,
+.shopify-payment-button__button:hover,
+.shopify-payment-button__button:hover * {
   color: #ffffff !important;
-  text-decoration: underline !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
