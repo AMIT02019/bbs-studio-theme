@@ -744,3 +744,39 @@ input[type="email"]::placeholder {
 .footer-block__item--text span {
   text-transform: none !important;
 }
+
+/* =============================================================================
+   Fix Footer Link Double Underline Hover Effect
+   ============================================================================= */
+.footer-block__details a,
+.footer-block__details-content a,
+.site-footer a,
+.footer a,
+.footer .image-title a {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.footer-block__details a::before,
+.footer-block__details a::after,
+.footer-block__details-content a::before,
+.footer-block__details-content a::after,
+.site-footer a::before,
+.site-footer a::after,
+.footer a::before,
+.footer a::after {
+  display: none !important;
+  content: "" !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.footer-block__details a:hover,
+.footer-block__details-content a:hover,
+.site-footer a:hover,
+.footer a:hover {
+  color: #784719 !important;
+  text-decoration: underline !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
