@@ -21,11 +21,33 @@
     assign price = target.price | default: 1999
     assign available = target.available | default: false
 
-    if settings.currency_format_enable
-        assign money_price = price | money_with_currency
+    assign raw_price_num = price | divided_by: 100
+    assign num_str = raw_price_num | append: ''
+    assign num_len = num_str | size
+
+    if num_len > 3
+        assign last_three = num_str | slice: -3, 3
+        assign remaining_len = num_len | minus: 3
+        assign remaining = num_str | slice: 0, remaining_len
+        assign rem_len = remaining | size
+        assign formatted_rem = ''
+        
+        for i in (1..rem_len)
+            assign idx = rem_len | minus: i
+            assign char = remaining | slice: idx, 1
+            if i > 1 and i % 2 == 1
+                assign formatted_rem = char | append: ',' | append: formatted_rem
+            else
+                assign formatted_rem = char | append: formatted_rem
+            endif
+        endfor
+        
+        assign formatted_indian_num = formatted_rem | append: ',' | append: last_three
     else
-        assign money_price = price | money
-    endif 
+        assign formatted_indian_num = num_str
+    endif
+
+    assign money_price = 'Rs. ' | append: formatted_indian_num | append: '.00' 
 
     if target == product and product.price_varies
         assign money_price = 'products.product.price.from_price_html' | t: price: money_price

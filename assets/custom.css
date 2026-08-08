@@ -691,3 +691,33 @@ a:hover,
 .footer-block__details a:hover {
   color: #7A4E2D !important;
 }
+
+/* =============================================================================
+   Button Text Color - Crisp White
+   ============================================================================= */
+button,
+.button,
+.btn,
+input[type="submit"],
+input[type="button"],
+.product-form__submit,
+.product-form__submit *,
+.shopify-payment-button__button,
+.shopify-payment-button__button *,
+.action-button,
+.card-action button,
+.add-to-cart-btn,
+.cart__checkout-button,
+.quick-add__submit {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+button:hover,
+.button:hover,
+.btn:hover,
+.product-form__submit:hover,
+.shopify-payment-button__button:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}

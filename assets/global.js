@@ -1175,7 +1175,17 @@ class SearchForm extends HTMLElement {
       if (numStr.length <= 3) return numStr + dec;
       var lastThree = numStr.substring(numStr.length - 3);
       var otherDigits = numStr.substring(0, numStr.length - 3);
-      return otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree + dec;
+      var formattedOther = '';
+      var oLen = otherDigits.length;
+      for (var i = 1; i <= oLen; i++) {
+        var char = otherDigits.charAt(oLen - i);
+        if (i > 1 && i % 2 === 1) {
+          formattedOther = char + ',' + formattedOther;
+        } else {
+          formattedOther = char + formattedOther;
+        }
+      }
+      return formattedOther + ',' + lastThree + dec;
     });
   }
 
@@ -1187,10 +1197,15 @@ class SearchForm extends HTMLElement {
     ];
     selectors.forEach(function(sel) {
       document.querySelectorAll(sel).forEach(function(el) {
-        if (el.children.length === 0 && el.textContent) {
-          var formatted = formatIndianCurrencyStr(el.textContent);
-          if (formatted !== el.textContent) {
-            el.textContent = formatted;
+        // Walk text nodes inside element
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+        var node;
+        while (node = walker.nextNode()) {
+          if (node.nodeValue && node.nodeValue.trim()) {
+            var formatted = formatIndianCurrencyStr(node.nodeValue);
+            if (formatted !== node.nodeValue) {
+              node.nodeValue = formatted;
+            }
           }
         }
       });
@@ -1205,8 +1220,7 @@ class SearchForm extends HTMLElement {
 
   window.addEventListener('load', applyIndianPriceFormatting);
 
-  // MutationObserver for dynamic price updates (filters, quick view, cart update)
-  var observer = new MutationObserver(function(mutations) {
+  var observer = new MutationObserver(function() {
     applyIndianPriceFormatting();
   });
   observer.observe(document.body, { childList: true, subtree: true });
