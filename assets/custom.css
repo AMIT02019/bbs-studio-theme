@@ -626,7 +626,7 @@ div[class*="recently-viewed"] {
 }
 
 /* =============================================================================
-   Footer Brown Text & Reduced Font Size
+   Footer 14px Font Size & Brown Styling
    ============================================================================= */
 
 /* Footer Headings (QUICK LINKS, CUSTOMER SERVICES, NEWSLETTER SIGN UP, REACH US) */
@@ -637,27 +637,36 @@ div[class*="recently-viewed"] {
 .site-footer .widget-title,
 .footer .footer-block__heading {
   color: #543217 !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.08em !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 14px !important;
 }
 
-/* Footer Links & Navigation Items */
+/* Footer Links, Reach Us Info, Address & Contact Details */
 .footer-block__details a,
 .footer-block__details li,
 .footer-block__details span,
 .footer-block__details p,
+.footer-block__details-content,
 .footer-block__details-content a,
 .footer-block__details-content li,
 .footer-block__details-content p,
+.footer-block__details-content span,
+.footer-block__text,
+.footer-block__text p,
+.footer-block__text span,
+.footer-block__item--text,
+.footer-block__item--text p,
+.footer-block__item--text span,
 .site-footer a,
+.site-footer p,
 .footer a {
   color: #543217 !important;
-  font-size: 11px !important;
+  font-size: 14px !important;
   font-weight: 400 !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.03em !important;
   line-height: 1.8 !important;
 }
 
@@ -668,31 +677,7 @@ div[class*="recently-viewed"] {
   text-decoration: underline !important;
 }
 
-/* Reach Us Contact Info & Newsletter Description */
-.footer-block__details-content,
-.footer-block__details-content *,
-.footer-newsletter-text,
-.newsletter-form__field-wrapper input,
-.newsletter-form__field-wrapper input::placeholder {
-  color: #543217 !important;
-  font-size: 11px !important;
-  line-height: 1.6 !important;
-}
-
-/* Newsletter Input & Submit Button */
-.footer .newsletter-form__button,
-.footer button[type="submit"],
-.footer .submit-btn {
-  font-size: 11px !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-}
-
-/* =============================================================================
-   Newsletter Sign Up Specific Brown & Small Font
-   ============================================================================= */
-
-/* Newsletter Description / Subtext */
+/* Newsletter Section (Description, Input & Submit Button) */
 .footer-block__newsletter,
 .footer-block__newsletter p,
 .footer-block__newsletter span,
@@ -705,14 +690,13 @@ div[class*="recently-viewed"] {
 [class*="newsletter"] p,
 [class*="newsletter"] span {
   color: #543217 !important;
-  font-size: 10px !important;
+  font-size: 14px !important;
   font-weight: 400 !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.03em !important;
   line-height: 1.6 !important;
   text-transform: uppercase !important;
 }
 
-/* Email Input Field & Placeholder */
 .footer-block__newsletter input,
 .footer-block__newsletter input[type="email"],
 .newsletter-form__field-wrapper input,
@@ -721,8 +705,8 @@ div[class*="recently-viewed"] {
 input[name="contact[email]"],
 input[type="email"] {
   color: #543217 !important;
-  font-size: 10px !important;
-  letter-spacing: 0.05em !important;
+  font-size: 14px !important;
+  letter-spacing: 0.03em !important;
   text-transform: uppercase !important;
   border-color: #d4c5b9 !important;
 }
@@ -732,25 +716,23 @@ input[type="email"] {
 .newsletter-input::placeholder,
 input[type="email"]::placeholder {
   color: #543217 !important;
-  font-size: 10px !important;
-  letter-spacing: 0.05em !important;
+  font-size: 14px !important;
+  letter-spacing: 0.03em !important;
   text-transform: uppercase !important;
   opacity: 0.8 !important;
 }
 
-/* Submit Button */
 .footer-block__newsletter button,
 .footer-block__newsletter input[type="submit"],
 .newsletter-form__button,
-.newsletter-form__button * {
-  font-size: 10px !important;
-  letter-spacing: 0.08em !important;
+.footer button[type="submit"],
+.footer .submit-btn {
+  font-size: 14px !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
 }
 
-/* =============================================================================
-   Footer Address Title Case Styling
-   ============================================================================= */
+/* Address Title Case Override */
 .footer-block__details-content,
 .footer-block__details-content p,
 .footer-block__details-content span,
@@ -759,7 +741,6 @@ input[type="email"]::placeholder {
 .footer-block__text span,
 .footer-block__item--text,
 .footer-block__item--text p,
-.footer-block__item--text span,
-.site-footer p {
+.footer-block__item--text span {
   text-transform: none !important;
 }
