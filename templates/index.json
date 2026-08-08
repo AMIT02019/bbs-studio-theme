@@ -138,7 +138,7 @@
             "tag": "",
             "image": "shopify://shop_images/BBS20-10-2024-3116_shopify.jpg",
             "title": "CHIRSTIAN DIOR",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descendinghttps://begborrowstealstudio.com/collections/all?filter.p.vendor=CHRISTIAN+DIOR&sort_by=created-descending"
           }
         },
         "circle_festive": {
@@ -150,7 +150,7 @@
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-2407.jpg",
             "title": "GUCCI",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=Gucci&sort_by=created-descending"
           }
         },
         "circle_sangeet": {
@@ -162,7 +162,7 @@
             "tag": "",
             "image": "shopify://shop_images/BBS20-10-2024-3032_shopify.jpg",
             "title": "GIANNI VERSACE",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=GIANNI+VERSACE&sort_by=created-descending"
           }
         },
         "circle_reception": {
@@ -174,7 +174,7 @@
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-2302.jpg",
             "title": "YSL",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=YSL&sort_by=created-descending"
           }
         },
         "circle_wedding": {
@@ -186,7 +186,7 @@
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-2538.jpg",
             "title": "GIVENCHY",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=GIVENCHY&sort_by=created-descending"
           }
         },
         "circle_top_picks": {
@@ -198,7 +198,7 @@
             "tag": "",
             "image": "shopify://shop_images/JEWELLERY4-2365.jpg",
             "title": "",
-            "link": ""
+            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=SCHIAPARELLI&sort_by=created-descending"
           }
         }
       },
@@ -211,7 +211,6 @@
         "circle_wedding",
         "circle_top_picks"
       ],
-      "disabled": true,
       "settings": {
         "hide_section": false,
         "heading": "",
@@ -366,7 +365,7 @@
             "header_margin_bottom": 70,
             "button_margin_top": 70,
             "background_color": "#f8f6f3",
-            "heading_color": "#462A0D",
+            "heading_color": "#462a0d",
             "subtitle_color": "#8c8c8c",
             "card_background": "#ffffff",
             "card_border_color": "#00000014",
