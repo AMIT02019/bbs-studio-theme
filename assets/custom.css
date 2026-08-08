@@ -769,3 +769,41 @@ button:hover,
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+/* =============================================================================
+   Footer & Copyright Bar White Text (#FFFFFF)
+   ============================================================================= */
+.footer,
+.footer *,
+.footer-bottom,
+.footer-bottom *,
+.footer-bottom p,
+.footer-bottom span,
+.footer-bottom a,
+.footer__content-bottom,
+.footer__content-bottom *,
+.footer-block__copyright,
+.footer-block__copyright *,
+.copyright,
+.copyright *,
+.footer__copyright,
+.footer__copyright *,
+.footer-block,
+.footer-block *,
+.footer-block__details,
+.footer-block__details *,
+.footer-block__heading,
+.footer-block__heading *,
+footer,
+footer * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.footer a:hover,
+.footer-bottom a:hover,
+.footer-block a:hover,
+.footer-block__details a:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
