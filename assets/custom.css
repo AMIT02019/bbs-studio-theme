@@ -751,8 +751,15 @@ input[type="email"]::placeholder {
 /* =============================================================================
    Footer Address Title Case Styling
    ============================================================================= */
+.footer-block__details-content,
 .footer-block__details-content p,
 .footer-block__details-content span,
+.footer-block__text,
+.footer-block__text p,
+.footer-block__text span,
+.footer-block__item--text,
+.footer-block__item--text p,
+.footer-block__item--text span,
 .site-footer p {
   text-transform: none !important;
 }
