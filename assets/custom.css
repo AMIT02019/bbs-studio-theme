@@ -555,7 +555,8 @@ a[href*="begborrowstealstudio@gmail.com"] {
 
 
 /* =============================================================================
-   Set Page Content / RTE Font Size to 16px
+   Set Page Content / RTE / Policy Pages Font Size to 16px
+   (Terms & Conditions, Privacy Policy, Exchange & Return Policy, etc.)
    ============================================================================= */
 .rte,
 .rte p,
@@ -566,20 +567,46 @@ a[href*="begborrowstealstudio@gmail.com"] {
 .page-content p,
 .page-content li,
 .page-content span,
+.page-content div,
 .halo-page-content,
 .halo-page-content p,
 .halo-page-content li,
 .halo-page-content span,
+.halo-page-content div,
 .main-page-content,
 .main-page-content p,
 .main-page-content li,
 .main-page-content span,
+.main-page-content div,
+.shopify-policy__container,
+.shopify-policy__body,
+.shopify-policy__body p,
+.shopify-policy__body li,
+.shopify-policy__body span,
+.shopify-policy__body div,
+.shopify-policy__rte,
+.shopify-policy__rte p,
+.shopify-policy__rte li,
+#shopify-policy-html,
+#shopify-policy-html p,
+#shopify-policy-html li,
 .template-page .rte,
 .template-page .rte p,
 .template-page .page-content p,
+.template-privacy-policy p,
+.template-privacy-policy li,
+.template-privacy-policy span,
+.template-refund-policy p,
+.template-refund-policy li,
+.template-refund-policy span,
 body.template-page p,
-body.template-page li {
+body.template-page li,
+body.template-page span,
+body[class*="policy"] p,
+body[class*="policy"] li,
+body[class*="policy"] span {
   font-size: 16px !important;
   line-height: 1.6 !important;
 }
+
 
