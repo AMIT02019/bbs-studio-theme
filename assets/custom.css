@@ -687,3 +687,63 @@ div[class*="recently-viewed"] {
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
 }
+
+/* =============================================================================
+   Newsletter Sign Up Specific Brown & Small Font
+   ============================================================================= */
+
+/* Newsletter Description / Subtext */
+.footer-block__newsletter,
+.footer-block__newsletter p,
+.footer-block__newsletter span,
+.footer-block__newsletter label,
+.footer-newsletter-text,
+.footer-newsletter-subtext,
+.newsletter-form__field-wrapper,
+.newsletter-form__field-wrapper p,
+.newsletter-form__field-wrapper span,
+[class*="newsletter"] p,
+[class*="newsletter"] span {
+  color: #543217 !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1.6 !important;
+  text-transform: uppercase !important;
+}
+
+/* Email Input Field & Placeholder */
+.footer-block__newsletter input,
+.footer-block__newsletter input[type="email"],
+.newsletter-form__field-wrapper input,
+.newsletter-form__field-wrapper input[type="email"],
+.newsletter-input,
+input[name="contact[email]"],
+input[type="email"] {
+  color: #543217 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  border-color: #d4c5b9 !important;
+}
+
+.footer-block__newsletter input::placeholder,
+.newsletter-form__field-wrapper input::placeholder,
+.newsletter-input::placeholder,
+input[type="email"]::placeholder {
+  color: #543217 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  opacity: 0.8 !important;
+}
+
+/* Submit Button */
+.footer-block__newsletter button,
+.footer-block__newsletter input[type="submit"],
+.newsletter-form__button,
+.newsletter-form__button * {
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
