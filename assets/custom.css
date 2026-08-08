@@ -552,3 +552,45 @@ a[href*="begborrowstealstudio@gmail.com"] {
     width: 180px !important;
   }
 }
+
+/* =============================================================================
+   Product Card Image Fit & Padding (No Edge Cropping)
+   ============================================================================= */
+.card-media,
+.cpg-card-img,
+.product-item .card-media,
+.card-product .card-media {
+  background-color: #ffffff !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.card-media img,
+.card-media > img,
+.cpg-card-img img,
+.product-item .card-media img,
+.card-product .card-media img,
+.card-media.media--hover-effect img,
+.media--hover-effect img,
+.card-product .card-media > a > img {
+  object-fit: contain !important;
+  object-position: center center !important;
+  padding: 18px 16px !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+@media (max-width: 767px) {
+  .card-media img,
+  .card-media > img,
+  .cpg-card-img img,
+  .product-item .card-media img,
+  .card-product .card-media img,
+  .card-media.media--hover-effect img,
+  .media--hover-effect img,
+  .card-product .card-media > a > img {
+    padding: 12px 10px !important;
+  }
+}
