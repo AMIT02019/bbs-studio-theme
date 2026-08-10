@@ -7,7 +7,7 @@
 
 {%- liquid
   assign products_per_page = section.settings.products_per_page | plus: 0
-  assign col_count = section.settings.layout
+  assign col_count = section.settings.layout | plus: 0
   assign sidebar_pos = section.settings.sidebar_position
   assign show_filter = section.settings.show_filter
   assign load_type = section.settings.show_infinite_scrolling
