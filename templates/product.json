@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -11,14 +20,7 @@
         ".pp-arrow,.swiper-button-next,.swiper-button-prev {width: 44px !important; height: 44px !important; border-radius: 50% !important; background: #fff !important; border: 1px solid #ddd !important;}",
         "@media (max-width: 900px) {.pp-gallery {position: relative; top: auto; } .pp-frame {padding: 10px 10px; border-radius: 12px; }}"
       ],
-      "settings": {
-        "show_sticky_add_to_cart": true,
-        "sticky_atc_layout": "1",
-        "enable_sticky_add_to_cart_always_mobile": true,
-        "show_sticky_vendor": true,
-        "show_sticky_info": true,
-        "enable_sticky": false
-      }
+      "settings": {}
     },
     "16523184820d078b27": {
       "type": "instagram",
@@ -580,18 +582,18 @@
             "grid_gap": 20,
             "heading_alignment": "left",
             "heading_size": 32,
-            "heading_color": "#000000",
+            "heading_color": "#3E2723",
             "heading_margin_bottom": 30,
             "image_border_radius": 8,
             "image_background_color": "#f4f4f4",
             "image_margin_bottom": 15,
             "title_size": 16,
             "title_font_weight": "600",
-            "title_color": "#000000",
+            "title_color": "#3E2723",
             "title_margin_bottom": 10,
             "price_size": 14,
             "price_font_weight": "700",
-            "price_color": "#000000",
+            "price_color": "#3E2723",
             "section_padding_top": 40,
             "section_padding_bottom": 40
           },
