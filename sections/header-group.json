@@ -296,7 +296,7 @@
         "7de2266e-0cd4-4fda-9f09-06f75a17f944": {
           "type": "menu",
           "settings": {
-            "color": "#3E2723",
+            "color": "#5a3a0a",
             "menu_tab_bg": "#000000"
           }
         },
@@ -305,7 +305,7 @@
           "settings": {
             "icon": "1",
             "popup_action": false,
-            "color": "#3E2723"
+            "color": "#5a3a0a"
           }
         },
         "550fbd21-75fb-4051-9dee-77d91b5239f0": {
@@ -325,7 +325,7 @@
           "type": "customer",
           "settings": {
             "icon": "2",
-            "color": "#3E2723"
+            "color": "#5a3a0a"
           }
         },
         "633f9dae-3f65-4bda-9ca8-9d3e231aaf9d": {
@@ -333,7 +333,7 @@
           "settings": {
             "icon": "2",
             "show_cart_count_bubble": true,
-            "color": "#3E2723",
+            "color": "#5a3a0a",
             "color_bubble": "#ffffff",
             "bg_bubble": "#000000"
           }

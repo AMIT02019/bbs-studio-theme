@@ -920,36 +920,35 @@ button[class*="ai-our-story-button"]:hover,
 }
 
 
+
 /* =============================================================================
-   EVERY PAGE BROWN TEXT COLOR SYSTEM
-   Forces every page's text (Headings, Body, Menus, Cards, Filters, Footers, RTE, PDP)
-   to luxury brown (#3E2723 / #5D4037) while preserving white text on dark elements.
+   EVERY PAGE BROWN TEXT COLOR SYSTEM (EXACT COLOR: #5a3a0a)
    ============================================================================= */
 
 /* 1. Root & Variable Overrides on ALL elements */
 *, *::before, *::after {
-  --color-body-text: #3E2723 !important;
-  --color-heading: #3E2723 !important;
-  --color-link: #3E2723 !important;
-  --color-link-hover: #4A2E16 !important;
-  --color-title: #3E2723 !important;
-  --color-price: #3E2723 !important;
-  --color-text: #3E2723 !important;
-  --color-text2: #5D4037 !important;
-  --color-text-grey: #5D4037 !important;
-  --color-text-secondary: #5D4037 !important;
-  --font-color-body: #3E2723 !important;
-  --color-main: #3E2723 !important;
-  --color-base-text: #3E2723 !important;
-  --color-foreground: 62, 39, 35 !important;
-  --product-title-color: #3E2723 !important;
-  --product-price-color: #3E2723 !important;
-  --product-vendor-color: #5D4037 !important;
-  --footer-heading-color: #3E2723 !important;
-  --footer-link-color: #3E2723 !important;
+  --color-body-text: #5a3a0a !important;
+  --color-heading: #5a3a0a !important;
+  --color-link: #5a3a0a !important;
+  --color-link-hover: #7c5113 !important;
+  --color-title: #5a3a0a !important;
+  --color-price: #5a3a0a !important;
+  --color-text: #5a3a0a !important;
+  --color-text2: #7c5113 !important;
+  --color-text-grey: #7c5113 !important;
+  --color-text-secondary: #7c5113 !important;
+  --font-color-body: #5a3a0a !important;
+  --color-main: #5a3a0a !important;
+  --color-base-text: #5a3a0a !important;
+  --color-foreground: 90, 58, 10 !important;
+  --product-title-color: #5a3a0a !important;
+  --product-price-color: #5a3a0a !important;
+  --product-vendor-color: #7c5113 !important;
+  --footer-heading-color: #5a3a0a !important;
+  --footer-link-color: #5a3a0a !important;
 }
 
-/* 2. Global Universal Text Color Rule (All Pages, All Sections) */
+/* 2. Global Universal Text Color Rule */
 html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select, button,
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
@@ -968,10 +967,10 @@ h1, h2, h3, h4, h5, h6,
 .rte, .rte p, .rte li, .rte span, .page-content, .main-page-content,
 .shopify-policy__container, .shopify-policy__body, .shopify-policy__rte,
 .breadcrumb a, .breadcrumb span, .bd-title {
-  color: #3E2723 !important;
+  color: #5a3a0a !important;
 }
 
-/* 3. Secondary & Muted Text -> Soft Warm Brown (#5D4037) */
+/* 3. Secondary & Muted Text -> Warm Brown (#7c5113) */
 .product-vendor,
 .card-vendor,
 .price-item--regular,
@@ -985,20 +984,21 @@ h1, h2, h3, h4, h5, h6,
 .field__input::placeholder,
 input::placeholder,
 textarea::placeholder {
-  color: #5D4037 !important;
+  color: #7c5113 !important;
 }
 
-/* 4. Target Inline Styles with Black, Grey, or Dark Colors */
+/* 4. Target Inline Styles with Black, Grey, or Previous Dark Colors */
 [style*="color: #000"], [style*="color:#000"], [style*="color: #000000"], [style*="color:#000000"],
 [style*="color: #111"], [style*="color:#111"], [style*="color: #222"], [style*="color:#222"],
 [style*="color: #232323"], [style*="color:#232323"], [style*="color: #333"], [style*="color:#333"],
 [style*="color: #3c3c3c"], [style*="color:#3c3c3c"], [style*="color: #444"], [style*="color:#444"],
+[style*="color: #3E2723"], [style*="color:#3E2723"], [style*="color: #5D4037"], [style*="color:#5D4037"],
 [style*="color: #555"], [style*="color:#555"], [style*="color: #666"], [style*="color:#666"],
 [style*="color: #777"], [style*="color:#777"], [style*="color: #787878"], [style*="color:#787878"],
 [style*="color: #888"], [style*="color:#888"], [style*="color: #868686"], [style*="color:#868686"],
 [style*="color: #999"], [style*="color:#999"], [style*="color: #969696"], [style*="color:#969696"],
 [style*="color: black"], [style*="color: darkgrey"], [style*="color: grey"] {
-  color: #3E2723 !important;
+  color: #5a3a0a !important;
 }
 
 /* 5. SVG Header & Navigation Icons */
@@ -1006,7 +1006,7 @@ textarea::placeholder {
 .header__heading-link svg,
 .header-navigation svg,
 .cpg-filter-group svg {
-  stroke: #3E2723 !important;
+  stroke: #5a3a0a !important;
 }
 
 /* 6. STRICTLY PROTECT WHITE TEXT ON DARK BACKGROUNDS & BUTTONS */

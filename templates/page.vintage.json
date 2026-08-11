@@ -71,7 +71,7 @@
             "title_alignment": "center",
             "title_padding": 15,
             "title_bg_color": "#ffffff",
-            "title_color": "#3E2723",
+            "title_color": "#5a3a0a",
             "title_hover_color": "#666666"
           },
           "blocks": {}
@@ -107,7 +107,7 @@
             "card_border_radius": 14,
             "hover_lift": 5,
             "hover_shadow_opacity": 0.1,
-            "title_color": "#3E2723",
+            "title_color": "#5a3a0a",
             "title_font_size": 18,
             "title_font_weight": "600",
             "text_alignment": "center"
@@ -187,7 +187,7 @@
             "text_align": "center",
             "title_font_size": 20,
             "title_font_weight": "600",
-            "title_color": "#3E2723"
+            "title_color": "#5a3a0a"
           },
           "blocks": {}
         }
