@@ -1031,3 +1031,85 @@ button[class*="ai-our-story-button"]:hover,
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+/* =============================================================================
+   BLACK BACKGROUND BUTTONS -> WHITE TEXT COLOR (#ffffff)
+   Targets ONLY buttons with black / dark backgrounds so text is crisp white,
+   while light / outline buttons maintain theme text color.
+   ============================================================================= */
+
+.product-form__submit,
+.product-form__buttons button,
+.product-form__buttons .button,
+.product-form__buttons a,
+[name="add"].button,
+[name="add"].btn,
+button[name="add"],
+[id*="Add-to-cart"],
+[id*="add-to-cart"],
+.cart__checkout-button,
+.cart-checkout-button,
+[name="checkout"],
+.btn-dark,
+.button-dark,
+.btn-primary,
+.button-primary,
+.btn--primary,
+.bg-black button,
+.bg-dark button,
+.bg-black .button,
+.bg-dark .button,
+.ai-our-story-button,
+[class*="ai-our-story-button"],
+button[style*="background: #000"],
+button[style*="background:#000"],
+button[style*="background: #232323"],
+button[style*="background:#232323"],
+button[style*="background-color: #000"],
+button[style*="background-color:#000"],
+button[style*="background-color: #232323"],
+button[style*="background-color:#232323"],
+button[style*="background-color: black"],
+button[style*="background-color:black"],
+.button[style*="background: #000"],
+.button[style*="background:#000"],
+.button[style*="background: #232323"],
+.button[style*="background:#232323"],
+.button[style*="background-color: #000"],
+.button[style*="background-color:#000"],
+.button[style*="background-color: #232323"],
+.button[style*="background-color:#232323"],
+.button[style*="background-color: black"],
+.button[style*="background-color:black"] {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.product-form__submit *,
+.product-form__buttons button *,
+.product-form__buttons .button *,
+.cart__checkout-button *,
+.cart-checkout-button *,
+[name="checkout"] *,
+.btn-dark *,
+.button-dark *,
+.btn-primary *,
+.button-primary *,
+.ai-our-story-button *,
+[class*="ai-our-story-button"] * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.product-form__submit:hover,
+.cart__checkout-button:hover,
+.cart-checkout-button:hover,
+[name="checkout"]:hover,
+.btn-dark:hover,
+.button-dark:hover,
+.btn-primary:hover,
+.button-primary:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
