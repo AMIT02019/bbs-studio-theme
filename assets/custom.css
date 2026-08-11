@@ -1208,8 +1208,9 @@ form[action*="/cart/add"] button:hover,
 }
 
 
+
 /* =============================================================================
-   BUY IT NOW (DYNAMIC CHECKOUT) BUTTON TEXT VISIBILITY FIX
+   BUY IT NOW (DYNAMIC CHECKOUT) BUTTON -> BROWN TEXT COLOR (#5a3a0a)
    ============================================================================= */
 
 .shopify-payment-button__button--unbranded,
@@ -1217,12 +1218,12 @@ form[action*="/cart/add"] button:hover,
 .shopify-payment-button button,
 [data-testid="Checkout-button"],
 .shopify-payment-button__button--unbranded.button {
-  background-color: #000000 !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 1px solid #000000 !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #5a3a0a !important;
+  fill: #5a3a0a !important;
+  -webkit-text-fill-color: #5a3a0a !important;
+  border: 1px solid #5a3a0a !important;
   font-weight: 600 !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -1235,8 +1236,8 @@ form[action*="/cart/add"] button:hover,
 .shopify-payment-button__button *,
 .shopify-payment-button button *,
 [data-testid="Checkout-button"] * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  color: #5a3a0a !important;
+  -webkit-text-fill-color: #5a3a0a !important;
   opacity: 1 !important;
 }
 
@@ -1244,9 +1245,17 @@ form[action*="/cart/add"] button:hover,
 .shopify-payment-button__button:hover,
 .shopify-payment-button button:hover,
 [data-testid="Checkout-button"]:hover {
-  background-color: #222222 !important;
-  background: #222222 !important;
+  background-color: #5a3a0a !important;
+  background: #5a3a0a !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  border-color: #222222 !important;
+  border-color: #5a3a0a !important;
+}
+
+.shopify-payment-button__button--unbranded:hover *,
+.shopify-payment-button__button:hover *,
+.shopify-payment-button button:hover *,
+[data-testid="Checkout-button"]:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
