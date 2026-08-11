@@ -556,8 +556,9 @@ form[action*="/cart/add"] button:hover,
 }
 
 
+
 /* =============================================================================
-   HERO BANNER SECTION WHITE TEXT COLOR (#ffffff)
+   HERO BANNER SECTION WHITE TEXT COLOR (#ffffff) - HIGH SPECIFICITY
    ============================================================================= */
 
 [class*="ai-vintage-hero"],
@@ -567,8 +568,9 @@ form[action*="/cart/add"] button:hover,
 [class*="ai-vintage-hero-text"],
 [class*="ai-vintage-hero-button"],
 [class*="ai-vintage-hero-button"] *,
-[class*="hero-banner"],
-[class*="hero-banner"] *,
+[class*="ai-vintage-hero-arrow"],
+h1[class*="ai-vintage-hero-heading"],
+a[class*="ai-vintage-hero-button"],
 .hero-banner *,
 .banner__content *,
 .banner__heading,
@@ -577,6 +579,8 @@ form[action*="/cart/add"] button:hover,
 .banner__buttons a {
   color: #ffffff !important;
   fill: #ffffff !important;
+  stroke: #ffffff !important;
+  border-color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
@@ -584,6 +588,7 @@ form[action*="/cart/add"] button:hover,
 [class*="ai-vintage-hero-button"]:hover * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+  border-color: #ffffff !important;
 }
 
 </style>
