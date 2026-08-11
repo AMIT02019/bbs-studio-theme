@@ -1331,3 +1331,42 @@ a[class*="ai-vintage-hero-button"],
   -webkit-text-fill-color: #ffffff !important;
   border-color: #ffffff !important;
 }
+
+
+/* =============================================================================
+   IMAGE OVERLAY CATEGORY CARDS & HERO SECTIONS WHITE TEXT COLOR (#ffffff)
+   ============================================================================= */
+
+[class*="ai-vintage-grid"],
+[class*="ai-vintage-grid"] *,
+[class*="ai-vintage-grid__title"],
+[class*="ai-vintage-grid__button"],
+[class*="ai-vintage-grid__button"] *,
+[class*="ai-vintage-grid__content"] *,
+h3[class*="ai-vintage-grid__title"],
+div[class*="ai-vintage-grid__button"],
+[class*="ai-vintage-hero"],
+[class*="ai-vintage-hero"] *,
+[class*="ai-vintage-hero-heading"],
+[class*="ai-vintage-hero-subheading"],
+[class*="ai-vintage-hero-text"],
+[class*="ai-vintage-hero-button"],
+[class*="ai-vintage-hero-button"] *,
+[class*="ai-vintage-hero-arrow"],
+h1[class*="ai-vintage-hero-heading"],
+a[class*="ai-vintage-hero-button"] {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  border-color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+[class*="ai-vintage-grid__card"]:hover [class*="ai-vintage-grid__title"],
+[class*="ai-vintage-grid__card"]:hover [class*="ai-vintage-grid__button"],
+[class*="ai-vintage-hero-button"]:hover,
+[class*="ai-vintage-hero-button"]:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #ffffff !important;
+}
