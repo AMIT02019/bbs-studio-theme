@@ -704,3 +704,217 @@ h1.page-title,
     line-height: 1.35 !important;
   }
 }
+
+
+/* =============================================================================
+   WHOLE WEBSITE BROWN TEXT COLOR THEME
+   Replaces Black, Dark, & Grey text with Luxury Brown (#3E2723 & #5D4037)
+   STRICTLY PRESERVES ALL WHITE TEXT
+   ============================================================================= */
+
+/* 1. Root CSS Variables Overrides */
+:root {
+  --color-body-text: #3E2723 !important;
+  --color-heading: #3E2723 !important;
+  --color-link: #3E2723 !important;
+  --color-link-hover: #4A2E16 !important;
+  --color-title: #3E2723 !important;
+  --color-price: #3E2723 !important;
+  --color-text: #3E2723 !important;
+  --color-text2: #5D4037 !important;
+  --color-text-grey: #5D4037 !important;
+  --color-text-secondary: #5D4037 !important;
+  --font-color-body: #3E2723 !important;
+  --color-main: #3E2723 !important;
+  --color-base-text: #3E2723 !important;
+  --color-foreground: 62, 39, 35 !important;
+  --product-title-color: #3E2723 !important;
+  --product-price-color: #3E2723 !important;
+  --product-vendor-color: #5D4037 !important;
+  --footer-heading-color: #3E2723 !important;
+  --footer-link-color: #3E2723 !important;
+}
+
+/* 2. Global Text Elements (Headings, Paragraphs, Links, Lists, Labels) */
+body, 
+p, 
+span, 
+div, 
+a, 
+li, 
+td, 
+th, 
+dt, 
+dd, 
+label, 
+input, 
+textarea, 
+select, 
+button,
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #3E2723;
+}
+
+/* 3. Specific Headings & Titles Overrides */
+.page-title,
+.main-page-title,
+.page-header h1,
+.page-header .title,
+.collection-title,
+.collection-hero__title,
+.section-header__title,
+.halo-block-header .title,
+.category-title,
+.collection-category-title,
+.ai-collection-category-title,
+.ai-our-story-heading,
+.ultra-title,
+.pp-title,
+.product-title,
+.productView-title,
+.product-single__title,
+.card-title,
+.card__heading,
+.card__heading a,
+.card-information,
+[class*="title"],
+[class*="heading"] {
+  color: #3E2723 !important;
+}
+
+/* 4. Product Listings, Cards, Prices, & Vendors */
+.price,
+.price-item,
+.price__regular,
+.price__sale,
+.price-item--regular,
+.product-price,
+.cpg-price,
+.pp-price,
+.productView-price {
+  color: #3E2723 !important;
+}
+
+.product-vendor,
+.card-vendor,
+.price-item--regular,
+.price__compare,
+.compare-price,
+.productView-info-name,
+.productView-info-value,
+.meta-text,
+.sub-title,
+.subtitle {
+  color: #5D4037 !important;
+}
+
+/* 5. Header, Navigation Bar, & Mobile Drawers */
+.site-nav a,
+.site-nav span,
+.menu-drawer a,
+.menu-drawer span,
+.header__menu-item,
+.header__icon,
+.halo-sidebar-menu a,
+.halo-sidebar-menu span,
+.cpg-filter-title,
+.cpg-filter-option,
+.cpg-filter-group button,
+.cpg-filter-group .button {
+  color: #3E2723 !important;
+}
+
+/* SVG Header & Navigation Icons */
+.header__icon svg,
+.header__heading-link svg,
+.header-navigation svg,
+.cpg-filter-group svg {
+  stroke: #3E2723 !important;
+}
+
+/* 6. Footer Section Text & Links */
+.footer,
+.footer p,
+.footer a,
+.footer li,
+.footer span,
+.footer-block__item,
+.footer-block__heading,
+.footer-block__list,
+.footer-block__list a,
+.copyright,
+.copyright__content {
+  color: #3E2723 !important;
+}
+
+/* 7. Input Fields & Placeholder Text */
+input,
+textarea,
+select,
+.field__input,
+.footer-block__newsletter-item ::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #5D4037 !important;
+}
+
+/* 8. Link Hover States */
+a:hover,
+.footer-block__list a:hover,
+.card__heading a:hover,
+.site-nav a:hover,
+.header__menu-item:hover {
+  color: #4A2E16 !important;
+}
+
+/* =============================================================================
+   PROTECT WHITE TEXT ON DARK BACKGROUNDS & BUTTONS (STRICTLY PRESERVED)
+   ============================================================================= */
+
+.btn-primary,
+.btn-dark,
+.button-primary,
+.button-dark,
+.btn--primary,
+.product-form__submit,
+.cart-checkout-button,
+.cart__checkout-button,
+.bg-black,
+.bg-dark,
+.bg-black *,
+.bg-dark *,
+[class*="bg-black"] *,
+[class*="bg-dark"] *,
+.halo-cart-count,
+.cart-count-bubble,
+.cart-count-bubble span,
+.header__icon--cart span,
+.badge--sale,
+.badge--sold-out,
+.badge--custom,
+.product-tag--sale,
+.product-tag--new,
+[style*="background: #000"] *,
+[style*="background:#000"] *,
+[style*="background: black"] *,
+[style*="background: #111"] *,
+[style*="background-color: #000"] *,
+[style*="background-color:#000"] *,
+[style*="background-color: black"] *,
+[style*="background-color: #111"] *,
+.text-white,
+.text-white *,
+.has-white-text,
+.has-white-text * {
+  color: #ffffff !important;
+}
+
+a[class*="ai-our-story-button"]:hover,
+button[class*="ai-our-story-button"]:hover,
+.ai-our-story-button:hover,
+[class*="ai-our-story-button"]:hover,
+[class*="ai-our-story-button"]:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
