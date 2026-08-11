@@ -1370,3 +1370,31 @@ a[class*="ai-vintage-hero-button"] {
   -webkit-text-fill-color: #ffffff !important;
   border-color: #ffffff !important;
 }
+
+
+/* =============================================================================
+   VIEW ALL BUTTON WHITE TEXT COLOR (#ffffff)
+   ============================================================================= */
+
+[class*="ai-rp-button"],
+[class*="ai-rp-button"] *,
+[class*="ai-rp-button-arrow"],
+a[class*="ai-rp-button"],
+.rp-button,
+.rp-button *,
+.view-all-button,
+.btn-view-all,
+.pp-related__all {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+[class*="ai-rp-button"]:hover,
+[class*="ai-rp-button"]:hover *,
+.rp-button:hover,
+.rp-button:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
