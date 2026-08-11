@@ -1259,3 +1259,39 @@ form[action*="/cart/add"] button:hover,
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+
+/* =============================================================================
+   FOOTER BOTTOM SECTION WHITE TEXT COLOR (#ffffff)
+   ============================================================================= */
+
+.footer__content-bottom,
+.footer__content-bottom *,
+.footer-block__bottom,
+.footer-block__bottom *,
+.footer__copyright,
+.footer__copyright *,
+.copyright__content,
+.copyright__content *,
+.copyright__content p,
+.copyright__content a,
+.copyright__content span,
+.footer__column-item,
+.footer__column-item *,
+.footer__column--info,
+.footer__column--info *,
+.bottom-bar,
+.bottom-bar *,
+.bottom-bar--list,
+.bottom-bar--list * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.footer__content-bottom a:hover,
+.footer-block__bottom a:hover,
+.copyright__content a:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
