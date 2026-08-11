@@ -949,7 +949,7 @@ button[class*="ai-our-story-button"]:hover,
 }
 
 /* 2. Global Universal Text Color Rule */
-html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select, button,
+html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select,
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 .page-title, .main-page-title, .page-header h1, .page-header .title,
@@ -1110,6 +1110,99 @@ button[style*="background-color:black"],
 .button-dark:hover,
 .btn-primary:hover,
 .button-primary:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+
+/* =============================================================================
+   ADD TO CART & DARK BUTTONS WHITE TEXT COLOR (#ffffff)
+   ============================================================================= */
+
+/* Add to Cart Buttons Specific High-Priority Rule */
+.pp-atc,
+button.pp-atc,
+[id*="pp-atc"],
+.product-form__submit,
+.product-form__buttons button,
+.product-form__buttons .button,
+.product-form__buttons a,
+form[action*="/cart/add"] button,
+form[action*="/cart/add"] [type="submit"],
+form[action*="/cart/add"] .button,
+form[action*="/cart/add"] .btn,
+[name="add"],
+button[name="add"],
+.button[name="add"],
+.btn[name="add"],
+[id*="Add-to-cart"],
+[id*="add-to-cart"],
+[class*="add-to-cart"],
+.halo-sticky-add-to-cart .button,
+.halo-sticky-add-to-cart button,
+.sticky-add-to-cart .button,
+.sticky-add-to-cart button,
+.quick-add__submit,
+.card-action .button,
+.product-item-action .button,
+.cart__checkout-button,
+.cart-checkout-button,
+[name="checkout"],
+.btn-dark,
+.button-dark,
+.btn-primary,
+.button-primary,
+.btn--primary,
+.bg-black button,
+.bg-dark button,
+.ai-our-story-button,
+[class*="ai-our-story-button"],
+button[style*="background: #000"],
+button[style*="background:#000"],
+button[style*="background: #232323"],
+button[style*="background:#232323"],
+button[style*="background-color: #000"],
+button[style*="background-color:#000"],
+button[style*="background-color: #232323"],
+button[style*="background-color:#232323"],
+button[style*="background-color: black"],
+button[style*="background-color:black"] {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Children elements inside Add to Cart and Dark Buttons */
+.pp-atc *,
+button.pp-atc *,
+[id*="pp-atc"] *,
+.product-form__submit *,
+.product-form__buttons button *,
+.product-form__buttons .button *,
+form[action*="/cart/add"] button *,
+form[action*="/cart/add"] *,
+.cart__checkout-button *,
+.cart-checkout-button *,
+[name="checkout"] *,
+.btn-dark *,
+.button-dark *,
+.btn-primary *,
+.button-primary *,
+.ai-our-story-button *,
+[class*="ai-our-story-button"] * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Hover state for Add to Cart and Dark Buttons */
+.pp-atc:hover,
+button.pp-atc:hover,
+[id*="pp-atc"]:hover,
+.product-form__submit:hover,
+form[action*="/cart/add"] button:hover,
+.cart__checkout-button:hover,
+.cart-checkout-button:hover,
+[name="checkout"]:hover {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
