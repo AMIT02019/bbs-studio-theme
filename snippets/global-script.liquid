@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 title.style.fontSize = (currentSize - 2) + 'px';
                 // Also set it as important just in case
                 title.style.setProperty('font-size', (currentSize - 2) + 'px', 'important');
+                title.style.setProperty('line-height', '1.3', 'important');
             }
             title.dataset.sizeReduced = "true";
         }
@@ -344,3 +345,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 {% comment %}v-cache-bust-1785093965771{% endcomment %}
+
+{% comment %}v-mobile-title-fix-1786438800823{% endcomment %}
