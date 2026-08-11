@@ -949,7 +949,7 @@ button[class*="ai-our-story-button"]:hover,
 }
 
 /* 2. Global Universal Text Color Rule */
-html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select,
+html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select, button,
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 .page-title, .main-page-title, .page-header h1, .page-header .title,
@@ -1028,68 +1028,6 @@ button[class*="ai-our-story-button"]:hover,
 .ai-our-story-button:hover,
 [class*="ai-our-story-button"]:hover,
 [class*="ai-our-story-button"]:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-
-/* =============================================================================
-   BUTTON TEXT COLOR WHITE (#ffffff)
-   Enforces white text on all buttons (Add to Cart, Checkout, CTA, Submit, Filter buttons)
-   ============================================================================= */
-
-button,
-.button,
-.btn,
-input[type="submit"],
-button[type="submit"],
-.product-form__submit,
-.product-form__buttons button,
-.product-form__buttons .button,
-.product-form__buttons a,
-[name="add"],
-[id*="Add-to-cart"],
-[id*="add-to-cart"],
-[class*="add-to-cart"],
-.cart__checkout-button,
-.cart-checkout-button,
-[name="checkout"],
-.ai-our-story-button,
-[class*="ai-our-story-button"],
-.cpg-btn,
-.btn-primary,
-.btn-secondary,
-.btn-dark,
-.button-primary,
-.button-dark,
-.btn-1, .btn-2, .btn-3 {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-button *,
-.button *,
-.btn *,
-.product-form__submit *,
-.product-form__buttons *,
-[name="add"] *,
-.cart__checkout-button *,
-.cart-checkout-button *,
-[name="checkout"] * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* Specific hover states for buttons */
-button:hover,
-.button:hover,
-.btn:hover,
-.product-form__submit:hover,
-[name="add"]:hover,
-.cart__checkout-button:hover,
-.cart-checkout-button:hover,
-[name="checkout"]:hover {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
