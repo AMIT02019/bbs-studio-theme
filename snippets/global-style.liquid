@@ -699,6 +699,70 @@ span[class*="ai-luxury-testimonial-star"] {
   text-transform: capitalize !important;
 }
 
+
+/* =============================================================================
+   FOOTER FONT SIZE REDUCTION & PAYMENT LOGO VISIBILITY FIX
+   ============================================================================= */
+
+/* Footer Typography & Spacing Reduction */
+.footer-block__heading,
+.footer__column-item .footer-block__heading,
+.footer-block__title {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  margin-bottom: 12px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.footer-block__list a,
+.footer-block__item,
+.footer-block__item a,
+.footer-block__info,
+.footer-block__info p,
+.footer-block__text,
+.footer-block__text p,
+.footer__content-top a,
+.footer__content-top p,
+.footer__content-top span,
+.footer-block__subheading,
+.newsletter-form__field-wrapper input {
+  font-size: 13px !important;
+  line-height: 22px !important;
+}
+
+.copyright__content,
+.copyright__content p {
+  font-size: 13px !important;
+}
+
+/* Restore Original Payment Icon Logos (Visa, Mastercard, Google Pay) */
+.list-payment,
+.list-payment *,
+.footer__payment,
+.footer__payment *,
+.payment-icon,
+.payment-icon *,
+.footer__column--info svg,
+.footer__column--info img,
+.footer-block__bottom svg,
+.footer-block__bottom img {
+  fill: initial !important;
+  stroke: initial !important;
+  color: initial !important;
+  -webkit-text-fill-color: initial !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.list-payment__item svg,
+.footer__payment svg,
+.payment-icon svg {
+  display: inline-block !important;
+  max-height: 28px !important;
+  width: auto !important;
+  vertical-align: middle !important;
+}
+
 </style>
 
 {% comment %}v-brown-text-theme-1786445362498{% endcomment %}
