@@ -35,7 +35,8 @@
         for i in (1..rem_len)
             assign idx = rem_len | minus: i
             assign char = remaining | slice: idx, 1
-            if i > 1 and i % 2 == 1
+            assign mod_val = i | modulo: 2
+            if i > 1 and mod_val == 1
                 assign formatted_rem = char | append: ',' | append: formatted_rem
             else
                 assign formatted_rem = char | append: formatted_rem
