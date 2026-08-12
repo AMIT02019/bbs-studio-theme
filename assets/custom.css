@@ -926,167 +926,136 @@ button[class*="ai-our-story-button"]:hover,
 /* =============================================================================
 
 /* =============================================================================
-   EVERY PAGE BROWN TEXT COLOR SYSTEM (#5a3a0a)
+
+/* =============================================================================
+   ELEGANT BROWN TEXT DESIGN SYSTEM (#5a3a0a)
    ============================================================================= */
 
 :root {
-  --color-text: #5a3a0a !important;
-  --color-body-text: #5a3a0a !important;
-  --color-heading: #5a3a0a !important;
-  --color-link: #5a3a0a !important;
-  --color-foreground: #5a3a0a !important;
-  --color-base-text: #5a3a0a !important;
-  --color-title: #5a3a0a !important;
+  --color-text: #5a3a0a;
+  --color-body-text: #5a3a0a;
+  --color-heading: #5a3a0a;
+  --color-link: #5a3a0a;
+  --color-foreground: #5a3a0a;
+  --color-base-text: #5a3a0a;
+  --color-title: #5a3a0a;
 }
 
-/* Universal Brown Text Override */
-html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select,
-.page-title, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
-.section-header, .section-heading, .heading, .title, .subheading,
+body {
+  color: #5a3a0a;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.page-title, .section-header, .section-heading, .heading, .title,
 .product-title, .product-card__title, .card__heading, .card-title,
-.product-single__title, .product__title, .price, .price-item, .price__regular,
-.menu-drawer__menu-item, .header__menu-item, .list-menu__item, .nav-link,
-.site-nav__link, .breadcrumb, .breadcrumb a, .footer-block__heading,
-.footer-block__list a, .footer-block__item, .cart-item__name, .cart-item__price,
-.quick-view__title, .modal__title, .drawer__title, .sidebar__title {
-  color: #5a3a0a !important;
+.product-single__title, .product__title {
+  color: #5a3a0a;
 }
 
-/* Secondary Muted Text (#7c5113) */
+.price, .price-item, .price__regular {
+  color: #5a3a0a;
+}
+
+/* Secondary Muted Details */
 .product-vendor, .caption, .caption-with-letter-spacing, .price__compare,
-.price-item--regular, .price-item--last, .badge, .field__label,
-::placeholder, .form__message {
-  color: #7c5113 !important;
+.price-item--regular, ::placeholder {
+  color: #7c5113;
 }
 
-/* Base Link Colors */
-a:not(.btn):not(.button):not(.product-form__submit):not(.shopify-payment-button__button) {
-  color: #5a3a0a !important;
-}
+/* =============================================================================
+   DARK CONTAINER & OVERLAY SECTION WHITE TEXT OVERRIDES (#ffffff)
+   ============================================================================= */
 
-/* HERO BANNER SECTION */
-[class*="ai-vintage-hero"],
-[class*="ai-vintage-hero"] *,
+/* 1. Hero Banner */
 [class*="ai-vintage-hero-heading"],
 [class*="ai-vintage-hero-subheading"],
 [class*="ai-vintage-hero-text"],
 [class*="ai-vintage-hero-button"],
-[class*="ai-vintage-hero-button"] *,
-[class*="ai-vintage-hero-arrow"],
-h1[class*="ai-vintage-hero-heading"],
-a[class*="ai-vintage-hero-button"],
-.hero-banner *,
-.banner__content *,
-.banner__heading,
-.banner__text,
-.banner__buttons,
-.banner__buttons a {
+[class*="ai-vintage-hero"] h1,
+[class*="ai-vintage-hero"] a,
+[class*="ai-vintage-hero"] p,
+[class*="ai-vintage-hero"] span {
   color: #ffffff !important;
   fill: #ffffff !important;
-  stroke: #ffffff !important;
   border-color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
-/* IMAGE OVERLAY CATEGORY CARDS */
-[class*="ai-vintage-grid"],
-[class*="ai-vintage-grid"] *,
+/* 2. Image Overlay Category Cards */
 [class*="ai-vintage-grid__title"],
 [class*="ai-vintage-grid__button"],
-[class*="ai-vintage-grid__button"] *,
-[class*="ai-vintage-grid__content"] *,
-h3[class*="ai-vintage-grid__title"],
-div[class*="ai-vintage-grid__button"] {
+[class*="ai-vintage-grid"] h3,
+[class*="ai-vintage-grid"] a {
   color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
-/* FOOTER BOTTOM SECTION */
+/* 3. Testimonials Section ("WHAT OUR CUSTOMERS SAY") */
+[class*="ai-luxury-testimonial-heading"],
+[class*="ai-luxury-testimonial-quote"],
+[class*="ai-luxury-testimonial-author"],
+[class*="ai-luxury-testimonial"] h2,
+[class*="ai-luxury-testimonial"] p {
+  color: #ffffff !important;
+}
+
+[class*="ai-luxury-testimonial-star"] {
+  color: #d4af37 !important;
+}
+
+/* 4. Footer Bottom Section */
 .footer__content-bottom p,
 .footer__content-bottom a,
 .footer__content-bottom span,
-.footer-block__bottom p,
-.footer-block__bottom a,
-.footer-block__bottom span,
-.footer__copyright,
 .copyright__content,
-.copyright__content p,
-.copyright__content a,
-.copyright__content span,
-.footer__column-item p,
-.footer__column-item a,
-.bottom-bar p,
-.bottom-bar a,
-.bottom-bar span {
+.copyright__content p {
   color: #ffffff !important;
 }
 
-/* VIEW ALL BUTTON */
+/* 5. View All & Dark Action Buttons */
 [class*="ai-rp-button"],
-[class*="ai-rp-button"] *,
-[class*="ai-rp-button-arrow"],
-a[class*="ai-rp-button"],
-.rp-button,
-.rp-button *,
-.view-all-button,
-.btn-view-all,
-.pp-related__all {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-/* ADD TO CART & DARK BUTTONS */
 .pp-atc,
-button.pp-atc,
-[id*="pp-atc"],
 .product-form__submit,
-.product-form__buttons button,
-.product-form__buttons .button,
-form[action*="/cart/add"] button,
-form[action*="/cart/add"] [type="submit"],
 [name="add"],
 .cart__checkout-button,
-.cart-checkout-button,
-[name="checkout"],
 .btn-dark,
-.button-dark,
-.btn-primary,
-.button-primary,
-.bg-black button,
-.bg-dark button {
+.btn-primary {
   color: #ffffff !important;
-  fill: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
 .pp-atc *,
-button.pp-atc *,
 .product-form__submit *,
-.cart__checkout-button *,
-[name="checkout"] * {
+[name="add"] * {
   color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
 }
 
-/* BUY IT NOW BUTTON (BROWN TEXT ON WHITE OUTLINE) */
+/* Buy It Now Button */
 .shopify-payment-button__button--unbranded,
-.shopify-payment-button__button,
-[data-testid="Checkout-button"] {
+.shopify-payment-button__button {
   background-color: #ffffff !important;
-  background: #ffffff !important;
   color: #5a3a0a !important;
-  fill: #5a3a0a !important;
-  -webkit-text-fill-color: #5a3a0a !important;
   border: 1px solid #5a3a0a !important;
-  font-weight: 600 !important;
 }
 
-.shopify-payment-button__button--unbranded *,
-.shopify-payment-button__button * {
+.shopify-payment-button__button--unbranded * {
   color: #5a3a0a !important;
-  -webkit-text-fill-color: #5a3a0a !important;
+}
+
+/* Footer Links Size */
+.footer-block__heading {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.footer-block__list a,
+.footer-block__info p {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+/* Payment Icons SVG Reset */
+.list-payment__item .icon,
+.list-payment__item svg {
+  fill: unset !important;
+  height: 26px !important;
+  width: auto !important;
 }
