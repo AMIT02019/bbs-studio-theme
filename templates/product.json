@@ -515,7 +515,7 @@
       "disabled": true,
       "custom_css": [],
       "settings": {
-        "display_product_recently_viewed": true,
+        "display_product_recently_viewed": false,
         "product_recently_viewed_container": "container",
         "padding_full_width": 0,
         "enable_border_top": true,
@@ -604,9 +604,9 @@
         "ai_gen_block_a15b149_8Pj4Rr"
       ],
       "custom_css": [
-        "/* Center product card content */[class*=\"ai-recent-product-card\"] {text-align: center !important;}",
-        " /* Center product title */[class*=\"ai-recent-product-title\"] {text-align: center !important;}",
-        " /* Center product price */[class*=\"ai-recent-product-price\"] {text-align: center !important; display: block !important; width: 100% !important;}"
+        "[class*=\"ai-recent-product-card\"] {text-align: center !important;}",
+        " [class*=\"ai-recent-product-title\"] {text-align: center !important;}",
+        " [class*=\"ai-recent-product-price\"] {text-align: center !important; display: block !important; width: 100% !important;}"
       ],
       "settings": {}
     }

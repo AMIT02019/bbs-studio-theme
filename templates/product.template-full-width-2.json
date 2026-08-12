@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -11,14 +20,7 @@
         ".pp-arrow,.swiper-button-next,.swiper-button-prev {width: 44px !important; height: 44px !important; border-radius: 50% !important; background: #fff !important; border: 1px solid #ddd !important;}",
         "@media (max-width: 900px) {.pp-gallery {position: relative; top: auto; } .pp-frame {padding: 10px 10px; border-radius: 12px; }}"
       ],
-      "settings": {
-        "show_sticky_add_to_cart": true,
-        "sticky_atc_layout": "1",
-        "enable_sticky_add_to_cart_always_mobile": true,
-        "show_sticky_vendor": true,
-        "show_sticky_info": true,
-        "enable_sticky": false
-      }
+      "settings": {}
     },
     "16523184820d078b27": {
       "type": "instagram",
@@ -513,7 +515,7 @@
       "disabled": true,
       "custom_css": [],
       "settings": {
-        "display_product_recently_viewed": true,
+        "display_product_recently_viewed": false,
         "product_recently_viewed_container": "container",
         "padding_full_width": 0,
         "enable_border_top": true,
@@ -602,9 +604,9 @@
         "ai_gen_block_a15b149_8Pj4Rr"
       ],
       "custom_css": [
-        "/* Center product card content */[class*=\"ai-recent-product-card\"] {text-align: center !important;}",
-        " /* Center product title */[class*=\"ai-recent-product-title\"] {text-align: center !important;}",
-        " /* Center product price */[class*=\"ai-recent-product-price\"] {text-align: center !important; display: block !important; width: 100% !important;}"
+        "[class*=\"ai-recent-product-card\"] {text-align: center !important;}",
+        " [class*=\"ai-recent-product-title\"] {text-align: center !important;}",
+        " [class*=\"ai-recent-product-price\"] {text-align: center !important; display: block !important; width: 100% !important;}"
       ],
       "settings": {}
     }

@@ -170,7 +170,7 @@
     "product-recently-viewed": {
       "type": "product-recently-viewed",
       "settings": {
-        "display_product_recently_viewed": true,
+        "display_product_recently_viewed": false,
         "product_recently_viewed_container": "container",
         "padding_full_width": 0,
         "enable_border_top": true,
