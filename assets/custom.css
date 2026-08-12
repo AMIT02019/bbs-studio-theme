@@ -924,6 +924,8 @@ button[class*="ai-our-story-button"]:hover,
 /* =============================================================================
 
 /* =============================================================================
+
+/* =============================================================================
    EVERY PAGE BROWN TEXT COLOR SYSTEM (#5a3a0a)
    ============================================================================= */
 
@@ -962,36 +964,7 @@ a:not(.btn):not(.button):not(.product-form__submit):not(.shopify-payment-button_
   color: #5a3a0a !important;
 }
 
-/* =============================================================================
-   SECTION-SPECIFIC WHITE TEXT OVERRIDES (#ffffff)
-   ============================================================================= */
-
-/* 1. TESTIMONIALS SECTION ("WHAT OUR CUSTOMERS SAY") */
-[class*="ai-luxury-testimonial"],
-[class*="ai-luxury-testimonial"] *,
-[class*="ai-luxury-testimonials"],
-[class*="ai-luxury-testimonials"] *,
-[class*="luxury-testimonial"],
-[class*="luxury-testimonial"] *,
-[class*="testimonial-card"],
-[class*="testimonial-card"] *,
-h2[class*="ai-luxury-testimonial-heading"],
-p[class*="ai-luxury-testimonial-quote"],
-p[class*="ai-luxury-testimonial-author"] {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-span[class*="ai-luxury-testimonial-star"] {
-  color: #d4af37 !important;
-  fill: #d4af37 !important;
-  stroke: #d4af37 !important;
-  -webkit-text-fill-color: #d4af37 !important;
-}
-
-/* 2. HERO BANNER SECTION */
+/* HERO BANNER SECTION */
 [class*="ai-vintage-hero"],
 [class*="ai-vintage-hero"] *,
 [class*="ai-vintage-hero-heading"],
@@ -1015,7 +988,7 @@ a[class*="ai-vintage-hero-button"],
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* 3. IMAGE OVERLAY CATEGORY CARDS */
+/* IMAGE OVERLAY CATEGORY CARDS */
 [class*="ai-vintage-grid"],
 [class*="ai-vintage-grid"] *,
 [class*="ai-vintage-grid__title"],
@@ -1030,11 +1003,10 @@ div[class*="ai-vintage-grid__button"] {
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* 4. FOOTER BOTTOM SECTION */
+/* FOOTER BOTTOM SECTION */
 .footer__content-bottom p,
 .footer__content-bottom a,
 .footer__content-bottom span,
-.footer__content-bottom div:not(.list-payment):not(.list-payment__item),
 .footer-block__bottom p,
 .footer-block__bottom a,
 .footer-block__bottom span,
@@ -1049,10 +1021,9 @@ div[class*="ai-vintage-grid__button"] {
 .bottom-bar a,
 .bottom-bar span {
   color: #ffffff !important;
-  font-size: 16px !important;
 }
 
-/* 5. VIEW ALL BUTTON */
+/* VIEW ALL BUTTON */
 [class*="ai-rp-button"],
 [class*="ai-rp-button"] *,
 [class*="ai-rp-button-arrow"],
@@ -1068,7 +1039,7 @@ a[class*="ai-rp-button"],
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* 6. ADD TO CART & DARK BUTTONS */
+/* ADD TO CART & DARK BUTTONS */
 .pp-atc,
 button.pp-atc,
 [id*="pp-atc"],
@@ -1101,7 +1072,7 @@ button.pp-atc *,
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* 7. BUY IT NOW BUTTON (BROWN TEXT ON WHITE OUTLINE) */
+/* BUY IT NOW BUTTON (BROWN TEXT ON WHITE OUTLINE) */
 .shopify-payment-button__button--unbranded,
 .shopify-payment-button__button,
 [data-testid="Checkout-button"] {
@@ -1118,53 +1089,4 @@ button.pp-atc *,
 .shopify-payment-button__button * {
   color: #5a3a0a !important;
   -webkit-text-fill-color: #5a3a0a !important;
-}
-
-/* 8. FOOTER FONT SIZE & PAYMENT LOGOS VISIBILITY */
-.footer-block__heading,
-.footer__column-item .footer-block__heading {
-  font-size: 16px !important;
-  line-height: 22px !important;
-}
-
-.footer-block__list a,
-.footer-block__item a,
-.footer-block__info p {
-  font-size: 16px !important;
-  line-height: 28px !important;
-}
-
-.footer-block__info p {
-  text-transform: capitalize !important;
-}
-
-/* Exclude payment list and SVG icons from fill/color overrides */
-.list-payment,
-.list-payment__item,
-.list-payment__item *,
-.footer__payment,
-.footer__payment * {
-  color: unset !important;
-  -webkit-text-fill-color: unset !important;
-  background-color: transparent !important;
-  filter: none !important;
-}
-
-.list-payment__item .icon,
-.list-payment__item svg,
-svg.icon--full-color {
-  max-height: 28px !important;
-  height: 28px !important;
-  width: auto !important;
-  display: inline-block !important;
-  vertical-align: middle !important;
-}
-
-.list-payment__item svg path,
-.list-payment__item svg rect,
-.list-payment__item svg circle,
-.list-payment__item svg g,
-.list-payment__item svg polygon {
-  color: unset !important;
-  -webkit-text-fill-color: unset !important;
 }
