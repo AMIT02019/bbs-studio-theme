@@ -1427,3 +1427,15 @@ span[class*="ai-luxury-testimonial-star"] {
   stroke: #d4af37 !important;
   -webkit-text-fill-color: #d4af37 !important;
 }
+
+
+/* =============================================================================
+   FOOTER CONTACT ADDRESS FIRST LETTER UPPERCASE
+   ============================================================================= */
+
+.footer-block__info p,
+.footer-block__text p,
+.footer-block__location,
+.footer__address {
+  text-transform: capitalize !important;
+}
