@@ -1261,32 +1261,30 @@ form[action*="/cart/add"] button:hover,
 }
 
 
+
 /* =============================================================================
    FOOTER BOTTOM SECTION WHITE TEXT COLOR (#ffffff)
    ============================================================================= */
 
-.footer__content-bottom,
-.footer__content-bottom *,
-.footer-block__bottom,
-.footer-block__bottom *,
+.footer__content-bottom p,
+.footer__content-bottom a,
+.footer__content-bottom span,
+.footer__content-bottom div:not(.list-payment):not(.list-payment__item),
+.footer-block__bottom p,
+.footer-block__bottom a,
+.footer-block__bottom span,
 .footer__copyright,
-.footer__copyright *,
 .copyright__content,
-.copyright__content *,
 .copyright__content p,
 .copyright__content a,
 .copyright__content span,
-.footer__column-item,
-.footer__column-item *,
-.footer__column--info,
-.footer__column--info *,
-.bottom-bar,
-.bottom-bar *,
-.bottom-bar--list,
-.bottom-bar--list * {
+.footer__column-item p,
+.footer__column-item a,
+.bottom-bar p,
+.bottom-bar a,
+.bottom-bar span {
   color: #ffffff !important;
-  fill: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  font-size: 16px !important;
 }
 
 .footer__content-bottom a:hover,
@@ -1296,257 +1294,36 @@ form[action*="/cart/add"] button:hover,
   text-decoration: underline !important;
 }
 
-
-
 /* =============================================================================
-   HERO BANNER SECTION WHITE TEXT COLOR (#ffffff) - HIGH SPECIFICITY
+   PAYMENT LOGOS MULTI-COLOR SVG PRESERVATION
    ============================================================================= */
 
-[class*="ai-vintage-hero"],
-[class*="ai-vintage-hero"] *,
-[class*="ai-vintage-hero-heading"],
-[class*="ai-vintage-hero-subheading"],
-[class*="ai-vintage-hero-text"],
-[class*="ai-vintage-hero-button"],
-[class*="ai-vintage-hero-button"] *,
-[class*="ai-vintage-hero-arrow"],
-h1[class*="ai-vintage-hero-heading"],
-a[class*="ai-vintage-hero-button"],
-.hero-banner *,
-.banner__content *,
-.banner__heading,
-.banner__text,
-.banner__buttons,
-.banner__buttons a {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  border-color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-[class*="ai-vintage-hero-button"]:hover,
-[class*="ai-vintage-hero-button"]:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border-color: #ffffff !important;
-}
-
-
-/* =============================================================================
-   IMAGE OVERLAY CATEGORY CARDS & HERO SECTIONS WHITE TEXT COLOR (#ffffff)
-   ============================================================================= */
-
-[class*="ai-vintage-grid"],
-[class*="ai-vintage-grid"] *,
-[class*="ai-vintage-grid__title"],
-[class*="ai-vintage-grid__button"],
-[class*="ai-vintage-grid__button"] *,
-[class*="ai-vintage-grid__content"] *,
-h3[class*="ai-vintage-grid__title"],
-div[class*="ai-vintage-grid__button"],
-[class*="ai-vintage-hero"],
-[class*="ai-vintage-hero"] *,
-[class*="ai-vintage-hero-heading"],
-[class*="ai-vintage-hero-subheading"],
-[class*="ai-vintage-hero-text"],
-[class*="ai-vintage-hero-button"],
-[class*="ai-vintage-hero-button"] *,
-[class*="ai-vintage-hero-arrow"],
-h1[class*="ai-vintage-hero-heading"],
-a[class*="ai-vintage-hero-button"] {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  border-color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-[class*="ai-vintage-grid__card"]:hover [class*="ai-vintage-grid__title"],
-[class*="ai-vintage-grid__card"]:hover [class*="ai-vintage-grid__button"],
-[class*="ai-vintage-hero-button"]:hover,
-[class*="ai-vintage-hero-button"]:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border-color: #ffffff !important;
-}
-
-
-/* =============================================================================
-   VIEW ALL BUTTON WHITE TEXT COLOR (#ffffff)
-   ============================================================================= */
-
-[class*="ai-rp-button"],
-[class*="ai-rp-button"] *,
-[class*="ai-rp-button-arrow"],
-a[class*="ai-rp-button"],
-.rp-button,
-.rp-button *,
-.view-all-button,
-.btn-view-all,
-.pp-related__all {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-[class*="ai-rp-button"]:hover,
-[class*="ai-rp-button"]:hover *,
-.rp-button:hover,
-.rp-button:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-
-/* =============================================================================
-   TESTIMONIALS SECTION ("WHAT OUR CUSTOMERS SAY") WHITE TEXT COLOR (#ffffff)
-   ============================================================================= */
-
-[class*="ai-luxury-testimonial"],
-[class*="ai-luxury-testimonial"] *,
-[class*="ai-luxury-testimonials"],
-[class*="ai-luxury-testimonials"] *,
-[class*="luxury-testimonial"],
-[class*="luxury-testimonial"] *,
-[class*="testimonial-card"],
-[class*="testimonial-card"] *,
-h2[class*="ai-luxury-testimonial-heading"],
-p[class*="ai-luxury-testimonial-quote"],
-p[class*="ai-luxury-testimonial-author"] {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-span[class*="ai-luxury-testimonial-star"] {
-  color: #d4af37 !important;
-  fill: #d4af37 !important;
-  stroke: #d4af37 !important;
-  -webkit-text-fill-color: #d4af37 !important;
-}
-
-
-/* =============================================================================
-   FOOTER CONTACT ADDRESS FIRST LETTER UPPERCASE
-   ============================================================================= */
-
-.footer-block__info p,
-.footer-block__text p,
-.footer-block__location,
-.footer__address {
-  text-transform: capitalize !important;
-}
-
-
-
-/* =============================================================================
-   FOOTER FONT SIZE SET TO 16PX & PAYMENT LOGO VISIBILITY FIX
-   ============================================================================= */
-
-/* Footer Typography 16px */
-.footer-block__heading,
-.footer__column-item .footer-block__heading,
-.footer-block__title {
-  font-size: 16px !important;
-  line-height: 22px !important;
-  margin-bottom: 14px !important;
-  letter-spacing: 0.05em !important;
-}
-
-.footer-block__list a,
-.footer-block__item,
-.footer-block__item a,
-.footer-block__info,
-.footer-block__info p,
-.footer-block__text,
-.footer-block__text p,
-.footer__content-top a,
-.footer__content-top p,
-.footer__content-top span,
-.footer-block__subheading,
-.newsletter-form__field-wrapper input {
-  font-size: 16px !important;
-  line-height: 28px !important;
-}
-
-.copyright__content,
-.copyright__content p {
-  font-size: 16px !important;
-}
-
-/* Restore Original Payment Icon Logos (Visa, Mastercard, Google Pay) */
 .list-payment,
-.list-payment *,
+.list-payment__item,
+.list-payment__item *,
 .footer__payment,
-.footer__payment *,
-.payment-icon,
-.payment-icon *,
-.footer__column--info svg,
-.footer__column--info img,
-.footer-block__bottom svg,
-.footer-block__bottom img {
-  fill: initial !important;
-  stroke: initial !important;
-  color: initial !important;
-  -webkit-text-fill-color: initial !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.list-payment__item svg,
-.footer__payment svg,
-.payment-icon svg {
-  display: inline-block !important;
-  max-height: 28px !important;
-  width: auto !important;
-  vertical-align: middle !important;
-}
-
-
-/* =============================================================================
-   PAYMENT LOGOS MULTI-COLOR SVG VISIBILITY FIX
-   ============================================================================= */
-
-/* Exclude payment list and SVG icons from fill/color overrides */
-.list-payment,
-.list-payment *,
-.footer__payment,
-.footer__payment *,
-.payment-icon,
-.payment-icon * {
+.footer__payment * {
   color: unset !important;
   -webkit-text-fill-color: unset !important;
   background-color: transparent !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  filter: none !important;
 }
 
 .list-payment__item .icon,
 .list-payment__item svg,
-.footer__payment svg,
-.payment-icon svg {
-  fill: unset !important;
-  stroke: unset !important;
+svg.icon--full-color {
+  max-height: 28px !important;
+  height: 28px !important;
   width: auto !important;
-  height: 26px !important;
-  max-height: 26px !important;
   display: inline-block !important;
   vertical-align: middle !important;
 }
 
-/* Reset fill and stroke on internal SVG paths so inline colors render */
 .list-payment__item svg path,
 .list-payment__item svg rect,
 .list-payment__item svg circle,
 .list-payment__item svg g,
-.list-payment__item svg polygon,
-.footer__payment svg path,
-.footer__payment svg rect,
-.footer__payment svg circle,
-.footer__payment svg g {
-  fill: unset !important;
-  stroke: unset !important;
+.list-payment__item svg polygon {
+  color: unset !important;
+  -webkit-text-fill-color: unset !important;
 }

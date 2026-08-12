@@ -16,18 +16,4 @@
 .list-payment__item .icon{
     width: auto;
     height: 32px;
-    /* fill: currentColor removed for multi-color SVG logos */;
-    stroke: transparent;
-}
-
-.list-payment__item:last-child{
-    margin-right: 0;
-}
-
-@media (max-width: 767px) {
-    .list-payment {
-        text-align: center;
-        padding: 0;
-        margin-top: 20px;
-    }
 }
