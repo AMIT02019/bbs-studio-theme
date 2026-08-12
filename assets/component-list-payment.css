@@ -16,7 +16,7 @@
 .list-payment__item .icon{
     width: auto;
     height: 32px;
-    fill: currentColor;
+    /* fill: currentColor removed for multi-color SVG logos */;
     stroke: transparent;
 }
 

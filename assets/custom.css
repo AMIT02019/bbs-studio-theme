@@ -1504,3 +1504,49 @@ span[class*="ai-luxury-testimonial-star"] {
   width: auto !important;
   vertical-align: middle !important;
 }
+
+
+/* =============================================================================
+   PAYMENT LOGOS MULTI-COLOR SVG VISIBILITY FIX
+   ============================================================================= */
+
+/* Exclude payment list and SVG icons from fill/color overrides */
+.list-payment,
+.list-payment *,
+.footer__payment,
+.footer__payment *,
+.payment-icon,
+.payment-icon * {
+  color: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.list-payment__item .icon,
+.list-payment__item svg,
+.footer__payment svg,
+.payment-icon svg {
+  fill: unset !important;
+  stroke: unset !important;
+  width: auto !important;
+  height: 26px !important;
+  max-height: 26px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/* Reset fill and stroke on internal SVG paths so inline colors render */
+.list-payment__item svg path,
+.list-payment__item svg rect,
+.list-payment__item svg circle,
+.list-payment__item svg g,
+.list-payment__item svg polygon,
+.footer__payment svg path,
+.footer__payment svg rect,
+.footer__payment svg circle,
+.footer__payment svg g {
+  fill: unset !important;
+  stroke: unset !important;
+}
