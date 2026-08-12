@@ -922,350 +922,115 @@ button[class*="ai-our-story-button"]:hover,
 
 
 /* =============================================================================
-   EVERY PAGE BROWN TEXT COLOR SYSTEM (EXACT COLOR: #5a3a0a)
+
+/* =============================================================================
+   EVERY PAGE BROWN TEXT COLOR SYSTEM (#5a3a0a)
    ============================================================================= */
 
-/* 1. Root & Variable Overrides on ALL elements */
-*, *::before, *::after {
+:root {
+  --color-text: #5a3a0a !important;
   --color-body-text: #5a3a0a !important;
   --color-heading: #5a3a0a !important;
   --color-link: #5a3a0a !important;
-  --color-link-hover: #7c5113 !important;
-  --color-title: #5a3a0a !important;
-  --color-price: #5a3a0a !important;
-  --color-text: #5a3a0a !important;
-  --color-text2: #7c5113 !important;
-  --color-text-grey: #7c5113 !important;
-  --color-text-secondary: #7c5113 !important;
-  --font-color-body: #5a3a0a !important;
-  --color-main: #5a3a0a !important;
+  --color-foreground: #5a3a0a !important;
   --color-base-text: #5a3a0a !important;
-  --color-foreground: 90, 58, 10 !important;
-  --product-title-color: #5a3a0a !important;
-  --product-price-color: #5a3a0a !important;
-  --product-vendor-color: #7c5113 !important;
-  --footer-heading-color: #5a3a0a !important;
-  --footer-link-color: #5a3a0a !important;
+  --color-title: #5a3a0a !important;
 }
 
-/* 2. Global Universal Text Color Rule */
+/* Universal Brown Text Override */
 html, body, p, span, div, a, li, td, th, dt, dd, label, input, textarea, select,
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.page-title, .main-page-title, .page-header h1, .page-header .title,
-.collection-title, .collection-hero__title, .section-header__title,
-.halo-block-header .title, .category-title, .collection-category-title,
-.ai-collection-category-title, .ai-our-story-heading, .ultra-title,
-.pp-title, .product-title, .productView-title, .product-single__title,
-.card-title, .card__heading, .card__heading a, .card-information,
-.price, .price-item, .price__regular, .price__sale, .product-price,
-.site-nav a, .site-nav span, .menu-drawer a, .menu-drawer span,
-.header__menu-item, .header__icon, .halo-sidebar-menu a,
-.cpg-filter-title, .cpg-filter-option, .cpg-filter-group button,
-.footer, .footer p, .footer a, .footer li, .footer span,
-.footer-block__item, .footer-block__heading, .footer-block__list a,
-.rte, .rte p, .rte li, .rte span, .page-content, .main-page-content,
-.shopify-policy__container, .shopify-policy__body, .shopify-policy__rte,
-.breadcrumb a, .breadcrumb span, .bd-title {
+.page-title, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6,
+.section-header, .section-heading, .heading, .title, .subheading,
+.product-title, .product-card__title, .card__heading, .card-title,
+.product-single__title, .product__title, .price, .price-item, .price__regular,
+.menu-drawer__menu-item, .header__menu-item, .list-menu__item, .nav-link,
+.site-nav__link, .breadcrumb, .breadcrumb a, .footer-block__heading,
+.footer-block__list a, .footer-block__item, .cart-item__name, .cart-item__price,
+.quick-view__title, .modal__title, .drawer__title, .sidebar__title {
   color: #5a3a0a !important;
 }
 
-/* 3. Secondary & Muted Text -> Warm Brown (#7c5113) */
-.product-vendor,
-.card-vendor,
-.price-item--regular,
-.price__compare,
-.compare-price,
-.productView-info-name,
-.productView-info-value,
-.meta-text,
-.sub-title,
-.subtitle,
-.field__input::placeholder,
-input::placeholder,
-textarea::placeholder {
+/* Secondary Muted Text (#7c5113) */
+.product-vendor, .caption, .caption-with-letter-spacing, .price__compare,
+.price-item--regular, .price-item--last, .badge, .field__label,
+::placeholder, .form__message {
   color: #7c5113 !important;
 }
 
-/* 4. Target Inline Styles with Black, Grey, or Previous Dark Colors */
-[style*="color: #000"], [style*="color:#000"], [style*="color: #000000"], [style*="color:#000000"],
-[style*="color: #111"], [style*="color:#111"], [style*="color: #222"], [style*="color:#222"],
-[style*="color: #232323"], [style*="color:#232323"], [style*="color: #333"], [style*="color:#333"],
-[style*="color: #3c3c3c"], [style*="color:#3c3c3c"], [style*="color: #444"], [style*="color:#444"],
-[style*="color: #3E2723"], [style*="color:#3E2723"], [style*="color: #5D4037"], [style*="color:#5D4037"],
-[style*="color: #555"], [style*="color:#555"], [style*="color: #666"], [style*="color:#666"],
-[style*="color: #777"], [style*="color:#777"], [style*="color: #787878"], [style*="color:#787878"],
-[style*="color: #888"], [style*="color:#888"], [style*="color: #868686"], [style*="color:#868686"],
-[style*="color: #999"], [style*="color:#999"], [style*="color: #969696"], [style*="color:#969696"],
-[style*="color: black"], [style*="color: darkgrey"], [style*="color: grey"] {
+/* Base Link Colors */
+a:not(.btn):not(.button):not(.product-form__submit):not(.shopify-payment-button__button) {
   color: #5a3a0a !important;
 }
 
-/* 5. SVG Header & Navigation Icons */
-.header__icon svg,
-.header__heading-link svg,
-.header-navigation svg,
-.cpg-filter-group svg {
-  stroke: #5a3a0a !important;
-}
-
-/* 6. STRICTLY PROTECT WHITE TEXT ON DARK BACKGROUNDS & BUTTONS */
-.btn-primary, .btn-dark, .button-primary, .button-dark, .btn--primary,
-.product-form__submit, .cart-checkout-button, .cart__checkout-button,
-.bg-black, .bg-dark, .bg-black *, .bg-dark *,
-[class*="bg-black"] *, [class*="bg-dark"] *,
-.halo-cart-count, .cart-count-bubble, .cart-count-bubble span, .header__icon--cart span,
-.badge--sale, .badge--sold-out, .badge--custom, .product-tag--sale, .product-tag--new,
-[style*="background: #000"] *, [style*="background:#000"] *, [style*="background: black"] *,
-[style*="background: #111"] *, [style*="background-color: #000"] *, [style*="background-color:#000"] *,
-[style*="background-color: black"] *, [style*="background-color: #111"] *,
-.text-white, .text-white *, .has-white-text, .has-white-text * {
-  color: #ffffff !important;
-}
-
-a[class*="ai-our-story-button"]:hover,
-button[class*="ai-our-story-button"]:hover,
-.ai-our-story-button:hover,
-[class*="ai-our-story-button"]:hover,
-[class*="ai-our-story-button"]:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
 /* =============================================================================
-   BLACK BACKGROUND BUTTONS -> WHITE TEXT COLOR (#ffffff)
-   Targets ONLY buttons with black / dark backgrounds so text is crisp white,
-   while light / outline buttons maintain theme text color.
+   SECTION-SPECIFIC WHITE TEXT OVERRIDES (#ffffff)
    ============================================================================= */
 
-.product-form__submit,
-.product-form__buttons button,
-.product-form__buttons .button,
-.product-form__buttons a,
-[name="add"].button,
-[name="add"].btn,
-button[name="add"],
-[id*="Add-to-cart"],
-[id*="add-to-cart"],
-.cart__checkout-button,
-.cart-checkout-button,
-[name="checkout"],
-.btn-dark,
-.button-dark,
-.btn-primary,
-.button-primary,
-.btn--primary,
-.bg-black button,
-.bg-dark button,
-.bg-black .button,
-.bg-dark .button,
-.ai-our-story-button,
-[class*="ai-our-story-button"],
-button[style*="background: #000"],
-button[style*="background:#000"],
-button[style*="background: #232323"],
-button[style*="background:#232323"],
-button[style*="background-color: #000"],
-button[style*="background-color:#000"],
-button[style*="background-color: #232323"],
-button[style*="background-color:#232323"],
-button[style*="background-color: black"],
-button[style*="background-color:black"],
-.button[style*="background: #000"],
-.button[style*="background:#000"],
-.button[style*="background: #232323"],
-.button[style*="background:#232323"],
-.button[style*="background-color: #000"],
-.button[style*="background-color:#000"],
-.button[style*="background-color: #232323"],
-.button[style*="background-color:#232323"],
-.button[style*="background-color: black"],
-.button[style*="background-color:black"] {
+/* 1. TESTIMONIALS SECTION ("WHAT OUR CUSTOMERS SAY") */
+[class*="ai-luxury-testimonial"],
+[class*="ai-luxury-testimonial"] *,
+[class*="ai-luxury-testimonials"],
+[class*="ai-luxury-testimonials"] *,
+[class*="luxury-testimonial"],
+[class*="luxury-testimonial"] *,
+[class*="testimonial-card"],
+[class*="testimonial-card"] *,
+h2[class*="ai-luxury-testimonial-heading"],
+p[class*="ai-luxury-testimonial-quote"],
+p[class*="ai-luxury-testimonial-author"] {
   color: #ffffff !important;
   fill: #ffffff !important;
+  stroke: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
-.product-form__submit *,
-.product-form__buttons button *,
-.product-form__buttons .button *,
-.cart__checkout-button *,
-.cart-checkout-button *,
-[name="checkout"] *,
-.btn-dark *,
-.button-dark *,
-.btn-primary *,
-.button-primary *,
-.ai-our-story-button *,
-[class*="ai-our-story-button"] * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+span[class*="ai-luxury-testimonial-star"] {
+  color: #d4af37 !important;
+  fill: #d4af37 !important;
+  stroke: #d4af37 !important;
+  -webkit-text-fill-color: #d4af37 !important;
 }
 
-.product-form__submit:hover,
-.cart__checkout-button:hover,
-.cart-checkout-button:hover,
-[name="checkout"]:hover,
-.btn-dark:hover,
-.button-dark:hover,
-.btn-primary:hover,
-.button-primary:hover {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-
-/* =============================================================================
-   ADD TO CART & DARK BUTTONS WHITE TEXT COLOR (#ffffff)
-   ============================================================================= */
-
-/* Add to Cart Buttons Specific High-Priority Rule */
-.pp-atc,
-button.pp-atc,
-[id*="pp-atc"],
-.product-form__submit,
-.product-form__buttons button,
-.product-form__buttons .button,
-.product-form__buttons a,
-form[action*="/cart/add"] button,
-form[action*="/cart/add"] [type="submit"],
-form[action*="/cart/add"] .button,
-form[action*="/cart/add"] .btn,
-[name="add"],
-button[name="add"],
-.button[name="add"],
-.btn[name="add"],
-[id*="Add-to-cart"],
-[id*="add-to-cart"],
-[class*="add-to-cart"],
-.halo-sticky-add-to-cart .button,
-.halo-sticky-add-to-cart button,
-.sticky-add-to-cart .button,
-.sticky-add-to-cart button,
-.quick-add__submit,
-.card-action .button,
-.product-item-action .button,
-.cart__checkout-button,
-.cart-checkout-button,
-[name="checkout"],
-.btn-dark,
-.button-dark,
-.btn-primary,
-.button-primary,
-.btn--primary,
-.bg-black button,
-.bg-dark button,
-.ai-our-story-button,
-[class*="ai-our-story-button"],
-button[style*="background: #000"],
-button[style*="background:#000"],
-button[style*="background: #232323"],
-button[style*="background:#232323"],
-button[style*="background-color: #000"],
-button[style*="background-color:#000"],
-button[style*="background-color: #232323"],
-button[style*="background-color:#232323"],
-button[style*="background-color: black"],
-button[style*="background-color:black"] {
+/* 2. HERO BANNER SECTION */
+[class*="ai-vintage-hero"],
+[class*="ai-vintage-hero"] *,
+[class*="ai-vintage-hero-heading"],
+[class*="ai-vintage-hero-subheading"],
+[class*="ai-vintage-hero-text"],
+[class*="ai-vintage-hero-button"],
+[class*="ai-vintage-hero-button"] *,
+[class*="ai-vintage-hero-arrow"],
+h1[class*="ai-vintage-hero-heading"],
+a[class*="ai-vintage-hero-button"],
+.hero-banner *,
+.banner__content *,
+.banner__heading,
+.banner__text,
+.banner__buttons,
+.banner__buttons a {
   color: #ffffff !important;
   fill: #ffffff !important;
+  stroke: #ffffff !important;
+  border-color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Children elements inside Add to Cart and Dark Buttons */
-.pp-atc *,
-button.pp-atc *,
-[id*="pp-atc"] *,
-.product-form__submit *,
-.product-form__buttons button *,
-.product-form__buttons .button *,
-form[action*="/cart/add"] button *,
-form[action*="/cart/add"] *,
-.cart__checkout-button *,
-.cart-checkout-button *,
-[name="checkout"] *,
-.btn-dark *,
-.button-dark *,
-.btn-primary *,
-.button-primary *,
-.ai-our-story-button *,
-[class*="ai-our-story-button"] * {
+/* 3. IMAGE OVERLAY CATEGORY CARDS */
+[class*="ai-vintage-grid"],
+[class*="ai-vintage-grid"] *,
+[class*="ai-vintage-grid__title"],
+[class*="ai-vintage-grid__button"],
+[class*="ai-vintage-grid__button"] *,
+[class*="ai-vintage-grid__content"] *,
+h3[class*="ai-vintage-grid__title"],
+div[class*="ai-vintage-grid__button"] {
   color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Hover state for Add to Cart and Dark Buttons */
-.pp-atc:hover,
-button.pp-atc:hover,
-[id*="pp-atc"]:hover,
-.product-form__submit:hover,
-form[action*="/cart/add"] button:hover,
-.cart__checkout-button:hover,
-.cart-checkout-button:hover,
-[name="checkout"]:hover {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-
-
-/* =============================================================================
-   BUY IT NOW (DYNAMIC CHECKOUT) BUTTON -> BROWN TEXT COLOR (#5a3a0a)
-   ============================================================================= */
-
-.shopify-payment-button__button--unbranded,
-.shopify-payment-button__button,
-.shopify-payment-button button,
-[data-testid="Checkout-button"],
-.shopify-payment-button__button--unbranded.button {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-  color: #5a3a0a !important;
-  fill: #5a3a0a !important;
-  -webkit-text-fill-color: #5a3a0a !important;
-  border: 1px solid #5a3a0a !important;
-  font-weight: 600 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.shopify-payment-button__button--unbranded *,
-.shopify-payment-button__button *,
-.shopify-payment-button button *,
-[data-testid="Checkout-button"] * {
-  color: #5a3a0a !important;
-  -webkit-text-fill-color: #5a3a0a !important;
-  opacity: 1 !important;
-}
-
-.shopify-payment-button__button--unbranded:hover,
-.shopify-payment-button__button:hover,
-.shopify-payment-button button:hover,
-[data-testid="Checkout-button"]:hover {
-  background-color: #5a3a0a !important;
-  background: #5a3a0a !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border-color: #5a3a0a !important;
-}
-
-.shopify-payment-button__button--unbranded:hover *,
-.shopify-payment-button__button:hover *,
-.shopify-payment-button button:hover *,
-[data-testid="Checkout-button"]:hover * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-
-
-
-/* =============================================================================
-   FOOTER BOTTOM SECTION WHITE TEXT COLOR (#ffffff)
-   ============================================================================= */
-
+/* 4. FOOTER BOTTOM SECTION */
 .footer__content-bottom p,
 .footer__content-bottom a,
 .footer__content-bottom span,
@@ -1287,17 +1052,93 @@ form[action*="/cart/add"] button:hover,
   font-size: 16px !important;
 }
 
-.footer__content-bottom a:hover,
-.footer-block__bottom a:hover,
-.copyright__content a:hover {
+/* 5. VIEW ALL BUTTON */
+[class*="ai-rp-button"],
+[class*="ai-rp-button"] *,
+[class*="ai-rp-button-arrow"],
+a[class*="ai-rp-button"],
+.rp-button,
+.rp-button *,
+.view-all-button,
+.btn-view-all,
+.pp-related__all {
   color: #ffffff !important;
-  text-decoration: underline !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
-/* =============================================================================
-   PAYMENT LOGOS MULTI-COLOR SVG PRESERVATION
-   ============================================================================= */
+/* 6. ADD TO CART & DARK BUTTONS */
+.pp-atc,
+button.pp-atc,
+[id*="pp-atc"],
+.product-form__submit,
+.product-form__buttons button,
+.product-form__buttons .button,
+form[action*="/cart/add"] button,
+form[action*="/cart/add"] [type="submit"],
+[name="add"],
+.cart__checkout-button,
+.cart-checkout-button,
+[name="checkout"],
+.btn-dark,
+.button-dark,
+.btn-primary,
+.button-primary,
+.bg-black button,
+.bg-dark button {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
 
+.pp-atc *,
+button.pp-atc *,
+.product-form__submit *,
+.cart__checkout-button *,
+[name="checkout"] * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* 7. BUY IT NOW BUTTON (BROWN TEXT ON WHITE OUTLINE) */
+.shopify-payment-button__button--unbranded,
+.shopify-payment-button__button,
+[data-testid="Checkout-button"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #5a3a0a !important;
+  fill: #5a3a0a !important;
+  -webkit-text-fill-color: #5a3a0a !important;
+  border: 1px solid #5a3a0a !important;
+  font-weight: 600 !important;
+}
+
+.shopify-payment-button__button--unbranded *,
+.shopify-payment-button__button * {
+  color: #5a3a0a !important;
+  -webkit-text-fill-color: #5a3a0a !important;
+}
+
+/* 8. FOOTER FONT SIZE & PAYMENT LOGOS VISIBILITY */
+.footer-block__heading,
+.footer__column-item .footer-block__heading {
+  font-size: 16px !important;
+  line-height: 22px !important;
+}
+
+.footer-block__list a,
+.footer-block__item a,
+.footer-block__info p {
+  font-size: 16px !important;
+  line-height: 28px !important;
+}
+
+.footer-block__info p {
+  text-transform: capitalize !important;
+}
+
+/* Exclude payment list and SVG icons from fill/color overrides */
 .list-payment,
 .list-payment__item,
 .list-payment__item *,
