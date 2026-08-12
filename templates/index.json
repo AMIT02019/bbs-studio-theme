@@ -546,7 +546,7 @@
             "overlay_color": "#00000040",
             "vignette_opacity": 0.5,
             "heading": "WHAT OUR CUSTOMERS SAY",
-            "heading_color": "#ffffff",
+            "heading_color": "#FFFFFF",
             "heading_size": 34,
             "heading_weight": "600",
             "heading_letter_spacing": "0.1em",
