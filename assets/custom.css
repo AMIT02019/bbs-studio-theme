@@ -1069,3 +1069,51 @@ h1, h2, h3, h4, h5, h6,
 [id*="recently-viewed"] {
   display: none !important;
 }
+
+
+/* =============================================================================
+   PRODUCT CARD IMAGE FIT - FULL CONTAINMENT (PREVENT IMAGE CROPPING/CUTTING)
+   ============================================================================= */
+
+:root {
+  --product-cart-image-fit: contain !important;
+}
+
+.card-media,
+.card__media,
+.card-media.media {
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.card-media img,
+.card-media > img,
+.card-media > img.lazyloaded,
+.card-media > img.lazyloading,
+.card-media > img + img,
+.card__media img,
+.card__media > img,
+.media > img,
+.product-card__image,
+.product-card img,
+.card-product .card-media img,
+.card-media.media--hover-effect > img,
+.card-media.media--hover-effect > img:first-child,
+.card-media.media--hover-effect > img + img,
+.card-media.media--hover-effect > img:last-child,
+.product-item .card-media img,
+.halo-row .card-media img,
+.product-grid .card-media img,
+.collection .card-media img,
+.featured-products .card-media img,
+.productView-media img,
+.product-single__media img,
+.product__media img {
+  object-fit: contain !important;
+  object-position: center !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+}
