@@ -85,8 +85,27 @@
     <div class="footer-block__details{% if block.settings.enable_custom_position_icon != blank %} enable_custom_position_icon{% endif %}{% if block.settings.phone_text != blank or block.settings.address_text != blank or block.settings.email_text != blank %} has-content-piece{% endif %}" style="--icon-color: {{ final_icon_color }}; --icon-size: {{ block.settings.icon_size | append: 'px' }}; --content-spacing: {{ block.settings.content_spacing | append: 'px' }}">
       {%- if logo != blank -%}
         <div class="image_logo" style="--margin-bottom: {{ logo_margin_bottom }}">
-          <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/Beg-Borrow-Steal-Studio-Logo.png?v=1780084614" srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/Beg-Borrow-Steal-Studio-Logo.png?v=1780084614 2x" class="lazyloaded" alt="{{ logo.alt | default: shop.name | escape }}" width="220" height="254" style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; image-rendering: -webkit-optimize-contrast !important; image-rendering: crisp-edges !important;">
-        </div>
+    {%- if logo != blank -%}
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+            <img src="{{ logo | image_url: width: 800 }}" 
+                 srcset="{{ logo | image_url: width: 600 }} 1x, {{ logo | image_url: width: 1200 }} 2x" 
+                 alt="{{ logo.alt | default: shop.name | escape }}" 
+                 width="220" 
+                 height="{{ 220 | divided_by: logo.aspect_ratio | default: 1 | round }}" 
+                 style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; display: block !important;" 
+                 loading="lazy">
+        </a>
+    {%- else -%}
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+            <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_Studio_Brown.png?v=1784707505" 
+                 srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_Studio_Brown.png?v=1784707505 2x" 
+                 alt="{{ shop.name | escape }}" 
+                 width="220" 
+                 style="width: 220px !important; max-width: 100% !important; height: auto !important; object-fit: contain !important; display: block !important;" 
+                 loading="lazy">
+        </a>
+    {%- endif -%}
+</div>
       {%- endif -%}
       <div class="rte">
         {% if subtext != blank %}
