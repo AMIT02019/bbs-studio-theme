@@ -1073,15 +1073,15 @@ h1, h2, h3, h4, h5, h6,
 
 
 
+
 /* =============================================================================
-   PRODUCT CARD UNIFORM SQUARE FRAME (1:1) WITH CONTAINED INSET IMAGES
+   UNIVERSAL PRODUCT CARD IMAGE SCALE FIT (0.85 SCALE INSET MARGINS)
    ============================================================================= */
 
 :root {
   --product-cart-image-fit: contain !important;
 }
 
-/* Force 1:1 Aspect Ratio Container for Product Cards */
 .card-media,
 .card__media,
 .card-product .card-media,
@@ -1090,20 +1090,16 @@ a.card-media {
   display: block !important;
   position: relative !important;
   width: 100% !important;
-  height: 0 !important;
-  padding-bottom: 100% !important;
-  padding-top: 0 !important;
   overflow: hidden !important;
   background-color: #ffffff !important;
-  box-sizing: border-box !important;
 }
 
-/* Inset Contained Product Image Inside Square Frame */
 .card-media img,
 .card-media > img,
 .card-media > img.lazyloaded,
 .card-media > img.lazyloading,
 .card-media > img + img,
+.card-media a img,
 .card__media img,
 .card__media > img,
 .media > img,
@@ -1119,14 +1115,8 @@ a.card-media {
 .product-grid .card-media img,
 .collection .card-media img,
 .featured-products .card-media img {
-  position: absolute !important;
-  top: 6% !important;
-  left: 6% !important;
-  width: 88% !important;
-  height: 88% !important;
-  max-width: 88% !important;
-  max-height: 88% !important;
   object-fit: contain !important;
   object-position: center !important;
-  box-sizing: border-box !important;
+  transform: scale(0.85) !important;
+  transform-origin: center center !important;
 }
