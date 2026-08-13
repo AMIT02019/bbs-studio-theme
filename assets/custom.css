@@ -1071,8 +1071,9 @@ h1, h2, h3, h4, h5, h6,
 }
 
 
+
 /* =============================================================================
-   PRODUCT CARD IMAGE FIT - FULL CONTAINMENT (PREVENT IMAGE CROPPING/CUTTING)
+   PRODUCT CARD IMAGE FIT - FULL CONTAINMENT WITH 12PX INSET MARGINS
    ============================================================================= */
 
 :root {
@@ -1083,9 +1084,7 @@ h1, h2, h3, h4, h5, h6,
 .card__media,
 .card-media.media {
   overflow: hidden !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  box-sizing: border-box !important;
 }
 
 .card-media img,
@@ -1107,13 +1106,14 @@ h1, h2, h3, h4, h5, h6,
 .halo-row .card-media img,
 .product-grid .card-media img,
 .collection .card-media img,
-.featured-products .card-media img,
-.productView-media img,
-.product-single__media img,
-.product__media img {
+.featured-products .card-media img {
+  top: 12px !important;
+  left: 12px !important;
+  width: calc(100% - 24px) !important;
+  height: calc(100% - 24px) !important;
+  max-width: calc(100% - 24px) !important;
+  max-height: calc(100% - 24px) !important;
   object-fit: contain !important;
   object-position: center !important;
-  max-height: 100% !important;
-  width: 100% !important;
-  height: 100% !important;
+  box-sizing: border-box !important;
 }

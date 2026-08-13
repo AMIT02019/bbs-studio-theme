@@ -187,8 +187,9 @@
 }
 
 
+
 /* =============================================================================
-   PRODUCT CARD IMAGE FIT - FULL CONTAINMENT (PREVENT IMAGE CROPPING/CUTTING)
+   PRODUCT CARD IMAGE FIT - FULL CONTAINMENT WITH 12PX INSET MARGINS
    ============================================================================= */
 
 :root {
@@ -199,9 +200,7 @@
 .card__media,
 .card-media.media {
   overflow: hidden !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  box-sizing: border-box !important;
 }
 
 .card-media img,
@@ -223,156 +222,17 @@
 .halo-row .card-media img,
 .product-grid .card-media img,
 .collection .card-media img,
-.featured-products .card-media img,
-.productView-media img,
-.product-single__media img,
-.product__media img {
+.featured-products .card-media img {
+  top: 12px !important;
+  left: 12px !important;
+  width: calc(100% - 24px) !important;
+  height: calc(100% - 24px) !important;
+  max-width: calc(100% - 24px) !important;
+  max-height: calc(100% - 24px) !important;
   object-fit: contain !important;
   object-position: center !important;
-  max-height: 100% !important;
-  width: 100% !important;
-  height: 100% !important;
+  box-sizing: border-box !important;
 }
 
 </style>
-<style id="global-brown-text-override">
-
-
-/* =============================================================================
-   ELEGANT BROWN TEXT DESIGN SYSTEM (#5a3a0a)
-   ============================================================================= */
-
-:root {
-  --color-text: #5a3a0a;
-  --color-body-text: #5a3a0a;
-  --color-heading: #5a3a0a;
-  --color-link: #5a3a0a;
-  --color-foreground: #5a3a0a;
-  --color-base-text: #5a3a0a;
-  --color-title: #5a3a0a;
-}
-
-body {
-  color: #5a3a0a;
-}
-
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.page-title, .section-header, .section-heading, .heading, .title,
-.product-title, .product-card__title, .card__heading, .card-title,
-.product-single__title, .product__title {
-  color: #5a3a0a;
-}
-
-.price, .price-item, .price__regular {
-  color: #5a3a0a;
-}
-
-/* Secondary Muted Details */
-.product-vendor, .caption, .caption-with-letter-spacing, .price__compare,
-.price-item--regular, ::placeholder {
-  color: #7c5113;
-}
-
-/* =============================================================================
-   DARK CONTAINER & OVERLAY SECTION WHITE TEXT OVERRIDES (#ffffff)
-   ============================================================================= */
-
-/* 1. Hero Banner */
-[class*="ai-vintage-hero-heading"],
-[class*="ai-vintage-hero-subheading"],
-[class*="ai-vintage-hero-text"],
-[class*="ai-vintage-hero-button"],
-[class*="ai-vintage-hero"] h1,
-[class*="ai-vintage-hero"] a,
-[class*="ai-vintage-hero"] p,
-[class*="ai-vintage-hero"] span {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  border-color: #ffffff !important;
-}
-
-/* 2. Image Overlay Category Cards */
-[class*="ai-vintage-grid__title"],
-[class*="ai-vintage-grid__button"],
-[class*="ai-vintage-grid"] h3,
-[class*="ai-vintage-grid"] a {
-  color: #ffffff !important;
-}
-
-/* 3. Testimonials Section ("WHAT OUR CUSTOMERS SAY") */
-[class*="ai-luxury-testimonial-heading"],
-[class*="ai-luxury-testimonial-quote"],
-[class*="ai-luxury-testimonial-author"],
-[class*="ai-luxury-testimonial"] h2,
-[class*="ai-luxury-testimonial"] p {
-  color: #ffffff !important;
-}
-
-[class*="ai-luxury-testimonial-star"] {
-  color: #d4af37 !important;
-}
-
-/* 4. Footer Bottom Section */
-.footer__content-bottom p,
-.footer__content-bottom a,
-.footer__content-bottom span,
-.copyright__content,
-.copyright__content p {
-  color: #ffffff !important;
-}
-
-/* 5. View All & Dark Action Buttons */
-[class*="ai-rp-button"],
-.pp-atc,
-.product-form__submit,
-[name="add"],
-.cart__checkout-button,
-.btn-dark,
-.btn-primary {
-  color: #ffffff !important;
-}
-
-.pp-atc *,
-.product-form__submit *,
-[name="add"] * {
-  color: #ffffff !important;
-}
-
-/* Buy It Now Button */
-.shopify-payment-button__button--unbranded,
-.shopify-payment-button__button {
-  background-color: #ffffff !important;
-  color: #5a3a0a !important;
-  border: 1px solid #5a3a0a !important;
-}
-
-.shopify-payment-button__button--unbranded * {
-  color: #5a3a0a !important;
-}
-
-/* Footer Links Size */
-.footer-block__heading {
-  font-size: 16px;
-  line-height: 22px;
-}
-
-.footer-block__list a,
-.footer-block__info p {
-  font-size: 16px;
-  line-height: 28px;
-}
-
-/* Payment Icons SVG Reset */
-.list-payment__item .icon,
-.list-payment__item svg {
-  fill: unset !important;
-  height: 26px !important;
-  width: auto !important;
-}
-
-</style>
-
-{% comment %}v-brown-text-theme-1786559113860{% endcomment %}
-
-{% comment %}v-brown-text-theme-1786646230792{% endcomment %}
+{% comment %}v-brown-text-theme-1786646348137{% endcomment %}
