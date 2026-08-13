@@ -1,7 +1,7 @@
-{{ 'base.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'base.css' | asset_url }}?v={{ 'now' | date: '%s' }}" media="all">
 
 {%- if settings.use_custom_css -%}
-	{{ 'custom.css' | asset_url | stylesheet_tag }}
+	<link rel="stylesheet" href="{{ 'custom.css' | asset_url }}?v={{ 'now' | date: '%s' }}" media="all">
 {%- endif -%}
 
 {%- if settings.banner_animation == 'effect_fade_up' or settings.animations_hover_elements == '3d-lift' or settings.animations_hover_elements == 'vertical-lift' -%}
