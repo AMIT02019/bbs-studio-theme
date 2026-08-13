@@ -1120,3 +1120,14 @@ a.card-media {
   transform: scale(0.85) !important;
   transform-origin: center center !important;
 }
+
+
+/* Footer Address & Email Text Transform */
+.footer-block__info p {
+  text-transform: none !important;
+}
+
+.footer-block__info a[href^="mailto:"],
+a[href*="mailto:"] {
+  text-transform: none !important;
+}
