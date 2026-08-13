@@ -49,7 +49,7 @@
     <div class="card{% if product_card_product.media[0].media_type == 'video' %} has-first-video{% endif %}">
         <div class="card-product{% if product_card_product.featured_media == nil %} card--text-only card--soft{% endif %}">
             <div class="card-product__wrapper">
-                <div class="card-media card-media--{{ media_size }}{% if product_card_product.media[1] != nil and settings.show_image_swap %} media--hover-effect{% endif %}{% if settings.show_compare and settings.product_compare_type == 'default' %} has-compare{% endif %}{% if loading %} media--loading-effect{% endif %}" style="padding-top: {% if image_ratio == 'portrait' %}{{ portrait_height }}%{% else %}100%{% endif %};">
+                <div class="card-media card-media--{{ media_size }}{% if product_card_product.media[1] != nil and settings.show_image_swap %} media--hover-effect{% endif %}{% if settings.show_compare and settings.product_compare_type == 'default' %} has-compare{% endif %}{% if loading %} media--loading-effect{% endif %}" style="padding-top: 100% !important;">
                     {% render 'image-product-card',
                         product_card_product: product_card_product,
                         variant_img: variant_img,

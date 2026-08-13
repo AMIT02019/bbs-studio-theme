@@ -29,7 +29,7 @@
             <a class="card-media"
                 href="{{ product_card_product.url }}"
                 {% if product_card_product.featured_media %}
-                    style="padding-bottom: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;"
+                    style="padding-bottom: 100% !important;"
                 {% endif %}
             >
             {%- if product_card_product.featured_media -%}

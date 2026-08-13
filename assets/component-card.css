@@ -45,7 +45,14 @@
     width: 100%;
     max-width: 100%;
     cursor: pointer;
-    object-fit: var(--product-cart-image-fit);
+    top: 6% !important;
+    left: 6% !important;
+    height: 88% !important;
+    width: 88% !important;
+    max-width: 88% !important;
+    max-height: 88% !important;
+    object-fit: contain !important;
+    box-sizing: border-box !important;
     object-position: center center;
     transition: all .8s ease;
 }
