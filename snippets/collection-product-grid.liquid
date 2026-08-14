@@ -172,14 +172,15 @@
 .cpg-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
 .cpg-card-img {
   position: relative; aspect-ratio: 1/1; overflow: hidden;
-  background: #f8f8f8; display: block;
+  background: #ffffff; display: block;
 }
 .cpg-card-img img {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain !important;
   transition: opacity 0.3s ease; position: absolute; top: 0; left: 0;
+  padding: 16px; box-sizing: border-box; background: #ffffff;
 }
-.cpg-card-img .cpg-img-primary { opacity: 1; position: relative; }
-.cpg-card-img .cpg-img-secondary { opacity: 0; }
+.cpg-card-img .cpg-img-primary { opacity: 1; position: absolute; }
+.cpg-card-img .cpg-img-secondary { opacity: 0; position: absolute; }
 @media (min-width: 1025px) and (hover: hover) {
   .cpg-card:hover .cpg-img-primary { opacity: 0; }
   .cpg-card:hover .cpg-img-secondary { opacity: 1; }
