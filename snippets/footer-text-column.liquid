@@ -85,7 +85,7 @@
     <div class="footer-block__details{% if block.settings.enable_custom_position_icon != blank %} enable_custom_position_icon{% endif %}{% if block.settings.phone_text != blank or block.settings.address_text != blank or block.settings.email_text != blank %} has-content-piece{% endif %}" style="--icon-color: {{ final_icon_color }}; --icon-size: {{ block.settings.icon_size | append: 'px' }}; --content-spacing: {{ block.settings.content_spacing | append: 'px' }}">
       <div class="image_logo" style="--margin-bottom: {{ logo_margin_bottom | default: '10px' }}">
         <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-            <img src="{{ 'bbs_footer_logo_official.png' | asset_url }}" 
+            <img src="{{ 'bbs_logo_official.svg' | asset_url }}" 
                  alt="{{ shop.name | escape }}" 
                  width="135" 
                  height="155" 
