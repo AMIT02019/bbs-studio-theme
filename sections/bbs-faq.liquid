@@ -183,52 +183,112 @@
 <div class="bbs-faq-section" id="faq-section-{{ section.id }}">
   <div class="bbs-faq-container">
     <div class="bbs-faq-header">
-      {%- if section.settings.subtitle != blank -%}
-        <div class="bbs-faq-subtitle">{{ section.settings.subtitle }}</div>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="bbs-faq-title">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.description != blank -%}
-        <p class="bbs-faq-desc">{{ section.settings.description }}</p>
-      {%- endif -%}
+      <div class="bbs-faq-subtitle">{{ section.settings.subtitle | default: 'NEED HELP?' }}</div>
+      <h2 class="bbs-faq-title">{{ section.settings.heading | default: 'FREQUENTLY ASKED QUESTIONS' }}</h2>
+      <p class="bbs-faq-desc">{{ section.settings.description | default: 'Everything you need to know about our vintage curation, orders, shipping, and store visits.' }}</p>
     </div>
 
     <div class="bbs-faq-list">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'faq_item' -%}
-          <details class="bbs-faq-item" {{ block.shopify_attributes }}>
-            <summary class="bbs-faq-summary">
-              <span>{{ block.settings.question | escape }}</span>
-              <span class="bbs-faq-icon" aria-hidden="true">
-                <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-              </span>
-            </summary>
-            <div class="bbs-faq-content">
-              {{ block.settings.answer }}
-            </div>
-          </details>
-        {%- endif -%}
-      {%- endfor -%}
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <details class="bbs-faq-item" {{ block.shopify_attributes }}>
+              <summary class="bbs-faq-summary">
+                <span>{{ block.settings.question | escape }}</span>
+                <span class="bbs-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </summary>
+              <div class="bbs-faq-content">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <details class="bbs-faq-item" open>
+          <summary class="bbs-faq-summary">
+            <span>Are all pieces at Beg Borrow Steal Studio authentic?</span>
+            <span class="bbs-faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="bbs-faq-content">
+            <p>Yes, every piece at Beg Borrow Steal Studio is rigorously inspected, vetted, and authenticated by our specialist curation team before being showcased.</p>
+          </div>
+        </details>
+
+        <details class="bbs-faq-item">
+          <summary class="bbs-faq-summary">
+            <span>Where is your physical boutique studio located?</span>
+            <span class="bbs-faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="bbs-faq-content">
+            <p>Our studio is located at <strong>Flat No 1, New Shams Building CHS, 76 Turner Road, Bandra West, Mumbai, Maharashtra 400050</strong>. You are always warmly welcome to visit us in store!</p>
+          </div>
+        </details>
+
+        <details class="bbs-faq-item">
+          <summary class="bbs-faq-summary">
+            <span>What are your shipping and delivery timelines?</span>
+            <span class="bbs-faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="bbs-faq-content">
+            <p>Orders are dispatched within 1–2 business days. Domestic deliveries across India generally arrive within 3–5 business days.</p>
+          </div>
+        </details>
+
+        <details class="bbs-faq-item">
+          <summary class="bbs-faq-summary">
+            <span>What is your return & exchange policy?</span>
+            <span class="bbs-faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="bbs-faq-content">
+            <p>Due to the exclusive and rare vintage nature of our curated inventory, all sales are final unless an item arrives defective or differs significantly from its description.</p>
+          </div>
+        </details>
+
+        <details class="bbs-faq-item">
+          <summary class="bbs-faq-summary">
+            <span>Do you offer worldwide international shipping?</span>
+            <span class="bbs-faq-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="bbs-faq-content">
+            <p>Yes, we ship worldwide! International shipping rates and estimated delivery windows are automatically calculated at checkout based on your country.</p>
+          </div>
+        </details>
+      {%- endif -%}
     </div>
 
-    {%- if section.settings.show_contact_note -%}
-      <div class="bbs-faq-footer-note">
-        Have more questions? <a href="mailto:{{ section.settings.contact_email | default: 'begborrowstealstudio@gmail.com' }}">Get in touch with us</a>
-      </div>
-    {%- endif -%}
+    <div class="bbs-faq-footer-note">
+      Have more questions? <a href="mailto:{{ section.settings.contact_email | default: 'begborrowstealstudio@gmail.com' }}">Get in touch with us</a>
+    </div>
   </div>
 </div>
 
 {% schema %}
 {
   "name": "BBS FAQs",
-  "enabled_on": {
-    "groups": ["footer", "aside", "custom.overlay"],
-    "templates": ["*"]
-  },
   "tag": "section",
   "class": "section-bbs-faq",
   "settings": [
@@ -350,44 +410,7 @@
   ],
   "presets": [
     {
-      "name": "BBS FAQs",
-      "blocks": [
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "Are all pieces at Beg Borrow Steal Studio authentic?",
-            "answer": "<p>Yes, every item in our collection is strictly curated and thoroughly authenticated by our specialists before being listed.</p>"
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "Where is your boutique studio located?",
-            "answer": "<p>We are located at <strong>Flat No 1, New Shams Building CHS, 76 Turner Road, Bandra West, Mumbai, Maharashtra 400050</strong>. You are always welcome to visit us!</p>"
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "What are your shipping and delivery timelines?",
-            "answer": "<p>Orders are dispatched within 1–2 business days. Domestic deliveries across India generally take 3–5 business days.</p>"
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is your return & exchange policy?",
-            "answer": "<p>Due to the exclusive and vintage nature of our curated inventory, all sales are final unless an item is demonstrably defective or differs significantly from its description.</p>"
-          }
-        },
-        {
-          "type": "faq_item",
-          "settings": {
-            "question": "Do you ship internationally?",
-            "answer": "<p>Yes, we ship globally! International shipping fees and estimated delivery times are automatically computed during checkout.</p>"
-          }
-        }
-      ]
+      "name": "BBS FAQs"
     }
   ]
 }
