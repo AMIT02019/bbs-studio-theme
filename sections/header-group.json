@@ -57,8 +57,8 @@
           "type": "logo",
           "settings": {
             "logo_position": "main_menu",
-            "logo": "shopify://shop_images/bbs_footer_logo_official.png",
-            "logo_width": 130,
+            "logo": "shopify://shop_images/bbs_official_hd_logo.png",
+            "logo_width": 90,
             "logo_width_fixed": 100,
             "logo_text": "",
             "logo_font_size": 20,
@@ -311,8 +311,8 @@
         "550fbd21-75fb-4051-9dee-77d91b5239f0": {
           "type": "logo",
           "settings": {
-            "logo_mobile": "shopify://shop_images/Beg-Borrow-Steal-Studio-Logo.webp",
-            "logo_width_mobile": 75,
+            "logo_mobile": "shopify://shop_images/bbs_official_hd_logo.png",
+            "logo_width_mobile": 55,
             "logo_text": "",
             "logo_font_size": 20,
             "logo_font_weight": "900",
