@@ -1,0 +1,269 @@
+{%- comment -%}
+  Beg Borrow Steal Studio - Interactive FAQ Section (Rendered above footer)
+{%- endcomment -%}
+
+<style>
+  .bbs-faq-section {
+    background-color: #faf8f5;
+    padding-top: 60px;
+    padding-bottom: 70px;
+    font-family: var(--font-body-family, inherit);
+    border-top: 1px solid #ede7df;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bbs-faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .bbs-faq-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .bbs-faq-subtitle {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8c6239;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .bbs-faq-title {
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5a3a0a;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+  }
+
+  .bbs-faq-desc {
+    font-size: 15px;
+    color: #6b4d24;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .bbs-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bbs-faq-item {
+    background: #ffffff;
+    border: 1px solid #ede7df;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .bbs-faq-item:hover {
+    border-color: #d4c5b3;
+    box-shadow: 0 4px 12px rgba(90, 58, 10, 0.04);
+  }
+
+  .bbs-faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #5a3a0a;
+    user-select: none;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+
+  .bbs-faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .bbs-faq-summary:hover {
+    color: #3b2403;
+  }
+
+  .bbs-faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #f7f3ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+  }
+
+  .bbs-faq-icon svg {
+    width: 12px;
+    height: 12px;
+    stroke: #5a3a0a;
+    transition: transform 0.3s ease;
+  }
+
+  details[open] .bbs-faq-summary {
+    border-bottom: 1px solid #f2ece4;
+  }
+
+  details[open] .bbs-faq-icon {
+    background-color: #5a3a0a;
+    transform: rotate(45deg);
+  }
+
+  details[open] .bbs-faq-icon svg {
+    stroke: #ffffff;
+  }
+
+  .bbs-faq-content {
+    padding: 18px 22px 22px 22px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #5a3a0a;
+    animation: bbsFaqFadeIn 0.3s ease-out;
+  }
+
+  .bbs-faq-content p {
+    margin: 0 0 10px 0;
+  }
+  .bbs-faq-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .bbs-faq-footer-note {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 14px;
+    color: #7a582c;
+  }
+
+  .bbs-faq-footer-note a {
+    color: #5a3a0a;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @keyframes bbsFaqFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .bbs-faq-section {
+      padding-top: 40px;
+      padding-bottom: 50px;
+    }
+    .bbs-faq-summary {
+      padding: 15px 16px;
+      font-size: 15px;
+    }
+    .bbs-faq-content {
+      padding: 15px 16px 18px 16px;
+      font-size: 14px;
+    }
+  }
+</style>
+
+<div class="bbs-faq-section" id="bbs-store-faq">
+  <div class="bbs-faq-container">
+    <div class="bbs-faq-header">
+      <div class="bbs-faq-subtitle">NEED HELP?</div>
+      <h2 class="bbs-faq-title">FREQUENTLY ASKED QUESTIONS</h2>
+      <p class="bbs-faq-desc">Everything you need to know about our vintage curation, orders, shipping, and store visits.</p>
+    </div>
+
+    <div class="bbs-faq-list">
+      <details class="bbs-faq-item" open>
+        <summary class="bbs-faq-summary">
+          <span>Are all pieces at Beg Borrow Steal Studio authentic?</span>
+          <span class="bbs-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="bbs-faq-content">
+          <p>Yes, every piece at Beg Borrow Steal Studio is rigorously inspected, vetted, and authenticated by our specialist curation team before being showcased.</p>
+        </div>
+      </details>
+
+      <details class="bbs-faq-item">
+        <summary class="bbs-faq-summary">
+          <span>Where is your physical boutique studio located?</span>
+          <span class="bbs-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="bbs-faq-content">
+          <p>Our studio is located at <strong>Flat No 1, New Shams Building CHS, 76 Turner Road, Bandra West, Mumbai, Maharashtra 400050</strong>. You are always warmly welcome to visit us in store!</p>
+        </div>
+      </details>
+
+      <details class="bbs-faq-item">
+        <summary class="bbs-faq-summary">
+          <span>What are your shipping and delivery timelines?</span>
+          <span class="bbs-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="bbs-faq-content">
+          <p>Orders are dispatched within 1–2 business days. Domestic deliveries across India generally arrive within 3–5 business days.</p>
+        </div>
+      </details>
+
+      <details class="bbs-faq-item">
+        <summary class="bbs-faq-summary">
+          <span>What is your return & exchange policy?</span>
+          <span class="bbs-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="bbs-faq-content">
+          <p>Due to the exclusive and rare vintage nature of our curated inventory, all sales are final unless an item arrives defective or differs significantly from its description.</p>
+        </div>
+      </details>
+
+      <details class="bbs-faq-item">
+        <summary class="bbs-faq-summary">
+          <span>Do you offer worldwide international shipping?</span>
+          <span class="bbs-faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1v10M1 6h10" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="bbs-faq-content">
+          <p>Yes, we ship worldwide! International shipping rates and estimated delivery windows are automatically calculated at checkout based on your country.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="bbs-faq-footer-note">
+      Have more questions? <a href="mailto:begborrowstealstudio@gmail.com">Get in touch with us</a>
+    </div>
+  </div>
+</div>
