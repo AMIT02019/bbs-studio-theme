@@ -324,6 +324,18 @@ a[href*="mailto:"] {
   text-transform: lowercase !important;
 }
 
+
+/* Header Logo Crystal-Clear Rendering */
+.header__heading-logo,
+.header-logo img,
+.header__heading-link img,
+.header-mobile .header__heading-logo,
+.header-mobile .header__heading-link img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  object-fit: contain !important;
+}
+
 </style>
 {% comment %}v-brown-text-theme-1786725531097{% endcomment %}
 
@@ -342,3 +354,5 @@ a[href*="mailto:"] {
 {% comment %}v-brown-text-theme-1786732338632{% endcomment %}
 
 {% comment %}v-brown-text-theme-1786732938080{% endcomment %}
+
+{% comment %}v-brown-text-theme-1786733143278{% endcomment %}

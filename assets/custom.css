@@ -1206,3 +1206,15 @@ a.card-media {
 a[href*="mailto:"] {
   text-transform: lowercase !important;
 }
+
+
+/* Header Logo Crystal-Clear Rendering */
+.header__heading-logo,
+.header-logo img,
+.header__heading-link img,
+.header-mobile .header__heading-logo,
+.header-mobile .header__heading-link img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  object-fit: contain !important;
+}
