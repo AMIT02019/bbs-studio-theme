@@ -72,11 +72,23 @@
                                                     {%- assign logo_width_img = logo_width | append: 'x' -%}
                                                     {%- assign logo_width_retina = logo_width | times: 2 | append: 'x'  -%}
                                                     {%- assign logo_height = block.settings.logo_width | divided_by: logo.aspect_ratio | round -%}
-                                                    <img {% if logo_mb != blank %}class="logo-m-none"{% endif %} srcset="{{ logo | img_url: logo_width_img }}, {{ logo | img_url: logo_width_retina }} 2x"
-                                                        src="{{ logo | img_url: logo_width_img }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} width="{{ logo_width }}" height="{{ logo_height }}" alt="{{ logo.alt | default: shop.name | escape }}" class="header__heading-logo">     
+                                                    <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
+                                     {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
+                                     class="header__heading-logo logo__main" 
+                                     alt="{{ logo.alt | default: shop.name | escape }}" 
+                                     width="{{ logo_width | default: 55 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 55 }}px !important; width: {{ logo_width | default: 55 }}px !important;">     
                                                     {% if logo_mb != blank %}
-                                                    <img class="logo-d-none" srcset="{{ logo_mb | img_url: logo_width_img }}, {{ logo | img_url: logo_width_retina }} 2x"
-                                                            src="{{ image_mb | img_url: logo_width_img }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} width="{{ logo_width }}" height="{{ logo_height }}" alt="{{ logo_mb.alt | default: shop.name | escape }}" class="header__heading-logo">
+                                                    <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
+                                     {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
+                                     class="header__heading-logo logo__main" 
+                                     alt="{{ logo.alt | default: shop.name | escape }}" 
+                                     width="{{ logo_width | default: 55 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 55 }}px !important; width: {{ logo_width | default: 55 }}px !important;">
                                                     {% endif %}
                                                 {%- else -%}
                                                     <span class="h2 {{ block.settings.logo_text_transform }}">{% if block.settings.logo_text != blank %}{{ block.settings.logo_text }}{% else %}{{ shop.name }}{% endif %}</span>
@@ -99,23 +111,23 @@
                                             {%- assign logo_width_img = logo_width | append: 'x' -%}
                                             {%- assign logo_width_retina = logo_width | times: 2 | append: 'x'  -%}
                                             {%- assign logo_height = block.settings.logo_width_mobile | divided_by: logo.aspect_ratio | round -%}
-                                            <img srcset="{{ 'bbs_footer_logo_official.png' | asset_url }} 1x, {{ 'bbs_footer_logo_official.png' | asset_url }} 2x, {{ 'bbs_footer_logo_official.png' | asset_url }} 3x" 
-                                     src="{{ 'bbs_footer_logo_official.png' | asset_url }}"
+                                            <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
                                      {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
-                                     width="{{ logo_width }}" 
-                                     height="{{ logo_height }}" 
                                      class="header__heading-logo logo__main" 
-                                     alt="{{ logo.alt | default: shop.name | escape }}"
-                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width }}px !important;">
-                                            {%- if check_transparent -%}
-                                                <img srcset="{{ 'bbs_footer_logo_official.png' | asset_url }} 1x, {{ 'bbs_footer_logo_official.png' | asset_url }} 2x, {{ 'bbs_footer_logo_official.png' | asset_url }} 3x" 
-                                     src="{{ 'bbs_footer_logo_official.png' | asset_url }}"
-                                     {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
-                                     class="header__heading-logo logo__main w-100 h-auto ver-alg-mid d-inline-block" 
                                      alt="{{ logo.alt | default: shop.name | escape }}" 
-                                     width="{{ logo_width }}" 
-                                     height="{{ logo_height }}"
-                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width }}px !important;">
+                                     width="{{ logo_width | default: 55 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 55 }}px !important; width: {{ logo_width | default: 55 }}px !important;">
+                                            {%- if check_transparent -%}
+                                                <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
+                                     {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
+                                     class="header__heading-logo logo__main" 
+                                     alt="{{ logo.alt | default: shop.name | escape }}" 
+                                     width="{{ logo_width | default: 55 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 55 }}px !important; width: {{ logo_width | default: 55 }}px !important;">
                                             {%- endif -%}
                                         {%- elsif block.settings.logo != blank -%}
                                             {%- assign logo = block.settings.logo -%}
@@ -123,14 +135,14 @@
                                             {%- assign logo_width_img = logo_width | append: 'x' -%}
                                             {%- assign logo_width_retina = logo_width | times: 2 | append: 'x' -%}
                                             {%- assign logo_height = block.settings.logo_width_mobile | divided_by: logo.aspect_ratio | round -%}
-                                            <img srcset="{{ 'bbs_footer_logo_official.png' | asset_url }} 1x, {{ 'bbs_footer_logo_official.png' | asset_url }} 2x, {{ 'bbs_footer_logo_official.png' | asset_url }} 3x" 
-                                     src="{{ 'bbs_footer_logo_official.png' | asset_url }}"
+                                            <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
                                      {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
-                                     width="{{ logo_width }}" 
-                                     height="{{ logo_height }}" 
                                      class="header__heading-logo logo__main" 
-                                     alt="{{ logo.alt | default: shop.name | escape }}"
-                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width }}px !important;">
+                                     alt="{{ logo.alt | default: shop.name | escape }}" 
+                                     width="{{ logo_width | default: 55 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 55 }}px !important; width: {{ logo_width | default: 55 }}px !important;">
                                         {%- else -%}
                                             <span class="h2 {{ block.settings.logo_text_transform }}">{% if block.settings.logo_text != blank %}{{ block.settings.logo_text }}{% else %}{{ shop.name }}{% endif %}</span>
                                         {%- endif -%}

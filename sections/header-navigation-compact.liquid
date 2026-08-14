@@ -53,14 +53,14 @@
                                 {%- assign logo_width_img = logo_width | append: 'x' -%}
                                 {%- assign logo_width_retina = logo_width | times: 2 | append: 'x'  -%}
                                 {%- assign logo_height = logo_width | divided_by: logo.aspect_ratio | round -%}
-                                <img srcset="{{ 'bbs_footer_logo_official.png' | asset_url }} 1x, {{ 'bbs_footer_logo_official.png' | asset_url }} 2x, {{ 'bbs_footer_logo_official.png' | asset_url }} 3x" 
-                                     src="{{ 'bbs_footer_logo_official.png' | asset_url }}"
+                                <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
+                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
                                      {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
                                      class="header__heading-logo logo__main w-100 h-auto ver-alg-mid d-inline-block" 
                                      alt="{{ logo.alt | default: shop.name | escape }}" 
-                                     width="{{ logo_width }}" 
-                                     height="{{ logo_height }}"
-                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width }}px !important;">
+                                     width="{{ logo_width | default: 90 }}" 
+                                     height="auto"
+                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 90 }}px !important; width: {{ logo_width | default: 90 }}px !important;">
                             {%- elsif block.settings.logo_text != blank -%}
                                 {%- assign logo_width_fixed = block.settings.logo_width_fixed -%}      
                                 {%- assign logo_svg_sticky_height = block.settings.logo_width | times: logo_width_fixed | divided_by: 100 | append: 'px'-%}
