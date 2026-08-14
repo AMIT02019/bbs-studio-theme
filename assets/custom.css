@@ -1218,3 +1218,33 @@ a[href*="mailto:"] {
   image-rendering: crisp-edges !important;
   object-fit: contain !important;
 }
+
+
+/* Header Logo Sizing */
+.header-logo,
+.header-navigation .header-logo {
+  max-width: 90px !important;
+}
+
+.header__heading-logo,
+.header-logo img,
+.header__heading-link img,
+.header-navigation .header-logo img {
+  width: 88px !important;
+  max-width: 88px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .header-mobile .header__heading-logo,
+  .header-mobile .header__heading-link img,
+  .header-mobile .header-logo img {
+    width: 52px !important;
+    max-width: 52px !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+}
