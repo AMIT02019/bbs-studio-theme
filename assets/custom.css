@@ -542,8 +542,8 @@ a[href*="begborrowstealstudio@gmail.com"] {
   max-width: 100% !important;
   height: auto !important;
   object-fit: contain !important;
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
+  
+  
 }
 
 @media (max-width: 767px) {
@@ -1214,8 +1214,8 @@ a[href*="mailto:"] {
 .header__heading-link img,
 .header-mobile .header__heading-logo,
 .header-mobile .header__heading-link img {
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
+  
+  
   object-fit: contain !important;
 }
 
@@ -1247,5 +1247,40 @@ a[href*="mailto:"] {
     height: auto !important;
     object-fit: contain !important;
     display: block !important;
+  }
+}
+
+
+/* Header & Footer Vector Logo Smoothing */
+.header__heading-logo,
+.header-logo img,
+.header-logo svg,
+.header__heading-link img,
+.header__heading-link svg,
+.header-mobile .header__heading-logo,
+.header-mobile .header__heading-link img,
+.header-mobile .header__heading-link svg,
+.footer-block__details .image_logo img,
+.footer-block__details .image_logo svg {
+  image-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.header-logo svg,
+.header-navigation .header-logo svg {
+  width: 90px !important;
+  max-width: 90px !important;
+  height: auto !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .header-mobile .header__heading-link svg,
+  .header-mobile .header-logo svg {
+    width: 55px !important;
+    max-width: 55px !important;
+    height: auto !important;
   }
 }

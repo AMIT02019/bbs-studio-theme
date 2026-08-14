@@ -44,14 +44,12 @@
                                 {%- assign logo_width_img = logo_width | append: 'x' -%}
                                 {%- assign logo_width_retina = logo_width | times: 2 | append: 'x'  -%}
                                 {%- assign logo_height = logo_width | divided_by: logo.aspect_ratio | round -%}
-                                <img srcset="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 1x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 2x, https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088 3x" 
-                                     src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/bbs_official_hd_logo.png?v=1786734088"
-                                     {% if settings.enable_lazyload %} loading="lazy"{% endif %} 
-                                     class="header__heading-logo logo__main w-100 h-auto ver-alg-mid d-inline-block" 
-                                     alt="{{ logo.alt | default: shop.name | escape }}" 
-                                     width="{{ logo_width | default: 90 }}" 
+                                <img src="{{ 'bbs_logo_official.svg' | asset_url }}" 
+                                     class="header__heading-logo logo__main" 
+                                     alt="Beg Borrow Steal Studio" 
+                                     width="90" 
                                      height="auto"
-                                     style="image-rendering: -webkit-optimize-contrast; max-width: {{ logo_width | default: 90 }}px !important; width: {{ logo_width | default: 90 }}px !important;">
+                                     style="width: 90px !important; max-width: 90px !important; height: auto !important; display: block !important;">
                             {%- elsif block.settings.logo_text != blank -%}
                                 <span class="header__heading-text {{ block.settings.logo_text_transform }} d-block">{{ block.settings.logo_text }}</span>
                             {%- else -%}
