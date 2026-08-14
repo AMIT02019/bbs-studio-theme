@@ -1220,6 +1220,7 @@ a[href*="mailto:"] {
 }
 
 
+
 /* Header Logo Sizing */
 .header-logo,
 .header-navigation .header-logo {
@@ -1230,8 +1231,8 @@ a[href*="mailto:"] {
 .header-logo img,
 .header__heading-link img,
 .header-navigation .header-logo img {
-  width: 88px !important;
-  max-width: 88px !important;
+  width: 90px !important;
+  max-width: 90px !important;
   height: auto !important;
   object-fit: contain !important;
   display: block !important;
@@ -1241,8 +1242,8 @@ a[href*="mailto:"] {
   .header-mobile .header__heading-logo,
   .header-mobile .header__heading-link img,
   .header-mobile .header-logo img {
-    width: 52px !important;
-    max-width: 52px !important;
+    width: 55px !important;
+    max-width: 55px !important;
     height: auto !important;
     object-fit: contain !important;
     display: block !important;
