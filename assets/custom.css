@@ -1075,8 +1075,9 @@ h1, h2, h3, h4, h5, h6,
 
 
 
+
 /* =============================================================================
-   PRODUCT CARD IMAGE FIT - MATCH SECOND IMAGE (70% CONTAINED WITH 15% MARGINS)
+   PRODUCT CARD IMAGE FIT - 15% INSET BOUNDING BOX (NO CROPPING / NO EDGE TOUCHING)
    ============================================================================= */
 
 :root {
@@ -1121,17 +1122,17 @@ a.card-media {
 .collection .card-media img,
 .featured-products .card-media img {
   position: absolute !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  margin: auto !important;
+  top: 15% !important;
+  bottom: 15% !important;
+  left: 15% !important;
+  right: 15% !important;
+  width: auto !important;
+  height: auto !important;
   max-width: 70% !important;
   max-height: 70% !important;
-  width: 70% !important;
-  height: 70% !important;
   object-fit: contain !important;
   object-position: center !important;
   transform: none !important;
+  margin: auto !important;
   box-sizing: border-box !important;
 }
