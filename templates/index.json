@@ -604,68 +604,6 @@
         "ai_gen_block_c582a29_RNpV9Q"
       ],
       "settings": {}
-    },
-    "bbs_faq_section": {
-      "type": "bbs-faq",
-      "blocks": {
-        "faq_1": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Are all pieces at Beg Borrow Steal Studio authentic?",
-            "answer": "<p>Yes, every item in our collection is strictly curated and thoroughly authenticated by our specialists before being listed.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Where is your boutique studio located?",
-            "answer": "<p>We are located at <strong>Flat No 1, New Shams Building CHS, 76 Turner Road, Bandra West, Mumbai, Maharashtra 400050</strong>. You are always welcome to visit us in store!</p>"
-          }
-        },
-        "faq_3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What are your shipping and delivery timelines?",
-            "answer": "<p>Orders are dispatched within 1–2 business days. Domestic deliveries across India generally take 3–5 business days.</p>"
-          }
-        },
-        "faq_4": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is your return & exchange policy?",
-            "answer": "<p>Due to the exclusive and vintage nature of our curated inventory, all sales are final unless an item is demonstrably defective or differs significantly from its description.</p>"
-          }
-        },
-        "faq_5": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Do you ship internationally?",
-            "answer": "<p>Yes, we ship globally! International shipping fees and estimated delivery times are automatically computed during checkout.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5"
-      ],
-      "settings": {
-        "subtitle": "NEED HELP?",
-        "heading": "FREQUENTLY ASKED QUESTIONS",
-        "description": "Everything you need to know about our vintage curation, orders, shipping, and store visits.",
-        "heading_align": "center",
-        "bg_color": "#faf8f5",
-        "heading_color": "#5a3a0a",
-        "question_color": "#5a3a0a",
-        "answer_color": "#5a3a0a",
-        "container_width": 900,
-        "padding_top": 60,
-        "padding_bottom": 70,
-        "show_contact_note": true,
-        "contact_email": "begborrowstealstudio@gmail.com"
-      }
     }
   },
   "order": [
@@ -677,7 +615,6 @@
     "1779387469a3ae875b",
     "1779388174dfe2079f",
     "1780139308cf84150b",
-    "17793899179af5c3d9",
-    "bbs_faq_section"
+    "17793899179af5c3d9"
   ]
 }
