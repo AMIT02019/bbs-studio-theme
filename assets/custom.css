@@ -1188,3 +1188,21 @@ a.card-media {
   object-fit: contain !important;
   display: block !important;
 }
+
+
+/* Footer Reach Us Explicit Casing */
+.footer-block__details,
+.footer-block__details *,
+.footer-block__details p,
+.email-wrapper,
+.email-wrapper *,
+.email-wrapper p,
+.address-wrapper,
+.address-wrapper * {
+  text-transform: none !important;
+}
+
+.footer-block__details a[href^="mailto:"],
+a[href*="mailto:"] {
+  text-transform: lowercase !important;
+}

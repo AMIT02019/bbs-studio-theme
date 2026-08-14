@@ -306,6 +306,24 @@ a.card-media {
   display: block !important;
 }
 
+
+/* Footer Reach Us Explicit Casing */
+.footer-block__details,
+.footer-block__details *,
+.footer-block__details p,
+.email-wrapper,
+.email-wrapper *,
+.email-wrapper p,
+.address-wrapper,
+.address-wrapper * {
+  text-transform: none !important;
+}
+
+.footer-block__details a[href^="mailto:"],
+a[href*="mailto:"] {
+  text-transform: lowercase !important;
+}
+
 </style>
 {% comment %}v-brown-text-theme-1786725531097{% endcomment %}
 
@@ -322,3 +340,5 @@ a.card-media {
 {% comment %}v-brown-text-theme-1786732054056{% endcomment %}
 
 {% comment %}v-brown-text-theme-1786732338632{% endcomment %}
+
+{% comment %}v-brown-text-theme-1786732938080{% endcomment %}
