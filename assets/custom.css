@@ -1156,3 +1156,16 @@ a.card-media {
   box-sizing: border-box !important;
   background: #ffffff !important;
 }
+
+
+/* Footer Contact Details - Preserve Uppercase Address & Lowercase Email */
+.footer-block__details,
+.footer-block__details *,
+.email-wrapper,
+.email-wrapper *,
+.address-wrapper,
+.address-wrapper *,
+.footer-block__info p,
+.footer-block__text div {
+  text-transform: none !important;
+}
