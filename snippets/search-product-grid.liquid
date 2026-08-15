@@ -331,11 +331,11 @@
                   <div class="cpg-title"><a href="{{ item.url }}">{{ item.title }}</a></div>
                   <div class="cpg-price">
                     {%- if on_sale -%}
-                      <span class="cpg-price-sale">{{ item.price | money }}</span>
-                      <span class="cpg-price-compare">{{ item.compare_at_price | money }}</span>
+                      <span class="cpg-price-sale">{% render 'indian-price', price: item.price %}</span>
+                      <span class="cpg-price-compare">{% render 'indian-price', price: item.compare_at_price %}</span>
                       <span class="cpg-price-save">Save {{ pct }}%</span>
                     {%- else -%}
-                      <span class="cpg-price-reg">{{ item.price | money }}</span>
+                      <span class="cpg-price-reg">{% render 'indian-price', price: item.price %}</span>
                     {%- endif -%}
                   </div>
                 </div>
