@@ -1,0 +1,37 @@
+{%- comment -%}
+  Renders a price formatted in Indian currency format (e.g., Rs. 1,00,000.00).
+  Accepts:
+  - price: {Number} Amount in cents (e.g. 10000000 for 1 Lakh)
+{%- endcomment -%}
+{%- liquid
+  assign raw_price = price | default: 0
+  assign price_in_rupees = raw_price | divided_by: 100
+  assign price_cents = raw_price | modulo: 100
+
+  if price_cents < 10
+    assign cents_str = '0' | append: price_cents
+  else
+    assign cents_str = price_cents | append: ''
+  endif
+
+  if price_in_rupees < 1000
+    assign formatted_int = price_in_rupees | append: ''
+  elsif price_in_rupees < 100000
+    assign thousands = price_in_rupees | divided_by: 1000
+    assign hundreds = price_in_rupees | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign formatted_int = thousands | append: ',' | append: hundreds
+  elsif price_in_rupees < 10000000
+    assign lakhs = price_in_rupees | divided_by: 100000
+    assign thousands = price_in_rupees | modulo: 100000 | divided_by: 1000 | prepend: '0' | slice: -2, 2
+    assign hundreds = price_in_rupees | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign formatted_int = lakhs | append: ',' | append: thousands | append: ',' | append: hundreds
+  else
+    assign crores = price_in_rupees | divided_by: 10000000
+    assign lakhs = price_in_rupees | modulo: 10000000 | divided_by: 100000 | prepend: '0' | slice: -2, 2
+    assign thousands = price_in_rupees | modulo: 100000 | divided_by: 1000 | prepend: '0' | slice: -2, 2
+    assign hundreds = price_in_rupees | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign formatted_int = crores | append: ',' | append: lakhs | append: ',' | append: thousands | append: ',' | append: hundreds
+  endif
+
+  echo 'Rs. ' | append: formatted_int | append: '.' | append: cents_str
+-%}

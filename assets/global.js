@@ -1167,12 +1167,15 @@ class SearchForm extends HTMLElement {
 (function() {
   function formatIndianCurrencyStr(str) {
     if (!str || typeof str !== 'string') return str;
-    return str.replace(/\b(\d{1,3})(?:,(\d{3}))+(\.\d{2})?\b/g, function(match) {
-      var rawDigits = match.replace(/,/g, '');
+    return str.replace(/(?:(Rs\.?|₹)\s*)?(\d{1,3})(?:,(\d{3}))+(\.\d{2})?/g, function(match, currencySymbol) {
+      var rawDigits = match.replace(/Rs\.?|₹|,|\s/g, '');
       var parts = rawDigits.split('.');
       var numStr = parts[0];
-      var dec = parts.length > 1 ? '.' + parts[1] : '';
-      if (numStr.length <= 3) return numStr + dec;
+      var dec = parts.length > 1 ? '.' + parts[1] : (match.includes('.') ? '.00' : '');
+      if (numStr.length <= 3) {
+        var res = numStr + dec;
+        return (currencySymbol ? currencySymbol + ' ' : '') + res;
+      }
       var lastThree = numStr.substring(numStr.length - 3);
       var otherDigits = numStr.substring(0, numStr.length - 3);
       var formattedOther = '';
@@ -1185,7 +1188,8 @@ class SearchForm extends HTMLElement {
           formattedOther = char + formattedOther;
         }
       }
-      return formattedOther + ',' + lastThree + dec;
+      var formattedNum = formattedOther + ',' + lastThree + dec;
+      return (currencySymbol ? currencySymbol + ' ' : '') + formattedNum;
     });
   }
 
@@ -1193,11 +1197,11 @@ class SearchForm extends HTMLElement {
     var selectors = [
       '.price-item', '.price-item--regular', '.price-item--sale', '.price',
       '.card-price', '.money', '.productView-price', '.cart-item__price',
-      '.totals__subtotal-value', '.tax-note', '.quick-cart-price', '[data-price]'
+      '.totals__subtotal-value', '.tax-note', '.quick-cart-price', '[data-price]',
+      '.pp-price', '.pp-compare', '.pp-rel-price', '.pp-rel-was'
     ];
     selectors.forEach(function(sel) {
       document.querySelectorAll(sel).forEach(function(el) {
-        // Walk text nodes inside element
         var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
         var node;
         while (node = walker.nextNode()) {
@@ -1212,16 +1216,21 @@ class SearchForm extends HTMLElement {
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyIndianPriceFormatting);
-  } else {
+  function init() {
     applyIndianPriceFormatting();
+    if (document.body) {
+      var observer = new MutationObserver(function() {
+        applyIndianPriceFormatting();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
   window.addEventListener('load', applyIndianPriceFormatting);
-
-  var observer = new MutationObserver(function() {
-    applyIndianPriceFormatting();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
 })();

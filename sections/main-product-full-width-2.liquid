@@ -660,9 +660,9 @@
           <h1 class="pp-title">{{ product.title }}</h1>
 
           <div class="pp-price-row" id="pp-price-{{ section.id }}">
-            <span class="pp-price" id="pp-amt-{{ section.id }}">{{ current_variant.price | money }}</span>
+            <span class="pp-price" id="pp-amt-{{ section.id }}">{% render 'indian-price', price: current_variant.price %}</span>
             {%- if show_sale -%}
-              <span class="pp-compare" id="pp-cmp-{{ section.id }}">{{ compare_price | money }}</span>
+              <span class="pp-compare" id="pp-cmp-{{ section.id }}">{% render 'indian-price', price: compare_price %}</span>
               <span class="pp-save" id="pp-sav-{{ section.id }}">{{ discount_pct }}% OFF</span>
             {%- endif -%}
           </div>
@@ -832,8 +832,8 @@
                       <div class="pp-rel-vendor">{{ rp.vendor }}</div>
                       <div class="pp-rel-name">{{ rp.title | truncate: 52 }}</div>
                       <div>
-                        <span class="pp-rel-price">{{ rp.price | money }}</span>
-                        {%- if rp.compare_at_price > rp.price -%}<span class="pp-rel-was">{{ rp.compare_at_price | money }}</span>{%- endif -%}
+                        <span class="pp-rel-price">{% render 'indian-price', price: rp.price %}</span>
+                        {%- if rp.compare_at_price > rp.price -%}<span class="pp-rel-was">{% render 'indian-price', price: rp.compare_at_price %}</span>{%- endif -%}
                       </div>
                     </a>
                   {%- endunless -%}
@@ -1000,7 +1000,20 @@
         var cp = parseInt(o.getAttribute('data-compare'), 10) || 0;
         var av = o.getAttribute('data-available') === 'true';
         var fmt = function (c) {
-          return '{{ cart.currency.symbol }}' + (c / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          var num = (c / 100).toFixed(2);
+          var parts = num.split('.');
+          var x = parts[0];
+          var cents = parts[1];
+          if (x.length <= 3) return 'Rs. ' + x + '.' + cents;
+          var lastThree = x.substring(x.length - 3);
+          var other = x.substring(0, x.length - 3);
+          var oFormatted = '';
+          for (var i = 1; i <= other.length; i++) {
+            var ch = other.charAt(other.length - i);
+            if (i > 1 && i % 2 === 1) oFormatted = ch + ',' + oFormatted;
+            else oFormatted = ch + oFormatted;
+          }
+          return 'Rs. ' + oFormatted + ',' + lastThree + '.' + cents;
         };
         var amt = document.getElementById('pp-amt-' + sid);
         var cmp = document.getElementById('pp-cmp-' + sid);
