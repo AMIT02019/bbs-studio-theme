@@ -1,5 +1,89 @@
 <div class="menu-lv__dropdownmenu menu-dropdown">
 	<ul class="menu-lv__list list-menu list-unstyled motion-reduce" role="list">
+        {%- assign check_mb_title = menu_item_heading | escape | downcase | handle -%}
+        {%- if check_mb_title == 'categories' -%}
+          <li class="menu-lv-item menu-lv-2 bbs-mm-mobile-wrapper">
+            <div class="bbs-mm-mobile-section-header">EXPLORE CATEGORIES</div>
+            <div class="bbs-mm-mobile-grid">
+              <a href="/pages/vintage-designer-jewellery" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_VE0036_1-1-600x600.webp?v=1779428263" alt="Earrings" width="56" height="56" loading="lazy">
+                </div>
+                <span>Earrings</span>
+              </a>
+              <a href="/collections/necklace" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_V0006_1-1-scaled_3182550c-707a-4b10-8b67-1a82c9595259.jpg?v=1779527302" alt="Necklaces" width="56" height="56" loading="lazy">
+                </div>
+                <span>Necklaces</span>
+              </a>
+              <a href="/collections/rings" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-1900.jpg?v=1779535405" alt="Rings" width="56" height="56" loading="lazy">
+                </div>
+                <span>Rings</span>
+              </a>
+              <a href="/collections/bracelets" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-2285.jpg?v=1779535778" alt="Bracelets" width="56" height="56" loading="lazy">
+                </div>
+                <span>Bracelets</span>
+              </a>
+              <a href="/collections/brooches" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-2355.jpg?v=1779535824" alt="Brooches" width="56" height="56" loading="lazy">
+                </div>
+                <span>Brooches</span>
+              </a>
+              <a href="/collections/watches" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-WATCHES--scaled.jpg?v=1779383463" alt="Watches" width="56" height="56" loading="lazy">
+                </div>
+                <span>Watches</span>
+              </a>
+              <a href="/collections/bags" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-BAGS-option-2-scaled.jpg?v=1779383464" alt="Bags" width="56" height="56" loading="lazy">
+                </div>
+                <span>Bags</span>
+              </a>
+              <a href="/collections/sunglasses" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/DSCF2973-scaled.jpg?v=1779383463" alt="Sunglasses" width="56" height="56" loading="lazy">
+                </div>
+                <span>Sunglasses</span>
+              </a>
+              <a href="/collections/all" class="bbs-mm-mobile-item">
+                <div class="bbs-mm-mobile-thumb">
+                  <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/HOME-DECOR-CURIOS-option-2-1-scaled.jpg?v=1779383463" alt="Curios" width="56" height="56" loading="lazy">
+                </div>
+                <span>Curios</span>
+              </a>
+            </div>
+
+            <div class="bbs-mm-mobile-curated">
+              <div class="bbs-mm-mobile-section-header">CURATED ARCHIVES</div>
+              <div class="bbs-mm-mobile-curated-links">
+                <a href="/collections/all?filter.p.vendor=CHANEL" class="bbs-mm-mobile-link">› Chanel Archive</a>
+                <a href="/collections/all?filter.p.vendor=CHRISTIAN+DIOR" class="bbs-mm-mobile-link">› Christian Dior</a>
+                <a href="/collections/all?filter.p.vendor=YVES+SAINT+LAURENT" class="bbs-mm-mobile-link">› Yves Saint Laurent</a>
+                <a href="/collections/all?filter.p.vendor=GIANNI+VERSACE" class="bbs-mm-mobile-link">› Gianni Versace</a>
+                <a href="/collections/all" class="bbs-mm-mobile-link">› 18K Gold Plated</a>
+                <a href="/collections/all" class="bbs-mm-mobile-link">› Deadstock Rare Finds</a>
+              </div>
+            </div>
+
+            <div class="bbs-mm-mobile-promo">
+              <a href="/collections/all" class="bbs-mm-mobile-banner">
+                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-DESIGNER-JEWELLERY-1-scaled_1.jpg?v=1779383464" alt="Curated Vintage" width="300" height="120" loading="lazy">
+                <div class="bbs-mm-mobile-banner-text">
+                  <span class="badge">ARCHIVAL COLLECTION</span>
+                  <span class="title">EXPLORE ALL DROPS →</span>
+                </div>
+              </a>
+            </div>
+          </li>
+        {%- endif -%}
 		<li class="menu-lv-item menu-lv-2 nav-title-mobile text-center">
             <span class="icon-dropdown">
                 {% render 'icon-arrow-nav' %}
