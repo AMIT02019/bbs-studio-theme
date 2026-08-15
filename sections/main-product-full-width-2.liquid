@@ -660,7 +660,7 @@
           <h1 class="pp-title">{{ product.title }}</h1>
 
           <div class="pp-price-row" id="pp-price-{{ section.id }}">
-            <span class="pp-price" id="pp-amt-{{ section.id }}">{% render 'indian-price', price: current_variant.price %}</span>
+            <span class="pp-price UNIQUE_MARKER_TEST" id="pp-amt-{{ section.id }}">{% render 'indian-price', price: current_variant.price %}</span>
             {%- if show_sale -%}
               <span class="pp-compare" id="pp-cmp-{{ section.id }}">{% render 'indian-price', price: compare_price %}</span>
               <span class="pp-save" id="pp-sav-{{ section.id }}">{{ discount_pct }}% OFF</span>
