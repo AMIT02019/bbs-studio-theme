@@ -176,7 +176,7 @@
             "columns_tablet": 3,
             "columns_mobile": "2",
             "grid_gap": 20,
-            "card_background": "#FFFFFF",
+            "card_background": "#ffffff",
             "border_radius": 14,
             "image_aspect_ratio": 100,
             "placeholder_background": "#f5f5f5",
@@ -187,7 +187,7 @@
             "content_padding": 16,
             "text_align": "center",
             "title_font_size": 20,
-            "title_font_weight": "400",
+            "title_font_weight": "500",
             "title_color": "#5a3a0a"
           },
           "blocks": {}
