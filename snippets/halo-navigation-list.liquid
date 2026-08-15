@@ -46,11 +46,8 @@
                         assign check_menu = true
                         assign block_style = menuItem.type
                         assign column = menuItem.settings.column
-
                         assign container = menuItem.settings.layout_block
-
                         assign size_container = menuItem.settings.header_custom_width_size
-                        
                         assign show_banner_1 = menuItem.settings.show_banner_1
                         if show_banner_1
                             assign banner_1 = menuItem.settings.banner_1
@@ -73,19 +70,16 @@
                             assign banner_4 = menuItem.settings.banner_4
                             assign banner_url_4 = menuItem.settings.banner_url_4
                         endif
-
                         assign show_banner_5 = menuItem.settings.show_banner_5
                         if show_banner_5
                             assign banner_5 = menuItem.settings.banner_5
                             assign banner_url_5 = menuItem.settings.banner_url_5
                         endif
-
                         assign show_banner_6 = menuItem.settings.show_banner_6
                         if show_banner_6
                             assign banner_6 = menuItem.settings.banner_6
                             assign banner_url_6 = menuItem.settings.banner_url_6
                         endif
-                    
                         assign show_az_brand = menuItem.settings.show_az_brand
                         if show_az_brand
                             assign az_brand_title = menuItem.settings.az_brand_title
@@ -100,18 +94,24 @@
                             assign product_limit = menuItem.settings.product_limit
                             assign product_per_row = menuItem.settings.product_per_row
                         endif
-                        
                         assign menu_text_left = menuItem.settings.menu_text_left
                         assign menu_text_left_sale = menuItem.settings.menu_text_left_sale | split: "," | strip | downcase | handle
                         assign mega_tyle = menuItem.settings.mega_tyle
                         assign product_limit = menuItem.settings.product_limit
-
                         break
                 endcase
             endfor
         -%}
-        {%- if check_menu -%}
-            {% render 'halo-megamenu'
+        {%- if title == 'categories' -%}
+            <li class="menu-lv-item menu-lv-1 has-megamenu has-bbs-luxury-megamenu dropdown p-static{% if sale_item_lv1 contains title %} menu-sale{% endif %}"{% if settings.enable_following_cursor and settings.following_cursor_style == 'default' %} no-effect-cursor{% endif %}>
+                <a class="menu-lv-1__action header__menu-item list-menu__item link focus-inset menu_mobile_link link-effect" href="{{ link.url }}">
+                    <span class="text p-relative">{{ link.title | escape }}</span>
+                    <span class="icon-dropdown" data-toggle-menu-mb="">{% render 'icon-caret-right' %}</span>
+                </a>
+                {% render 'bbs-luxury-megamenu' %}
+            </li>
+        {%- elsif check_menu -%}
+            {% render 'halo-megamenu',
                 container: container,
                 size_container: size_container,
                 link: link,
@@ -167,10 +167,9 @@
                 product_limit: product_limit,
                 mega_tyle: mega_tyle,
                 alignment: alignment
-
             %}
         {%- else -%}
-            {% render 'halo-dropdownmenu'
+            {% render 'halo-dropdownmenu',
                 link: link,
                 title: title,
                 sale_item_lv1: sale_item_lv1,
