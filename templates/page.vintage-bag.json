@@ -201,6 +201,10 @@
         ".ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw > *:hover {border-color: #000; transform: translateY(-4px);}"
       ],
       "settings": {}
+    },
+    "17867732626c68c671": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -209,6 +213,7 @@
     "1779526568cf6ff77a",
     "1779528762caa83115",
     "17795300250604e4a5",
-    "1779531797578522e2"
+    "1779531797578522e2",
+    "17867732626c68c671"
   ]
 }
