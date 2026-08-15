@@ -1339,6 +1339,8 @@ a[href*="mailto:"] {
 
 
 
+
+
 /* =============================================================================
    BBS Luxury 4-Column Mega-Menu Styles (Desktop & Mobile Pixel-Perfect)
    ============================================================================= */
@@ -1396,7 +1398,8 @@ a[href*="mailto:"] {
     pointer-events: auto !important;
   }
 
-  .bbs-luxury-megamenu-dropdown .nav-title-mobile {
+  .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .bbs-mm-mobile-only {
     display: none !important;
   }
 

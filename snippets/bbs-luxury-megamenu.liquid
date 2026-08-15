@@ -19,7 +19,7 @@
       
       <!-- COLUMN 1: Category Circles (3x3 grid) -->
       <div class="bbs-mm-col bbs-mm-col-circles">
-        <div class="bbs-mm-section-title d-md-none">ALL CATEGORIES</div>
+        <div class="bbs-mm-section-title bbs-mm-mobile-only">ALL CATEGORIES</div>
         <div class="bbs-mm-circles-grid">
           <a href="/pages/vintage-designer-jewellery" class="bbs-mm-circle-item">
             <div class="bbs-mm-circle-thumb">
@@ -83,7 +83,7 @@
 
       <!-- COLUMN 2: Curated Collections (2 Sub-Columns with chevrons) -->
       <div class="bbs-mm-col bbs-mm-col-links">
-        <div class="bbs-mm-section-title d-md-none">CURATED ARCHIVES</div>
+        <div class="bbs-mm-section-title bbs-mm-mobile-only">CURATED ARCHIVES</div>
         <div class="bbs-mm-links-grid">
           <div class="bbs-mm-links-subcol">
             <a href="/collections/all?filter.p.vendor=CHANEL" class="bbs-mm-link-item">
@@ -204,7 +204,6 @@
     var navLink = navItem.querySelector('.menu-lv-1__action');
     var closeTimer = null;
 
-    // Desktop hover with debounce
     if (window.innerWidth >= 1025) {
       function showMenu() {
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
@@ -235,7 +234,6 @@
       }
     }
 
-    // Mobile click & back handling
     function setupMobileEvents() {
       var mobileNavItems = document.querySelectorAll('.site-nav-mobile .has-bbs-luxury-megamenu');
       mobileNavItems.forEach(function(item) {
