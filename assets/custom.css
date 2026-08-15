@@ -1341,8 +1341,10 @@ a[href*="mailto:"] {
 
 
 
+
+
 /* =============================================================================
-   BBS Luxury 4-Column Mega-Menu Styles (Desktop & Mobile Pixel-Perfect)
+   BBS Luxury 4-Column Mega-Menu Styles with Smooth Animations & Cascade
    ============================================================================= */
 
 /* Nav Item Hover Bridge */
@@ -1353,9 +1355,29 @@ a[href*="mailto:"] {
 .has-bbs-luxury-megamenu > .menu-lv-1__action {
   padding-bottom: 24px !important;
   margin-bottom: -24px !important;
+  position: relative !important;
+  transition: color 0.25s ease !important;
 }
 
-/* Desktop Dropdown Container */
+.has-bbs-luxury-megamenu > .menu-lv-1__action::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: calc(100% - 20px);
+  height: 2px;
+  background: #5a3a0a;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
+.has-bbs-luxury-megamenu:hover > .menu-lv-1__action::after,
+.has-bbs-luxury-megamenu.is-active > .menu-lv-1__action::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Desktop Dropdown Container with Smooth Physic Transition */
 @media (min-width: 1025px) {
   .has-bbs-luxury-megamenu:hover .bbs-luxury-megamenu-dropdown,
   .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
@@ -1363,7 +1385,7 @@ a[href*="mailto:"] {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
-    transform: translateY(0) !important;
+    transform: translateY(0) scale(1) !important;
   }
 
   .bbs-luxury-megamenu-dropdown {
@@ -1374,19 +1396,23 @@ a[href*="mailto:"] {
     width: 100vw !important;
     margin-left: calc(-50vw + 50%) !important;
     background: #ffffff !important;
-    border-top: 1px solid #f0ede8 !important;
-    border-bottom: 1px solid #e8e4df !important;
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.09) !important;
-    padding: 32px 0 36px 0 !important;
+    border-top: 1px solid rgba(235, 230, 222, 0.8) !important;
+    border-bottom: 1px solid rgba(220, 214, 204, 0.7) !important;
+    box-shadow: 0 28px 65px -12px rgba(0, 0, 0, 0.12), 0 10px 24px -6px rgba(0, 0, 0, 0.04) !important;
+    padding: 34px 0 38px 0 !important;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(6px);
-    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s !important;
+    transform: translateY(12px) scale(0.992);
+    transform-origin: top center;
+    transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1), 
+                transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), 
+                visibility 0.32s !important;
     z-index: 1000 !important;
+    will-change: transform, opacity;
   }
 
-  /* Invisible hover bridge above dropdown */
+  /* Invisible hover bridge */
   .bbs-luxury-megamenu-dropdown::before {
     content: '' !important;
     position: absolute !important;
@@ -1416,9 +1442,26 @@ a[href*="mailto:"] {
     gap: 0 !important;
   }
 
+  /* Staggered Column Cascade Animation */
+  .bbs-mm-anim-col {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    transition-delay: var(--col-delay, 0s) !important;
+    will-change: opacity, transform;
+  }
+
+  .has-bbs-luxury-megamenu:hover .bbs-mm-anim-col,
+  .has-bbs-luxury-megamenu.is-active .bbs-mm-anim-col,
+  .bbs-luxury-megamenu-dropdown.is-visible .bbs-mm-anim-col {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Vertical Dividers */
   .bbs-mm-divider {
     width: 1px !important;
-    background-color: #eee9e2 !important;
+    background: linear-gradient(180deg, rgba(238,233,226,0.2) 0%, rgba(238,233,226,1) 15%, rgba(238,233,226,1) 85%, rgba(238,233,226,0.2) 100%) !important;
     margin: 0 24px !important;
     flex-shrink: 0 !important;
   }
@@ -1443,11 +1486,13 @@ a[href*="mailto:"] {
     text-decoration: none !important;
     padding: 8px 6px !important;
     border-radius: 12px !important;
-    transition: all 0.22s ease !important;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease, box-shadow 0.25s ease !important;
   }
 
   .bbs-mm-circle-item:hover {
-    background-color: #f7f5f2 !important;
+    background-color: #f8f6f3 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 4px 12px rgba(90, 58, 10, 0.06) !important;
   }
 
   .bbs-mm-circle-thumb {
@@ -1462,12 +1507,13 @@ a[href*="mailto:"] {
     overflow: hidden !important;
     margin-bottom: 8px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    transition: transform 0.25s ease, border-color 0.25s ease !important;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease !important;
   }
 
   .bbs-mm-circle-item:hover .bbs-mm-circle-thumb {
-    transform: scale(1.06) !important;
+    transform: scale(1.08) !important;
     border-color: #5a3a0a !important;
+    box-shadow: 0 4px 14px rgba(90, 58, 10, 0.15) !important;
   }
 
   .bbs-mm-circle-thumb img {
@@ -1475,6 +1521,11 @@ a[href*="mailto:"] {
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
+    transition: transform 0.35s ease !important;
+  }
+
+  .bbs-mm-circle-item:hover .bbs-mm-circle-thumb img {
+    transform: scale(1.05) !important;
   }
 
   .bbs-mm-circle-label {
@@ -1482,7 +1533,7 @@ a[href*="mailto:"] {
     font-weight: 500 !important;
     color: #3e2723 !important;
     letter-spacing: 0.02em !important;
-    transition: color 0.2s ease !important;
+    transition: color 0.22s ease, transform 0.22s ease !important;
   }
 
   .bbs-mm-circle-item:hover .bbs-mm-circle-label {
@@ -1513,29 +1564,31 @@ a[href*="mailto:"] {
   .bbs-mm-link-item {
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 7px !important;
     text-decoration: none !important;
     font-size: 13.5px !important;
     color: #4a3828 !important;
     font-weight: 400 !important;
-    padding: 4px 0 !important;
-    transition: all 0.2s ease !important;
+    padding: 5px 6px !important;
+    border-radius: 6px !important;
+    transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
   .bbs-mm-chevron {
     font-size: 14px !important;
     color: #998877 !important;
-    transition: transform 0.2s ease, color 0.2s ease !important;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), color 0.22s ease !important;
   }
 
   .bbs-mm-link-item:hover {
     color: #5a3a0a !important;
-    padding-left: 3px !important;
+    background-color: #faf7f2 !important;
+    padding-left: 9px !important;
   }
 
   .bbs-mm-link-item:hover .bbs-mm-chevron {
     color: #5a3a0a !important;
-    transform: translateX(2px) !important;
+    transform: translateX(3px) scale(1.15) !important;
   }
 
   /* Column 3: Shop By Look */
@@ -1566,11 +1619,11 @@ a[href*="mailto:"] {
     text-decoration: none !important;
     text-align: center !important;
     border-radius: 8px !important;
-    transition: transform 0.22s ease !important;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
   .bbs-mm-look-card:hover {
-    transform: translateY(-2px) !important;
+    transform: translateY(-3px) !important;
   }
 
   .bbs-mm-look-img {
@@ -1581,6 +1634,11 @@ a[href*="mailto:"] {
     background: #f5f2ed !important;
     margin-bottom: 6px !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+    transition: box-shadow 0.25s ease !important;
+  }
+
+  .bbs-mm-look-card:hover .bbs-mm-look-img {
+    box-shadow: 0 6px 14px rgba(90, 58, 10, 0.12) !important;
   }
 
   .bbs-mm-look-img img {
@@ -1588,11 +1646,11 @@ a[href*="mailto:"] {
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
-    transition: transform 0.35s ease !important;
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
   .bbs-mm-look-card:hover .bbs-mm-look-img img {
-    transform: scale(1.08) !important;
+    transform: scale(1.12) !important;
   }
 
   .bbs-mm-look-title {
@@ -1600,7 +1658,7 @@ a[href*="mailto:"] {
     font-family: Georgia, serif !important;
     font-style: italic !important;
     color: #3e2723 !important;
-    transition: color 0.2s ease !important;
+    transition: color 0.22s ease !important;
   }
 
   .bbs-mm-look-card:hover .bbs-mm-look-title {
@@ -1622,7 +1680,13 @@ a[href*="mailto:"] {
     border-radius: 12px !important;
     overflow: hidden !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+    transition: box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  .bbs-mm-banner-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 28px rgba(90, 58, 10, 0.2) !important;
   }
 
   .bbs-mm-banner-bg {
@@ -1635,29 +1699,36 @@ a[href*="mailto:"] {
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
-    transition: transform 0.5s ease !important;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
   .bbs-mm-banner-card:hover .bbs-mm-banner-bg img {
-    transform: scale(1.05) !important;
+    transform: scale(1.08) !important;
   }
 
   .bbs-mm-banner-overlay {
     position: absolute !important;
     inset: 0 !important;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.85) 100%) !important;
+    background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.85) 100%) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 16px !important;
     text-align: center !important;
+    transition: background 0.3s ease !important;
   }
 
   .bbs-mm-banner-box {
-    border: 1px solid rgba(255, 255, 255, 0.45) !important;
-    padding: 16px 12px !important;
-    backdrop-filter: blur(1px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    padding: 18px 14px !important;
+    backdrop-filter: blur(2px) !important;
     width: 100% !important;
+    transition: border-color 0.3s ease, background-color 0.3s ease !important;
+  }
+
+  .bbs-mm-banner-card:hover .bbs-mm-banner-box {
+    border-color: rgba(255, 255, 255, 0.8) !important;
+    background-color: rgba(0, 0, 0, 0.15) !important;
   }
 
   .bbs-mm-banner-badge {
@@ -1699,13 +1770,15 @@ a[href*="mailto:"] {
     font-weight: 600 !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
-    padding: 7px 16px !important;
+    padding: 7px 18px !important;
     border-radius: 3px !important;
-    transition: background 0.2s ease !important;
+    transition: all 0.25s ease !important;
   }
 
   .bbs-mm-banner-card:hover .bbs-mm-banner-btn {
     background: #5a3a0a !important;
+    transform: scale(1.04) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
   }
 }
 
@@ -1728,7 +1801,8 @@ a[href*="mailto:"] {
     transform: translate3d(-101%, 0, 0) !important;
     opacity: 0 !important;
     visibility: hidden !important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s !important;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, visibility 0.3s !important;
+    will-change: transform, opacity;
   }
 
   .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown {
@@ -1752,6 +1826,11 @@ a[href*="mailto:"] {
     top: 0 !important;
     z-index: 10 !important;
     cursor: pointer !important;
+    transition: background-color 0.2s ease !important;
+  }
+
+  .site-nav-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile:active {
+    background-color: #f5f0e8 !important;
   }
 
   .site-nav-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile .icon-dropdown {
@@ -1812,6 +1891,12 @@ a[href*="mailto:"] {
     border-radius: 10px !important;
     background: #faf8f5 !important;
     border: 1px solid #f0eae1 !important;
+    transition: transform 0.2s ease, background-color 0.2s ease !important;
+  }
+
+  .bbs-mm-circle-item:active {
+    transform: scale(0.96) !important;
+    background-color: #f0ebe2 !important;
   }
 
   .bbs-mm-circle-thumb {
@@ -1862,6 +1947,12 @@ a[href*="mailto:"] {
     font-size: 12.5px !important;
     color: #4a3828 !important;
     font-weight: 500 !important;
+    transition: transform 0.2s ease, background-color 0.2s ease !important;
+  }
+
+  .bbs-mm-link-item:active {
+    transform: scale(0.98) !important;
+    background-color: #ede6dc !important;
   }
 
   .bbs-mm-chevron {
@@ -1884,6 +1975,11 @@ a[href*="mailto:"] {
     flex-direction: column !important;
     align-items: center !important;
     text-decoration: none !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  .bbs-mm-look-card:active {
+    transform: scale(0.96) !important;
   }
 
   .bbs-mm-look-img {
