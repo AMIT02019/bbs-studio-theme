@@ -282,7 +282,7 @@
         "header_navigation_bg_gradient": "",
         "sticky_header_type": "none",
         "sticky_header_width": "full",
-        "enable_transparent": false,
+        "enable_transparent": true,
         "transparent_color": "#462a0d",
         "transparent_color_hover": "#462a0d",
         "border_color": "",
