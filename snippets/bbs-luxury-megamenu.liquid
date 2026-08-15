@@ -1,13 +1,17 @@
 {% comment %}
   Beg Borrow Steal Studio - Luxury 4-Column Mega Menu
-  Pixel-perfect replication of reference luxury menu (Desktop & Mobile Optimized)
+  Ultra-responsive, pixel-perfect on both Desktop & Phone views
 {% endcomment %}
-<div class="menu-dropdown bbs-luxury-megamenu-dropdown custom-scrollbar p-absolute top-auto left-0 w-100 zi-10 text-left">
+<div class="menu-dropdown bbs-luxury-megamenu-dropdown custom-scrollbar p-absolute top-auto left-0 w-100 zi-10 text-left" id="bbs-megamenu-dropdown">
   
-  <!-- Mobile Back Navigation Header -->
-  <div class="nav-title-mobile text-center">
-    <span class="icon-dropdown">{% render 'icon-arrow-nav' %}</span>
-    CATEGORIES
+  <!-- Mobile Header with Back Button -->
+  <div class="nav-title-mobile text-center bbs-mm-mobile-back" data-bbs-mm-back>
+    <span class="icon-dropdown">
+      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow-nav" viewBox="0 0 24 24" width="16" height="16">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span>CATEGORIES</span>
   </div>
 
   <div class="bbs-mm-container">
@@ -15,9 +19,9 @@
       
       <!-- COLUMN 1: Category Circles (3x3 grid) -->
       <div class="bbs-mm-col bbs-mm-col-circles">
-        <div class="bbs-mm-mobile-section-tag d-md-none">ALL CATEGORIES</div>
+        <div class="bbs-mm-section-title d-md-none">ALL CATEGORIES</div>
         <div class="bbs-mm-circles-grid">
-          <a href="/pages/vintage-designer-jewellery" class="bbs-mm-circle-item is-selected">
+          <a href="/pages/vintage-designer-jewellery" class="bbs-mm-circle-item">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_VE0036_1-1-600x600.webp?v=1779428263" alt="Earrings" width="68" height="68" loading="lazy">
             </div>
@@ -79,7 +83,7 @@
 
       <!-- COLUMN 2: Curated Collections (2 Sub-Columns with chevrons) -->
       <div class="bbs-mm-col bbs-mm-col-links">
-        <div class="bbs-mm-mobile-section-tag d-md-none">CURATED ARCHIVES</div>
+        <div class="bbs-mm-section-title d-md-none">CURATED ARCHIVES</div>
         <div class="bbs-mm-links-grid">
           <div class="bbs-mm-links-subcol">
             <a href="/collections/all?filter.p.vendor=CHANEL" class="bbs-mm-link-item">
@@ -147,7 +151,7 @@
           </a>
           <a href="/collections/all" class="bbs-mm-look-card">
             <div class="bbs-mm-look-img">
-              <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/Image_3-3-1.jpg?v=1780084331" alt="Baroque & Pearl" width="70" height="52" loading="lazy">
+              <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/Vintage-Cluster-Earrings.jpg?v=1780084529" alt="Baroque & Pearl" width="70" height="52" loading="lazy">
             </div>
             <span class="bbs-mm-look-title">Baroque</span>
           </a>
@@ -189,3 +193,90 @@
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  function initBbsMegamenu() {
+    var navItem = document.querySelector('.has-bbs-luxury-megamenu');
+    if (!navItem) return;
+
+    var dropdown = navItem.querySelector('.bbs-luxury-megamenu-dropdown');
+    var navLink = navItem.querySelector('.menu-lv-1__action');
+    var closeTimer = null;
+
+    // Desktop hover with debounce
+    if (window.innerWidth >= 1025) {
+      function showMenu() {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        navItem.classList.add('is-active');
+        if (dropdown) dropdown.classList.add('is-visible');
+      }
+
+      function hideMenu() {
+        closeTimer = setTimeout(function() {
+          navItem.classList.remove('is-active');
+          if (dropdown) dropdown.classList.remove('is-visible');
+        }, 180);
+      }
+
+      navItem.addEventListener('mouseenter', showMenu);
+      navItem.addEventListener('mouseleave', hideMenu);
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', showMenu);
+        dropdown.addEventListener('mouseleave', hideMenu);
+      }
+
+      if (navLink) {
+        navLink.addEventListener('click', function(e) {
+          if (window.innerWidth >= 1025) {
+            e.preventDefault();
+          }
+        });
+      }
+    }
+
+    // Mobile click & back handling
+    function setupMobileEvents() {
+      var mobileNavItems = document.querySelectorAll('.site-nav-mobile .has-bbs-luxury-megamenu');
+      mobileNavItems.forEach(function(item) {
+        var link = item.querySelector('.menu-lv-1__action');
+        var backBtn = item.querySelector('[data-bbs-mm-back]');
+
+        if (link && !link.dataset.bbsInit) {
+          link.dataset.bbsInit = 'true';
+          link.addEventListener('click', function(e) {
+            if (window.innerWidth < 1025) {
+              e.preventDefault();
+              e.stopPropagation();
+              item.classList.toggle('is-open');
+            }
+          });
+        }
+
+        if (backBtn && !backBtn.dataset.bbsInit) {
+          backBtn.dataset.bbsInit = 'true';
+          backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            item.classList.remove('is-open');
+          });
+        }
+      });
+    }
+
+    setupMobileEvents();
+    document.addEventListener('shopify:section:load', setupMobileEvents);
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.header-mobile--icon, [data-mobile-menu]')) {
+        setTimeout(setupMobileEvents, 300);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBbsMegamenu);
+  } else {
+    initBbsMegamenu();
+  }
+})();
+</script>

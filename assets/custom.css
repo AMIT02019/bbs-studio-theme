@@ -1337,14 +1337,27 @@ a[href*="mailto:"] {
 
 
 
+
+
 /* =============================================================================
    BBS Luxury 4-Column Mega-Menu Styles (Desktop & Mobile Pixel-Perfect)
    ============================================================================= */
 
-/* Desktop Specific Mega-Menu Rules */
+/* Nav Item Hover Bridge */
+.has-bbs-luxury-megamenu {
+  position: static !important;
+}
+
+.has-bbs-luxury-megamenu > .menu-lv-1__action {
+  padding-bottom: 24px !important;
+  margin-bottom: -24px !important;
+}
+
+/* Desktop Dropdown Container */
 @media (min-width: 1025px) {
   .has-bbs-luxury-megamenu:hover .bbs-luxury-megamenu-dropdown,
-  .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown {
+  .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+  .bbs-luxury-megamenu-dropdown.is-visible {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
@@ -1366,9 +1379,21 @@ a[href*="mailto:"] {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(8px);
-    transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s !important;
+    transform: translateY(6px);
+    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s !important;
     z-index: 1000 !important;
+  }
+
+  /* Invisible hover bridge above dropdown */
+  .bbs-luxury-megamenu-dropdown::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -30px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 30px !important;
+    background: transparent !important;
+    pointer-events: auto !important;
   }
 
   .bbs-luxury-megamenu-dropdown .nav-title-mobile {
@@ -1395,6 +1420,7 @@ a[href*="mailto:"] {
     flex-shrink: 0 !important;
   }
 
+  /* Column 1: Category Circles */
   .bbs-mm-col-circles {
     flex: 0 0 29% !important;
     max-width: 29% !important;
@@ -1417,8 +1443,7 @@ a[href*="mailto:"] {
     transition: all 0.22s ease !important;
   }
 
-  .bbs-mm-circle-item:hover,
-  .bbs-mm-circle-item.is-selected {
+  .bbs-mm-circle-item:hover {
     background-color: #f7f5f2 !important;
   }
 
@@ -1461,6 +1486,7 @@ a[href*="mailto:"] {
     color: #5a3a0a !important;
   }
 
+  /* Column 2: Curated Links */
   .bbs-mm-col-links {
     flex: 0 0 24% !important;
     max-width: 24% !important;
@@ -1509,6 +1535,7 @@ a[href*="mailto:"] {
     transform: translateX(2px) !important;
   }
 
+  /* Column 3: Shop By Look */
   .bbs-mm-col-looks {
     flex: 0 0 22% !important;
     max-width: 22% !important;
@@ -1577,6 +1604,7 @@ a[href*="mailto:"] {
     color: #5a3a0a !important;
   }
 
+  /* Column 4: Promo Banner */
   .bbs-mm-col-banner {
     flex: 0 0 21% !important;
     max-width: 21% !important;
@@ -1680,7 +1708,8 @@ a[href*="mailto:"] {
 
 /* Mobile & Tablet Phone View Optimization */
 @media (max-width: 1024px) {
-  .site-nav-mobile .bbs-luxury-megamenu-dropdown {
+  .site-nav-mobile .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown {
+    display: block !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -1688,25 +1717,38 @@ a[href*="mailto:"] {
     height: 100vh !important;
     max-height: 100vh !important;
     background: #ffffff !important;
-    z-index: 105 !important;
+    z-index: 200 !important;
     overflow-y: auto !important;
     padding: 0 0 120px 0 !important;
     -webkit-overflow-scrolling: touch !important;
     box-shadow: none !important;
+    transform: translate3d(-101%, 0, 0) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s !important;
+  }
+
+  .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown {
+    transform: translate3d(0, 0, 0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
 
   .site-nav-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile {
-    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     padding: 16px 20px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     color: #5a3a0a !important;
     border-bottom: 1px solid #eee8e0 !important;
     background: #fdfbf7 !important;
-    text-align: center !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 10 !important;
+    cursor: pointer !important;
   }
 
   .site-nav-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile .icon-dropdown {
@@ -1714,8 +1756,8 @@ a[href*="mailto:"] {
     left: 15px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 28px !important;
+    height: 28px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -1738,7 +1780,7 @@ a[href*="mailto:"] {
     margin: 0 !important;
   }
 
-  .bbs-mm-mobile-section-tag {
+  .bbs-mm-section-title {
     font-size: 11px !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
@@ -1826,15 +1868,6 @@ a[href*="mailto:"] {
 
   .bbs-mm-col-looks {
     width: 100% !important;
-  }
-
-  .bbs-mm-section-title {
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    color: #5a3a0a !important;
-    margin-bottom: 12px !important;
   }
 
   .bbs-mm-looks-grid {
