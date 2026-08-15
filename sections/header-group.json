@@ -287,7 +287,7 @@
         "transparent_color_hover": "#462a0d",
         "border_color": "",
         "padding_top": 10,
-        "padding_bottom": 15
+        "padding_bottom": 8
       }
     },
     "header-mobile": {
