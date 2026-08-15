@@ -272,7 +272,7 @@
       ],
       "custom_css": [
         "element.style {}",
-        "@media screen and (min-width: 1025px) {.header-nav-hamburger > .container-full {padding-left: 55px; padding-right: 55px; }}"
+        "@media screen and (min-width: 1025px) {.header-nav-hamburger > .container-full {padding-left: 30px; padding-right: 30px; }}"
       ],
       "settings": {
         "container": "full",
