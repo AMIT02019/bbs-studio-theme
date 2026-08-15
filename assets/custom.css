@@ -86,8 +86,8 @@ body.layout_default .body-content-wrapper,
 /* Make sidebar filters uppercase */
 .cpg-filter-title span,
 .cpg-filter-option,
-.cpg-filter-group button,
-.cpg-filter-group .button {
+.cpg-filter-group button:not(.cpg-price-apply),
+.cpg-filter-group .button:not(.cpg-price-apply) {
   text-transform: uppercase !important;
 }
 
@@ -1304,4 +1304,32 @@ a[href*="mailto:"] {
 .footer .footer__content-bottom .footer__copyright p,
 .footer .footer__content-bottom .footer__copyright a {
   font-size: 14px !important;
+}
+
+
+/* =============================================================================
+   Filter Price Apply Button - White Text
+   ============================================================================= */
+.cpg-price-apply,
+.cpg-filter-group button.cpg-price-apply,
+.cpg-filter-group .cpg-price-apply,
+.facets__price--apply,
+.filter__price--apply,
+.facets__price--box .filter__price--apply,
+.facets__price--box button,
+.facets__submit {
+  color: #ffffff !important;
+  background-color: #1a1a1a !important;
+}
+
+.cpg-price-apply:hover,
+.cpg-filter-group button.cpg-price-apply:hover,
+.cpg-filter-group .cpg-price-apply:hover,
+.facets__price--apply:hover,
+.filter__price--apply:hover,
+.facets__price--box .filter__price--apply:hover,
+.facets__price--box button:hover,
+.facets__submit:hover {
+  color: #ffffff !important;
+  background-color: #333333 !important;
 }
