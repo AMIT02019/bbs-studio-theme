@@ -186,7 +186,7 @@
             "content_padding": 16,
             "text_align": "center",
             "title_font_size": 20,
-            "title_font_weight": "600",
+            "title_font_weight": "500",
             "title_color": "#5a3a0a"
           },
           "blocks": {}
