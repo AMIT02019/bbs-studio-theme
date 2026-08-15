@@ -1284,3 +1284,24 @@ a[href*="mailto:"] {
     height: auto !important;
   }
 }
+
+/* Footer text size 14px */
+.footer,
+.footer .footer-block__heading,
+.footer .footer-block__item,
+.footer .footer-block__details,
+.footer .footer-block__details .rte,
+.footer .footer-block__details p,
+.footer .footer-block__details a,
+.footer .footer-block__list .list-menu__item--link,
+.footer .footer-block__list .text,
+.footer .footer-block__newsletter .footer-block__subheading,
+.footer .footer-block__newsletter .footer-block__subheading p,
+.footer .footer-block__newsletter .field__input,
+.footer .footer-block__newsletter .newsletter-form__button,
+.footer .footer__content-bottom,
+.footer .footer__content-bottom .footer__copyright,
+.footer .footer__content-bottom .footer__copyright p,
+.footer .footer__content-bottom .footer__copyright a {
+  font-size: 14px !important;
+}
