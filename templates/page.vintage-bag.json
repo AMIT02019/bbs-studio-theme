@@ -32,10 +32,10 @@
             "border_radius": 8,
             "overlay_opacity": 0.5,
             "title_font_size": 24,
-            "title_font_weight": "700",
+            "title_font_weight": "400",
             "title_text_transform": "uppercase",
             "title_alignment": "center",
-            "title_color": "#ffffff",
+            "title_color": "#5a3a0a",
             "content_padding": 20
           },
           "blocks": {}
@@ -66,12 +66,12 @@
             "border_radius": 8,
             "placeholder_bg_color": "#f4f4f4",
             "title_font_size": 18,
-            "title_font_weight": "600",
+            "title_font_weight": "400",
             "title_text_transform": "capitalize",
             "title_alignment": "center",
             "title_padding": 15,
             "title_bg_color": "#ffffff",
-            "title_color": "#000000",
+            "title_color": "#5a3a0a",
             "title_hover_color": "#666666"
           },
           "blocks": {}
@@ -107,9 +107,9 @@
             "card_border_radius": 14,
             "hover_lift": 5,
             "hover_shadow_opacity": 0.1,
-            "title_color": "#000000",
+            "title_color": "#5a3a0a",
             "title_font_size": 18,
-            "title_font_weight": "600",
+            "title_font_weight": "400",
             "text_alignment": "center"
           },
           "blocks": {}
@@ -184,8 +184,8 @@
             "content_padding": 16,
             "text_align": "center",
             "title_font_size": 20,
-            "title_font_weight": "600",
-            "title_color": "#000000"
+            "title_font_weight": "400",
+            "title_color": "#5a3a0a"
           },
           "blocks": {}
         }
