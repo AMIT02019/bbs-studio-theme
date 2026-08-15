@@ -200,7 +200,7 @@
   @media screen and (max-width: 749px) {
     .ai-vintage-hero-{{ ai_gen_id }} {
       height: {{ block.settings.mobile_height }}vh;
-      min-height: 400px;
+      min-height: 420px;
     }
 
     {% if block.settings.enable_parallax %}
@@ -209,8 +209,22 @@
       }
     {% endif %}
 
+    .ai-vintage-hero-background-{{ ai_gen_id }} img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 16% center;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .ai-vintage-hero-overlay-{{ ai_gen_id }} {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.65) 100%);
+    }
+
     .ai-vintage-hero-content-{{ ai_gen_id }} {
-      padding: 20px;
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
     }
 
     .ai-vintage-hero-text-container-{{ ai_gen_id }} {
@@ -218,12 +232,18 @@
     }
 
     .ai-vintage-hero-heading-{{ ai_gen_id }} {
-      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
-      margin-bottom: 30px;
+      font-size: {{ block.settings.heading_size | times: 0.7 | at_least: 20 }}px;
+      margin-bottom: 22px;
+      line-height: 1.3;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+      letter-spacing: 0.03em;
     }
 
     .ai-vintage-hero-button-{{ ai_gen_id }} {
-      font-size: {{ block.settings.button_font_size | times: 0.9 }}px;
+      font-size: {{ block.settings.button_font_size | at_least: 13 }}px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
     }
   }
 {% endstyle %}
@@ -234,17 +254,19 @@
       {%- assign bg_image = block.settings.background_image -%}
       <img
         srcset="
-          {{ block.settings.background_image | image_url: width: 375 }} 375w,
-          {{ block.settings.background_image | image_url: width: 600 }} 600w,
-          {{ block.settings.background_image | image_url: width: 750 }} 750w
+          {{ block.settings.background_image | image_url: width: 750 }} 750w,
+          {{ block.settings.background_image | image_url: width: 1100 }} 1100w,
+          {{ block.settings.background_image | image_url: width: 1500 }} 1500w,
+          {{ block.settings.background_image | image_url: width: 1800 }} 1800w,
+          {{ block.settings.background_image | image_url: width: 2000 }} 2000w
         "
         sizes="100vw"
-        src="{{ block.settings.background_image | image_url: width: 600 }}"
+        src="{{ block.settings.background_image | image_url: width: 1600 }}"
         alt="{{ block.settings.background_image.alt | default: 'Beg Borrow Steal Studio Vintage Luxury Collection' | escape }}"
         loading="eager"
         fetchpriority="high"
-        width="600"
-        height="600"
+        width="1600"
+        height="1067"
         class="{% if block.settings.enable_parallax %}mobile-only-img-{{ ai_gen_id }}{% endif %}"
       >
     {% else %}
