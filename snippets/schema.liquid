@@ -28,11 +28,42 @@
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "JewelryStore",
     "name": "Beg Borrow Steal Studio",
+    "image": "{{ default_logo }}",
     "url": "{{ shop_url }}",
-    "logo": "{{ default_logo }}",
-    "description": "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds.",
+    "telephone": "+919136047270",
+    "email": "begborrowstealstudio@gmail.com",
+    "priceRange": "$$$",
+    "description": "Mumbai's premier boutique destination for authenticated vintage designer jewellery, archival timepieces, luxury accessories, and rare curated collectibles.",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "76 Turner Road, New Shams Building, Bandra West",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400050",
+        "addressCountry": "IN"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 19.0573,
+        "longitude": 72.8296
+    },
+    "openingHoursSpecification": [
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
+            "opens": "11:00",
+            "closes": "20:00"
+        }
+    ],
     "sameAs": [
         {%- assign sa_items = '' -%}
         {%- if settings.social_instagram_link != blank -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_instagram_link | append: '"' -%}{%- endif -%}
@@ -82,7 +113,7 @@
         "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
         "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}",
         "seller": {
-            "@type": "Organization",
+            "@type": "JewelryStore",
             "name": "Beg Borrow Steal Studio",
             "url": "{{ shop_url }}"
         }
