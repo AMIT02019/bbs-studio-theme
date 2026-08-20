@@ -249,7 +249,11 @@
             {%- endif -%}
         {%- endif -%}
     {%- endif -%}
-    <div class="collection-header {% if container == '1170' %}container-1170{% elsif container == '1770' %}container-1770{% elsif container == 'fullwidth'%}container-full{% else %}container{% endif %}{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}" style="{% if collection_description_bg_gradient != blank%}--desc-bg: {{ collection_description_bg_gradient }}{% elsif collection_description_bg != blank %}--desc-bg: {{ collection_description_bg }}{% endif %}; --desc-color: {{ collection_description_color }};">
+    
+{%- unless show_page_title -%}
+    <h1 class="visually-hidden">{{ collection.title | escape }}</h1>
+{%- endunless -%}
+<div class="collection-header {% if container == '1170' %}container-1170{% elsif container == '1770' %}container-1770{% elsif container == 'fullwidth'%}container-full{% else %}container{% endif %}{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}" style="{% if collection_description_bg_gradient != blank%}--desc-bg: {{ collection_description_bg_gradient }}{% elsif collection_description_bg != blank %}--desc-bg: {{ collection_description_bg }}{% endif %}; --desc-color: {{ collection_description_color }};">
         {%- unless layout == '1' and collection_description_position == 'absolute' -%}
             {%- if show_breadcrumb -%}
                 <div class="collection-breadcrumb text-{{ breadcrumb_alignment }}" style="--breadcrumb-color-mb: {{ breadcrumb_color_mb }}; --breadcrumb-color: {{ breadcrumb_color }};--breadcrumb-bg: {% if breadcrumb_gradient != blank and breadcrumb_gradient != 'rgba(0,0,0,0)' %}{{ breadcrumb_gradient }}{% elsif breadcrumb_bg != blank and breadcrumb_bg != 'rgba(0,0,0,0)' %}{{ breadcrumb_bg }}{% endif %};--breadcrumb-bg-mb: {% if breadcrumb_gradient_mb != blank and breadcrumb_gradient_mb != 'rgba(0,0,0,0)' %}{{ breadcrumb_gradient_mb }}{% elsif breadcrumb_bg_mb != blank and breadcrumb_bg_mb != 'rgba(0,0,0,0)' %}{{ breadcrumb_bg_mb }}{% endif %}">

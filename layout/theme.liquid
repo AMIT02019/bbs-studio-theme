@@ -39,14 +39,25 @@
             <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}">
         {%- endif -%}
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="dns-prefetch" href="https://fonts.shopifycdn.com">
         <link rel="dns-prefetch" href="//www.googletagmanager.com">
         <link rel="dns-prefetch" href="//www.google-analytics.com">
         <title>{{ page_title }} {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%} {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%} {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}</title>
 
-        {%- if page_description -%}
-            <meta name="description" content="{{ page_description | escape }}">
-        {%- endif -%}
+        {%- liquid
+            if page_description != blank
+                assign site_meta_description = page_description | strip_html | strip_newlines | escape
+            elsif template contains 'collection' and collection.description != blank
+                assign site_meta_description = collection.description | split: '[lang2]' | first | strip_html | truncate: 155 | escape
+            elsif template contains 'product' and product.description != blank
+                assign site_meta_description = product.description | strip_html | truncate: 155 | escape
+            else
+                assign site_meta_description = "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds." | escape
+            endif
+        -%}
+        <meta name="description" content="{{ site_meta_description }}">
         {% render 'meta-tags' %}
         {{ content_for_header }}
         {% render 'variable' %}

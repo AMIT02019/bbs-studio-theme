@@ -2,7 +2,16 @@
   assign og_title = page_title | default: shop.name
   assign og_url = canonical_url | default: shop.url
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  
+  if page_description != blank
+    assign og_description = page_description | strip_html | escape
+  elsif template contains 'collection' and collection.description != blank
+    assign og_description = collection.description | strip_html | truncate: 155 | escape
+  elsif template contains 'product' and product.description != blank
+    assign og_description = product.description | strip_html | truncate: 155 | escape
+  else
+    assign og_description = "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds." | escape
+  endif
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -13,14 +22,14 @@
   elsif request.page_type == 'password'
     assign og_url = shop.url
   endif
-%}
+-%}
 
-<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:site_name" content="{{ shop.name | default: 'Beg Borrow Steal Studio' }}">
 <meta property="og:url" content="{{ og_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
-<meta property="og:description" content="{{ og_description | escape }}">
-<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
+<meta property="og:description" content="{{ og_description }}">
+<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' | default: 'en_US' }}">
 
 {%- if page_image -%}
   <meta property="og:image" content="https:{{ page_image | img_url: 'master' }}">
@@ -40,7 +49,7 @@
 {%- endif -%}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
-<meta name="twitter:description" content="{{ og_description | escape }}">
+<meta name="twitter:description" content="{{ og_description }}">
 {%- if page_image -%}
   <meta name="twitter:image" content="https:{{ page_image | img_url: 'master' }}">
   <meta name="twitter:image:alt" content="{{ og_title | escape }}">

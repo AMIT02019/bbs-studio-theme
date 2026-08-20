@@ -1,271 +1,231 @@
-{% liquid
-    assign url = shop.url
+{%- liquid
+    assign shop_url = shop.url
     assign page_type = request.page_type
-%}
-{%- if page_type == 'product' -%}
-    {%- liquid
-        assign fa_current_variant = product.selected_or_first_available_variant
-        assign fa_variant_count = product.variants | size
-        assign fa_count = 0
-    -%}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        {%- if fa_variant_count != 1 -%}
-            "@type": "ProductGroup",
-            "productGroupID": "{{ product.id }}",
-        {%- else -%}
-            "@type": "Product",
-        {%- endif -%}
-        "name": "{{ product.title | strip_html | escape }}",
-        "url": "{{ url }}{{ product.url }}",
-        {%- if product.variants.first.sku != blank -%}
-            "sku": "{{ product.variants.first.sku }}",
-        {%- else -%}
-            "sku": "{{ product.variants.first.id }}",
-        {%- endif -%}
-        {%- if product.variants.first.barcode.size == 12 -%}
-            "gtin12": {{ product.variants.first.barcode }},
-        {%- endif -%}
-        {%- if product.variants.first.barcode.size == 13 -%}
-            "gtin13": {{ product.variants.first.barcode }},
-        {%- endif -%}
-        {%- if product.variants.first.barcode.size == 14 -%}
-            "gtin14": {{ product.variants.first.barcode }},
-        {%- endif -%}
-        "@id": "{{ url }}/products/{{ product.handle }}#product",
-        "brand": {
-            "@type": "Brand",
-            "name": "{{ product.vendor | escape }}"
-        },
-        {% if product.description != blank %}
-            "description": "{{ product.description | strip_html | escape | strip_newlines }}",
-        {% else %}
-            "description": "{{ product.title | strip_html | escape }}",
-        {% endif %}
-        "image": "https:{{ product.featured_image.src | img_url: 'original' }}",
-        {%- if product.variants and fa_variant_count != 1 -%}
-            "hasVariant": [
-            {% for variant in product.variants %}
-                {%- assign fa_count = fa_count | plus: 1 -%}
-                {
-                    "@id": "{{ url }}/products/{{ product.handle }}?variant={{ variant.id }}#variant",
-                    "@type": "Product",
-                    {%- if variant.image -%}
-                        {%- assign variant_image_size = variant.image.width | append: 'x' -%}
-                        "image": "https:{{ variant.image.src | img_url: variant_image_size }}",
-                    {%- else -%}
-                        "image": "https:{{ product.featured_image.src | img_url: 'original' }}",
-                    {%- endif -%}
-                    {%- if variant.title != 'Default Title' -%}
-                        "name": "{{ product.title | strip_html | escape }} - {{ variant.title | escape }}",
-                    {%- else -%}
-                        "name": "{{ variant.title | strip_html | escape }}",
-                    {%- endif -%}
-                    "offers": {
-                        "@id": "{{ url }}/products/{{ product.handle }}?variant={{ variant.id }}#offer",
-                        "@type": "Offer",
-                        "priceCurrency": "{{ shop.currency }}",
-                        "price": "{{ variant.price | divided_by: 100.00 | json }}",
-                        "itemCondition": "https://schema.org/NewCondition",
-                        "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-                        "url": "{{ url }}{{ variant.url }}",
-                        {%- if variant.barcode.size == 12 -%}
-                            "gtin12": {{ variant.barcode | json }},
-                        {%- endif -%}
-                        {%- if variant.barcode.size == 13 -%}
-                            "gtin13": {{ variant.barcode | json }},
-                        {%- endif -%}
-                        {%- if variant.barcode.size == 14 -%}
-                            "gtin14": {{ variant.barcode | json }},
-                        {%- endif -%}
-                        {%- if variant.sku != blank -%}
-                            "sku": "{{ variant.sku }}",
-                        {%- else -%}
-                            "sku": "{{ variant.id }}",
-                        {%- endif -%}
-                        "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | uri_encode | replace:'+','%20' }}"
-                    }
+    assign default_logo = 'https://begborrowstealstudio.com/cdn/shop/files/ChatGPT_Image_Jul_11_2026_04_59_32_PM.png?v=1783769391'
+    if settings.favicon != blank
+        assign default_logo = settings.favicon | img_url: 'master' | prepend: 'https:'
+    endif
+-%}
 
-                }{%- if fa_count != fa_variant_count -%},{%- endif -%}
-            {% endfor %}
-            ]
-        {%- else -%}
-            {%- for variant in product.variants -%}
-                "offers":
-                {
-                    "@id": "{{ url }}/products/{{ product.handle }}?variant={{ variant.id }}#offer",
-                    "@type": "Offer",
-                    "priceCurrency": "{{ shop.currency }}",
-                    "price": "{{ variant.price | divided_by: 100.00 | json }}",
-                    "itemCondition": "https://schema.org/NewCondition",
-                    "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
-                    "url": "{{ url }}{{ variant.url }}",
-                    {%- if variant.barcode.size == 12 -%}
-                        "gtin12": {{ variant.barcode | json }},
-                    {%- endif -%}
-                    {%- if variant.barcode.size == 13 -%}
-                        "gtin13": {{ variant.barcode | json }},
-                    {%- endif -%}
-                    {%- if variant.barcode.size == 14 -%}
-                        "gtin14": {{ variant.barcode | json }},
-                    {%- endif -%}
-                    {%- if variant.sku != blank -%}
-                        "sku": "{{ variant.sku }}",
-                    {%- else -%}
-                        "sku": "{{ variant.id }}",
-                    {%- endif -%}
-                    "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | uri_encode | replace:'+','%20' }}"
-                }
-            {%- endfor -%}
-        {%- endif -%}
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "{{ url }}"
+{%- comment -%} ================= GLOBAL / HOMEPAGE SCHEMAS ================= {%- endcomment -%}
+{%- if page_type == 'index' -%}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Beg Borrow Steal Studio",
+    "url": "{{ shop_url }}",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "{{ shop_url }}/search?q={search_term_string}"
         },
-        {%- if collection -%}
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "{{ collection.title }}",
-                "item": "{{ url }}/collections/{{ collection.handle }}"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "{{ product.title }}",
-                "item": "{{ canonical_url }}"
-            }
-        {%- else -%}
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "{{ product.title }}",
-                "item": "{{ canonical_url }}"
-            }
-        {%- endif -%}]
+        "query-input": "required name=search_term_string"
     }
-    </script>
-{%- elsif page_type == 'article' -%}
-    <script type="application/ld+json">
-        {{ article | structured_data }}
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "{{ url }}"
-        },
-        {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "{{ article.title }}",
-            "item": "{{ canonical_url }}"
-        }]
-    }
-    </script>
-{%- elsif page_type == 'collection' and collection.handle -%}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "CollectionPage",
-        "name": "{{ collection.title }}",
-        "url": "{{ canonical_url }}",
-        "description": "{{ collection.description | split: '[lang2]' | first | strip_html }}"
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "{{ url }}"
-        },
-        {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "{{ collection.title }}",
-            "item": "{{ canonical_url }}"
-        }]
-    }
-    </script>
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Beg Borrow Steal Studio",
+    "url": "{{ shop_url }}",
+    "logo": "{{ default_logo }}",
+    "description": "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds.",
+    "sameAs": [
+        {%- assign sa_items = '' -%}
+        {%- if settings.social_instagram_link != blank -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_instagram_link | append: '"' -%}{%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_facebook_link | append: '"' -%}{%- endif -%}
+        {%- if settings.social_twitter_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_twitter_link | append: '"' -%}{%- endif -%}
+        {%- if settings.social_pinterest_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_pinterest_link | append: '"' -%}{%- endif -%}
+        {{ sa_items }}
+    ]
+}
+</script>
 {%- endif -%}
 
-{%- if request.page_type == 'index' -%}
-    {%- liquid
-        assign social_links = ''
-        if settings.social_facebook_link != blank
-            assign social_links = social_links | append: settings.social_facebook_link | append: '|'
-        endif
-        if settings.social_instagram_link != blank
-            assign social_links = social_links | append: settings.social_instagram_link | append: '|'
-        endif
-        if settings.social_twitter_link != blank
-            assign social_links = social_links | append: settings.social_twitter_link | append: '|'
-        endif
-        if settings.social_pinterest_link != blank
-            assign social_links = social_links | append: settings.social_pinterest_link | append: '|'
-        endif
-        if settings.social_youtube_link != blank
-            assign social_links = social_links | append: settings.social_youtube_link | append: '|'
-        endif
-        assign social_array = social_links | split: '|'
-    -%}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "{{ shop.name | escape }}",
-        "url": "{{ url }}",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "{{ url }}/search?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
+{%- comment -%} ================= PRODUCT SCHEMA ================= {%- endcomment -%}
+{%- if page_type == 'product' -%}
+{%- liquid
+    assign current_variant = product.selected_or_first_available_variant
+    assign product_desc = product.description | strip_html | strip_newlines | escape
+    if product_desc == blank
+        assign product_desc = product.title | escape
+    endif
+-%}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.title | strip_html | escape }}",
+    "url": "{{ shop_url }}{{ product.url }}",
+    "@id": "{{ shop_url }}{{ product.url }}#product",
+    "sku": "{{ current_variant.sku | default: current_variant.id }}",
+    "brand": {
+        "@type": "Brand",
+        "name": "{{ product.vendor | default: 'Beg Borrow Steal Studio' | escape }}"
+    },
+    "description": "{{ product_desc }}",
+    "image": [
+        {%- for img in product.images limit: 8 -%}
+            "https:{{ img.src | img_url: 'master' }}"{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+    ],
+    "itemCondition": "https://schema.org/UsedCondition",
+    "offers": {
+        "@type": "Offer",
+        "url": "{{ shop_url }}{{ product.url }}",
+        "priceCurrency": "{{ cart.currency.iso_code | default: shop.currency }}",
+        "price": "{{ current_variant.price | divided_by: 100.00 | json }}",
+        "itemCondition": "https://schema.org/UsedCondition",
+        "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}",
+        "seller": {
+            "@type": "Organization",
+            "name": "Beg Borrow Steal Studio",
+            "url": "{{ shop_url }}"
         }
     }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "{{ shop.name | escape }}",
-        "url": "{{ url }}"
-        {%- if settings.favicon != blank -%}
-        ,"logo": {
-            "@type": "ImageObject",
-            "url": "https:{{ settings.favicon | img_url: 'master' }}"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ shop_url }}"
+        }
+        {%- if collection -%}
+        ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ collection.title | escape }}",
+            "item": "{{ shop_url }}/collections/{{ collection.handle }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{ product.title | escape }}",
+            "item": "{{ canonical_url }}"
+        }
+        {%- else -%}
+        ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ product.title | escape }}",
+            "item": "{{ canonical_url }}"
         }
         {%- endif -%}
-        {%- if social_links != blank -%}
-        ,"sameAs": [
-            {%- assign sa_first = true -%}
-            {%- for link in social_array -%}
-                {%- if link != blank -%}
-                    {%- unless sa_first -%},{%- endunless -%}
-                    "{{ link }}"
-                    {%- assign sa_first = false -%}
-                {%- endif -%}
+    ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ================= COLLECTION SCHEMA ================= {%- endcomment -%}
+{%- if page_type == 'collection' and collection.handle -%}
+{%- liquid
+    assign col_desc = collection.description | split: '[lang2]' | first | strip_html | strip_newlines | escape
+    if col_desc == blank
+        assign col_desc = "Discover authentic vintage " | append: collection.title | append: " and archival luxury pieces at Beg Borrow Steal Studio." | escape
+    endif
+-%}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "CollectionPage",
+    "name": "{{ collection.title | escape }}",
+    "url": "{{ canonical_url }}",
+    "description": "{{ col_desc }}",
+    "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{ collection.products_count | default: 20 }},
+        "itemListElement": [
+            {%- for prod in collection.products limit: 12 -%}
+            {
+                "@type": "ListItem",
+                "position": {{ forloop.index }},
+                "url": "{{ shop_url }}{{ prod.url }}",
+                "name": "{{ prod.title | strip_html | escape }}"
+            }{%- unless forloop.last -%},{%- endunless -%}
             {%- endfor -%}
         ]
-        {%- endif -%}
     }
-    </script>
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ shop_url }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ collection.title | escape }}",
+            "item": "{{ canonical_url }}"
+        }
+    ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ================= ARTICLE SCHEMA ================= {%- endcomment -%}
+{%- if page_type == 'article' -%}
+<script type="application/ld+json">
+{{ article | structured_data }}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ shop_url }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ article.title | escape }}",
+            "item": "{{ canonical_url }}"
+        }
+    ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ================= GENERAL PAGE BREADCRUMBS ================= {%- endcomment -%}
+{%- if page_type == 'page' -%}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "{{ shop_url }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "{{ page.title | escape }}",
+            "item": "{{ canonical_url }}"
+        }
+    ]
+}
+</script>
 {%- endif -%}
