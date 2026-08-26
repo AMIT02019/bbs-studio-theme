@@ -515,95 +515,121 @@
             data-load-type="{{ load_type }}"
             data-next-url="{{ paginate.next.url }}">
 
+            {%- comment -%} 1. IN-STOCK / AVAILABLE PRODUCTS FIRST {%- endcomment -%}
             {%- for product in collection.products -%}
-              {%- assign on_sale = false -%}
-              {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
-              {%- assign pct = 0 -%}
-              {%- if on_sale -%}
-                {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
-              {%- endif -%}
-              {%- assign condition_tag = '' -%}
-              {%- for tag in product.tags -%}
-                {%- if tag == 'New' or tag == 'Excellent' or tag == 'Very Good' or tag == 'Good' or tag == 'Fair' -%}
-                  {%- assign condition_tag = tag -%}
+              {%- if product.available -%}
+                {%- assign on_sale = false -%}
+                {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+                {%- assign pct = 0 -%}
+                {%- if on_sale -%}
+                  {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
                 {%- endif -%}
-              {%- endfor -%}
+                {%- assign condition_tag = '' -%}
+                {%- for tag in product.tags -%}
+                  {%- if tag == 'New' or tag == 'Excellent' or tag == 'Very Good' or tag == 'Good' or tag == 'Fair' -%}
+                    {%- assign condition_tag = tag -%}
+                  {%- endif -%}
+                {%- endfor -%}
 
-              {%- comment -%} Optional in-grid banners {%- endcomment -%}
-              {%- if section.settings.show_banner -%}
-                {%- if section.settings.show_banner_1 and section.settings.img_banner1 != blank -%}
-                  {%- if forloop.index == section.settings.banner_position_1 -%}
-                    <div class="cpg-grid-banner">
-                      <a {% if section.settings.link_banner_1 != blank %}href="{{ section.settings.link_banner_1 }}"{% endif %}>
-                        <img src="{{ section.settings.img_banner1 | image_url: width: 480 }}" alt="Banner" loading="lazy">
-                      </a>
-                    </div>
-                  {%- endif -%}
-                {%- endif -%}
-                {%- if section.settings.show_banner_2 and section.settings.img_banner2 != blank -%}
-                  {%- if forloop.index == section.settings.banner_position_2 -%}
-                    <div class="cpg-grid-banner">
-                      <a {% if section.settings.link_banner_2 != blank %}href="{{ section.settings.link_banner_2 }}"{% endif %}>
-                        <img src="{{ section.settings.img_banner2 | image_url: width: 480 }}" alt="Banner" loading="lazy">
-                      </a>
-                    </div>
-                  {%- endif -%}
-                {%- endif -%}
-                {%- if section.settings.show_banner_3 and section.settings.img_banner3 != blank -%}
-                  {%- if forloop.index == section.settings.banner_position_3 -%}
-                    <div class="cpg-grid-banner">
-                      <a {% if section.settings.link_banner_3 != blank %}href="{{ section.settings.link_banner_3 }}"{% endif %}>
-                        <img src="{{ section.settings.img_banner3 | image_url: width: 480 }}" alt="Banner" loading="lazy">
-                      </a>
-                    </div>
-                  {%- endif -%}
-                {%- endif -%}
-              {%- endif -%}
+                <div class="cpg-card cpg-card--available" data-product-id="{{ product.id }}" style="order: 1;">
+                  <a class="cpg-card-img" href="{{ product.url | within: collection }}">
+                    {%- if product.images[0] -%}
+                      <img class="cpg-img-primary"
+                        src="{{ product.images[0] | image_url: width: 3293 }}"
+                        alt="{{ product.images[0].alt | escape }}"
+                        width="3293" height="3293" {% if forloop.index <= 4 %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}>
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                    {%- endif -%}
+                    {%- if product.images[1] -%}
+                      <img class="cpg-img-secondary"
+                        src="{{ product.images[1] | image_url: width: 3293 }}"
+                        alt="{{ product.images[1].alt | escape }}"
+                        width="3293" height="3293" loading="lazy">
+                    {%- endif -%}
+                  </a>
 
-              <div class="cpg-card" data-product-id="{{ product.id }}"{% unless product.available %} style="order: 99;"{% endunless %}>
-                <a class="cpg-card-img" href="{{ product.url | within: collection }}">
-                  {%- if product.images[0] -%}
-                    <img class="cpg-img-primary"
-                      src="{{ product.images[0] | image_url: width: 3293 }}"
-                      alt="{{ product.images[0].alt | escape }}"
-                      width="3293" height="3293" {% if forloop.index <= 4 %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}>
-                  {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
-                  {%- endif -%}
-                  {%- if product.images[1] -%}
-                    <img class="cpg-img-secondary"
-                      src="{{ product.images[1] | image_url: width: 3293 }}"
-                      alt="{{ product.images[1].alt | escape }}"
-                      width="3293" height="3293" loading="lazy">
-                  {%- endif -%}
-                </a>
+                  <div class="cpg-badges">
+                    {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
+                    {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
+                  </div>
 
-                <div class="cpg-badges">
-                  {%- unless product.available -%}<span class="cpg-badge cpg-badge--soldout">Sold</span>{%- endunless -%}
-                  {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
-                  {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
-                </div>
-
-                {%- if product.available -%}
                   <button class="cpg-quick-add" data-variant="{{ product.variants.first.id }}" onclick="cpgAddToCart(this)">
                     Add to Cart
                   </button>
-                {%- endif -%}
 
-                <div class="cpg-card-body">
-                  <div class="cpg-vendor"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>
-                  <div class="cpg-title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
-                  <div class="cpg-price">
-                    {%- if on_sale -%}
-                      <span class="cpg-price-sale">{% render 'indian-price', price: product.price %}</span>
-                      <span class="cpg-price-compare">{% render 'indian-price', price: product.compare_at_price %}</span>
-                      <span class="cpg-price-save">Save {{ pct }}%</span>
-                    {%- else -%}
-                      <span class="cpg-price-reg">{% render 'indian-price', price: product.price %}</span>
-                    {%- endif -%}
+                  <div class="cpg-card-body">
+                    <div class="cpg-vendor"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>
+                    <div class="cpg-title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                    <div class="cpg-price">
+                      {%- if on_sale -%}
+                        <span class="cpg-price-sale">{% render 'indian-price', price: product.price %}</span>
+                        <span class="cpg-price-compare">{% render 'indian-price', price: product.compare_at_price %}</span>
+                        <span class="cpg-price-save">Save {{ pct }}%</span>
+                      {%- else -%}
+                        <span class="cpg-price-reg">{% render 'indian-price', price: product.price %}</span>
+                      {%- endif -%}
+                    </div>
                   </div>
                 </div>
-              </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- comment -%} 2. SOLD OUT / OUT OF STOCK PRODUCTS AFTER {%- endcomment -%}
+            {%- for product in collection.products -%}
+              {%- unless product.available -%}
+                {%- assign on_sale = false -%}
+                {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+                {%- assign pct = 0 -%}
+                {%- if on_sale -%}
+                  {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
+                {%- endif -%}
+                {%- assign condition_tag = '' -%}
+                {%- for tag in product.tags -%}
+                  {%- if tag == 'New' or tag == 'Excellent' or tag == 'Very Good' or tag == 'Good' or tag == 'Fair' -%}
+                    {%- assign condition_tag = tag -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <div class="cpg-card cpg-card--soldout" data-product-id="{{ product.id }}" style="order: 99;">
+                  <a class="cpg-card-img" href="{{ product.url | within: collection }}">
+                    {%- if product.images[0] -%}
+                      <img class="cpg-img-primary"
+                        src="{{ product.images[0] | image_url: width: 3293 }}"
+                        alt="{{ product.images[0].alt | escape }}"
+                        width="3293" height="3293" loading="lazy">
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                    {%- endif -%}
+                    {%- if product.images[1] -%}
+                      <img class="cpg-img-secondary"
+                        src="{{ product.images[1] | image_url: width: 3293 }}"
+                        alt="{{ product.images[1].alt | escape }}"
+                        width="3293" height="3293" loading="lazy">
+                    {%- endif -%}
+                  </a>
+
+                  <div class="cpg-badges">
+                    <span class="cpg-badge cpg-badge--soldout">Sold</span>
+                    {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
+                    {%- if condition_tag != '' -%}<span class="cpg-badge cpg-badge--condition">{{ condition_tag }}</span>{%- endif -%}
+                  </div>
+
+                  <div class="cpg-card-body">
+                    <div class="cpg-vendor"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>
+                    <div class="cpg-title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                    <div class="cpg-price">
+                      {%- if on_sale -%}
+                        <span class="cpg-price-sale">{% render 'indian-price', price: product.price %}</span>
+                        <span class="cpg-price-compare">{% render 'indian-price', price: product.compare_at_price %}</span>
+                        <span class="cpg-price-save">Save {{ pct }}%</span>
+                      {%- else -%}
+                        <span class="cpg-price-reg">{% render 'indian-price', price: product.price %}</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endunless -%}
             {%- endfor -%}
 
           </div>
