@@ -201,7 +201,10 @@
                                     assign banner_position_2 = section.settings.banner_position_2 | round | default: 5
                                     assign banner_position_3 = section.settings.banner_position_3 | round | default: 12
                                 -%}
-                                {%- for product in collection.products -%}
+                                {%- comment -%} 1. In-Stock Products First {%- endcomment -%}
+            {%- for product in collection.products -%}
+              {%- if product.available -%}
+
                                     {%- if paginate.current_page == 1 and section.settings.show_banner -%}
                                         {%- if forloop.index == banner_position_1 and section.settings.show_banner_1 -%}
                                             <li class="product banner" data-product-banner="1" data-first-position="{{ banner_position_1 }}">
@@ -277,7 +280,91 @@
                                             %}
                                         </li>
                                     {%- endif -%}
-                                {%- endfor -%}
+                                
+              {%- endif -%}
+            {%- endfor -%}
+            {%- comment -%} 2. Sold Out Products Second {%- endcomment -%}
+            {%- for product in collection.products -%}
+              {%- unless product.available -%}
+
+                                    {%- if paginate.current_page == 1 and section.settings.show_banner -%}
+                                        {%- if forloop.index == banner_position_1 and section.settings.show_banner_1 -%}
+                                            <li class="product banner" data-product-banner="1" data-first-position="{{ banner_position_1 }}">
+                                                <div class="grid-item banner-img">
+                                                    <a class="animate-scale"{% if section.settings.link_banner_1 == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.link_banner_1 }}"{% endif %}>
+                                                    {%- if section.settings.img_banner1 != blank -%}
+                                                        {%- assign height = section.settings.img_banner1.width | divided_by: section.settings.img_banner1.aspect_ratio | round -%}
+                                                        <img {% if settings.enable_lazyload %}data-{% endif %}srcset="{{ section.settings.img_banner1 | img_url: 'master' }}" src="{{ section.settings.img_banner1 | img_url: 'master' }}" alt="{{ section.settings.img_banner1.alt | default: shop.name | escape }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} width="{{section.settings.img_banner1.width}}" height="{{height}}">
+                                                    {%- else -%}
+                                                        <div class="placeholder" style="--height_placeholder: clamp(270px, calc(560 / 1920 * 100vw), 560px);">
+                                                            {{ 'blog-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                                        </div>
+                                                    {%- endif -%}
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if forloop.index == banner_position_2 and section.settings.show_banner_2 -%}
+                                            <li class="product banner" data-product-banner="2" data-first-position="{{ banner_position_2 }}">
+                                                <div class="grid-item banner-img">
+                                                    <a class="animate-scale"{% if section.settings.link_banner_2 == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.link_banner_2 }}"{% endif %}>
+                                                    {%- if section.settings.img_banner2 != blank -%}
+                                                        {%- assign height = section.settings.img_banner2.width | divided_by: section.settings.img_banner2.aspect_ratio | round -%}
+                                                        <img {% if settings.enable_lazyload %}data-{% endif %}srcset="{{ section.settings.img_banner2 | img_url: 'master' }}" src="{{ section.settings.img_banner2 | img_url: 'master' }}" alt="{{ section.settings.img_banner2.alt | default: shop.name | escape }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} width="{{section.settings.img_banner2.width}}" height="{{height}}">
+                                                    {%- else -%}
+                                                        <div class="placeholder" style="--height_placeholder: clamp(270px, calc(560 / 1920 * 100vw), 560px);">
+                                                            {{ 'blog-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+                                                        </div>
+                                                    {%- endif -%}
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if forloop.index == banner_position_3 and section.settings.show_banner_3 -%}
+                                            <li class="product banner" data-product-banner="3" data-first-position="{{ banner_position_3 | plus: 2 }}">
+                                                <div class="grid-item banner-img">
+                                                    <a class="animate-scale"{% if section.settings.link_banner_3 == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.link_banner_3 }}"{% endif %}>
+                                                    {%- if section.settings.img_banner3 != blank -%}
+                                                        {%- assign height = section.settings.img_banner3.width | divided_by: section.settings.img_banner3.aspect_ratio | round -%}
+                                                        <img {% if settings.enable_lazyload %}data-{% endif %}srcset="{{ section.settings.img_banner3 | img_url: 'master' }}" src="{{ section.settings.img_banner3 | img_url: 'master' }}" alt="{{ section.settings.img_banner3.alt | default: shop.name | escape }}"{% if settings.enable_lazyload %} loading="lazy"{% endif %} width="{{section.settings.img_banner3.width}}" height="{{height}}">
+                                                    {%- else -%}
+                                                        <div class="placeholder" style="--height_placeholder: clamp(270px, calc(560 / 1920 * 100vw), 560px);">
+                                                            {{ 'blog-apparel-3' | placeholder_svg_tag: 'placeholder-svg' }}
+                                                        </div>
+                                                    {%- endif -%}
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        {%- endif -%}
+                                        <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>
+                                            {% render 'product-grid-layout',
+                                                product_card_product: product,
+                                                media_size: image_ratio,
+                                                portrait_aspect_ratio: portrait_aspect_ratio,
+                                                complementary_product_button_atc: true,
+                                                serial: forloop.index,
+                                                sectionId: section.id,
+                                                show_list: true,
+                                                loading: true
+                                            %}
+                                        </li>
+                                    {% else %}
+                                        <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>
+                                            {% render 'product-grid-layout',
+                                                product_card_product: product,
+                                                media_size: image_ratio,
+                                                portrait_aspect_ratio: portrait_aspect_ratio,
+                                                complementary_product_button_atc: true,
+                                                serial: forloop.index,
+                                                sectionId: section.id,
+                                                show_list: true,
+                                                loading: true
+                                            %}
+                                        </li>
+                                    {%- endif -%}
+                                
+              {%- endunless -%}
+            {%- endfor -%}
                             </ul>
                             {%- if paginate.pages > 1 -%}
                                 {% render 'pagination-listing',

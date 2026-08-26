@@ -191,7 +191,10 @@
                                         --space-between-horiz-mb: {{product_space_between_horiz_mb}}px;
                                 "
                             >
-                                {%- for product in collection.products -%}
+                                {%- comment -%} 1. In-Stock Products First {%- endcomment -%}
+            {%- for product in collection.products -%}
+              {%- if product.available -%}
+
                                     <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>
                                         {% render 'product-grid-layout',
                                             product_card_product: product,
@@ -204,7 +207,28 @@
                                             loading: true
                                         %}
                                     </li>
-                                {%- endfor -%}
+                                
+              {%- endif -%}
+            {%- endfor -%}
+            {%- comment -%} 2. Sold Out Products Second {%- endcomment -%}
+            {%- for product in collection.products -%}
+              {%- unless product.available -%}
+
+                                    <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} style="--animation-order: {{ forloop.index }};"{% endif %}>
+                                        {% render 'product-grid-layout',
+                                            product_card_product: product,
+                                            media_size: image_ratio,
+                                            portrait_aspect_ratio: portrait_aspect_ratio,
+                                            complementary_product_button_atc: true,
+                                            serial: forloop.index,
+                                            sectionId: section.id,
+                                            show_list: true,
+                                            loading: true
+                                        %}
+                                    </li>
+                                
+              {%- endunless -%}
+            {%- endfor -%}
                             </ul>
                             {%- if paginate.pages > 1 -%}
                                 {% render 'pagination-listing',
