@@ -190,7 +190,7 @@
             "page_link_12": "",
             "desktop_width_percent": 100,
             "max_width": 1400,
-            "columns_desktop": 4,
+            "columns_desktop": 3,
             "columns_tablet": 3,
             "columns_mobile": "2",
             "grid_gap": 20,
