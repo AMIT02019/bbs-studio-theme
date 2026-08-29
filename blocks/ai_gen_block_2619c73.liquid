@@ -290,21 +290,28 @@
   {{ block.shopify_attributes }}
 >
   <div class="ai-collection-categories-wrapper-{{ ai_gen_id }}">
-    {% for i in (1..6) %}
+    {% for i in (1..12) %}
       {% liquid
         assign collection_key = 'collection_' | append: i
+        assign custom_title_key = 'custom_title_' | append: i
         assign custom_image_key = 'custom_image_' | append: i
         assign page_link_key = 'page_link_' | append: i
+
         assign collection = block.settings[collection_key]
+        assign custom_title = block.settings[custom_title_key]
         assign custom_image = block.settings[custom_image_key]
         assign page_link = block.settings[page_link_key]
+
+        assign card_title = custom_title | default: collection.title
       %}
 
-      {% if collection != blank %}
+      {% if collection != blank or custom_title != blank %}
         {% if page_link != blank %}
           {% assign card_url = page_link %}
-        {% else %}
+        {% elsif collection != blank and collection.url != blank %}
           {% assign card_url = collection.url %}
+        {% else %}
+          {% assign card_url = '#' %}
         {% endif %}
 
         <a
@@ -315,7 +322,7 @@
             {% if custom_image != blank %}
               <img
                 src="{{ custom_image | image_url: width: 800 }}"
-                alt="{{ collection.title | escape }}"
+                alt="{{ card_title | escape }}"
                 loading="lazy"
                 class="ai-collection-category-image-{{ ai_gen_id }}"
                 width="800"
@@ -324,7 +331,7 @@
             {% elsif collection.featured_image %}
               <img
                 src="{{ collection.featured_image | image_url: width: 800 }}"
-                alt="{{ collection.title | escape }}"
+                alt="{{ card_title | default: collection.title | escape }}"
                 loading="lazy"
                 class="ai-collection-category-image-{{ ai_gen_id }}"
                 width="800"
@@ -337,7 +344,7 @@
 
           <div class="ai-collection-category-content-{{ ai_gen_id }}">
             <h3 class="ai-collection-category-title-{{ ai_gen_id }}">
-              {{ collection.title }}
+              {{ card_title }}
             </h3>
           </div>
         </a>
@@ -372,6 +379,11 @@
       "label": "Collection 1"
     },
     {
+      "type": "text",
+      "id": "custom_title_1",
+      "label": "Custom Title 1 (optional, overrides collection title)"
+    },
+    {
       "type": "url",
       "id": "page_link_1",
       "label": "Custom link 1 (optional, overrides collection URL)"
@@ -385,6 +397,11 @@
       "type": "collection",
       "id": "collection_2",
       "label": "Collection 2"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_2",
+      "label": "Custom Title 2 (optional, overrides collection title)"
     },
     {
       "type": "url",
@@ -402,6 +419,11 @@
       "label": "Collection 3"
     },
     {
+      "type": "text",
+      "id": "custom_title_3",
+      "label": "Custom Title 3 (optional, overrides collection title)"
+    },
+    {
       "type": "url",
       "id": "page_link_3",
       "label": "Custom link 3 (optional, overrides collection URL)"
@@ -415,6 +437,11 @@
       "type": "collection",
       "id": "collection_4",
       "label": "Collection 4"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_4",
+      "label": "Custom Title 4 (optional, overrides collection title)"
     },
     {
       "type": "url",
@@ -432,6 +459,11 @@
       "label": "Collection 5"
     },
     {
+      "type": "text",
+      "id": "custom_title_5",
+      "label": "Custom Title 5 (optional, overrides collection title)"
+    },
+    {
       "type": "url",
       "id": "page_link_5",
       "label": "Custom link 5 (optional, overrides collection URL)"
@@ -447,6 +479,11 @@
       "label": "Collection 6"
     },
     {
+      "type": "text",
+      "id": "custom_title_6",
+      "label": "Custom Title 6 (optional, overrides collection title)"
+    },
+    {
       "type": "url",
       "id": "page_link_6",
       "label": "Custom link 6 (optional, overrides collection URL)"
@@ -455,6 +492,126 @@
       "type": "image_picker",
       "id": "custom_image_6",
       "label": "Custom image 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Collection 7"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_7",
+      "label": "Custom Title 7 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_7",
+      "label": "Custom link 7 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_7",
+      "label": "Custom image 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Collection 8"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_8",
+      "label": "Custom Title 8 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_8",
+      "label": "Custom link 8 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_8",
+      "label": "Custom image 8"
+    },
+    {
+      "type": "collection",
+      "id": "collection_9",
+      "label": "Collection 9"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_9",
+      "label": "Custom Title 9 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_9",
+      "label": "Custom link 9 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_9",
+      "label": "Custom image 9"
+    },
+    {
+      "type": "collection",
+      "id": "collection_10",
+      "label": "Collection 10"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_10",
+      "label": "Custom Title 10 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_10",
+      "label": "Custom link 10 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_10",
+      "label": "Custom image 10"
+    },
+    {
+      "type": "collection",
+      "id": "collection_11",
+      "label": "Collection 11"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_11",
+      "label": "Custom Title 11 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_11",
+      "label": "Custom link 11 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_11",
+      "label": "Custom image 11"
+    },
+    {
+      "type": "collection",
+      "id": "collection_12",
+      "label": "Collection 12"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_12",
+      "label": "Custom Title 12 (optional, overrides collection title)"
+    },
+    {
+      "type": "url",
+      "id": "page_link_12",
+      "label": "Custom link 12 (optional, overrides collection URL)"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image_12",
+      "label": "Custom image 12"
     },
     {
       "type": "header",
@@ -503,8 +660,14 @@
       "id": "columns_mobile",
       "label": "Columns on mobile",
       "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
       ],
       "default": "1"
     },
@@ -613,9 +776,18 @@
       "id": "text_align",
       "label": "Text alignment",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "center"
     },
@@ -638,10 +810,22 @@
       "id": "title_font_weight",
       "label": "Font weight",
       "options": [
-        { "value": "400", "label": "Normal" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semi-bold" },
-        { "value": "700", "label": "Bold" }
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
       ],
       "default": "600"
     },
