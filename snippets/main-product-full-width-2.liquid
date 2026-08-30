@@ -13,6 +13,44 @@
     assign return_days       = section.settings.return_days | default: '7'
     assign wa_msg            = 'Hi! I am interested in ' | append: product.title | url_encode
     assign wa_msg_full       = 'Hi! I need more info about ' | append: product.title | append: ' - ' | append: shop.url | append: product.url | url_encode
+
+    # Determine if Authentication accordion should be hidden for antique & art collections
+    assign hide_auth = false
+    assign p_type_lower = product.type | downcase | strip
+    if p_type_lower contains 'indian antique' or p_type_lower contains 'ceramic' or p_type_lower contains 'african' or p_type_lower contains 'islamic' or p_type_lower contains 'japanese artifact' or p_type_lower contains 'japanese artefact' or p_type_lower contains 'crockery' or p_type_lower contains 'artwork' or p_type_lower contains 'art work' or p_type_lower contains 'christian art' or p_type_lower contains 'european art' or p_type_lower contains 'chinese art'
+      assign hide_auth = true
+    endif
+
+    unless hide_auth
+      for col in product.collections
+        assign c_handle = col.handle | downcase
+        assign c_title = col.title | downcase
+        if c_handle contains 'indian-antique' or c_title contains 'indian antique' or c_handle contains 'ceramic' or c_title contains 'ceramic' or c_handle contains 'african' or c_title contains 'african' or c_handle contains 'islamic' or c_title contains 'islamic' or c_handle contains 'japanese-artifact' or c_handle contains 'japanese-artefact' or c_title contains 'japanese artifact' or c_title contains 'japanese artefact' or c_handle contains 'crockery' or c_title contains 'crockery' or c_handle contains 'artwork' or c_title contains 'artwork' or c_title contains 'art work' or c_handle contains 'christian-art' or c_title contains 'christian art' or c_handle contains 'european-art' or c_title contains 'european art' or c_handle contains 'chinese-art' or c_title contains 'chinese art'
+          assign hide_auth = true
+          break
+        endif
+      endfor
+    endunless
+
+    unless hide_auth
+      for tag in product.tags
+        assign t_lower = tag | downcase
+        if t_lower contains 'indian antique' or t_lower contains 'ceramic' or t_lower contains 'african' or t_lower contains 'islamic' or t_lower contains 'japanese artifact' or t_lower contains 'japanese artefact' or t_lower contains 'crockery' or t_lower contains 'artwork' or t_lower contains 'art work' or t_lower contains 'christian art' or t_lower contains 'european art' or t_lower contains 'chinese art'
+          assign hide_auth = true
+          break
+        endif
+      endfor
+    endunless
+
+    unless hide_auth
+      if collection
+        assign curr_c_handle = collection.handle | downcase
+        assign curr_c_title = collection.title | downcase
+        if curr_c_handle contains 'indian-antique' or curr_c_title contains 'indian antique' or curr_c_handle contains 'ceramic' or curr_c_title contains 'ceramic' or curr_c_handle contains 'african' or curr_c_title contains 'african' or curr_c_handle contains 'islamic' or curr_c_title contains 'islamic' or curr_c_handle contains 'japanese-artifact' or curr_c_handle contains 'japanese-artefact' or curr_c_title contains 'japanese artifact' or curr_c_title contains 'japanese artefact' or curr_c_handle contains 'crockery' or curr_c_title contains 'crockery' or curr_c_handle contains 'artwork' or curr_c_title contains 'artwork' or curr_c_title contains 'art work' or curr_c_handle contains 'christian-art' or curr_c_title contains 'christian art' or curr_c_handle contains 'european-art' or curr_c_title contains 'european art' or curr_c_handle contains 'chinese-art' or curr_c_title contains 'chinese art'
+          assign hide_auth = true
+        endif
+      endif
+    endunless
   -%}
 
   {%- assign condition_label = '' -%}
@@ -754,22 +792,24 @@
 
     <!-- ── ACCORDION TABS ── -->
     <div class="pp-accordion" id="pp-acc-{{ section.id }}">
-      <div class="pp-acc-item pp-anim">
-        <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Authentication</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="pp-acc-body">
-          {%- if section.settings.auth_content != blank -%}
-            {{ section.settings.auth_content }}
-          {%- else -%}
-            <p>Authenticity is our utmost priority. Every item undergoes a rigorous verification process before being listed.</p>
-            <ul>
-              <li><strong>Legit Grails</strong> — Third-party authentication for luxury goods.</li>
-              <li><strong>Real Authentication</strong> — Independent verification with certificates provided.</li>
-            </ul>
-            <p>Every authenticated item is backed by a certificate of authenticity.</p>
-          {%- endif -%}
+      {%- unless hide_auth -%}
+        <div class="pp-acc-item pp-anim">
+          <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Authentication</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="pp-acc-body">
+            {%- if section.settings.auth_content != blank -%}
+              {{ section.settings.auth_content }}
+            {%- else -%}
+              <p>Authenticity is our utmost priority. Every item undergoes a rigorous verification process before being listed.</p>
+              <ul>
+                <li><strong>Legit Grails</strong> — Third-party authentication for luxury goods.</li>
+                <li><strong>Real Authentication</strong> — Independent verification with certificates provided.</li>
+              </ul>
+              <p>Every authenticated item is backed by a certificate of authenticity.</p>
+            {%- endif -%}
+          </div>
         </div>
-      </div>
-      <div class="pp-acc-item pp-anim" style="transition-delay:.08s">
+      {%- endunless -%}
+      <div class="pp-acc-item pp-anim"{% unless hide_auth %} style="transition-delay:.08s"{% endunless %}>
         <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Shipping</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="pp-acc-body">
           {%- if section.settings.shipping_content != blank -%}
@@ -782,7 +822,7 @@
           {%- endif -%}
         </div>
       </div>
-      <div class="pp-acc-item pp-anim" style="transition-delay:.16s">
+      <div class="pp-acc-item pp-anim"{% unless hide_auth %} style="transition-delay:.16s"{% else %} style="transition-delay:.08s"{% endunless %}>
         <button type="button" class="pp-acc-btn"><span class="pp-acc-title">Exchange &amp; Returns</span><svg class="pp-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="pp-acc-body">
           {%- if section.settings.cancellation_content != blank -%}
