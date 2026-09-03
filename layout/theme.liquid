@@ -34,9 +34,11 @@
         {%- endunless -%}
         <link rel="canonical" href="{{ canonical_url }}" canonical-shop-url="{{ shop.url }}/">
         {%- if settings.favicon != blank -%}
-            <link rel="icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" sizes="32x32">
-            <link rel="icon" href="{{ settings.favicon | img_url: '16x16' }}" type="image/png" sizes="16x16">
-            <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}">
+            <link rel="icon" href="{{ 'bbs_favicon.svg' | asset_url }}" type="image/svg+xml">
+            <link rel="icon" href="{{ settings.favicon | image_url: width: 96, height: 96 }}" type="image/png" sizes="96x96">
+            <link rel="icon" href="{{ settings.favicon | image_url: width: 48, height: 48 }}" type="image/png" sizes="48x48">
+            <link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png" sizes="32x32">
+            <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
         {%- endif -%}
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
         <link rel="preconnect" href="https://fonts.googleapis.com">
