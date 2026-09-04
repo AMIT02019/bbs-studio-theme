@@ -34,11 +34,18 @@
         {%- endunless -%}
         <link rel="canonical" href="{{ canonical_url }}" canonical-shop-url="{{ shop.url }}/">
         {%- if settings.favicon != blank -%}
-            <link rel="icon" href="{{ 'bbs_favicon.svg' | asset_url }}" type="image/svg+xml">
+            <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+            <link rel="icon" href="{{ settings.favicon | image_url: width: 512, height: 512 }}" type="image/png" sizes="512x512">
+            <link rel="icon" href="{{ settings.favicon | image_url: width: 192, height: 192 }}" type="image/png" sizes="192x192">
             <link rel="icon" href="{{ settings.favicon | image_url: width: 96, height: 96 }}" type="image/png" sizes="96x96">
             <link rel="icon" href="{{ settings.favicon | image_url: width: 48, height: 48 }}" type="image/png" sizes="48x48">
             <link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png" sizes="32x32">
+            <link rel="icon" href="{{ 'bbs_favicon.svg' | asset_url }}" type="image/svg+xml">
             <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+        {%- else -%}
+            <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+            <link rel="icon" href="{{ 'favicon-512.png' | asset_url }}" type="image/png" sizes="512x512">
+            <link rel="icon" href="{{ 'bbs_favicon.svg' | asset_url }}" type="image/svg+xml">
         {%- endif -%}
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
         <link rel="preconnect" href="https://fonts.googleapis.com">
