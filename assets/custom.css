@@ -2082,3 +2082,23 @@ a[href*="mailto:"] {
     width: fit-content !important;
   }
 }
+
+
+/* Clothing Page Category Images: Zoom-out & Contain Fit */
+#shopify-section-template--22421793079467__1779531797578522e2 [class*="ai-collection-category-image-wrapper"] {
+  background: #ffffff !important;
+}
+#shopify-section-template--22421793079467__1779531797578522e2 [class*="ai-collection-category-image-wrapper"] img {
+  object-fit: contain !important;
+  padding: 28px !important;
+  box-sizing: border-box !important;
+  transition: transform 0.35s ease !important;
+}
+#shopify-section-template--22421793079467__1779531797578522e2 [class*="ai-collection-category-card"]:hover img {
+  transform: scale(1.04) !important;
+}
+@media (max-width: 768px) {
+  #shopify-section-template--22421793079467__1779531797578522e2 [class*="ai-collection-category-image-wrapper"] img {
+    padding: 18px !important;
+  }
+}

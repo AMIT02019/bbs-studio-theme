@@ -200,7 +200,7 @@
             "card_background": "#ffffff",
             "border_radius": 14,
             "image_aspect_ratio": 100,
-            "placeholder_background": "#f5f5f5",
+            "placeholder_background": "#ffffff",
             "hover_lift": 5,
             "hover_shadow_y": 12,
             "hover_shadow_blur": 30,
@@ -218,8 +218,9 @@
         "ai_gen_block_2619c73_FDprRw"
       ],
       "custom_css": [
-        ".ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw > * {border: 1px solid #dcdcdc; border-radius: 16px; padding: 20px; background: #ffffff; transition: all 0.3s ease;}",
-        ".ai-collection-categories-wrapper-aotnzz2o4r1jul2pqnaigenblock2619c73fdprrw > *:hover {border-color: #000; transform: translateY(-4px);}"
+        "[class*=\"ai-collection-category-image-wrapper\"] { background: #ffffff !important; }",
+        "[class*=\"ai-collection-category-image-wrapper\"] img { object-fit: contain !important; padding: 28px !important; box-sizing: border-box !important; }",
+        "@media (max-width: 767px) { [class*=\"ai-collection-category-image-wrapper\"] img { padding: 18px !important; } }"
       ],
       "settings": {}
     }
