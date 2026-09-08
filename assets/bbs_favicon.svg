@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <style>
+      .bbs-bg {
+        fill: #FFFFFF;
+      }
+      .bbs-solid-part {
+        fill: #472b03;
+      }
+      .bbs-dotted-part {
+        fill: none;
+        stroke: #472b03;
+        stroke-width: 8;
+        stroke-dasharray: 10, 8;
+        stroke-linecap: round;
+      }
+    </style>
+  </defs>
+
+  <!-- Crisp White Circular Badge -->
+  <circle cx="256" cy="256" r="248" class="bbs-bg" />
+
+  <!-- 3 BBB Columns Perfectly Centered and Sized -->
+  <g transform="translate(53.5, 123.7) scale(0.90)">
+    <!-- COLUMN 1: Center X = 75 -->
+    <path class="bbs-dotted-part" d="M 75,3 A 72,72 0 0,0 75,147" />
+    <path class="bbs-solid-part" d="M 75,3 A 72,72 0 0,1 75,147 Z" />
+    <path class="bbs-dotted-part" d="M 75,147 A 72,72 0 0,0 75,291" />
+    <path class="bbs-solid-part" d="M 75,147 A 72,72 0 0,1 75,291 Z" />
+
+    <!-- COLUMN 2: Center X = 225 -->
+    <path class="bbs-dotted-part" d="M 225,3 A 72,72 0 0,0 225,147" />
+    <path class="bbs-solid-part" d="M 225,3 A 72,72 0 0,1 225,147 Z" />
+    <path class="bbs-dotted-part" d="M 225,147 A 72,72 0 0,0 225,291" />
+    <path class="bbs-solid-part" d="M 225,147 A 72,72 0 0,1 225,291 Z" />
+
+    <!-- COLUMN 3: Center X = 375 -->
+    <!-- Top circle: SOLID ON LEFT, DOTTED ON RIGHT (Authentic geometry) -->
+    <path class="bbs-solid-part" d="M 375,3 A 72,72 0 0,0 375,147 Z" />
+    <path class="bbs-dotted-part" d="M 375,3 A 72,72 0 0,1 375,147" />
+    <!-- Bottom circle: dotted on left, solid on right -->
+    <path class="bbs-dotted-part" d="M 375,147 A 72,72 0 0,0 375,291" />
+    <path class="bbs-solid-part" d="M 375,147 A 72,72 0 0,1 375,291 Z" />
+  </g>
+</svg>
