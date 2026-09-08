@@ -31,11 +31,33 @@
 <meta property="og:description" content="{{ og_description }}">
 <meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' | default: 'en_US' }}">
 
-{%- if page_image -%}
-  <meta property="og:image" content="https:{{ page_image | img_url: 'master' }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | img_url: 'master' }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
+{%- liquid
+  assign og_img_url = ''
+  assign og_img_w = 1200
+  assign og_img_h = 630
+
+  if request.page_type == 'product' and product.featured_image
+    assign og_img_url = product.featured_image | img_url: 'master'
+    assign og_img_w = product.featured_image.width
+    assign og_img_h = product.featured_image.height
+  elsif request.page_type == 'article' and article.image
+    assign og_img_url = article.image | img_url: 'master'
+    assign og_img_w = article.image.width
+    assign og_img_h = article.image.height
+  elsif request.page_type == 'collection' and collection.image
+    assign og_img_url = collection.image | img_url: 'master'
+    assign og_img_w = collection.image.width
+    assign og_img_h = collection.image.height
+  else
+    assign og_img_url = 'bbs_social_share.png' | asset_url
+  endif
+-%}
+
+{%- if og_img_url != blank -%}
+  <meta property="og:image" content="https:{{ og_img_url }}">
+  <meta property="og:image:secure_url" content="https:{{ og_img_url }}">
+  <meta property="og:image:width" content="{{ og_img_w }}">
+  <meta property="og:image:height" content="{{ og_img_h }}">
   <meta property="og:image:alt" content="{{ og_title | escape }}">
 {%- endif -%}
 
@@ -50,7 +72,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description }}">
-{%- if page_image -%}
-  <meta name="twitter:image" content="https:{{ page_image | img_url: 'master' }}">
+{%- if og_img_url != blank -%}
+  <meta name="twitter:image" content="https:{{ og_img_url }}">
   <meta name="twitter:image:alt" content="{{ og_title | escape }}">
 {%- endif -%}

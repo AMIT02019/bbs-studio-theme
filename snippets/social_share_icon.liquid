@@ -7,7 +7,7 @@
     endunless
         assign perTitle = share_title | url_param_escape
     unless share_image
-        assign share_image = product.featured_image |default:article.image |default:settings.share_image | default: page_image | default: settings.logo
+        assign share_image = product.featured_image |default:article.image |default:settings.share_image | default: 'bbs_social_share.png'
     endunless
     assign perImage = share_image | image_url: width: 1024, height: 1024
 -%}
