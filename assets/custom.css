@@ -2120,11 +2120,11 @@ a[href*="mailto:"] {
   margin-left: auto !important;
 }
 
-/* BBS Page Title - Light Brown Background Banner & Uppercase */
+/* BBS Page Title - Logo Brown Background Banner & White Uppercase Text */
 .template-page section.spaced-section:has(.main-page-title),
 .template-page section:has(.main-page-title),
 .template-page #shopify-section-template--21802693558443__main {
-  background-color: #ede4d8 !important;
+  background-color: #472b03 !important;
   padding-top: 20px !important;
   padding-bottom: 20px !important;
   margin-top: 0 !important;
@@ -2139,7 +2139,8 @@ a[href*="mailto:"] {
   border-top: none !important;
   border-bottom: none !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.06em !important;
+  color: #ffffff !important;
 }
 
 .main-page-title.page-header::before,
@@ -2157,5 +2158,9 @@ a[href*="mailto:"] {
     padding-top: 15px !important;
     padding-bottom: 15px !important;
     margin-bottom: 20px !important;
+  }
+  .template-page .main-page-title.page-header,
+  .main-page-title.page-header {
+    letter-spacing: 0.05em !important;
   }
 }
