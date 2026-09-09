@@ -2119,3 +2119,24 @@ a[href*="mailto:"] {
   font-weight: 600 !important;
   margin-left: auto !important;
 }
+
+/* BBS Page Title Top & Bottom Accent Lines */
+.main-page-title.page-header,
+.template-page .page-header {
+  border-top: 1px solid #e5e5e5 !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  margin-top: 12px !important;
+  margin-bottom: 24px !important;
+}
+
+@media (min-width: 1025px) {
+  .main-page-title.page-header,
+  .template-page .page-header {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    margin-top: 15px !important;
+    margin-bottom: 30px !important;
+  }
+}
