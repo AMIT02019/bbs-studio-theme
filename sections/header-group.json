@@ -286,8 +286,8 @@
         "transparent_color": "#5a3a0a",
         "transparent_color_hover": "#5a3a0a",
         "border_color": "",
-        "padding_top": 10,
-        "padding_bottom": 8
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "header-mobile": {
