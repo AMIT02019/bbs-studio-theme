@@ -1,7 +1,9 @@
 {% comment %}
   Beg Borrow Steal Studio - Luxury 4-Column Mega Menu
   Column 1: 12 Category Circles (3x4 grid)
-  Column 2: Dynamic Sub-Category Block (Designer, Vintage, Decor, Textiles)
+            - Watches, Textiles, Sunglasses are DIRECT links to their collections
+            - Other categories dynamically reveal sub-categories on click/hover
+  Column 2: Dynamic Sub-Category Block (Designer, Vintage, Decor)
   Column 3: Curated Designers & Collections (Shifted, Archive removed)
   Column 4: Featured Curated Vintage Banner
 {% endcomment %}
@@ -25,6 +27,7 @@
         <div class="bbs-mm-section-title">ALL CATEGORIES</div>
         <div class="bbs-mm-circles-grid">
           
+          <!-- 1. Earrings (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger is-active" data-cat="earrings" style="--item-index: 0;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_VE0036_1-1-600x600.webp?v=1779428263" alt="Earrings" width="62" height="62" loading="eager">
@@ -32,6 +35,7 @@
             <span class="bbs-mm-circle-label">Earrings</span>
           </button>
 
+          <!-- 2. Necklaces (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="necklaces" style="--item-index: 1;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_V0006_1-1-scaled_3182550c-707a-4b10-8b67-1a82c9595259.jpg?v=1779527302" alt="Necklaces" width="62" height="62" loading="eager">
@@ -39,6 +43,7 @@
             <span class="bbs-mm-circle-label">Necklaces</span>
           </button>
 
+          <!-- 3. Rings (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="rings" style="--item-index: 2;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-1900.jpg?v=1779535405" alt="Rings" width="62" height="62" loading="eager">
@@ -46,6 +51,7 @@
             <span class="bbs-mm-circle-label">Rings</span>
           </button>
 
+          <!-- 4. Bracelets (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="bracelets" style="--item-index: 3;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-2285.jpg?v=1779535778" alt="Bracelets" width="62" height="62" loading="eager">
@@ -53,6 +59,7 @@
             <span class="bbs-mm-circle-label">Bracelets</span>
           </button>
 
+          <!-- 5. Brooches (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="brooches" style="--item-index: 4;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY_4-2355.jpg?v=1779535824" alt="Brooches" width="62" height="62" loading="eager">
@@ -60,13 +67,15 @@
             <span class="bbs-mm-circle-label">Brooches</span>
           </button>
 
-          <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="watches" style="--item-index: 5;">
+          <!-- 6. Watches (DIRECT LINK) -->
+          <a href="/collections/watches" class="bbs-mm-circle-item bbs-mm-direct-link bbs-mm-stagger" style="--item-index: 5;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-WATCHES--scaled.jpg?v=1779383463" alt="Watches" width="62" height="62" loading="eager">
             </div>
             <span class="bbs-mm-circle-label">Watches</span>
-          </button>
+          </a>
 
+          <!-- 7. Designer Bags (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="designer-bags" style="--item-index: 6;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/JEWELLERY4-2704_resized.jpg?v=1784360003" alt="Designer Bags" width="62" height="62" loading="eager">
@@ -74,6 +83,7 @@
             <span class="bbs-mm-circle-label">Designer Bags</span>
           </button>
 
+          <!-- 8. Vintage Bags (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="vintage-bags" style="--item-index: 7;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-BAGS-option-2-scaled.jpg?v=1779383464" alt="Vintage Bags" width="62" height="62" loading="eager">
@@ -81,6 +91,7 @@
             <span class="bbs-mm-circle-label">Vintage Bags</span>
           </button>
 
+          <!-- 9. Clothing (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="clothing" style="--item-index: 8;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-CLOTHING--scaled.jpg?v=1779383597" alt="Clothing" width="62" height="62" loading="eager">
@@ -88,6 +99,7 @@
             <span class="bbs-mm-circle-label">Clothing</span>
           </button>
 
+          <!-- 10. Home Decor (Interactive Subcategory) -->
           <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="home-decor" style="--item-index: 9;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/HOME-DECOR-CURIOS-option-2-1-scaled.jpg?v=1779383463" alt="Home Decor" width="62" height="62" loading="eager">
@@ -95,19 +107,21 @@
             <span class="bbs-mm-circle-label">Home Decor</span>
           </button>
 
-          <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="vintage-textiles" style="--item-index: 10;">
+          <!-- 11. Vintage Textiles (DIRECT LINK) -->
+          <a href="/collections/textiles" class="bbs-mm-circle-item bbs-mm-direct-link bbs-mm-stagger" style="--item-index: 10;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_T022_1.jpg?v=1788436118" alt="Vintage Textiles" width="62" height="62" loading="eager">
             </div>
             <span class="bbs-mm-circle-label">Textiles</span>
-          </button>
+          </a>
 
-          <button type="button" class="bbs-mm-circle-item bbs-mm-cat-trigger bbs-mm-stagger" data-cat="sunglasses" style="--item-index: 11;">
+          <!-- 12. Sunglasses (DIRECT LINK) -->
+          <a href="/collections/sunglasses" class="bbs-mm-circle-item bbs-mm-direct-link bbs-mm-stagger" style="--item-index: 11;">
             <div class="bbs-mm-circle-thumb">
               <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/DSCF2973-scaled.jpg?v=1779383463" alt="Sunglasses" width="62" height="62" loading="eager">
             </div>
             <span class="bbs-mm-circle-label">Sunglasses</span>
-          </button>
+          </a>
 
         </div>
       </div>
@@ -274,38 +288,7 @@
           </a>
         </div>
 
-        <!-- 6. WATCHES -->
-        <div class="bbs-mm-subcat-panel" data-subcat="watches">
-          <div class="bbs-mm-subcat-badge">Watches Selection</div>
-          <div class="bbs-mm-subcat-cards">
-            <a href="/collections/watches" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/rolex-lady-datejust-69173-boxed.png?v=1787922049" alt="Designer Watches" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Designer Watches</span>
-                <span class="bbs-mm-subcat-desc">Rolex, Cartier & Swiss</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-            <a href="/collections/watches" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/VINTAGE-WATCHES--scaled.jpg?v=1779383463" alt="Vintage Watches" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Vintage Watches</span>
-                <span class="bbs-mm-subcat-desc">Mechanical & Quartz</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-          </div>
-          <a href="/collections/watches" class="bbs-mm-subcat-all-link">
-            <span>View All Watches</span>
-            <span class="bbs-mm-chevron">›</span>
-          </a>
-        </div>
-
-        <!-- 7. DESIGNER BAGS -->
+        <!-- 6. DESIGNER BAGS -->
         <div class="bbs-mm-subcat-panel" data-subcat="designer-bags">
           <div class="bbs-mm-subcat-badge">Designer Bags Selection</div>
           <div class="bbs-mm-subcat-cards">
@@ -336,7 +319,7 @@
           </a>
         </div>
 
-        <!-- 8. VINTAGE BAGS -->
+        <!-- 7. VINTAGE BAGS -->
         <div class="bbs-mm-subcat-panel" data-subcat="vintage-bags">
           <div class="bbs-mm-subcat-badge">Vintage Bags Selection</div>
           <div class="bbs-mm-subcat-cards">
@@ -367,7 +350,7 @@
           </a>
         </div>
 
-        <!-- 9. CLOTHING -->
+        <!-- 8. CLOTHING -->
         <div class="bbs-mm-subcat-panel" data-subcat="clothing">
           <div class="bbs-mm-subcat-badge">Clothing Selection</div>
           <div class="bbs-mm-subcat-cards">
@@ -408,7 +391,7 @@
           </a>
         </div>
 
-        <!-- 10. HOME DECOR -->
+        <!-- 9. HOME DECOR -->
         <div class="bbs-mm-subcat-panel" data-subcat="home-decor">
           <div class="bbs-mm-subcat-badge">Home Decor Selection</div>
           <div class="bbs-mm-subcat-cards">
@@ -445,78 +428,6 @@
           </div>
           <a href="/collections/indian-antique" class="bbs-mm-subcat-all-link">
             <span>View All Home Decor</span>
-            <span class="bbs-mm-chevron">›</span>
-          </a>
-        </div>
-
-        <!-- 11. VINTAGE TEXTILES -->
-        <div class="bbs-mm-subcat-panel" data-subcat="vintage-textiles">
-          <div class="bbs-mm-subcat-badge">Textiles Selection</div>
-          <div class="bbs-mm-subcat-cards">
-            <a href="/collections/textiles" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_T022_1.jpg?v=1788436118" alt="African Kuba Cloth" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">African Kuba Cloth</span>
-                <span class="bbs-mm-subcat-desc">Raffia & Mud Cloth</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-            <a href="/collections/textiles" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_T020_1.jpg?v=1788436106" alt="Japanese Indigo Boro" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Japanese Indigo Boro</span>
-                <span class="bbs-mm-subcat-desc">Hand-Dyed & Shibori</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-            <a href="/collections/textiles" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/BBS_T019_1.jpg?v=1788436094" alt="Tapestries & Screens" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Tapestries & Screens</span>
-                <span class="bbs-mm-subcat-desc">Petitpoint & Woven Art</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-          </div>
-          <a href="/collections/textiles" class="bbs-mm-subcat-all-link">
-            <span>View All Textiles</span>
-            <span class="bbs-mm-chevron">›</span>
-          </a>
-        </div>
-
-        <!-- 12. SUNGLASSES -->
-        <div class="bbs-mm-subcat-panel" data-subcat="sunglasses">
-          <div class="bbs-mm-subcat-badge">Eyewear Selection</div>
-          <div class="bbs-mm-subcat-cards">
-            <a href="/collections/sunglasses" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/DSCF2973-scaled.jpg?v=1779383463" alt="Vintage Sunglasses" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Vintage Sunglasses</span>
-                <span class="bbs-mm-subcat-desc">Ray-Ban, Carrera & Retro</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-            <a href="/collections/sunglasses" class="bbs-mm-subcat-card">
-              <div class="bbs-mm-subcat-thumb">
-                <img src="https://cdn.shopify.com/s/files/1/0774/6653/4059/files/DSCF2973-scaled.jpg?v=1779383463" alt="Designer Eyewear" width="48" height="48" loading="eager">
-              </div>
-              <div class="bbs-mm-subcat-meta">
-                <span class="bbs-mm-subcat-name">Designer Eyewear</span>
-                <span class="bbs-mm-subcat-desc">Statement Archival Frames</span>
-              </div>
-              <span class="bbs-mm-subcat-arrow">›</span>
-            </a>
-          </div>
-          <a href="/collections/sunglasses" class="bbs-mm-subcat-all-link">
-            <span>View All Sunglasses</span>
             <span class="bbs-mm-chevron">›</span>
           </a>
         </div>
@@ -611,7 +522,7 @@
     var navLink = navItem.querySelector('.menu-lv-1__action');
     var closeTimer = null;
 
-    // Subcategory switcher
+    // Subcategory switcher (only for categories with sub-categories)
     var triggers = dropdown.querySelectorAll('.bbs-mm-cat-trigger');
     var panels = dropdown.querySelectorAll('.bbs-mm-subcat-panel');
 
