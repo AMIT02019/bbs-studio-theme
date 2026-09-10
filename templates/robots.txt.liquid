@@ -11,38 +11,26 @@
 {% endfor %}
 
 # -----------------------------------------------------
-# Custom Rules: Manage AI and LLM Crawlers
+# AEO & GEO Optimization: Authorized AI & Answer Engine Crawlers
 # -----------------------------------------------------
-
-# Block OpenAI's crawlers
+# Allow conversational shopping assistants & AI answer engines to index and cite products
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: ChatGPT-User
-Disallow: /
-
-# Block Google's AI crawler
-User-agent: Google-Extended
-Disallow: /
-
-# Block Anthropic's Claude
-User-agent: anthropic-ai
-Disallow: /
+Allow: /
 
 User-agent: ClaudeBot
-Disallow: /
+Allow: /
 
-User-agent: Claude-Web
-Disallow: /
+User-agent: anthropic-ai
+Allow: /
 
-# Block Common Crawl (used by many AI models)
-User-agent: CCBot
-Disallow: /
-
-# Block Perplexity
 User-agent: PerplexityBot
-Disallow: /
+Allow: /
 
-# Block Facebook/Meta's crawler
+User-agent: Google-Extended
+Allow: /
+
 User-agent: FacebookBot
-Disallow: /
+Allow: /
