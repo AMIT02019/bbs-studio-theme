@@ -44,7 +44,9 @@
         <link rel="dns-prefetch" href="https://fonts.shopifycdn.com">
         <link rel="dns-prefetch" href="//www.googletagmanager.com">
         <link rel="dns-prefetch" href="//www.google-analytics.com">
-        <title>{{ page_title }} {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%} {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%} {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}</title>
+        {%- assign page_title_downcase = page_title | downcase -%}
+        {%- assign shop_name_downcase = shop.name | downcase -%}
+        <title>{{ page_title }} {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%} {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%} {%- unless page_title_downcase contains shop_name_downcase or page_title_downcase contains 'beg borrow steal' %} &ndash; {{ shop.name }}{% endunless -%}</title>
 
         {%- liquid
             if page_description != blank
@@ -53,6 +55,10 @@
                 assign site_meta_description = collection.description | split: '[lang2]' | first | strip_html | truncate: 155 | escape
             elsif template contains 'product' and product.description != blank
                 assign site_meta_description = product.description | strip_html | truncate: 155 | escape
+            elsif page.handle == 'vintage-designer-jewellery'
+                assign site_meta_description = "Explore authentic vintage designer jewellery at Beg Borrow Steal Studio. Curated Chanel, Dior, Yves Saint Laurent necklaces, earrings, brooches, and cuffs in Mumbai." | escape
+            elsif page.handle == 'about-us'
+                assign site_meta_description = "Learn about Beg Borrow Steal Studio in Mumbai, founded by Pranav Sood and Krisna Krishnankutty. Discover our story of authentic archival vintage fashion and jewellery." | escape
             else
                 assign site_meta_description = "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds." | escape
             endif

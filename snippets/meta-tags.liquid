@@ -9,6 +9,10 @@
     assign og_description = collection.description | strip_html | truncate: 155 | escape
   elsif template contains 'product' and product.description != blank
     assign og_description = product.description | strip_html | truncate: 155 | escape
+  elsif page.handle == 'vintage-designer-jewellery'
+    assign og_description = "Explore authentic vintage designer jewellery at Beg Borrow Steal Studio. Curated Chanel, Dior, Yves Saint Laurent necklaces, earrings, brooches, and cuffs in Mumbai." | escape
+  elsif page.handle == 'about-us'
+    assign og_description = "Learn about Beg Borrow Steal Studio in Mumbai, founded by Pranav Sood and Krisna Krishnankutty. Discover our story of authentic archival vintage fashion and jewellery." | escape
   else
     assign og_description = "Step into our sanctuary of vintage fashion, statement accessories, rare antiques, and exquisite fine art. Embrace mindful luxury through our one-of-a-kind curated finds." | escape
   endif
@@ -62,8 +66,15 @@
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | remove: ',' }}">
   <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html | remove: ',' }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  <meta property="product:condition" content="used">
+  {%- if product.vendor != blank -%}
+    <meta property="product:brand" content="{{ product.vendor | escape }}">
+  {%- endif -%}
 {%- endif -%}
 
 {%- if settings.social_twitter_link != blank -%}

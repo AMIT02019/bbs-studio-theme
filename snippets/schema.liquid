@@ -34,8 +34,20 @@
     "url": "{{ shop_url }}",
     "telephone": "+919136047270",
     "email": "begborrowstealstudio@gmail.com",
-    "priceRange": "$$$",
+    "priceRange": "$$",
     "description": "Mumbai's premier boutique destination for authenticated vintage designer jewellery, archival timepieces, luxury accessories, and rare curated collectibles.",
+    "founder": [
+        {
+            "@type": "Person",
+            "name": "Pranav Sood",
+            "jobTitle": "Co-Founder & Creative Director"
+        },
+        {
+            "@type": "Person",
+            "name": "Krisna Krishnankutty",
+            "jobTitle": "Co-Founder & Stylist"
+        }
+    ],
     "address": {
         "@type": "PostalAddress",
         "streetAddress": "76 Turner Road, New Shams Building, Bandra West",
@@ -65,12 +77,10 @@
         }
     ],
     "sameAs": [
-        {%- assign sa_items = '' -%}
-        {%- if settings.social_instagram_link != blank -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_instagram_link | append: '"' -%}{%- endif -%}
-        {%- if settings.social_facebook_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_facebook_link | append: '"' -%}{%- endif -%}
-        {%- if settings.social_twitter_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_twitter_link | append: '"' -%}{%- endif -%}
-        {%- if settings.social_pinterest_link != blank -%}{%- if sa_items != '' -%}{%- assign sa_items = sa_items | append: ',' -%}{%- endif -%}{%- assign sa_items = sa_items | append: '"' | append: settings.social_pinterest_link | append: '"' -%}{%- endif -%}
-        {{ sa_items }}
+        "https://www.instagram.com/begborrowstealstudio"
+        {%- if settings.social_facebook_link != blank and settings.social_facebook_link != '' -%}, "{{ settings.social_facebook_link }}"{%- endif -%}
+        {%- if settings.social_twitter_link != blank and settings.social_twitter_link != '' -%}, "{{ settings.social_twitter_link }}"{%- endif -%}
+        {%- if settings.social_pinterest_link != blank and settings.social_pinterest_link != '' -%}, "{{ settings.social_pinterest_link }}"{%- endif -%}
     ]
 }
 </script>
@@ -255,6 +265,58 @@
             "position": 2,
             "name": "{{ page.title | escape }}",
             "item": "{{ canonical_url }}"
+        }
+    ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} ================= FAQ SCHEMA (AEO & AI SEARCH OPTIMIZATION) ================= {%- endcomment -%}
+{%- if page_type == 'index' or page.handle == 'about-us' or page.handle == 'vintage-designer-jewellery' -%}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Are all vintage designer jewellery and accessories at Beg Borrow Steal Studio authentic?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Every vintage designer piece at Beg Borrow Steal Studio undergoes rigorous multi-point authentication for brand hallmarks, craftsmanship, date stamps, and materials before being curated for sale."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Where is Beg Borrow Steal Studio located?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Beg Borrow Steal Studio is located at 1, New Shams Building, 76 Turner Road, Bandra West, Mumbai, Maharashtra 400050, India."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Who founded Beg Borrow Steal Studio?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Beg Borrow Steal Studio was founded by fashion stylists and creative visionaries Pranav Sood and Krisna Krishnankutty."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What designer brands does Beg Borrow Steal Studio curate?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Beg Borrow Steal Studio curates authenticated archival and vintage collections from iconic fashion houses including Chanel, Christian Dior, Yves Saint Laurent, Givenchy, Celine, Lanvin, and Christian Lacroix."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the condition of items sold at Beg Borrow Steal Studio?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "All pieces are rare archival and vintage items. Each listing features detailed condition grading and high-resolution imagery showcasing their authentic vintage patina and preserved beauty."
+            }
         }
     ]
 }

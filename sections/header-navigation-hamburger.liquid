@@ -711,27 +711,7 @@ if (sticky != undefined || sticky != null) {
         appendPrependMenuMobile();
     })
 </script>
-<script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": {{ shop.name | json }},
-        {% if logo %}
-            "logo": {{ logo | image_url: width: 500 | prepend: "https:" | json }},
-        {% endif %}
-        "sameAs": [
-            {{ settings.social_twitter_link | json }},
-            {{ settings.social_facebook_link | json }},
-            {{ settings.social_pinterest_link | json }},
-            {{ settings.social_instagram_link | json }},
-            {{ settings.social_tumblr_link | json }},
-            {{ settings.social_snapchat_link | json }},
-            {{ settings.social_youtube_link | json }},
-            {{ settings.social_vimeo_link | json }}
-        ],
-        "url": {{ request.origin | append: page.url | json }}
-    }
-</script>
+{%- comment -%} Organization schema cleanly consolidated in snippets/schema.liquid {%- endcomment -%}
 
 {% schema %}
 {
