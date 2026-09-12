@@ -2183,3 +2183,22 @@ a[href*="mailto:"] {
     padding-top: 10px !important;
   }
 }
+
+/* BBS Product Description - Standardized Attribute & Paragraph Spacing */
+.pp-desc__text p,
+.productView-desc p,
+.product__description p,
+.halo-text-format p {
+  margin-top: 13px !important;
+  margin-bottom: 13px !important;
+  line-height: 1.6 !important;
+}
+
+/* Fallback spacing for any stray <br> tags */
+.pp-desc__text p br,
+.productView-desc p br,
+.product__description p br {
+  content: "";
+  display: block;
+  margin-top: 12px;
+}
