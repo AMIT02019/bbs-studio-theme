@@ -329,6 +329,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const pageTitles = document.querySelectorAll('.page-header h1, .page-header .title, .main-page-title, .page-title, h1.title, h1.page-title');
     pageTitles.forEach(function(title) {
+        if (title.classList.contains('main-page-title') || title.matches('.main-page-title')) {
+            title.style.setProperty('font-size', '20px', 'important');
+            title.style.setProperty('line-height', '1.15', 'important');
+            title.dataset.sizeReduced = "true";
+            return;
+        }
         if (!title.dataset.sizeReduced) {
             const currentSizeStr = window.getComputedStyle(title).fontSize;
             const currentSize = parseFloat(currentSizeStr);
