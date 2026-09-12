@@ -2123,12 +2123,13 @@ a[href*="mailto:"] {
 /* BBS Page Title - Logo Brown Background Banner & White Uppercase Text */
 .template-page section.spaced-section:has(.main-page-title),
 .template-page section:has(.main-page-title),
-.template-page #shopify-section-template--21802693558443__main {
+.template-page #shopify-section-template--21802693558443__main,
+.template-page #shopify-section-template--21802692182187__main {
   background-color: #472b03 !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   margin-top: 0 !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 0 !important;
 }
 
 .template-page .main-page-title.page-header,
@@ -2152,17 +2153,35 @@ a[href*="mailto:"] {
   content: none !important;
 }
 
+/* Remove white spacing below banner on pages */
+.template-page section:has(.main-page-title) + div,
+.template-page section:has(.main-page-title) + section,
+.template-page section.spaced-section:has(.main-page-title) + div,
+.template-page section.spaced-section:has(.main-page-title) + section {
+  margin-top: 0 !important;
+}
+
+.template-page section:has(.main-page-title) + div [class*="ai-our-story"],
+.template-page section.spaced-section:has(.main-page-title) + div [class*="ai-our-story"],
+.template-page [class*="ai-our-story"] {
+  padding-top: 15px !important;
+}
+
 @media (max-width: 767px) {
   .template-page section.spaced-section:has(.main-page-title),
   .template-page section:has(.main-page-title),
-  .template-page #shopify-section-template--21802693558443__main {
+  .template-page #shopify-section-template--21802693558443__main,
+  .template-page #shopify-section-template--21802692182187__main {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 0 !important;
   }
   .template-page .main-page-title.page-header,
   .main-page-title.page-header {
     letter-spacing: 0.05em !important;
     line-height: 1.15 !important;
+  }
+  .template-page [class*="ai-our-story"] {
+    padding-top: 10px !important;
   }
 }
