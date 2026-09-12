@@ -2161,9 +2161,7 @@ a[href*="mailto:"] {
   margin-top: 0 !important;
 }
 
-.template-page section:has(.main-page-title) + div [class*="ai-our-story"],
-.template-page section.spaced-section:has(.main-page-title) + div [class*="ai-our-story"],
-.template-page [class*="ai-our-story"] {
+.template-page div.shopify-section > [class^="ai-our-story"]:not([class*="-container"]):not([class*="-grid"]):not([class*="-content"]):not([class*="-heading"]):not([class*="-text"]):not([class*="-button"]):not([class*="-image"]) {
   padding-top: 15px !important;
 }
 
@@ -2181,7 +2179,7 @@ a[href*="mailto:"] {
     letter-spacing: 0.05em !important;
     line-height: 1.15 !important;
   }
-  .template-page [class*="ai-our-story"] {
+  .template-page div.shopify-section > [class^="ai-our-story"]:not([class*="-container"]):not([class*="-grid"]):not([class*="-content"]):not([class*="-heading"]):not([class*="-text"]):not([class*="-button"]):not([class*="-image"]) {
     padding-top: 10px !important;
   }
 }
