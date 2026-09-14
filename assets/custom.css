@@ -2210,3 +2210,30 @@ a[href*="mailto:"] {
   display: block;
   margin-top: 12px;
 }
+/* Custom Luxury Scrollbar for Home Decor Subcategories */
+.bbs-mm-subcat-cards.bbs-mm-scrollable {
+  max-height: 240px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 6px !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+.bbs-mm-subcat-cards.bbs-mm-scrollable::-webkit-scrollbar {
+  width: 4px !important;
+}
+.bbs-mm-subcat-cards.bbs-mm-scrollable::-webkit-scrollbar-track {
+  background: #f4ede4 !important;
+  border-radius: 4px !important;
+}
+.bbs-mm-subcat-cards.bbs-mm-scrollable::-webkit-scrollbar-thumb {
+  background: #8c7355 !important;
+  border-radius: 4px !important;
+}
+.bbs-mm-subcat-cards.bbs-mm-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #5a3a0a !important;
+}
+.bbs-mm-subcat-cards.bbs-mm-scrollable {
+  scrollbar-width: thin !important;
+  scrollbar-color: #8c7355 #f4ede4 !important;
+}
