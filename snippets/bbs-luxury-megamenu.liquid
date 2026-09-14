@@ -588,6 +588,17 @@
 
   /* Mobile Phone View Enhancements (< 1025px) */
   @media (max-width: 1024px) {
+    .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
+    .site-nav-mobile .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+    .halo-sidebar_menu .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
+    .halo-sidebar_menu .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+    .site-nav-mobile .menu-lv-item.is-active > .bbs-luxury-megamenu-dropdown,
+    .site-nav-mobile .menu-lv-item.is-open > .bbs-luxury-megamenu-dropdown {
+      transform: translate3d(0, 0, 0) !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
     .bbs-mm-container {
       padding: 14px 12px !important;
     }
@@ -719,22 +730,28 @@
     if (backBtn) {
       e.preventDefault();
       e.stopPropagation();
-      var parentItem = backBtn.closest('.has-bbs-luxury-megamenu');
+      var parentItem = backBtn.closest('.has-bbs-luxury-megamenu') || backBtn.closest('.menu-lv-item');
       if (parentItem) {
         parentItem.classList.remove('is-open');
+        parentItem.classList.remove('is-active');
       }
       return;
     }
 
     // 3. Mobile category toggle in drawer
     if (window.innerWidth < 1025) {
-      var mobileAction = e.target.closest('.site-nav-mobile .has-bbs-luxury-megamenu > .menu-lv-1__action');
+      var mobileAction = e.target.closest('.site-nav-mobile .has-bbs-luxury-megamenu > .menu-lv-1__action, .site-nav-mobile .has-bbs-luxury-megamenu [data-toggle-menu-mb], .halo-sidebar_menu .has-bbs-luxury-megamenu > .menu-lv-1__action, .halo-sidebar_menu .has-bbs-luxury-megamenu [data-toggle-menu-mb]');
       if (mobileAction) {
         e.preventDefault();
         e.stopPropagation();
         var navItem = mobileAction.closest('.has-bbs-luxury-megamenu');
         if (navItem) {
-          navItem.classList.toggle('is-open');
+          var willOpen = !navItem.classList.contains('is-open') && !navItem.classList.contains('is-active');
+          if (willOpen) {
+            navItem.classList.add('is-open', 'is-active');
+          } else {
+            navItem.classList.remove('is-open', 'is-active');
+          }
         }
         return;
       }

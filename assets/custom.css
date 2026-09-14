@@ -1856,7 +1856,12 @@ a[href*="mailto:"] {
     will-change: transform, opacity;
   }
 
-  .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown {
+  .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
+  .site-nav-mobile .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+  .halo-sidebar_menu .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
+  .halo-sidebar_menu .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+  .site-nav-mobile .menu-lv-item.is-active > .bbs-luxury-megamenu-dropdown,
+  .site-nav-mobile .menu-lv-item.is-open > .bbs-luxury-megamenu-dropdown {
     transform: translate3d(0, 0, 0) !important;
     opacity: 1 !important;
     visibility: visible !important;
