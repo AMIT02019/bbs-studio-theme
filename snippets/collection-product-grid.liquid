@@ -429,7 +429,7 @@
               {%- for filter in collection.filters -%}
                 {%- assign nfl = filter.label | downcase | strip -%}
                 {%- comment -%} Treat a native Vendor facet as "brand" so it slots into filter_order {%- endcomment -%}
-                {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+                {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
                 {%- if nfl == ord_label -%}
                   {% render 'cpg-native-filter', filter: filter, index: filter.label | handle, csd: csd, section: section %}
                 {%- endif -%}
@@ -450,7 +450,7 @@
             {%- comment -%} 3) Remaining native facets not in the explicit order {%- endcomment -%}
             {%- for filter in collection.filters -%}
               {%- assign nfl = filter.label | downcase | strip -%}
-              {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+              {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
               {%- assign nfl_check = '|' | append: nfl | append: '|' -%}
               {%- if hidden_filters contains nfl_check -%}{%- continue -%}{%- endif -%}
               {%- unless filter_order_str contains nfl_check -%}
@@ -459,6 +459,15 @@
             {%- endfor -%}
 
           {%- else -%}
+            {%- assign is_hd_empty = false -%}
+            {%- assign hd_all_h = 'indian-antique,crockery,african,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
+            {%- if hd_all_h contains collection.handle -%}
+              {%- assign is_hd_empty = true -%}
+            {%- endif -%}
+            {%- if is_hd_empty -%}
+              {% render 'cpg-native-filter', filter: blank, index: 'Brands', csd: csd, section: section, forced_fl: 'brands', forced_label: 'Brands' %}
+              {% render 'cpg-native-filter', filter: blank, index: 'Product type', csd: csd, section: section, forced_fl: 'product type', forced_label: 'Product type' %}
+            {%- endif -%}
             {%- comment -%} Fallback: manual block-based tag filters, in the explicit order first {%- endcomment -%}
             {%- for ord in filter_order_list -%}
               {%- assign ord_label = ord | strip | downcase -%}

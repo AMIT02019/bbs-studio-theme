@@ -4,19 +4,30 @@
     can be rendered in a custom order (e.g. Brand/Vendor before Product type).
 
     Accepts:
-      filter  - a collection.filters item
-      index   - unique value used for element ids
-      csd     - collapse-default flag ('close' = start collapsed)
-      section - the section (for settings)
+      filter       - a collection.filters item
+      index        - unique value used for element ids
+      csd          - collapse-default flag ('close' = start collapsed)
+      section      - the section (for settings)
+      forced_fl    - optional override for filter label (e.g. 'brands', 'product type')
+      forced_label - optional override for display header
 {%- endcomment -%}
-{%- assign limit = section.settings.max_item_per_filter -%}
+{%- assign limit = section.settings.max_item_per_filter | default: 10 -%}
 {%- assign fl = filter.label | downcase -%}
+{%- if forced_fl != blank -%}{%- assign fl = forced_fl -%}{%- endif -%}
+{%- assign display_title = filter.label | default: forced_label | default: index -%}
 {%- assign sw_label = section.settings.filter_swatch | downcase -%}
 {%- assign sz_label = section.settings.filter_rectangle | downcase -%}
 {%- assign cur = currency | default: '₹' -%}
+
+{%- assign is_home_decor = false -%}
+{%- assign hd_handles = 'indian-antique,crockery,african,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
+{%- if hd_handles contains collection.handle -%}
+  {%- assign is_home_decor = true -%}
+{%- endif -%}
+
 <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{{ index }}">
   <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{{ index }}')">
-    <span>{{ filter.label }}</span>
+    <span>{{ display_title }}</span>
     <span class="cpg-toggle-icon">{% if csd == 'close' %}+{% else %}−{% endif %}</span>
   </div>
   <div class="cpg-filter-body">
@@ -49,7 +60,7 @@
         </label>
       {%- endfor -%}
 
-    {%- elsif filter.type == 'list' -%}
+    {%- elsif filter.type == 'list' or is_home_decor -%}
 
       {%- if fl == sw_label -%}
         {%- comment -%} Color swatches {%- endcomment -%}
@@ -91,6 +102,68 @@
             </a>
           {%- endfor -%}
         </div>
+
+      {%- elsif is_home_decor and fl == 'brands' or is_home_decor and fl == 'brand' or is_home_decor and fl == 'vendor' -%}
+        {%- comment -%} Home Decor Brands: Show all 10 subcategories {%- endcomment -%}
+        {%- assign hd_brands = 'indian-antique:Indian Antique:89,crockery:Ceramics:6,african:African Artifacts:2,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:13,chinese-art:Chinese Artifacts:7' | split: ',' -%}
+        {%- for item in hd_brands -%}
+          {%- assign parts = item | split: ':' -%}
+          {%- assign col_h = parts[0] -%}
+          {%- assign col_title = parts[1] -%}
+          {%- assign col_fallback = parts[2] | plus: 0 -%}
+          {%- assign col_live = collections[col_h].all_products_count -%}
+          {%- if col_live != blank and col_live >= 0 -%}
+            {%- assign col_cnt = col_live -%}
+          {%- else -%}
+            {%- assign col_cnt = col_fallback -%}
+          {%- endif -%}
+          {%- assign is_act = false -%}
+          {%- if collection.handle == col_h -%}
+            {%- assign is_act = true -%}
+          {%- endif -%}
+          {%- if is_act -%}
+            {%- assign target_dest = '/collections/home-decor-curios' -%}
+          {%- else -%}
+            {%- assign target_dest = '/collections/' | append: col_h -%}
+          {%- endif -%}
+          <label class="cpg-filter-option">
+            <input type="checkbox" {% if is_act %}checked{% endif %}
+              onchange="window.location='{{ target_dest }}'">
+            {{ col_title }}
+            <span class="cpg-filter-count">({{ col_cnt }})</span>
+          </label>
+        {%- endfor -%}
+
+      {%- elsif is_home_decor and fl == 'product type' -%}
+        {%- comment -%} Home Decor Product Types: Show all 10 product types {%- endcomment -%}
+        {%- assign hd_types = 'indian-antique:INDIAN ANTIQUES:89,crockery:Ceramics:6,african:African Artifacts:2,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:13,chinese-art:Chinese Artifacts:7' | split: ',' -%}
+        {%- for item in hd_types -%}
+          {%- assign parts = item | split: ':' -%}
+          {%- assign col_h = parts[0] -%}
+          {%- assign col_title = parts[1] -%}
+          {%- assign col_fallback = parts[2] | plus: 0 -%}
+          {%- assign col_live = collections[col_h].all_products_count -%}
+          {%- if col_live != blank and col_live >= 0 -%}
+            {%- assign col_cnt = col_live -%}
+          {%- else -%}
+            {%- assign col_cnt = col_fallback -%}
+          {%- endif -%}
+          {%- assign is_act = false -%}
+          {%- if collection.handle == col_h -%}
+            {%- assign is_act = true -%}
+          {%- endif -%}
+          {%- if is_act -%}
+            {%- assign target_dest = '/collections/home-decor-curios' -%}
+          {%- else -%}
+            {%- assign target_dest = '/collections/' | append: col_h -%}
+          {%- endif -%}
+          <label class="cpg-filter-option">
+            <input type="checkbox" {% if is_act %}checked{% endif %}
+              onchange="window.location='{{ target_dest }}'">
+            {{ col_title }}
+            <span class="cpg-filter-count">({{ col_cnt }})</span>
+          </label>
+        {%- endfor -%}
 
       {%- else -%}
         {%- comment -%} Default checkbox list {%- endcomment -%}
