@@ -1892,34 +1892,36 @@ a[href*="mailto:"] {
   }
 
   .bbs-mm-container {
-    padding: 18px 16px !important;
+    padding: 14px 12px !important;
   }
 
   .bbs-mm-wrapper {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 16px !important;
   }
 
   .bbs-mm-divider {
     height: 1px !important;
     width: 100% !important;
     background: #f0eae1 !important;
-    margin: 4px 0 !important;
+    margin: 2px 0 !important;
   }
 
   .bbs-mm-section-title {
-    font-size: 11px !important;
+    font-size: 10.5px !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
     color: #8c7355 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
+    text-transform: uppercase !important;
   }
 
+  /* Compact 4-Column Grid for All 11 Categories on Phone */
   .bbs-mm-circles-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 12px !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px 4px !important;
   }
 
   .bbs-mm-circle-item {
@@ -1931,28 +1933,38 @@ a[href*="mailto:"] {
     border: none !important;
     padding: 0 !important;
     cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   .bbs-mm-circle-thumb {
-    width: 58px !important;
-    height: 58px !important;
+    width: 50px !important;
+    height: 50px !important;
     border-radius: 50% !important;
     overflow: hidden !important;
     background: #f8f6f0 !important;
     border: 1.5px solid #eae3d7 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 3px !important;
+    transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .bbs-mm-circle-item:active .bbs-mm-circle-thumb {
+    transform: scale(0.92) !important;
   }
 
   .bbs-mm-circle-thumb img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    display: block !important;
   }
 
   .bbs-mm-circle-label {
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     color: #333333 !important;
     font-weight: 500 !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+    max-width: 64px !important;
   }
 
   .bbs-mm-circle-item.is-active .bbs-mm-circle-thumb {
@@ -1965,6 +1977,7 @@ a[href*="mailto:"] {
     font-weight: 700 !important;
   }
 
+  /* Subcategory Panel on Mobile */
   .bbs-mm-subcat-panel {
     display: none !important;
     flex-direction: column !important;
@@ -1975,15 +1988,38 @@ a[href*="mailto:"] {
     display: flex !important;
   }
 
+  .bbs-mm-subcat-badge {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #8c7355 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 2px !important;
+  }
+
+  .bbs-mm-subcat-cards {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 7px !important;
+  }
+
+  /* Luxury Touch-Friendly Subcategory Cards */
   .bbs-mm-subcat-card {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
-    padding: 10px 12px !important;
+    gap: 10px !important;
+    padding: 8px 10px !important;
     background: #fbf9f5 !important;
     border: 1px solid #eee6d9 !important;
     border-radius: 8px !important;
     text-decoration: none !important;
+    transition: background 0.15s ease, transform 0.15s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .bbs-mm-subcat-card:active {
+    background: #f0e6d6 !important;
+    transform: scale(0.98) !important;
   }
 
   .bbs-mm-subcat-thumb {
@@ -1992,6 +2028,7 @@ a[href*="mailto:"] {
     border-radius: 6px !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
   }
 
   .bbs-mm-subcat-thumb img {
@@ -2000,51 +2037,88 @@ a[href*="mailto:"] {
     object-fit: cover !important;
   }
 
+  .bbs-mm-subcat-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    gap: 2px !important;
+  }
+
   .bbs-mm-subcat-name {
     font-size: 12px !important;
     font-weight: 600 !important;
     color: #1a1a1a !important;
+    line-height: 1.25 !important;
   }
 
   .bbs-mm-subcat-desc {
     font-size: 10px !important;
     color: #8c7355 !important;
+    line-height: 1.2 !important;
   }
 
   .bbs-mm-subcat-arrow {
     color: #8c7355 !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
   }
 
   .bbs-mm-subcat-all-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
     font-size: 11px !important;
     font-weight: 600 !important;
     color: #5a3a0a !important;
     text-decoration: none !important;
     margin-top: 4px !important;
+    padding: 6px 0 !important;
   }
 
+  /* Home Decor Scrollable List on Mobile */
+  .bbs-mm-subcat-cards.bbs-mm-scrollable {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-right: 4px !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Curated Designers in 2-Column Grid on Mobile */
   .bbs-mm-links-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 4px 12px !important;
+  }
+
+  .bbs-mm-links-subcol {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 2px !important;
   }
 
   .bbs-mm-link-item {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    padding: 6px 0 !important;
-    font-size: 13px !important;
+    gap: 6px !important;
+    padding: 5px 0 !important;
+    font-size: 12px !important;
     text-decoration: none !important;
     color: #2b2825 !important;
     border-bottom: 1px solid #f6f3ee !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
+  /* Compact Luxury Banner on Mobile */
   .bbs-mm-banner-card {
     display: block !important;
     position: relative !important;
-    height: 130px !important;
+    height: 110px !important;
     border-radius: 8px !important;
     overflow: hidden !important;
     text-decoration: none !important;
@@ -2059,31 +2133,35 @@ a[href*="mailto:"] {
   .bbs-mm-banner-overlay {
     position: absolute !important;
     inset: 0 !important;
-    background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%) !important;
+    background: linear-gradient(0deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 100%) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-end !important;
-    padding: 12px !important;
+    padding: 10px 14px !important;
     color: #ffffff !important;
   }
 
   .bbs-mm-banner-badge {
-    font-size: 9px !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.12em !important;
     color: #f1ebd9 !important;
+    font-weight: 600 !important;
   }
 
   .bbs-mm-banner-heading {
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     font-family: Georgia, serif !important;
     color: #ffffff !important;
+    line-height: 1.15 !important;
+    margin: 2px 0 3px 0 !important;
   }
 
   .bbs-mm-banner-btn {
     display: inline-block !important;
-    margin-top: 4px !important;
+    margin-top: 2px !important;
     background: #ffffff !important;
     color: #1a1a1a !important;
-    font-size: 10px !important;
+    font-size: 9.5px !important;
     font-weight: 700 !important;
     padding: 4px 10px !important;
     border-radius: 2px !important;

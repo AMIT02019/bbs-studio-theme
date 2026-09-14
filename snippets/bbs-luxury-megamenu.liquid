@@ -564,6 +564,8 @@
     padding-right: 6px !important;
     scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
   }
   .bbs-mm-subcat-cards.bbs-mm-scrollable::-webkit-scrollbar {
     width: 4px !important;
@@ -583,125 +585,218 @@
     scrollbar-width: thin !important;
     scrollbar-color: #8c7355 #f4ede4 !important;
   }
+
+  /* Mobile Phone View Enhancements (< 1025px) */
+  @media (max-width: 1024px) {
+    .bbs-mm-container {
+      padding: 14px 12px !important;
+    }
+    .bbs-mm-wrapper {
+      gap: 16px !important;
+    }
+    .bbs-mm-section-title {
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      color: #8c7355 !important;
+      margin-bottom: 10px !important;
+      text-transform: uppercase !important;
+    }
+    .bbs-mm-circles-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 10px 4px !important;
+    }
+    .bbs-mm-circle-item {
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .bbs-mm-circle-thumb {
+      width: 50px !important;
+      height: 50px !important;
+      border-radius: 50% !important;
+      margin-bottom: 3px !important;
+      transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+    .bbs-mm-circle-item:active .bbs-mm-circle-thumb {
+      transform: scale(0.92) !important;
+    }
+    .bbs-mm-circle-label {
+      font-size: 9.5px !important;
+      line-height: 1.15 !important;
+      max-width: 64px !important;
+    }
+    .bbs-mm-subcat-card {
+      padding: 8px 10px !important;
+      gap: 10px !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .bbs-mm-subcat-card:active {
+      background: #f0e6d6 !important;
+      transform: scale(0.98) !important;
+    }
+    .bbs-mm-subcat-thumb {
+      width: 44px !important;
+      height: 44px !important;
+      border-radius: 6px !important;
+    }
+    .bbs-mm-subcat-name {
+      font-size: 12px !important;
+    }
+    .bbs-mm-subcat-desc {
+      font-size: 10px !important;
+    }
+    .bbs-mm-subcat-cards.bbs-mm-scrollable {
+      max-height: 250px !important;
+      padding-right: 4px !important;
+    }
+    .bbs-mm-links-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 4px 12px !important;
+    }
+    .bbs-mm-link-item {
+      padding: 5px 0 !important;
+      font-size: 12px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .bbs-mm-banner-card {
+      height: 110px !important;
+    }
+  }
 </style>
 
 <script>
 (function() {
-  function initBbsMegamenu() {
-    var dropdown = document.getElementById('bbs-megamenu-dropdown');
-    var navItem = document.querySelector('.has-bbs-luxury-megamenu');
-    if (!dropdown || !navItem) return;
+  function setActiveCategory(catKey, container) {
+    if (!catKey) return null;
+    var scope = container || document;
+    var triggers = scope.querySelectorAll('.bbs-mm-cat-trigger');
+    var panels = scope.querySelectorAll('.bbs-mm-subcat-panel');
 
-    var navLink = navItem.querySelector('.menu-lv-1__action');
-    var closeTimer = null;
+    for (var i = 0; i < triggers.length; i++) {
+      if (triggers[i].getAttribute('data-cat') === catKey) {
+        triggers[i].classList.add('is-active');
+      } else {
+        triggers[i].classList.remove('is-active');
+      }
+    }
+    var activePanel = null;
+    for (var j = 0; j < panels.length; j++) {
+      if (panels[j].getAttribute('data-subcat') === catKey) {
+        panels[j].classList.add('is-active');
+        activePanel = panels[j];
+      } else {
+        panels[j].classList.remove('is-active');
+      }
+    }
+    return activePanel;
+  }
 
-    // Subcategory switcher (only for categories with sub-categories)
-    var triggers = dropdown.querySelectorAll('.bbs-mm-cat-trigger');
-    var panels = dropdown.querySelectorAll('.bbs-mm-subcat-panel');
-
-    function setActiveCategory(catKey) {
-      if (!catKey) return;
-      for (var i = 0; i < triggers.length; i++) {
-        if (triggers[i].getAttribute('data-cat') === catKey) {
-          triggers[i].classList.add('is-active');
-        } else {
-          triggers[i].classList.remove('is-active');
+  // Universal click / tap delegation (works seamlessly on mobile drawers & cloned nodes)
+  document.addEventListener('click', function(e) {
+    // 1. Category circle trigger clicked
+    var trigger = e.target.closest('.bbs-mm-cat-trigger');
+    if (trigger) {
+      var dropdown = trigger.closest('.bbs-luxury-megamenu-dropdown');
+      var cat = trigger.getAttribute('data-cat');
+      if (cat) {
+        e.preventDefault();
+        e.stopPropagation();
+        var panel = setActiveCategory(cat, dropdown);
+        if (window.innerWidth < 1025 && panel) {
+          setTimeout(function() {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 80);
         }
       }
-      for (var j = 0; j < panels.length; j++) {
-        if (panels[j].getAttribute('data-subcat') === catKey) {
-          panels[j].classList.add('is-active');
-        } else {
-          panels[j].classList.remove('is-active');
+      return;
+    }
+
+    // 2. Mobile back button
+    var backBtn = e.target.closest('[data-bbs-mm-back]');
+    if (backBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      var parentItem = backBtn.closest('.has-bbs-luxury-megamenu');
+      if (parentItem) {
+        parentItem.classList.remove('is-open');
+      }
+      return;
+    }
+
+    // 3. Mobile category toggle in drawer
+    if (window.innerWidth < 1025) {
+      var mobileAction = e.target.closest('.site-nav-mobile .has-bbs-luxury-megamenu > .menu-lv-1__action');
+      if (mobileAction) {
+        e.preventDefault();
+        e.stopPropagation();
+        var navItem = mobileAction.closest('.has-bbs-luxury-megamenu');
+        if (navItem) {
+          navItem.classList.toggle('is-open');
+        }
+        return;
+      }
+    }
+  }, true);
+
+  // Desktop hover subcategory switcher
+  document.addEventListener('mouseover', function(e) {
+    if (window.innerWidth >= 1025) {
+      var trigger = e.target.closest('.bbs-mm-cat-trigger');
+      if (trigger) {
+        var dropdown = trigger.closest('.bbs-luxury-megamenu-dropdown');
+        var cat = trigger.getAttribute('data-cat');
+        if (cat) {
+          setActiveCategory(cat, dropdown);
         }
       }
     }
+  });
 
-    triggers.forEach(function(trigger) {
-      var cat = trigger.getAttribute('data-cat');
-      trigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        setActiveCategory(cat);
-      });
+  // Desktop mega menu reveal on navigation hover
+  var closeTimer = null;
+  function setupDesktopHover() {
+    var navItems = document.querySelectorAll('.has-bbs-luxury-megamenu');
+    navItems.forEach(function(item) {
+      var dd = item.querySelector('.bbs-luxury-megamenu-dropdown');
+      var navLink = item.querySelector('.menu-lv-1__action');
+      if (!dd) return;
 
-      trigger.addEventListener('mouseenter', function() {
-        if (window.innerWidth >= 1025) {
-          setActiveCategory(cat);
-        }
-      });
-    });
-
-    // Desktop hover with debounce
-    if (window.innerWidth >= 1025) {
-      function showMenu() {
+      function show() {
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-        navItem.classList.add('is-active');
-        dropdown.classList.add('is-visible');
+        item.classList.add('is-active');
+        dd.classList.add('is-visible');
       }
-
-      function hideMenu() {
+      function hide() {
         closeTimer = setTimeout(function() {
-          navItem.classList.remove('is-active');
-          dropdown.classList.remove('is-visible');
+          item.classList.remove('is-active');
+          dd.classList.remove('is-visible');
         }, 220);
       }
 
-      navItem.addEventListener('mouseenter', showMenu);
-      navItem.addEventListener('mouseleave', hideMenu);
-      dropdown.addEventListener('mouseenter', showMenu);
-      dropdown.addEventListener('mouseleave', hideMenu);
+      item.addEventListener('mouseenter', show);
+      item.addEventListener('mouseleave', hide);
+      dd.addEventListener('mouseenter', show);
+      dd.addEventListener('mouseleave', hide);
 
-      if (navLink) {
+      if (navLink && !navLink.dataset.bbsHoverInit) {
+        navLink.dataset.bbsHoverInit = 'true';
         navLink.addEventListener('click', function(e) {
           if (window.innerWidth >= 1025) {
             e.preventDefault();
           }
         });
       }
-    }
-
-    function setupMobileEvents() {
-      var mobileNavItems = document.querySelectorAll('.site-nav-mobile .has-bbs-luxury-megamenu');
-      mobileNavItems.forEach(function(item) {
-        var link = item.querySelector('.menu-lv-1__action');
-        var backBtn = item.querySelector('[data-bbs-mm-back]');
-
-        if (link && !link.dataset.bbsInit) {
-          link.dataset.bbsInit = 'true';
-          link.addEventListener('click', function(e) {
-            if (window.innerWidth < 1025) {
-              e.preventDefault();
-              e.stopPropagation();
-              item.classList.toggle('is-open');
-            }
-          });
-        }
-
-        if (backBtn && !backBtn.dataset.bbsInit) {
-          backBtn.dataset.bbsInit = 'true';
-          backBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            item.classList.remove('is-open');
-          });
-        }
-      });
-    }
-
-    setupMobileEvents();
-    document.addEventListener('shopify:section:load', setupMobileEvents);
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('.header-mobile--icon, [data-mobile-menu]')) {
-        setTimeout(setupMobileEvents, 300);
-      }
     });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBbsMegamenu);
+    document.addEventListener('DOMContentLoaded', setupDesktopHover);
   } else {
-    initBbsMegamenu();
+    setupDesktopHover();
   }
+  document.addEventListener('shopify:section:load', setupDesktopHover);
 })();
 </script>
