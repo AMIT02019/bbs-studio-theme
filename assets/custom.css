@@ -171,9 +171,8 @@ body.template-search #MainContent,
 .cpg-sidebar-title { order: 0; }
 #cpg-fg-Price { order: 1; }
 #cpg-fg-Availability { order: 2; }
-#cpg-fg-Brands { order: 3; }
-#cpg-fg-Category { order: 4; }
-[id="cpg-fg-Product type"] { order: 5; }
+#cpg-fg-Category, #cpg-fg-Brands { order: 3; }
+[id="cpg-fg-Product type"] { order: 4; }
 
 
 /* Vintage Designer Jewellery Page Grid Text */
