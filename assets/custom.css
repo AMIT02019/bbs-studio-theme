@@ -2274,6 +2274,19 @@ a[href*="mailto:"] {
   }
 }
 
+/* BBS Product Description - Capitalize First Letter of Every Word */
+.pp-desc__text,
+.pp-desc__text p,
+.pp-desc__text span,
+.pp-desc__text div,
+.productView-desc,
+.productView-desc p,
+.product__description,
+.product__description p,
+.halo-text-format p {
+  text-transform: capitalize !important;
+}
+
 /* BBS Product Description - Standardized Attribute & Paragraph Spacing */
 .pp-desc__text p,
 .productView-desc p,
