@@ -2453,3 +2453,19 @@ a[href*="mailto:"] {
   letter-spacing: 0.05em !important;
   color: #ffffff !important;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   BBS MAIN HEADER NAVIGATION - TOP-LEVEL MENU ITEMS (18px)
+   ───────────────────────────────────────────────────────────── */
+.header__inline-menu .menu-lv-1__action,
+.header__inline-menu .menu-lv-1__action .text,
+.list-menu--inline .menu-lv-1__action,
+.list-menu--inline .menu-lv-1__action .text,
+.section-header-navigation .menu-lv-1__action,
+.section-header-navigation .menu-lv-1__action .text,
+.header-navigation .menu-lv-1__action,
+.header-navigation .menu-lv-1__action .text,
+.header__menu-item.menu-lv-1__action,
+.header__menu-item.menu-lv-1__action .text {
+  font-size: 18px !important;
+}
