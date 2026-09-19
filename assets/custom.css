@@ -1834,9 +1834,13 @@ a[href*="mailto:"] {
 
 /* Mobile & Tablet Navigation (< 1025px) */
 @media (max-width: 1024px) {
-  /* Prevent brown line artifact under text on tap */
+  /* Prevent brown line artifact / underline under text on mobile */
   #navigation-mobile .menu-lv-1__action > .text:before,
-  .site-nav-mobile .menu-lv-1__action > .text:before {
+  .site-nav-mobile .menu-lv-1__action > .text:before,
+  #navigation-mobile .has-bbs-luxury-megamenu > .menu-lv-1__action::after,
+  #navigation-mobile .menu-lv-1__action::after,
+  .site-nav-mobile .has-bbs-luxury-megamenu > .menu-lv-1__action::after,
+  .site-nav-mobile .menu-lv-1__action::after {
     display: none !important;
   }
 
@@ -1885,6 +1889,9 @@ a[href*="mailto:"] {
     pointer-events: auto !important;
     z-index: 500 !important;
   }
+  #navigation-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .halo-sidebar_menu .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   #navigation-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   .halo-sidebar_menu .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   .bbs-luxury-megamenu-dropdown .nav-title-mobile,
