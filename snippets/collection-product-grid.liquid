@@ -167,24 +167,110 @@
   overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; background: #fff;
 }
 .cpg-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+/* ─── Product card media & slider ─── */
 .cpg-card-img {
   position: relative; aspect-ratio: 1/1; overflow: hidden;
   background: #ffffff; display: block;
 }
-.cpg-card-img img {
+.cpg-card-slider {
+  position: relative; width: 100%; height: 100%; display: block;
+}
+.cpg-card-slide {
+  position: absolute; inset: 0; display: block;
+  text-decoration: none; -webkit-tap-highlight-color: transparent;
+}
+.cpg-card-slide img {
   width: 100%; height: 100%; object-fit: contain !important;
   transition: opacity 0.3s ease; position: absolute; top: 0; left: 0;
-  padding: 16px; box-sizing: border-box; background: #ffffff;
+  padding: 16px; box-sizing: border-box; background: #ffffff; display: block;
 }
-.cpg-card-img .cpg-img-primary { opacity: 1; position: absolute; }
-.cpg-card-img .cpg-img-secondary { opacity: 0; position: absolute; }
+/* Desktop: image 1 visible, image 2 visible on hover, extras hidden */
+.cpg-card-slide.is-first { opacity: 1; z-index: 1; }
+.cpg-card-slide.is-second { opacity: 0; z-index: 2; transition: opacity 0.3s ease; }
+.cpg-card-slide.is-extra { display: none !important; }
+
 @media (min-width: 1025px) and (hover: hover) {
-  .cpg-card:hover .cpg-img-primary { opacity: 0; }
-  .cpg-card:hover .cpg-img-secondary { opacity: 1; }
+  .cpg-card:hover .cpg-card-slide.is-first { opacity: 0; }
+  .cpg-card:hover .cpg-card-slide.is-second { opacity: 1; }
+}
+
+.cpg-slider-dots {
+  display: none;
+}
+
+/* ─── Mobile Photo Swipe (< 1025px) ─── */
+@media (max-width: 1024px) {
+  .cpg-card-slider {
+    display: flex !important;
+    position: absolute !important;
+    inset: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    overscroll-behavior-x: contain !important;
+    touch-action: pan-x pan-y !important;
+  }
+  .cpg-card-slider::-webkit-scrollbar {
+    display: none !important;
+  }
+  .cpg-card-slide {
+    position: relative !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    display: block !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+  .cpg-card-slide.is-second,
+  .cpg-card-slide.is-extra {
+    display: block !important;
+    opacity: 1 !important;
+  }
+  .cpg-card-slide img {
+    padding: 12px !important;
+    position: relative !important;
+    opacity: 1 !important;
+  }
+
+  /* Slide indicator dots */
+  .cpg-slider-dots {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important;
+    bottom: 6px !important;
+    left: 0 !important;
+    right: 0 !important;
+    gap: 4px !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+  }
+  .cpg-dot {
+    width: 5px !important;
+    height: 5px !important;
+    border-radius: 50% !important;
+    background: rgba(90, 58, 10, 0.28) !important;
+    transition: all 0.22s ease !important;
+  }
+  .cpg-dot.is-active {
+    width: 14px !important;
+    border-radius: 4px !important;
+    background: #5a3a0a !important;
+  }
+}
+@media (max-width: 480px) {
+  .cpg-card-slide img {
+    padding: 8px !important;
+  }
 }
 .cpg-badges {
   position: absolute; top: 8px; left: 8px;
-  display: flex; flex-direction: column; gap: 4px; z-index: 2;
+  display: flex; flex-direction: column; gap: 4px; z-index: 10; pointer-events: none;
 }
 .cpg-badge {
   display: inline-block; padding: 2px 7px; border-radius: 3px;
@@ -538,22 +624,36 @@
                 {%- endfor -%}
 
                 <div class="cpg-card cpg-card--available" data-product-id="{{ product.id }}" style="order: 1;">
-                  <a class="cpg-card-img" href="{{ product.url | within: collection }}">
-                    {%- if product.images[0] -%}
-                      <img class="cpg-img-primary"
-                        src="{{ product.images[0] | image_url: width: 3293 }}"
-                        alt="{{ product.images[0].alt | escape }}"
-                        width="3293" height="3293" {% if forloop.index <= 4 %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}>
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                  <div class="cpg-card-img">
+                    <div class="cpg-card-slider" data-cpg-slider>
+                      {%- if product.images.size > 0 -%}
+                        {%- for image in product.images limit: 6 -%}
+                          <a class="cpg-card-slide{% if forloop.first %} is-first{% elsif forloop.index == 2 %} is-second{% else %} is-extra{% endif %}"
+                             href="{{ product.url | within: collection }}"
+                             title="{{ product.title | escape }}">
+                            <img
+                              class="{% if forloop.first %}cpg-img-primary{% elsif forloop.index == 2 %}cpg-img-secondary{% endif %}"
+                              src="{{ image | image_url: width: 800 }}"
+                              alt="{{ image.alt | default: product.title | escape }}"
+                              width="800" height="800"
+                              {% if forloop.parentloop.index <= 4 and forloop.first %}fetchpriority="high" loading="eager"{% else %}loading="lazy"{% endif %}>
+                          </a>
+                        {%- endfor -%}
+                      {%- else -%}
+                        <a class="cpg-card-slide is-first" href="{{ product.url | within: collection }}">
+                          {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                        </a>
+                      {%- endif -%}
+                    </div>
+
+                    {%- if product.images.size > 1 -%}
+                      <div class="cpg-slider-dots" data-cpg-dots aria-hidden="true">
+                        {%- for image in product.images limit: 6 -%}
+                          <span class="cpg-dot{% if forloop.first %} is-active{% endif %}"></span>
+                        {%- endfor -%}
+                      </div>
                     {%- endif -%}
-                    {%- if product.images[1] -%}
-                      <img class="cpg-img-secondary"
-                        src="{{ product.images[1] | image_url: width: 3293 }}"
-                        alt="{{ product.images[1].alt | escape }}"
-                        width="3293" height="3293" loading="lazy">
-                    {%- endif -%}
-                  </a>
+                  </div>
 
                   <div class="cpg-badges">
                     {%- if on_sale -%}<span class="cpg-badge cpg-badge--sale">-{{ pct }}%</span>{%- endif -%}
@@ -598,22 +698,36 @@
                 {%- endfor -%}
 
                 <div class="cpg-card cpg-card--soldout" data-product-id="{{ product.id }}" style="order: 99;">
-                  <a class="cpg-card-img" href="{{ product.url | within: collection }}">
-                    {%- if product.images[0] -%}
-                      <img class="cpg-img-primary"
-                        src="{{ product.images[0] | image_url: width: 3293 }}"
-                        alt="{{ product.images[0].alt | escape }}"
-                        width="3293" height="3293" loading="lazy">
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                  <div class="cpg-card-img">
+                    <div class="cpg-card-slider" data-cpg-slider>
+                      {%- if product.images.size > 0 -%}
+                        {%- for image in product.images limit: 6 -%}
+                          <a class="cpg-card-slide{% if forloop.first %} is-first{% elsif forloop.index == 2 %} is-second{% else %} is-extra{% endif %}"
+                             href="{{ product.url | within: collection }}"
+                             title="{{ product.title | escape }}">
+                            <img
+                              class="{% if forloop.first %}cpg-img-primary{% elsif forloop.index == 2 %}cpg-img-secondary{% endif %}"
+                              src="{{ image | image_url: width: 800 }}"
+                              alt="{{ image.alt | default: product.title | escape }}"
+                              width="800" height="800"
+                              loading="lazy">
+                          </a>
+                        {%- endfor -%}
+                      {%- else -%}
+                        <a class="cpg-card-slide is-first" href="{{ product.url | within: collection }}">
+                          {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
+                        </a>
+                      {%- endif -%}
+                    </div>
+
+                    {%- if product.images.size > 1 -%}
+                      <div class="cpg-slider-dots" data-cpg-dots aria-hidden="true">
+                        {%- for image in product.images limit: 6 -%}
+                          <span class="cpg-dot{% if forloop.first %} is-active{% endif %}"></span>
+                        {%- endfor -%}
+                      </div>
                     {%- endif -%}
-                    {%- if product.images[1] -%}
-                      <img class="cpg-img-secondary"
-                        src="{{ product.images[1] | image_url: width: 3293 }}"
-                        alt="{{ product.images[1].alt | escape }}"
-                        width="3293" height="3293" loading="lazy">
-                    {%- endif -%}
-                  </a>
+                  </div>
 
                   <div class="cpg-badges">
                     <span class="cpg-badge cpg-badge--soldout">Sold</span>
@@ -796,6 +910,62 @@
       }).catch(function () { busy = false; });
     }, { rootMargin: '300px' }).observe(trigger);
   }
+  // Mobile Card Photo Swipe Touch and Dot Tracking
+  var cpgTouchStartX = 0;
+  var cpgTouchStartY = 0;
+  var cpgIsSwiping = false;
+
+  document.addEventListener('touchstart', function(e) {
+    var slider = e.target.closest('[data-cpg-slider]');
+    if (slider) {
+      cpgIsSwiping = false;
+      cpgTouchStartX = e.touches[0].clientX;
+      cpgTouchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (cpgTouchStartX) {
+      var diffX = Math.abs(e.touches[0].clientX - cpgTouchStartX);
+      var diffY = Math.abs(e.touches[0].clientY - cpgTouchStartY);
+      if (diffX > 7 && diffX > diffY) {
+        cpgIsSwiping = true;
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('click', function(e) {
+    if (cpgIsSwiping) {
+      var slide = e.target.closest('.cpg-card-slide');
+      if (slide) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      cpgIsSwiping = false;
+    }
+    cpgTouchStartX = 0;
+    cpgTouchStartY = 0;
+  }, true);
+
+  // Active Dot Sync on Horizontal Scroll
+  document.addEventListener('scroll', function(e) {
+    var slider = e.target;
+    if (slider && slider.classList && slider.classList.contains('cpg-card-slider')) {
+      var dotsWrap = slider.parentElement.querySelector('[data-cpg-dots]');
+      if (!dotsWrap) return;
+      var dots = dotsWrap.querySelectorAll('.cpg-dot');
+      if (!dots.length) return;
+      var width = slider.clientWidth;
+      if (width > 0) {
+        var index = Math.round(slider.scrollLeft / width);
+        index = Math.max(0, Math.min(index, dots.length - 1));
+        for (var i = 0; i < dots.length; i++) {
+          dots[i].classList.toggle('is-active', i === index);
+        }
+      }
+    }
+  }, { passive: true, capture: true });
+
   window.cpgSortBy = cpgSortBy;
   window.cpgChangePerPage = cpgChangePerPage;
   window.cpgToggleFilter = cpgToggleFilter;
