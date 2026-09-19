@@ -2307,7 +2307,7 @@ a[href*="mailto:"] {
 }
 /* Custom Luxury Scrollbar for Home Decor Subcategories */
 .bbs-mm-subcat-cards.bbs-mm-scrollable {
-  max-height: 366px !important;
+  max-height: 370px !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding-right: 6px !important;
