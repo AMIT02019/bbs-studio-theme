@@ -2226,8 +2226,9 @@ a[href*="mailto:"] {
 .main-page-title.page-header,
 .template-page .main-page-title,
 .main-page-title {
+  text-align: center !important;
   font-size: 20px !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
   padding: 0 !important;
   border: none !important;
   border-top: none !important;
@@ -2236,6 +2237,19 @@ a[href*="mailto:"] {
   letter-spacing: 0.06em !important;
   color: #ffffff !important;
   line-height: 1.15 !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+.template-page section.spaced-section:has(.main-page-title) .container,
+.template-page section:has(.main-page-title) .container,
+.template-page .shopify-section:has(.main-page-title) .container,
+.template-page section.spaced-section:has(.main-page-title) .page-width,
+.template-page section:has(.main-page-title) .page-width,
+.template-page .shopify-section:has(.main-page-title) .page-width {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .main-page-title.page-header::before,
@@ -2272,6 +2286,7 @@ a[href*="mailto:"] {
   .main-page-title.page-header,
   .template-page .main-page-title,
   .main-page-title {
+    text-align: center !important;
     font-size: 20px !important;
     letter-spacing: 0.05em !important;
     line-height: 1.15 !important;
