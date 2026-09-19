@@ -332,11 +332,38 @@
       const nextBtn = section.querySelector('.category-circle-arrow-next');
 
       if (grid && prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', function() {
-          grid.scrollBy({ left: -360, behavior: 'smooth' });
+        function getScrollStep() {
+          var item = grid.querySelector('.category-circle-item');
+          if (item) {
+            // Scroll by 2 items width or fallback to 360
+            var step = (item.offsetWidth + 22) * 2;
+            return Math.min(step, grid.clientWidth || 360);
+          }
+          return 360;
+        }
+
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var maxScroll = grid.scrollWidth - grid.clientWidth;
+          if (maxScroll <= 0) return;
+          // If at the beginning, loop to the last circle
+          if (grid.scrollLeft <= 15) {
+            grid.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            grid.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+          }
         });
-        nextBtn.addEventListener('click', function() {
-          grid.scrollBy({ left: 360, behavior: 'smooth' });
+
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var maxScroll = grid.scrollWidth - grid.clientWidth;
+          if (maxScroll <= 0) return;
+          // After the last circle, scroll back to the first circle
+          if (grid.scrollLeft >= maxScroll - 15) {
+            grid.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            grid.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+          }
         });
       }
     }
