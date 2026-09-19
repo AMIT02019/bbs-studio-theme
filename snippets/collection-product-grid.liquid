@@ -162,11 +162,15 @@
 }
 
 /* ─── Product card ─── */
+/* ─── Product card ─── */
 .cpg-card {
   position: relative; border: 1px solid #f0f0f0; border-radius: 6px;
-  overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; background: #fff;
+  overflow: hidden; background: #fff;
 }
-.cpg-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+@media (min-width: 1025px) and (hover: hover) {
+  .cpg-card { transition: box-shadow 0.2s, transform 0.2s; }
+  .cpg-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+}
 /* ─── Product card media & slider ─── */
 .cpg-card-img {
   position: relative; aspect-ratio: 1/1; overflow: hidden;
@@ -195,8 +199,18 @@
   .cpg-card:hover .cpg-card-slide.is-second { opacity: 1; }
 }
 
-/* ─── Mobile Photo Swipe (< 1025px) - Ultra Smooth ─── */
+/* ─── Mobile Photo Swipe (< 1025px) - Zero Shake & Rock Solid ─── */
 @media (max-width: 1024px) {
+  .cpg-card,
+  .cpg-card:hover,
+  .cpg-card:active {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+  .cpg-card-img {
+    contain: layout paint !important;
+  }
   .cpg-card-slider {
     display: flex !important;
     position: absolute !important;
@@ -206,10 +220,10 @@
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
+    overscroll-behavior: contain !important;
     overscroll-behavior-x: contain !important;
-    touch-action: pan-x pan-y !important;
-    scroll-behavior: smooth !important;
-    will-change: scroll-position !important;
+    overscroll-behavior-y: contain !important;
+    touch-action: pan-x !important;
   }
   .cpg-card-slider::-webkit-scrollbar {
     display: none !important;
@@ -232,6 +246,7 @@
     user-select: none !important;
     -webkit-user-select: none !important;
     -webkit-touch-callout: none !important;
+    contain: layout paint !important;
   }
   .cpg-card-slide img,
   .cpg-card-slide .cpg-slide-img {
@@ -256,6 +271,7 @@
     padding: 8px !important;
   }
 }
+
 .cpg-badges {
   position: absolute; top: 8px; left: 8px;
   display: flex; flex-direction: column; gap: 4px; z-index: 10; pointer-events: none;
@@ -920,62 +936,6 @@
   }, true);
 
 
-
-  // Mobile Card Photo Swipe Touch and Dot Tracking
-  var cpgTouchStartX = 0;
-  var cpgTouchStartY = 0;
-  var cpgIsSwiping = false;
-
-  document.addEventListener('touchstart', function(e) {
-    var slider = e.target.closest('[data-cpg-slider]');
-    if (slider) {
-      cpgIsSwiping = false;
-      cpgTouchStartX = e.touches[0].clientX;
-      cpgTouchStartY = e.touches[0].clientY;
-    }
-  }, { passive: true });
-
-  document.addEventListener('touchmove', function(e) {
-    if (cpgTouchStartX) {
-      var diffX = Math.abs(e.touches[0].clientX - cpgTouchStartX);
-      var diffY = Math.abs(e.touches[0].clientY - cpgTouchStartY);
-      if (diffX > 7 && diffX > diffY) {
-        cpgIsSwiping = true;
-      }
-    }
-  }, { passive: true });
-
-  document.addEventListener('click', function(e) {
-    if (cpgIsSwiping) {
-      var slide = e.target.closest('.cpg-card-slide');
-      if (slide) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      cpgIsSwiping = false;
-    }
-    cpgTouchStartX = 0;
-    cpgTouchStartY = 0;
-  }, true);
-
-  // Active Dot Sync on Horizontal Scroll
-  document.addEventListener('scroll', function(e) {
-    var slider = e.target;
-    if (slider && slider.classList && slider.classList.contains('cpg-card-slider')) {
-      var dotsWrap = slider.parentElement.querySelector('[data-cpg-dots]');
-      if (!dotsWrap) return;
-      var dots = dotsWrap.querySelectorAll('.cpg-dot');
-      if (!dots.length) return;
-      var width = slider.clientWidth;
-      if (width > 0) {
-        var index = Math.round(slider.scrollLeft / width);
-        index = Math.max(0, Math.min(index, dots.length - 1));
-        for (var i = 0; i < dots.length; i++) {
-          dots[i].classList.toggle('is-active', i === index);
-        }
-      }
-    }
-  }, { passive: true, capture: true });
 
   window.cpgSortBy = cpgSortBy;
   window.cpgChangePerPage = cpgChangePerPage;
