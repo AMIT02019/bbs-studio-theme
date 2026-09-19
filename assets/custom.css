@@ -2223,22 +2223,26 @@ a[href*="mailto:"] {
   gap: 2px !important;
 }
 
+.bbs-mm-subcat-card .bbs-mm-subcat-name,
 .bbs-mm-subcat-name {
   font-size: 12.5px !important;
   font-weight: 600 !important;
-  color: #1a1a1a !important;
+  color: #ffffff !important;
   letter-spacing: 0.02em !important;
   line-height: 1.25 !important;
 }
 
+.bbs-mm-subcat-card .bbs-mm-subcat-desc,
 .bbs-mm-subcat-desc {
   font-size: 10.5px !important;
-  color: #8c7355 !important;
+  color: #ffffff !important;
+  opacity: 0.88 !important;
   line-height: 1.2 !important;
 }
 
+.bbs-mm-subcat-card .bbs-mm-subcat-arrow,
 .bbs-mm-subcat-arrow {
-  color: #8c7355 !important;
+  color: #ffffff !important;
   font-size: 16px !important;
   font-weight: 600 !important;
   margin-left: auto !important;
