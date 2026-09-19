@@ -19,7 +19,7 @@
         "ai_gen_block_ec0e7e2_rJaNmy": {
           "type": "ai_gen_block_ec0e7e2",
           "settings": {
-            "heading": "OUR STORY",
+            "heading": "",
             "text": "<p>Welcome to Beg Borrow Steal Studio a premier Mumbai based boutique where fashion, art and antiques come together in a celebration of timeless style and conscious luxury. Founded in 2018 by friends Pranav Sood and Krisna Krishnankutty, the studio began in Bandra with a vision to redefine modern style through sustainability, craftsmanship and individuality.<br/><br/>Driven by a passion for rare and exceptional finds, we source authentic vintage treasures, iconic designer pieces from houses such as Chanel, Dior, and Hermès, and one-of-a-kind collectibles from around the world. Every designer item is carefully authenticated and certified through trusted platforms including Legit Grails and Real Authentication, ensuring complete confidence in every purchase.<br/><br/>At Beg Borrow Steal Studio, we pride ourselves on sourcing exceptional deadstock pieces, not pre-loved items. Our collections consist of rare, unworn treasures sourced through exclusive auctions, private collections and special acquisitions from across the globe. Each piece is selected for its rarity, craftsmanship and enduring relevance, offering our clients access to truly unique finds with preserved originality.<br/><br/>Today, Beg Borrow Steal Studio offers a thoughtfully curated universe of vintage jewellery, handbags, watches, sunglasses, antiques and home curios. Each piece is handpicked for its character, history and enduring beauty, breathing new life into treasures of the past while seamlessly complementing contemporary style.<br/><br/>Step into our world and discover a refined tapestry of authenticity, artistry and sustainable luxury.</p>",
             "button_text": "KNOW MORE →",
             "button_link": "shopify://pages/contact-us",
@@ -29,7 +29,7 @@
             "padding_top": 50,
             "padding_bottom": 50,
             "mobile_text_align": "left",
-            "background_color": "#FFFFFF",
+            "background_color": "#ffffff",
             "heading_color": "#3e2723",
             "text_color": "#6d6d6d",
             "heading_size": 34,
