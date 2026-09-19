@@ -1834,6 +1834,15 @@ a[href*="mailto:"] {
 
 /* Mobile & Tablet Navigation (< 1025px) */
 @media (max-width: 1024px) {
+  /* Prevent brown line artifact under text on tap */
+  #navigation-mobile .menu-lv-1__action > .text:before,
+  .site-nav-mobile .menu-lv-1__action > .text:before {
+    display: none !important;
+  }
+
+  #navigation-mobile .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .bbs-luxury-megamenu-dropdown,
+  .halo-sidebar_menu .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown,
   .site-nav-mobile .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown {
     display: block !important;
     position: fixed !important;
@@ -1867,6 +1876,9 @@ a[href*="mailto:"] {
     pointer-events: auto !important;
   }
 
+  #navigation-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .halo-sidebar_menu .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   .site-nav-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile {
     display: flex !important;
     align-items: center !important;
