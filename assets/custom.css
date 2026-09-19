@@ -1840,10 +1840,11 @@ a[href*="mailto:"] {
     display: none !important;
   }
 
-  #navigation-mobile .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown,
-  #navigation-mobile .bbs-luxury-megamenu-dropdown,
-  .halo-sidebar_menu .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown,
-  .site-nav-mobile .has-bbs-luxury-megamenu .bbs-luxury-megamenu-dropdown {
+  /* Base/Closed State for Mobile Megamenu Drawer */
+  #navigation-mobile .has-bbs-luxury-megamenu:not(.is-open):not(.is-active) .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .bbs-luxury-megamenu-dropdown:not(.is-open):not(.is-active),
+  .halo-sidebar_menu .has-bbs-luxury-megamenu:not(.is-open):not(.is-active) .bbs-luxury-megamenu-dropdown,
+  .site-nav-mobile .has-bbs-luxury-megamenu:not(.is-open):not(.is-active) .bbs-luxury-megamenu-dropdown {
     display: block !important;
     position: fixed !important;
     top: 0 !important;
@@ -1852,7 +1853,7 @@ a[href*="mailto:"] {
     height: 100vh !important;
     max-height: 100vh !important;
     background: #ffffff !important;
-    z-index: 200 !important;
+    z-index: 10 !important;
     overflow-y: auto !important;
     padding: 0 0 120px 0 !important;
     -webkit-overflow-scrolling: touch !important;
@@ -1860,10 +1861,18 @@ a[href*="mailto:"] {
     transform: translate3d(-101%, 0, 0) !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    pointer-events: none !important;
     transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, visibility 0.3s !important;
     will-change: transform, opacity;
   }
 
+  /* Open/Active State when CATEGORIES is tapped */
+  #navigation-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .menu-lv-item.is-open > .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .menu-lv-item.is-active > .bbs-luxury-megamenu-dropdown,
+  #navigation-mobile .bbs-luxury-megamenu-dropdown.is-open,
+  #navigation-mobile .bbs-luxury-megamenu-dropdown.is-active,
   .site-nav-mobile .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
   .site-nav-mobile .has-bbs-luxury-megamenu.is-active .bbs-luxury-megamenu-dropdown,
   .halo-sidebar_menu .has-bbs-luxury-megamenu.is-open .bbs-luxury-megamenu-dropdown,
@@ -1874,8 +1883,11 @@ a[href*="mailto:"] {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+    z-index: 500 !important;
   }
-
+  #navigation-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .halo-sidebar_menu .bbs-luxury-megamenu-dropdown .nav-title-mobile,
+  .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   #navigation-mobile .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   .halo-sidebar_menu .bbs-luxury-megamenu-dropdown .nav-title-mobile,
   .bbs-luxury-megamenu-dropdown .nav-title-mobile,
