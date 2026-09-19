@@ -195,11 +195,7 @@
   .cpg-card:hover .cpg-card-slide.is-second { opacity: 1; }
 }
 
-.cpg-slider-dots {
-  display: none;
-}
-
-/* ─── Mobile Photo Swipe (< 1025px) ─── */
+/* ─── Mobile Photo Swipe (< 1025px) - Ultra Smooth ─── */
 @media (max-width: 1024px) {
   .cpg-card-slider {
     display: flex !important;
@@ -212,9 +208,13 @@
     scrollbar-width: none !important;
     overscroll-behavior-x: contain !important;
     touch-action: pan-x pan-y !important;
+    scroll-behavior: smooth !important;
+    will-change: scroll-position !important;
   }
   .cpg-card-slider::-webkit-scrollbar {
     display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .cpg-card-slide,
   .cpg-card-slide.is-first,
@@ -225,11 +225,13 @@
     width: 100% !important;
     height: 100% !important;
     scroll-snap-align: start !important;
-    scroll-snap-stop: always !important;
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
     z-index: 1 !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
   }
   .cpg-card-slide img,
   .cpg-card-slide .cpg-slide-img {
@@ -243,32 +245,9 @@
     padding: 10px !important;
     box-sizing: border-box !important;
     background: #ffffff !important;
-  }
-
-  /* Slide indicator dots */
-  .cpg-slider-dots {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    position: absolute !important;
-    bottom: 6px !important;
-    left: 0 !important;
-    right: 0 !important;
-    gap: 4px !important;
-    z-index: 5 !important;
     pointer-events: none !important;
-  }
-  .cpg-dot {
-    width: 5px !important;
-    height: 5px !important;
-    border-radius: 50% !important;
-    background: rgba(90, 58, 10, 0.28) !important;
-    transition: all 0.22s ease !important;
-  }
-  .cpg-dot.is-active {
-    width: 14px !important;
-    border-radius: 4px !important;
-    background: #5a3a0a !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
   }
 }
 @media (max-width: 480px) {
@@ -654,14 +633,6 @@
                         </a>
                       {%- endif -%}
                     </div>
-
-                    {%- if product.images.size > 1 -%}
-                      <div class="cpg-slider-dots" data-cpg-dots aria-hidden="true">
-                        {%- for image in product.images limit: 6 -%}
-                          <span class="cpg-dot{% if forloop.first %} is-active{% endif %}"></span>
-                        {%- endfor -%}
-                      </div>
-                    {%- endif -%}
                   </div>
 
                   <div class="cpg-badges">
@@ -728,14 +699,6 @@
                         </a>
                       {%- endif -%}
                     </div>
-
-                    {%- if product.images.size > 1 -%}
-                      <div class="cpg-slider-dots" data-cpg-dots aria-hidden="true">
-                        {%- for image in product.images limit: 6 -%}
-                          <span class="cpg-dot{% if forloop.first %} is-active{% endif %}"></span>
-                        {%- endfor -%}
-                      </div>
-                    {%- endif -%}
                   </div>
 
                   <div class="cpg-badges">
@@ -956,24 +919,7 @@
     cpgTouchStartY = 0;
   }, true);
 
-  // Active Dot Sync on Horizontal Scroll
-  document.addEventListener('scroll', function(e) {
-    var slider = e.target;
-    if (slider && slider.classList && slider.classList.contains('cpg-card-slider')) {
-      var dotsWrap = slider.parentElement.querySelector('[data-cpg-dots]');
-      if (!dotsWrap) return;
-      var dots = dotsWrap.querySelectorAll('.cpg-dot');
-      if (!dots.length) return;
-      var width = slider.clientWidth;
-      if (width > 0) {
-        var index = Math.round(slider.scrollLeft / width);
-        index = Math.max(0, Math.min(index, dots.length - 1));
-        for (var i = 0; i < dots.length; i++) {
-          dots[i].classList.toggle('is-active', i === index);
-        }
-      }
-    }
-  }, { passive: true, capture: true });
+
 
   // Mobile Card Photo Swipe Touch and Dot Tracking
   var cpgTouchStartX = 0;
