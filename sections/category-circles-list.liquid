@@ -25,9 +25,18 @@
   .category-circles-container {
     max-width: {{ section.settings.max_width }}px;
     margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
     position: relative;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    .category-circles-container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 
   .category-circles-heading {
@@ -227,7 +236,7 @@
 {%- endstyle -%}
 
 <div class="category-circles-wrapper section-{{ section.id }}-padding" {% if section.settings.hide_section %}style="display: none !important;"{% endif %}>
-  <div class="category-circles-container">
+  <div class="category-circles-container container container-1470">
     {%- if section.settings.heading != blank -%}
       <h2 class="category-circles-heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -401,7 +410,7 @@
       "step": 10,
       "unit": "px",
       "label": "Section Container Max Width",
-      "default": 1430
+      "default": 1500
     },
     {
       "type": "checkbox",
