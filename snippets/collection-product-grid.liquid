@@ -937,6 +937,99 @@
 
 
 
+  
+  // ─── Clicked Product Scroll Restoration on Back Navigation ───
+  // 1. Remember clicked product ID and scroll position
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.cpg-card');
+    if (card && e.target.closest('a')) {
+      var pid = card.getAttribute('data-product-id');
+      if (pid) {
+        try {
+          sessionStorage.setItem('cpg_back_pid', pid);
+          sessionStorage.setItem('cpg_back_path', window.location.pathname);
+          sessionStorage.setItem('cpg_back_y', String(window.scrollY || window.pageYOffset || 0));
+        } catch (err) {}
+      }
+    }
+  }, true);
+
+  // 2. Restore exact position of the clicked product when navigating back
+  function cpgRestoreScrollPosition() {
+    var pid;
+    var path;
+    try {
+      pid = sessionStorage.getItem('cpg_back_pid');
+      path = sessionStorage.getItem('cpg_back_path');
+    } catch (e) { return; }
+
+    if (!pid || !path || path !== window.location.pathname) return;
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    var attempts = 0;
+    var maxAttempts = 25;
+
+    function attemptScroll() {
+      var card = document.querySelector('.cpg-card[data-product-id="' + pid + '"]');
+      if (card) {
+        var rect = card.getBoundingClientRect();
+        var currentScroll = window.scrollY || window.pageYOffset || 0;
+        var cardAbsoluteTop = rect.top + currentScroll;
+        var targetY = Math.max(0, cardAbsoluteTop - (window.innerHeight / 2) + (rect.height / 2));
+
+        window.scrollTo({
+          top: targetY,
+          behavior: 'instant'
+        });
+
+        try {
+          sessionStorage.removeItem('cpg_back_pid');
+          sessionStorage.removeItem('cpg_back_path');
+          sessionStorage.removeItem('cpg_back_y');
+        } catch (e) {}
+
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'auto';
+        }
+        return true;
+      }
+
+      // If card was on a later page loaded via "Load More", auto-trigger next page
+      var loadBtn = document.querySelector('.cpg-show-more-btn');
+      if (loadBtn && !loadBtn.disabled && attempts % 4 === 1) {
+        if (typeof window.cpgLoadMore === 'function') {
+          window.cpgLoadMore(loadBtn);
+        } else {
+          loadBtn.click();
+        }
+      }
+
+      return false;
+    }
+
+    if (attemptScroll()) return;
+
+    var timer = setInterval(function() {
+      attempts++;
+      if (attemptScroll() || attempts >= maxAttempts) {
+        clearInterval(timer);
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'auto';
+        }
+      }
+    }, 80);
+  }
+
+  window.addEventListener('pageshow', cpgRestoreScrollPosition);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cpgRestoreScrollPosition);
+  } else {
+    cpgRestoreScrollPosition();
+  }
+
   window.cpgSortBy = cpgSortBy;
   window.cpgChangePerPage = cpgChangePerPage;
   window.cpgToggleFilter = cpgToggleFilter;
