@@ -2081,7 +2081,7 @@ a[href*="mailto:"] {
 
   /* Home Decor Scrollable List on Mobile */
   .bbs-mm-subcat-cards.bbs-mm-scrollable {
-    max-height: 340px !important;
+    max-height: 360px !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     padding-right: 4px !important;
@@ -2108,14 +2108,21 @@ a[href*="mailto:"] {
     display: flex !important;
     align-items: center !important;
     gap: 6px !important;
-    padding: 5px 0 !important;
-    font-size: 12px !important;
+    padding: 7px 4px !important;
+    min-height: 36px !important;
+    font-size: 12.5px !important;
     text-decoration: none !important;
     color: #2b2825 !important;
     border-bottom: 1px solid #f6f3ee !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: background-color 0.15s ease !important;
+  }
+
+  .bbs-mm-link-item:active {
+    background-color: #fbf8f3 !important;
   }
 
   /* Compact Luxury Banner on Mobile */
@@ -2331,4 +2338,151 @@ a[href*="mailto:"] {
 .bbs-mm-subcat-cards.bbs-mm-scrollable {
   scrollbar-width: thin !important;
   scrollbar-color: #8c7355 #f4ede4 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE DRAWER NAVIGATION (halo-navigation-mobile-list)
+   ───────────────────────────────────────────────────────────── */
+.bbs-mm-mobile-wrapper {
+  padding: 12px 14px !important;
+}
+
+.bbs-mm-mobile-section-header {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #5a3a0a !important;
+  margin-bottom: 12px !important;
+  padding-bottom: 4px !important;
+  border-bottom: 1px solid #f0ede8 !important;
+}
+
+.bbs-mm-mobile-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px 8px !important;
+  margin-bottom: 20px !important;
+}
+
+.bbs-mm-mobile-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  color: #3e2723 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 8px 4px !important;
+  border-radius: 8px !important;
+  background: #faf8f5 !important;
+  border: 1px solid #f0eae1 !important;
+  transition: transform 0.15s ease, background-color 0.15s ease !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.bbs-mm-mobile-item:active {
+  background-color: #f1ebd9 !important;
+  transform: scale(0.96) !important;
+}
+
+.bbs-mm-mobile-thumb {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  border: 1px solid #e2ded7 !important;
+  margin-bottom: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+.bbs-mm-mobile-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.bbs-mm-mobile-curated {
+  margin-bottom: 18px !important;
+}
+
+.bbs-mm-mobile-curated-links {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+.bbs-mm-mobile-link {
+  display: flex !important;
+  align-items: center !important;
+  font-size: 12px !important;
+  color: #4a3828 !important;
+  text-decoration: none !important;
+  padding: 8px 10px !important;
+  background: #faf8f5 !important;
+  border-radius: 6px !important;
+  border: 1px solid #f0eae1 !important;
+  font-weight: 500 !important;
+  min-height: 40px !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  transition: background-color 0.15s ease, transform 0.15s ease !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.bbs-mm-mobile-link:active {
+  background-color: #f0e6d6 !important;
+  transform: scale(0.98) !important;
+}
+
+.bbs-mm-mobile-promo {
+  margin-top: 10px !important;
+}
+
+.bbs-mm-mobile-banner {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 110px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+}
+
+.bbs-mm-mobile-banner img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.bbs-mm-mobile-banner-text {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding: 10px 14px !important;
+  color: #ffffff !important;
+}
+
+.bbs-mm-mobile-banner-text .badge {
+  font-size: 9px !important;
+  letter-spacing: 0.12em !important;
+  color: #e5d3b3 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+.bbs-mm-mobile-banner-text .title {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  color: #ffffff !important;
 }
