@@ -283,6 +283,15 @@
     text-transform: uppercase;
   }
 
+  @media screen and (min-width: 768px) {
+    .ai-collection-category-title-{{ ai_gen_id }} .ai-cat-title-line {
+      display: inline;
+    }
+    .ai-collection-category-title-{{ ai_gen_id }} .ai-cat-title-line-1::after {
+      content: " ";
+    }
+  }
+
   @media screen and (max-width: 1200px) {
     .ai-collection-categories-wrapper-{{ ai_gen_id }} {
       grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
@@ -298,8 +307,25 @@
       {% endif %}
     }
 
+    .ai-collection-category-content-{{ ai_gen_id }} {
+      padding: 10px 4px !important;
+    }
+
     .ai-collection-category-title-{{ ai_gen_id }} {
-      font-size: {{ block.settings.title_font_size | times: 0.9 }}px;
+      font-size: 15px !important;
+      line-height: 1.25 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 2px !important;
+      text-align: center !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .ai-collection-category-title-{{ ai_gen_id }} .ai-cat-title-line {
+      display: block !important;
+      white-space: nowrap !important;
     }
   }
 {% endstyle %}
@@ -363,7 +389,13 @@
 
           <div class="ai-collection-category-content-{{ ai_gen_id }}">
             <h3 class="ai-collection-category-title-{{ ai_gen_id }}">
-              {{ card_title }}
+              {%- assign title_words = card_title | split: ' ' -%}
+              {%- if title_words.size > 1 -%}
+                <span class="ai-cat-title-line ai-cat-title-line-1">{{ title_words[0] }}</span>
+                <span class="ai-cat-title-line ai-cat-title-line-2">{{ title_words | slice: 1, title_words.size | join: ' ' }}</span>
+              {%- else -%}
+                <span class="ai-cat-title-line">{{ card_title }}</span>
+              {%- endif -%}
             </h3>
           </div>
         </a>
