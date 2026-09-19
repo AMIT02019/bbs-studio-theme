@@ -2209,47 +2209,17 @@ a[href*="mailto:"] {
   margin-left: auto !important;
 }
 
-/* BBS Page Title - Logo Brown Background Banner & White Uppercase Text */
+/* BBS Page Title - Hidden as requested */
 .template-page section.spaced-section:has(.main-page-title),
 .template-page section:has(.main-page-title),
 .template-page .shopify-section:has(.main-page-title),
 .template-page #shopify-section-template--21802693558443__main,
-.template-page #shopify-section-template--21802692182187__main {
-  background-color: #472b03 !important;
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
-  margin-top: 0 !important;
-  margin-bottom: 35px !important;
-}
-
+.template-page #shopify-section-template--21802692182187__main,
 .template-page .main-page-title.page-header,
 .main-page-title.page-header,
 .template-page .main-page-title,
 .main-page-title {
-  text-align: center !important;
-  font-size: 20px !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-  border: none !important;
-  border-top: none !important;
-  border-bottom: none !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.06em !important;
-  color: #ffffff !important;
-  line-height: 1.15 !important;
-  width: 100% !important;
-  display: block !important;
-}
-
-.template-page section.spaced-section:has(.main-page-title) .container,
-.template-page section:has(.main-page-title) .container,
-.template-page .shopify-section:has(.main-page-title) .container,
-.template-page section.spaced-section:has(.main-page-title) .page-width,
-.template-page section:has(.main-page-title) .page-width,
-.template-page .shopify-section:has(.main-page-title) .page-width {
-  text-align: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  display: none !important;
 }
 
 .main-page-title.page-header::before,
@@ -2273,24 +2243,6 @@ a[href*="mailto:"] {
 }
 
 @media (max-width: 767px) {
-  .template-page section.spaced-section:has(.main-page-title),
-  .template-page section:has(.main-page-title),
-  .template-page .shopify-section:has(.main-page-title),
-  .template-page #shopify-section-template--21802693558443__main,
-  .template-page #shopify-section-template--21802692182187__main {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    margin-bottom: 25px !important;
-  }
-  .template-page .main-page-title.page-header,
-  .main-page-title.page-header,
-  .template-page .main-page-title,
-  .main-page-title {
-    text-align: center !important;
-    font-size: 20px !important;
-    letter-spacing: 0.05em !important;
-    line-height: 1.15 !important;
-  }
   .template-page div.shopify-section > [class^="ai-our-story"]:not([class*="-container"]):not([class*="-grid"]):not([class*="-content"]):not([class*="-heading"]):not([class*="-text"]):not([class*="-button"]):not([class*="-image"]) {
     padding-top: 10px !important;
   }
