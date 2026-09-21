@@ -11,7 +11,15 @@
             <li class="list-social__item"><a href="{{ settings.social_facebook_link }}" target="_blank" class="link link--text list-social__link icon-facebook">{%- render 'icon-facebook' -%} <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span></a></li>
         {%- endif -%}
         {%- if settings.social_instagram_link != blank -%}
-            <li class="list-social__item"><a {% if settings.social_instagram_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_instagram_link }}" target="_blank"{% endif %} class="link link--text list-social__link icon-instagram">{%- render 'icon-instagram' -%} <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span></a></li>
+            <li class="list-social__item">
+            <a {% if settings.social_instagram_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_instagram_link }}" target="_blank"{% endif %} class="link link--text list-social__link icon-instagram" aria-label="Instagram">
+                {%- render 'icon-instagram' -%}
+                <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+            </a>
+            {%- if show_social_handle and settings.social_instagram_link != blank -%}
+                <a href="{{ settings.social_instagram_link }}" target="_blank" class="list-social__handle">@begborrowstealstudio</a>
+            {%- endif -%}
+        </li>
         {%- endif -%}
         {%- if settings.social_pinterest_link != blank -%}
             <li class="list-social__item"><a {% if settings.social_pinterest_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ settings.social_pinterest_link }}" target="_blank"{% endif %} class="link link--text list-social__link icon-pinterest">{%- render 'icon-pinterest' -%} <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span></a></li>

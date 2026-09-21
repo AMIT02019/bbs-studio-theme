@@ -28,10 +28,13 @@
 %}
 <style>
     .footer-block__list-social.enable_bg_social .list-social__link.icon-facebook{background:#385a9a!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-instagram{background:#3e739d!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-pinterest,.footer-block__list-social.enable_bg_social .list-social__link.icon-tumblr,.footer-block__list-social.enable_bg_social .list-social__link.icon-youtube{background:#ec2327!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-tiktok{background:#000!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-snapchat{background:#e3da6d!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-twitter{background:#31b1df!important}.footer-block__list-social.enable_bg_social .list-social__link.icon-vimeo{background:#4593d7!important}
-    .footer-block__list-social .list-social__item{margin-right: {{ social_icon_margin_right }}}   
+    .footer-block__list-social .list-social {display: flex; align-items: center; flex-wrap: wrap;}
+    .footer-block__list-social .list-social__item{display: inline-flex; align-items: center; margin-right: {{ social_icon_margin_right }}}   
+    .footer-block__list-social .list-social__handle {font-family: inherit; font-size: 14px; font-weight: 500; color: {{ social_color }}; text-decoration: none; letter-spacing: 0.02em; margin-left: 12px; transition: color 0.25s ease;}
+    .footer-block__list-social .list-social__item:hover .list-social__handle {color: #1a1002; text-decoration: underline; text-underline-offset: 3px;}   
     .footer-block__list-social .list-social__link:before {box-shadow: 0 0 0 2px {{ social_box_hover_color }}}
 
-    .footer-block__list-social .list-social__link {color: {{ social_color }} !important;background: {% if social_background_color_gradient != blank %}{{ social_background_color_gradient }}{% else %}{{ social_background_color }}{% endif %};border: {{ social_icon_border_width | append: 'px' }} solid {{ social_border_color }};padding: {{ social_icon_padding | append: 'px' }}}
+    .footer-block__list-social .list-social__link {display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; color: {{ social_color }} !important;background: {% if social_background_color_gradient != blank %}{{ social_background_color_gradient }}{% else %}{{ social_background_color }}{% endif %};border: {{ social_icon_border_width | append: 'px' }} solid {{ social_border_color }};padding: {{ social_icon_padding | append: 'px' }}}
 
     .footer-block__list-social .list-social__link svg {fill: {{ social_color }} !important;width: {{ social_icon_width | append: 'px' }} !important;height: {{ social_icon_width | append: 'px' }} !important}
 {%- if social_border_color == 'rgba(0,0,0,0)' or social_border_color == blank -%}
@@ -55,7 +58,7 @@
     {%- if social_heading != blank -%}
         <h2 class="footer-block__heading">{{- social_heading | escape -}}</h2>       
     {%- endif -%}
-    <div class="item clearfix">{% render 'halo-social-media-icons' %}</div>  
+    <div class="item clearfix">{% render 'halo-social-media-icons', show_social_handle: true %}</div>  
 </div>
 {%- if show_payment and social_is_nested == false -%}
     {% render 'footer-payment', block: block %}
