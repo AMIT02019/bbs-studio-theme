@@ -323,8 +323,10 @@
         {%- endfor -%}
         {%- if f.type == 'price_range' -%}
           {%- if f.min_value.value != blank or f.max_value.value != blank -%}
+            {%- assign chip_min = f.min_value.value | default: 0 | divided_by: 100.0 | floor -%}
+            {%- assign chip_max = f.max_value.value | default: f.range_max | divided_by: 100.0 | ceil -%}
             <span class="cpg-active-tag">
-              {{ cart.currency.symbol }}{{ f.min_value.value | default: 0 }} – {{ cart.currency.symbol }}{{ f.max_value.value | default: f.range_max }}
+              {{ cart.currency.symbol | default: '₹' }}{{ chip_min }} – {{ cart.currency.symbol | default: '₹' }}{{ chip_max }}
               <a href="{{ f.url_to_remove }}" aria-label="Remove price">×</a>
             </span>
           {%- endif -%}
@@ -506,10 +508,20 @@
   }
   function cpgShowMore(btn) { btn.closest('.cpg-filter-body').querySelectorAll('.cpg-extra').forEach(function (el) { el.style.display = 'flex'; }); btn.remove(); }
   function cpgApplyPrice() {
-    var min = document.getElementById('cpg-pmin'), max = document.getElementById('cpg-pmax');
+    var min = document.getElementById('cpg-pmin');
+    var max = document.getElementById('cpg-pmax');
     var u = new URL(location.href);
-    if (min) { if (min.value) u.searchParams.set(min.name, min.value); else u.searchParams.delete(min.name); }
-    if (max) { if (max.value) u.searchParams.set(max.name, max.value); else u.searchParams.delete(max.name); }
+    if (min) {
+      var minVal = min.value ? min.value.trim() : '';
+      if (minVal !== '') u.searchParams.set(min.name, minVal);
+      else u.searchParams.delete(min.name);
+    }
+    if (max) {
+      var maxVal = max.value ? max.value.trim() : '';
+      if (maxVal !== '') u.searchParams.set(max.name, maxVal);
+      else u.searchParams.delete(max.name);
+    }
+    u.searchParams.delete('page');
     location.href = u.toString();
   }
   function cpgOpenSidebar() { document.getElementById('cpg-sidebar').classList.add('is-open'); document.getElementById('cpg-overlay').classList.add('is-open'); document.body.style.overflow = 'hidden'; }
