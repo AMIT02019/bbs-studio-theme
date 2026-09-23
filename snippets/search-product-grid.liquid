@@ -322,15 +322,24 @@
           <span class="cpg-active-tag">{{ v.label }}<a href="{{ v.url_to_remove }}" aria-label="Remove">×</a></span>
         {%- endfor -%}
         {%- if f.type == 'price_range' -%}
-          {%- if f.min_value.value != blank or f.max_value.value != blank -%}
-            {%- assign chip_min = f.min_value.value | default: 0 | divided_by: 100.0 | floor -%}
-            {%- assign chip_max = f.max_value.value | default: f.range_max | divided_by: 100.0 | ceil -%}
-            <span class="cpg-active-tag">
-              {{ cart.currency.symbol | default: '₹' }}{{ chip_min }} – {{ cart.currency.symbol | default: '₹' }}{{ chip_max }}
-              <a href="{{ f.url_to_remove }}" aria-label="Remove price">×</a>
-            </span>
+            {%- if f.min_value.value != blank or f.max_value.value != blank -%}
+              {%- assign sym = cart.currency.symbol | default: '₹' -%}
+              <span class="cpg-active-tag">
+                {%- if f.min_value.value != blank and f.max_value.value != blank -%}
+                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
+                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
+                  {{ sym }}{{ chip_min }} – {{ sym }}{{ chip_max }}
+                {%- elsif f.min_value.value != blank -%}
+                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
+                  {{ sym }}{{ chip_min }}+
+                {%- elsif f.max_value.value != blank -%}
+                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
+                  Up to {{ sym }}{{ chip_max }}
+                {%- endif -%}
+                <a href="{{ f.url_to_remove }}" aria-label="Remove price">×</a>
+              </span>
+            {%- endif -%}
           {%- endif -%}
-        {%- endif -%}
       {%- endfor -%}
       <a href="{{ search_base_url }}" class="cpg-clear-all">Clear all</a>
     </div>

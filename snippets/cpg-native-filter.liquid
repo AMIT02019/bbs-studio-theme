@@ -37,7 +37,6 @@
   <div class="cpg-filter-body">
 
     {%- if filter.type == 'price_range' -%}
-      {%- assign max_range_unit = filter.range_max | divided_by: 100.0 | ceil -%}
       {%- assign min_val_unit = '' -%}
       {%- if filter.min_value.value != blank -%}
         {%- assign min_val_unit = filter.min_value.value | divided_by: 100.0 | floor -%}
@@ -51,7 +50,8 @@
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
             value="{{ min_val_unit }}"
-            min="0" max="{{ max_range_unit }}" placeholder="0"
+            min="0" placeholder="Min"
+            aria-label="Minimum price"
             onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
         </div>
         <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
@@ -59,7 +59,8 @@
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
             value="{{ max_val_unit }}"
-            min="0" max="{{ max_range_unit }}" placeholder="{{ max_range_unit }}"
+            min="0" placeholder="Max"
+            aria-label="Maximum price"
             onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
         </div>
       </div>
