@@ -146,20 +146,104 @@
   overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; background: #fff;
 }
 .cpg-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+/* ─── Product card media & slider ─── */
 .cpg-card-img {
   position: relative; aspect-ratio: 1/1; overflow: hidden;
   background: #ffffff; display: block;
 }
-.cpg-card-img img {
+.cpg-card-slider {
+  position: relative; width: 100%; height: 100%; display: block;
+}
+.cpg-card-slide {
+  position: absolute; inset: 0; display: block;
+  text-decoration: none; -webkit-tap-highlight-color: transparent;
+}
+.cpg-card-slide img,
+.cpg-card-slide .cpg-slide-img {
   width: 100%; height: 100%; object-fit: contain !important;
   transition: opacity 0.3s ease; position: absolute; top: 0; left: 0;
-  padding: 16px; box-sizing: border-box; background: #ffffff;
+  padding: 16px; box-sizing: border-box; background: #ffffff; display: block;
 }
-.cpg-card-img .cpg-img-primary { opacity: 1; position: absolute; }
-.cpg-card-img .cpg-img-secondary { opacity: 0; position: absolute; }
+/* Desktop: image 1 visible, image 2 visible on hover, extras hidden */
+.cpg-card-slide.is-first { opacity: 1; z-index: 1; }
+.cpg-card-slide.is-second { opacity: 0; z-index: 2; transition: opacity 0.3s ease; }
+.cpg-card-slide.is-extra { display: none !important; }
+
 @media (min-width: 1025px) and (hover: hover) {
-  .cpg-card:hover .cpg-img-primary { opacity: 0; }
-  .cpg-card:hover .cpg-img-secondary { opacity: 1; }
+  .cpg-card:hover .cpg-card-slide.is-first { opacity: 0; }
+  .cpg-card:hover .cpg-card-slide.is-second { opacity: 1; }
+}
+
+/* ─── Mobile Photo Swipe (< 1025px) ─── */
+@media (max-width: 1024px) {
+  .cpg-card,
+  .cpg-card:hover,
+  .cpg-card:active {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+  .cpg-card-img {
+    contain: layout paint !important;
+  }
+  .cpg-card-slider {
+    display: flex !important;
+    position: absolute !important;
+    inset: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    overscroll-behavior-x: contain !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: pan-y !important;
+  }
+  .cpg-card-slider::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .cpg-card-slide,
+  .cpg-card-slide.is-first,
+  .cpg-card-slide.is-second,
+  .cpg-card-slide.is-extra {
+    position: relative !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    scroll-snap-align: start !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 1 !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    contain: layout paint !important;
+  }
+  .cpg-card-slide img,
+  .cpg-card-slide .cpg-slide-img {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+}
+@media (max-width: 480px) {
+  .cpg-card-slide img,
+  .cpg-card-slide .cpg-slide-img {
+    padding: 8px !important;
+  }
 }
 .cpg-badges {
   position: absolute; top: 8px; left: 8px;
@@ -417,22 +501,33 @@
               {%- endfor -%}
 
               <div class="cpg-card" data-product-id="{{ item.id }}">
-                <a class="cpg-card-img" href="{{ item.url }}">
-                  {%- if item.images[0] -%}
-                    <img class="cpg-img-primary"
-                      src="{{ item.images[0] | image_url: width: 480 }}"
-                      alt="{{ item.images[0].alt | escape }}"
-                      width="480" height="480" loading="lazy">
-                  {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag: 'cpg-img-primary' }}
-                  {%- endif -%}
-                  {%- if item.images[1] -%}
-                    <img class="cpg-img-secondary"
-                      src="{{ item.images[1] | image_url: width: 480 }}"
-                      alt="{{ item.images[1].alt | escape }}"
-                      width="480" height="480" loading="lazy">
-                  {%- endif -%}
-                </a>
+                <div class="cpg-card-img">
+                  <div class="cpg-card-slider" data-cpg-slider>
+                    {%- assign item_images = item.media | default: item.images -%}
+                    {%- if item_images.size > 0 -%}
+                      {%- for img in item_images limit: 6 -%}
+                        <a class="cpg-card-slide{% if forloop.first %} is-first{% elsif forloop.index == 2 %} is-second{% else %} is-extra{% endif %}"
+                           href="{{ item.url }}"
+                           title="{{ item.title | escape }}">
+                          <img
+                            class="cpg-slide-img"
+                            src="{{ img | image_url: width: 800 }}"
+                            alt="{{ img.alt | default: item.title | escape }}"
+                            width="800" height="800"
+                            loading="lazy">
+                        </a>
+                      {%- endfor -%}
+                    {%- elsif item.featured_media -%}
+                      <a class="cpg-card-slide is-first" href="{{ item.url }}" title="{{ item.title | escape }}">
+                        <img class="cpg-slide-img" src="{{ item.featured_media | image_url: width: 800 }}" alt="{{ item.title | escape }}" width="800" height="800" loading="lazy">
+                      </a>
+                    {%- else -%}
+                      <a class="cpg-card-slide is-first" href="{{ item.url }}">
+                        {{ 'product-1' | placeholder_svg_tag: 'cpg-slide-img' }}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
 
                 <div class="cpg-badges">
                   {%- unless item.available -%}<span class="cpg-badge cpg-badge--soldout">Sold</span>{%- endunless -%}
@@ -576,6 +671,72 @@
   window.cpgToggleFilter = cpgToggleFilter; window.cpgShowMore = cpgShowMore;
   window.cpgApplyPrice = cpgApplyPrice; window.cpgOpenSidebar = cpgOpenSidebar;
   window.cpgCloseSidebar = cpgCloseSidebar; window.cpgAddToCart = cpgAddToCart;
+  // Mobile Card Photo Swipe Touch & Scroll Controller
+  var cpgActiveSlider = null;
+  var cpgTouchStartX = 0;
+  var cpgTouchStartY = 0;
+  var cpgInitialScrollLeft = 0;
+  var cpgIsHorizontalSwipe = null;
+  var cpgWasSwiped = false;
+  var cpgSwipeTimeout = null;
+
+  document.addEventListener('touchstart', function(e) {
+    var slider = e.target.closest('[data-cpg-slider]');
+    if (!slider) return;
+    cpgActiveSlider = slider;
+    cpgTouchStartX = e.touches[0].clientX;
+    cpgTouchStartY = e.touches[0].clientY;
+    cpgInitialScrollLeft = slider.scrollLeft;
+    cpgIsHorizontalSwipe = null;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!cpgActiveSlider || !cpgTouchStartX) return;
+    var dx = e.touches[0].clientX - cpgTouchStartX;
+    var dy = e.touches[0].clientY - cpgTouchStartY;
+
+    if (cpgIsHorizontalSwipe === null) {
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+        cpgIsHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
+      }
+    }
+
+    if (cpgIsHorizontalSwipe === true) {
+      cpgActiveSlider.scrollLeft = cpgInitialScrollLeft - dx;
+      cpgWasSwiped = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (cpgActiveSlider && cpgIsHorizontalSwipe === true) {
+      var w = cpgActiveSlider.clientWidth || 180;
+      var targetIdx = Math.round(cpgActiveSlider.scrollLeft / w);
+      cpgActiveSlider.scrollTo({
+        left: targetIdx * w,
+        behavior: 'smooth'
+      });
+      cpgWasSwiped = true;
+      clearTimeout(cpgSwipeTimeout);
+      cpgSwipeTimeout = setTimeout(function() {
+        cpgWasSwiped = false;
+      }, 350);
+    }
+    cpgActiveSlider = null;
+    cpgTouchStartX = 0;
+    cpgTouchStartY = 0;
+    cpgIsHorizontalSwipe = null;
+  }, { passive: true });
+
+  document.addEventListener('click', function(e) {
+    if (cpgWasSwiped) {
+      var slide = e.target.closest('.cpg-card-slide');
+      if (slide) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+  }, true);
+
   window.cpgLoadMore = cpgLoadMore;
 })();
 </script>

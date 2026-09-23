@@ -222,7 +222,7 @@
     scrollbar-width: none !important;
     overscroll-behavior-x: contain !important;
     overscroll-behavior-y: auto !important;
-    touch-action: pan-x pan-y !important;
+    touch-action: pan-y !important;
   }
   .cpg-card-slider::-webkit-scrollbar {
     display: none !important;
@@ -917,47 +917,70 @@
       }).catch(function () { busy = false; });
     }, { rootMargin: '300px' }).observe(trigger);
   }
-  // Mobile Card Photo Swipe Touch and Dot Tracking
+    // Mobile Card Photo Swipe Touch & Scroll Controller
+  var cpgActiveSlider = null;
   var cpgTouchStartX = 0;
   var cpgTouchStartY = 0;
-  var cpgIsSwiping = false;
-  var cpgIsScrollingY = false;
+  var cpgInitialScrollLeft = 0;
+  var cpgIsHorizontalSwipe = null;
+  var cpgWasSwiped = false;
+  var cpgSwipeTimeout = null;
 
   document.addEventListener('touchstart', function(e) {
     var slider = e.target.closest('[data-cpg-slider]');
-    if (slider) {
-      cpgIsSwiping = false;
-      cpgIsScrollingY = false;
-      cpgTouchStartX = e.touches[0].clientX;
-      cpgTouchStartY = e.touches[0].clientY;
-    }
+    if (!slider) return;
+    cpgActiveSlider = slider;
+    cpgTouchStartX = e.touches[0].clientX;
+    cpgTouchStartY = e.touches[0].clientY;
+    cpgInitialScrollLeft = slider.scrollLeft;
+    cpgIsHorizontalSwipe = null;
   }, { passive: true });
 
   document.addEventListener('touchmove', function(e) {
-    if (cpgTouchStartX) {
-      var diffX = Math.abs(e.touches[0].clientX - cpgTouchStartX);
-      var diffY = Math.abs(e.touches[0].clientY - cpgTouchStartY);
-      if (diffX > 7 && diffX > diffY) {
-        cpgIsSwiping = true;
+    if (!cpgActiveSlider || !cpgTouchStartX) return;
+    var dx = e.touches[0].clientX - cpgTouchStartX;
+    var dy = e.touches[0].clientY - cpgTouchStartY;
+
+    if (cpgIsHorizontalSwipe === null) {
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+        cpgIsHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
       }
-      if (diffY > 7 && diffY > diffX) {
-        cpgIsScrollingY = true;
-      }
+    }
+
+    if (cpgIsHorizontalSwipe === true) {
+      cpgActiveSlider.scrollLeft = cpgInitialScrollLeft - dx;
+      cpgWasSwiped = true;
     }
   }, { passive: true });
 
+  document.addEventListener('touchend', function(e) {
+    if (cpgActiveSlider && cpgIsHorizontalSwipe === true) {
+      var w = cpgActiveSlider.clientWidth || 180;
+      var targetIdx = Math.round(cpgActiveSlider.scrollLeft / w);
+      cpgActiveSlider.scrollTo({
+        left: targetIdx * w,
+        behavior: 'smooth'
+      });
+      cpgWasSwiped = true;
+      clearTimeout(cpgSwipeTimeout);
+      cpgSwipeTimeout = setTimeout(function() {
+        cpgWasSwiped = false;
+      }, 350);
+    }
+    cpgActiveSlider = null;
+    cpgTouchStartX = 0;
+    cpgTouchStartY = 0;
+    cpgIsHorizontalSwipe = null;
+  }, { passive: true });
+
   document.addEventListener('click', function(e) {
-    if (cpgIsSwiping || cpgIsScrollingY) {
+    if (cpgWasSwiped) {
       var slide = e.target.closest('.cpg-card-slide');
       if (slide) {
         e.preventDefault();
         e.stopPropagation();
       }
-      cpgIsSwiping = false;
-      cpgIsScrollingY = false;
     }
-    cpgTouchStartX = 0;
-    cpgTouchStartY = 0;
   }, true);
 
 
