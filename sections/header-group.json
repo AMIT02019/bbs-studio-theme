@@ -278,7 +278,7 @@
         "container": "full",
         "padding_full_width": 25,
         "header_layout_style": "style_1",
-        "header_navigation_bg": "#ffffff",
+        "header_navigation_bg": "#F8F8F8",
         "header_navigation_bg_gradient": "",
         "sticky_header_type": "none",
         "sticky_header_width": "full",
