@@ -152,7 +152,7 @@
 
       {%- elsif fl == 'product type' -%}
         {%- comment -%} Store Product Types: Jewellery, Clothing, Watches, Sunglasses, Bags, Home Decor, Textiles {%- endcomment -%}
-        {%- assign pt_items = 'jewellery:Jewellery:/pages/designer-jewellery:269,clothing:Clothing:/collections/clothing:127,watches:Watches:/collections/watches:60,sunglasses:Sunglasses:/collections/sunglasses:22,bags:Bags:/collections/bags:42,home-decor:Home Decor:/collections/home-decor-curios:202,textiles:Textiles:/collections/textiles:22' | split: ',' -%}
+        {%- assign pt_items = 'jewellery:Jewellery:/collections/jewellery:313,clothing:Clothing:/collections/clothing:127,watches:Watches:/collections/watches:60,sunglasses:Sunglasses:/collections/sunglasses:22,bags:Bags:/collections/bags:42,home-decor:Home Decor:/collections/home-decor-curios:202,textiles:Textiles:/collections/textiles:22' | split: ',' -%}
         {%- for item in pt_items -%}
           {%- assign parts = item | split: ':' -%}
           {%- assign pt_key = parts[0] -%}
@@ -172,6 +172,8 @@
           {%- if pt_key == 'home-decor' and is_home_decor -%}
             {%- assign is_pt_active = true -%}
           {%- elsif collection.handle == pt_key -%}
+            {%- assign is_pt_active = true -%}
+          {%- elsif pt_key == 'jewellery' and collection.handle == 'jewellery' or collection.handle == 'earrings' or collection.handle == 'necklace' or collection.handle == 'necklaces' or collection.handle == 'rings' or collection.handle == 'bracelets-cuffs' or collection.handle == 'broaches' or collection.handle == 'earrings-1' or collection.handle == 'rings-1' or collection.handle == 'brooches' -%}
             {%- assign is_pt_active = true -%}
           {%- elsif pt_key == 'bags' and collection.handle == 'designer-bags' -%}
             {%- assign is_pt_active = true -%}
