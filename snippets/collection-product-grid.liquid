@@ -917,61 +917,120 @@
       }).catch(function () { busy = false; });
     }, { rootMargin: '300px' }).observe(trigger);
   }
-    // Mobile Card Photo Swipe Touch & Scroll Controller
+    // Mobile Card Photo Swipe Touch & Scroll Controller (Real-time tracking & smooth transition)
   var cpgActiveSlider = null;
   var cpgTouchStartX = 0;
   var cpgTouchStartY = 0;
+  var cpgStartTime = 0;
   var cpgInitialScrollLeft = 0;
   var cpgIsHorizontalSwipe = null;
   var cpgWasSwiped = false;
   var cpgSwipeTimeout = null;
 
   document.addEventListener('touchstart', function(e) {
+    if (window.innerWidth > 1024) return;
+    if (!e.touches || e.touches.length !== 1) return;
     var slider = e.target.closest('[data-cpg-slider]');
     if (!slider) return;
+
+    var slides = slider.querySelectorAll('.cpg-card-slide');
+    if (slides.length <= 1) return;
+
     cpgActiveSlider = slider;
     cpgTouchStartX = e.touches[0].clientX;
     cpgTouchStartY = e.touches[0].clientY;
+    cpgStartTime = Date.now();
     cpgInitialScrollLeft = slider.scrollLeft;
     cpgIsHorizontalSwipe = null;
-  }, { passive: true });
+
+    // Disable CSS scroll-snap and smooth animation during finger drag so scrollLeft tracks finger in real-time
+    slider.style.setProperty('scroll-snap-type', 'none', 'important');
+    slider.style.setProperty('scroll-behavior', 'auto', 'important');
+  }, { passive: true, capture: true });
 
   document.addEventListener('touchmove', function(e) {
     if (!cpgActiveSlider || !cpgTouchStartX) return;
+    if (!e.touches || e.touches.length !== 1) return;
+
     var dx = e.touches[0].clientX - cpgTouchStartX;
     var dy = e.touches[0].clientY - cpgTouchStartY;
 
     if (cpgIsHorizontalSwipe === null) {
       if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
-        cpgIsHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
+        if (Math.abs(dx) > Math.abs(dy)) {
+          cpgIsHorizontalSwipe = true;
+        } else {
+          cpgIsHorizontalSwipe = false;
+          cpgActiveSlider.style.removeProperty('scroll-snap-type');
+          cpgActiveSlider.style.removeProperty('scroll-behavior');
+          cpgActiveSlider = null;
+          return;
+        }
       }
     }
 
     if (cpgIsHorizontalSwipe === true) {
+      if (e.cancelable) e.preventDefault();
       cpgActiveSlider.scrollLeft = cpgInitialScrollLeft - dx;
       cpgWasSwiped = true;
     }
-  }, { passive: true });
+  }, { passive: false, capture: true });
 
   document.addEventListener('touchend', function(e) {
     if (cpgActiveSlider && cpgIsHorizontalSwipe === true) {
       var w = cpgActiveSlider.clientWidth || 180;
-      var targetIdx = Math.round(cpgActiveSlider.scrollLeft / w);
+      var slides = cpgActiveSlider.querySelectorAll('.cpg-card-slide');
+      var maxIndex = Math.max(0, slides.length - 1);
+
+      var touch = e.changedTouches && e.changedTouches[0];
+      var endX = touch ? touch.clientX : cpgTouchStartX;
+      var dx = endX - cpgTouchStartX;
+      var dt = Math.max(1, Date.now() - cpgStartTime);
+      var speed = Math.abs(dx) / dt;
+
+      var currentIdx = Math.round(cpgInitialScrollLeft / w);
+      var targetIdx = currentIdx;
+
+      // Sensitive flick or drag threshold (>35px or >20px with velocity)
+      if (dx < -35 || (dx < -20 && speed > 0.25)) {
+        targetIdx = Math.min(currentIdx + 1, maxIndex);
+      } else if (dx > 35 || (dx > 20 && speed > 0.25)) {
+        targetIdx = Math.max(currentIdx - 1, 0);
+      }
+
+      // Re-enable smooth transition to target slide
+      cpgActiveSlider.style.removeProperty('scroll-snap-type');
+      cpgActiveSlider.style.removeProperty('scroll-behavior');
       cpgActiveSlider.scrollTo({
         left: targetIdx * w,
         behavior: 'smooth'
       });
+
       cpgWasSwiped = true;
       clearTimeout(cpgSwipeTimeout);
       cpgSwipeTimeout = setTimeout(function() {
         cpgWasSwiped = false;
       }, 350);
+    } else if (cpgActiveSlider) {
+      cpgActiveSlider.style.removeProperty('scroll-snap-type');
+      cpgActiveSlider.style.removeProperty('scroll-behavior');
     }
     cpgActiveSlider = null;
     cpgTouchStartX = 0;
     cpgTouchStartY = 0;
     cpgIsHorizontalSwipe = null;
-  }, { passive: true });
+  }, { passive: true, capture: true });
+
+  document.addEventListener('touchcancel', function() {
+    if (cpgActiveSlider) {
+      cpgActiveSlider.style.removeProperty('scroll-snap-type');
+      cpgActiveSlider.style.removeProperty('scroll-behavior');
+    }
+    cpgActiveSlider = null;
+    cpgTouchStartX = 0;
+    cpgTouchStartY = 0;
+    cpgIsHorizontalSwipe = null;
+  }, { passive: true, capture: true });
 
   document.addEventListener('click', function(e) {
     if (cpgWasSwiped) {
