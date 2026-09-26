@@ -329,19 +329,19 @@
           {% if category_image %}
             <img
               srcset="
-                {{ category_image | image_url: width: 360 }} 360w,
-                {{ category_image | image_url: width: 540 }} 540w,
-                {{ category_image | image_url: width: 720 }} 720w,
-                {{ category_image | image_url: width: 900 }} 900w
+                {{ category_image | image_url: width: 320 }} 320w,
+                {{ category_image | image_url: width: 440 }} 440w,
+                {{ category_image | image_url: width: 560 }} 560w,
+                {{ category_image | image_url: width: 720 }} 720w
               "
-              sizes="(max-width: 749px) 100vw, (max-width: 989px) 50vw, 25vw"
-              src="{{ category_image | image_url: width: 540 }}"
+              sizes="(max-width: 749px) 440px, (max-width: 989px) 50vw, 25vw"
+              src="{{ category_image | image_url: width: 440 }}"
               alt="{{ category_title | escape }}"
               class="ai-vintage-grid__image-{{ ai_gen_id }}"
               loading="lazy"
               decoding="async"
-              width="540"
-              height="540"
+              width="440"
+              height="440"
             >
           {% else %}
             <div class="ai-vintage-grid__placeholder-{{ ai_gen_id }}">

@@ -227,7 +227,7 @@
     .ai-luxury-banner__background-{{ ai_gen_id }} {
       height: {{ block.settings.section_height_mobile }}px;
       {% if block.settings.banner_image %}
-        background-image: url('{{ block.settings.banner_image | image_url: width: 800 }}') !important;
+        background-image: url('{{ block.settings.banner_image | image_url: width: 600 }}') !important;
       {% endif %}
       {% if block.settings.disable_fixed_mobile %}
         background-attachment: scroll !important;

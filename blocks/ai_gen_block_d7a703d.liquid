@@ -256,7 +256,6 @@
         {% if block.settings.enable_parallax %}
           <source media="(min-width: 750px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
         {% endif %}
-        <source media="(max-width: 480px)" srcset="{{ block.settings.background_image | image_url: width: 600 }}">
         <source media="(max-width: 749px)" srcset="{{ block.settings.background_image | image_url: width: 750 }}">
         <img
           srcset="

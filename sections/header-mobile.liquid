@@ -232,108 +232,6 @@
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header-mobile{% else %}div{% endif %}>
 
 {% javascript %}
-    class StickyHeaderMobile extends HTMLElement {
-        constructor() {
-            super();
-        }
-  
-        connectedCallback() {
-            this.header = document.querySelector('.section-header-mobile');
-            this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
-            this.headerBounds = {};
-    
-            if (this.headerIsAlwaysSticky) {
-            this.header.classList.add('shopify-section-header-sticky');
-            };
-    
-            this.currentScrollTop = 0;
-            this.preventReveal = false;
-            this.predictiveSearch = this.querySelector('predictive-search');
-    
-            this.onScrollHandler = this.onScroll.bind(this);
-            this.hideHeaderOnScrollUp = () => this.preventReveal = true;
-    
-            this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-            window.addEventListener('scroll', this.onScrollHandler, false);
-    
-            this.createObserver();
-        }
-  
-        disconnectedCallback() {
-            this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
-            window.removeEventListener('scroll', this.onScrollHandler);
-        }
-  
-        createObserver() {
-            let observer = new IntersectionObserver((entries, observer) => {
-                this.headerBounds = entries[0].intersectionRect;
-                observer.disconnect();
-            });
-    
-            observer.observe(this.header);
-        }
-  
-        onScroll() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-            if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
-    
-            if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-                this.header.classList.add('scrolled-past-header');
-                if (this.preventHide) return;
-                requestAnimationFrame(this.hide.bind(this));
-            } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
-                this.header.classList.add('scrolled-past-header');
-                if (!this.preventReveal) {
-                    requestAnimationFrame(this.reveal.bind(this));
-                } else {
-                    window.clearTimeout(this.isScrolling);
-        
-                    this.isScrolling = setTimeout(() => {
-                    this.preventReveal = false;
-                    }, 66);
-        
-                    requestAnimationFrame(this.hide.bind(this));
-                }
-            } else if (scrollTop <= this.headerBounds.top) {
-                this.header.classList.remove('scrolled-past-header');
-                requestAnimationFrame(this.reset.bind(this));
-            }
-    
-            this.currentScrollTop = scrollTop;
-        }
-  
-        hide() {
-            if (this.headerIsAlwaysSticky) return;
-            this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
-            this.header.classList.remove('shopify-section-header-show');
-            this.header.style.top = '';
-        }
-  
-        reveal() {
-            const headerMultiSite = document.querySelector('.section-header-nav-multi-site');
-            if (this.headerIsAlwaysSticky) return;
-            this.header.classList.add('shopify-section-header-sticky', 'shopify-section-header-show', 'animate');
-            this.header.classList.remove('shopify-section-header-hidden');
-            if (headerMultiSite) {
-                const height = headerMultiSite.offsetHeight;
-                this.header.style.top = `${height}px`;
-            }
-        }
-  
-        reset() {
-            if (this.headerIsAlwaysSticky) return;
-            this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-show', 'shopify-section-header-sticky', 'animate');
-            this.header.style.top = '';
-        }
-    }
-  
-    customElements.define('sticky-header-mobile', StickyHeaderMobile);
-
-    document.querySelector('[data-mobile-menu]').addEventListener('click', () => {
-        document.body.classList.toggle('menu_open');
-    })
-
     function setCookie(cname, cvalue, exdays) {
         const d = new Date();
         d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
@@ -342,20 +240,24 @@
     };
 
     function renderLogoMobile() {
+        var $ = window.jQuery || window.$;
+        if (!$) return;
         if ($("[data-menu-tab]").length > 0) {
 
             $(document).on("click", "[data-menu-tab] li", (event) => {
                 var active = $(event.currentTarget).data("load-page"),
                     href = $(event.currentTarget).attr("href");
 
-                $.cookie("page-url", active, {
-                    expires: 1,
-                    path: "/",
-                });
+                if ($.cookie) {
+                    $.cookie("page-url", active, {
+                        expires: 1,
+                        path: "/",
+                    });
+                }
             });
 
             var canonical = $("[canonical-shop-url]").attr("canonical-shop-url"),
-            pageUrl = $.cookie("page-url"),
+            pageUrl = ($.cookie ? $.cookie("page-url") : null),
             menuTabItem,
             logoTabItem,
             menuItem;
@@ -399,7 +301,6 @@
 
             const header = menuTabItem.closest(".header");
 
-            
             if (header && window.innerWidth < 1025) {
                 if (
                     window.location.pathname.indexOf("/pages/") !== -1 &&
@@ -435,7 +336,13 @@
         }
     }
 
-    renderLogoMobile();
+    if (typeof window.jQuery === 'undefined' && typeof window.$ === 'undefined') {
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLogoMobile();
+        });
+    } else {
+        renderLogoMobile();
+    }
 {% endjavascript %}
 
 {% schema %}

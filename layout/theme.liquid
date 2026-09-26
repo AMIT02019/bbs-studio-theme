@@ -210,28 +210,36 @@
             {% render 'halo-currency-js' %}
         {% endif %}
         
-        <!-- Core Web Vitals Tracking -->
-        <script type="module">
-          import {onCLS, onFID, onLCP, onINP, onTTFB} from 'https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module';
-
-          function sendToGoogleAnalytics({name, delta, id}) {
-            if (typeof window.gtag !== 'undefined') {
-              window.gtag('config', 'G-WK7MWFGG9D');
-              window.gtag('event', name, {
-                event_category: 'Web Vitals',
-                event_label: id,
-                value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-                non_interaction: true,
-                send_to: 'G-WK7MWFGG9D'
-              });
+        <!-- Core Web Vitals Tracking (Deferred) -->
+        <script>
+          window.addEventListener('load', function() {
+            var loadVitals = function() {
+              import('https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module').then(function(vitals) {
+                function sendToGoogleAnalytics(metric) {
+                  if (typeof window.gtag !== 'undefined') {
+                    window.gtag('config', 'G-WK7MWFGG9D');
+                    window.gtag('event', metric.name, {
+                      event_category: 'Web Vitals',
+                      event_label: metric.id,
+                      value: Math.round(metric.name === 'CLS' ? metric.delta * 1000 : metric.delta),
+                      non_interaction: true,
+                      send_to: 'G-WK7MWFGG9D'
+                    });
+                  }
+                }
+                vitals.onCLS(sendToGoogleAnalytics);
+                vitals.onFID(sendToGoogleAnalytics);
+                vitals.onLCP(sendToGoogleAnalytics);
+                vitals.onINP(sendToGoogleAnalytics);
+                vitals.onTTFB(sendToGoogleAnalytics);
+              }).catch(function(){});
+            };
+            if ('requestIdleCallback' in window) {
+              requestIdleCallback(loadVitals, { timeout: 4000 });
+            } else {
+              setTimeout(loadVitals, 2500);
             }
-          }
-
-          onCLS(sendToGoogleAnalytics);
-          onFID(sendToGoogleAnalytics);
-          onLCP(sendToGoogleAnalytics);
-          onINP(sendToGoogleAnalytics);
-          onTTFB(sendToGoogleAnalytics);
+          });
         </script>
         <!-- End Core Web Vitals Tracking -->
     
