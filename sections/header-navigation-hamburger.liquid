@@ -559,8 +559,9 @@
     {%- endif -%}
 {%- endif -%}
 {% javascript %}
-var sticky = document.getElementsByTagName('sticky-header')[0].querySelector('.header-nav-hamburger');
-if (sticky != undefined || sticky != null) {
+var stickyHeaderEl = document.getElementsByTagName('sticky-header')[0];
+var sticky = stickyHeaderEl ? stickyHeaderEl.querySelector('.header-nav-hamburger') : null;
+if (!customElements.get('sticky-header')) {
     class StickyHeader extends HTMLElement {
         constructor() {
           super();
