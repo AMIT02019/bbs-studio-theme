@@ -15,18 +15,19 @@
 -%}
 <html class="no-js" lang="{{ request.locale.iso_code }}"{% if settings.enable_layout_rtl and enable_iso_rtl %} dir="rtl"{% endif %}>
     <head>
-        <!-- Google tag (gtag.js) -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        
+        <!-- Google tag (gtag.js) consolidated -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WK7MWFGG9D"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', 'G-WK7MWFGG9D');
+          gtag('config', 'G-K8X64DJ6Q0');
         </script>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
         {%- unless request.page_type == 'password' -%}
             <meta name="robots" content="index, follow">
         {%- else -%}
@@ -39,11 +40,14 @@
         <link rel="icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" sizes="192x192">
         <link rel="apple-touch-icon" href="{{ 'apple-touch-icon.png' | asset_url }}">
         <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="dns-prefetch" href="https://cdn.shopify.com">
         <link rel="dns-prefetch" href="https://fonts.shopifycdn.com">
         <link rel="dns-prefetch" href="//www.googletagmanager.com">
-        <link rel="dns-prefetch" href="//www.google-analytics.com">
+
+        {%- if template == 'index' -%}
+          <!-- Preload Homepage LCP Hero Image -->
+          <link rel="preload" as="image" href="https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=750" imagesrcset="https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=600 600w, https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=750 750w, https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=1100 1100w, https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=1600 1600w, https://begborrowstealstudio.com/cdn/shop/files/jpg_1-2_1.webp?v=1779378992&width=2000 2000w" imagesizes="100vw" fetchpriority="high">
+        {%- endif -%}
         {%- assign page_title_downcase = page_title | downcase -%}
         {%- assign shop_name_downcase = shop.name | downcase -%}
         <title>{{ page_title }} {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%} {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%} {%- unless page_title_downcase contains shop_name_downcase or page_title_downcase contains 'beg borrow steal' %} &ndash; {{ shop.name }}{% endunless -%}</title>
@@ -138,15 +142,7 @@
                 assign style_text_size_varriant = 'size_varriant_style_2'
             endif
         -%}
-        <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K8X64DJ6Q0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-K8X64DJ6Q0');
-</script>
     {% render 'sq-assets' %}
  {% render 'sq-dropdown' %} 
  {% render 'schema' %}

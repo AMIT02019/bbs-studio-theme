@@ -328,12 +328,20 @@
         <div class="ai-vintage-grid__image-wrapper-{{ ai_gen_id }}">
           {% if category_image %}
             <img
-              src="{{ category_image | image_url: width: 800 }}"
+              srcset="
+                {{ category_image | image_url: width: 360 }} 360w,
+                {{ category_image | image_url: width: 540 }} 540w,
+                {{ category_image | image_url: width: 720 }} 720w,
+                {{ category_image | image_url: width: 900 }} 900w
+              "
+              sizes="(max-width: 749px) 100vw, (max-width: 989px) 50vw, 25vw"
+              src="{{ category_image | image_url: width: 540 }}"
               alt="{{ category_title | escape }}"
               class="ai-vintage-grid__image-{{ ai_gen_id }}"
               loading="lazy"
-              width="800"
-              height="800"
+              decoding="async"
+              width="540"
+              height="540"
             >
           {% else %}
             <div class="ai-vintage-grid__placeholder-{{ ai_gen_id }}">

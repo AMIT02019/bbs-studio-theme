@@ -29,9 +29,9 @@
                     {% if product.featured_image %}
                       <img
                         class="rp-image primary-image"
-                        src="{{ product.featured_image | image_url: width: 1200 }}"
+                        src="{{ product.featured_image | image_url: width: 500 }}"
                         alt="{{ product.title }}"
-                        loading="lazy"
+                        loading="lazy" decoding="async"
                         width=""
                         height=""
                       >
@@ -40,9 +40,9 @@
                     {% if section.settings.enable_hover_image and product.images.size > 1 %}
                       <img
                         class="rp-image hover-image"
-                        src="{{ product.images[1] | image_url: width: 1200 }}"
+                        src="{{ product.images[1] | image_url: width: 500 }}"
                         alt="{{ product.title }}"
-                        loading="lazy"
+                        loading="lazy" decoding="async"
                         width=""
                         height=""
                       >
@@ -499,9 +499,9 @@
                   {% if product.featured_image %}
                     <img
                       class="ai-rp-image-{{ ai_gen_id }} ai-rp-primary-image-{{ ai_gen_id }}"
-                      src="{{ product.featured_image | image_url: width: 1200 }}"
+                      src="{{ product.featured_image | image_url: width: 500 }}"
                       alt="{{ product.title | escape }}"
-                      loading="lazy"
+                      loading="lazy" decoding="async"
                       width="{{ product.featured_image.width }}"
                       height="{{ product.featured_image.height }}"
                     >
@@ -510,9 +510,9 @@
                   {% if block.settings.enable_hover_image and product.images.size > 1 %}
                     <img
                       class="ai-rp-image-{{ ai_gen_id }} ai-rp-hover-image-{{ ai_gen_id }}"
-                      src="{{ product.images[1] | image_url: width: 1200 }}"
+                      src="{{ product.images[1] | image_url: width: 500 }}"
                       alt="{{ product.title | escape }}"
-                      loading="lazy"
+                      loading="lazy" decoding="async"
                       width="{{ product.images[1].width }}"
                       height="{{ product.images[1].height }}"
                     >
@@ -540,9 +540,9 @@
                 {% if product.featured_image %}
                   <img
                     class="ai-rp-image-{{ ai_gen_id }} ai-rp-primary-image-{{ ai_gen_id }}"
-                    src="{{ product.featured_image | image_url: width: 1200 }}"
+                    src="{{ product.featured_image | image_url: width: 500 }}"
                     alt="{{ product.title | escape }}"
-                    loading="lazy"
+                    loading="lazy" decoding="async"
                     width="{{ product.featured_image.width }}"
                     height="{{ product.featured_image.height }}"
                   >
@@ -551,9 +551,9 @@
                 {% if block.settings.enable_hover_image and product.images.size > 1 %}
                   <img
                     class="ai-rp-image-{{ ai_gen_id }} ai-rp-hover-image-{{ ai_gen_id }}"
-                    src="{{ product.images[1] | image_url: width: 1200 }}"
+                    src="{{ product.images[1] | image_url: width: 500 }}"
                     alt="{{ product.title | escape }}"
-                    loading="lazy"
+                    loading="lazy" decoding="async"
                     width="{{ product.images[1].width }}"
                     height="{{ product.images[1].height }}"
                   >
