@@ -666,20 +666,6 @@
     }
   }, true);
 
-  // Desktop hover subcategory switcher
-  document.addEventListener('mouseover', function(e) {
-    if (window.innerWidth >= 1025) {
-      var trigger = e.target.closest('.bbs-mm-cat-trigger');
-      if (trigger) {
-        var dropdown = trigger.closest('.bbs-luxury-megamenu-dropdown');
-        var cat = trigger.getAttribute('data-cat');
-        if (cat) {
-          setActiveCategory(cat, dropdown);
-        }
-      }
-    }
-  });
-
   // Desktop mega menu reveal on navigation hover
   var closeTimer = null;
   function setupDesktopHover() {
