@@ -20,7 +20,7 @@
 {%- assign cur = currency | default: '₹' -%}
 
 {%- assign is_home_decor = false -%}
-{%- assign hd_handles = 'indian-antique,crockery,african,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
+{%- assign hd_handles = 'indian-antique,crockery,african,african-artifacts,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
 {%- if hd_handles contains collection.handle -%}
   {%- assign is_home_decor = true -%}
 {%- endif -%}
@@ -37,31 +37,19 @@
   <div class="cpg-filter-body">
 
     {%- if filter.type == 'price_range' -%}
-      {%- assign min_val_unit = '' -%}
-      {%- if filter.min_value.value != blank -%}
-        {%- assign min_val_unit = filter.min_value.value | divided_by: 100.0 | floor -%}
-      {%- endif -%}
-      {%- assign max_val_unit = '' -%}
-      {%- if filter.max_value.value != blank -%}
-        {%- assign max_val_unit = filter.max_value.value | divided_by: 100.0 | ceil -%}
-      {%- endif -%}
       <div class="cpg-price-inputs">
         <div class="cpg-price-field">
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
-            value="{{ min_val_unit }}"
-            min="0" placeholder="Min"
-            aria-label="Minimum price"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
+            value="{{ filter.min_value.value | default: '' }}"
+            min="0" max="{{ filter.range_max }}" placeholder="0">
         </div>
         <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
         <div class="cpg-price-field">
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
-            value="{{ max_val_unit }}"
-            min="0" placeholder="Max"
-            aria-label="Maximum price"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
+            value="{{ filter.max_value.value | default: '' }}"
+            min="0" max="{{ filter.range_max }}" placeholder="{{ filter.range_max }}">
         </div>
       </div>
       <button type="button" class="cpg-price-apply" onclick="cpgApplyPrice()">Apply</button>
@@ -121,7 +109,7 @@
 
       {%- elsif is_home_decor and fl == 'brands' or is_home_decor and fl == 'brand' or is_home_decor and fl == 'vendor' -%}
         {%- comment -%} Home Decor Subcategories under CATEGORY heading {%- endcomment -%}
-        {%- assign hd_brands = 'indian-antique:Indian Antique:89,crockery:Ceramics:6,african:African Artifacts:2,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:12,chinese-art:Chinese Artifacts:7' | split: ',' -%}
+        {%- assign hd_brands = 'indian-antique:Indian Antique:89,crockery:Ceramics:6,african-artifacts:African Artifacts:27,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:12,chinese-art:Chinese Artifacts:7' | split: ',' -%}
         {%- for item in hd_brands -%}
           {%- assign parts = item | split: ':' -%}
           {%- assign col_h = parts[0] -%}

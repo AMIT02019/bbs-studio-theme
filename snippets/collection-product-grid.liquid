@@ -220,9 +220,10 @@
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
+    overscroll-behavior: contain !important;
     overscroll-behavior-x: contain !important;
-    overscroll-behavior-y: auto !important;
-    touch-action: pan-y !important;
+    overscroll-behavior-y: contain !important;
+    touch-action: pan-x !important;
   }
   .cpg-card-slider::-webkit-scrollbar {
     display: none !important;
@@ -450,19 +451,8 @@
           {%- endfor -%}
           {%- if f.type == 'price_range' -%}
             {%- if f.min_value.value != blank or f.max_value.value != blank -%}
-              {%- assign sym = cart.currency.symbol | default: '₹' -%}
               <span class="cpg-active-tag">
-                {%- if f.min_value.value != blank and f.max_value.value != blank -%}
-                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
-                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
-                  {{ sym }}{{ chip_min }} – {{ sym }}{{ chip_max }}
-                {%- elsif f.min_value.value != blank -%}
-                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
-                  {{ sym }}{{ chip_min }}+
-                {%- elsif f.max_value.value != blank -%}
-                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
-                  Up to {{ sym }}{{ chip_max }}
-                {%- endif -%}
+                ₹{{ f.min_value.value | default: 0 }} – ₹{{ f.max_value.value | default: f.range_max }}
                 <a href="{{ f.url_to_remove }}" aria-label="Remove price">×</a>
               </span>
             {%- endif -%}
@@ -561,7 +551,7 @@
 
           {%- else -%}
             {%- assign is_hd_empty = false -%}
-            {%- assign hd_all_h = 'indian-antique,crockery,african,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
+            {%- assign hd_all_h = 'indian-antique,crockery,african,african-artifacts,islamic,japanese-artifacts,ceramic,artwork,christian-art,european-art,chinese-art,home-decor-curios,home-decor' | split: ',' -%}
             {%- if hd_all_h contains collection.handle -%}
               {%- assign is_hd_empty = true -%}
             {%- endif -%}
@@ -823,17 +813,8 @@
     var min = document.getElementById('cpg-pmin');
     var max = document.getElementById('cpg-pmax');
     var u = new URL(location.href);
-    if (min) {
-      var minVal = min.value ? min.value.trim() : '';
-      if (minVal !== '') u.searchParams.set(min.name, minVal);
-      else u.searchParams.delete(min.name);
-    }
-    if (max) {
-      var maxVal = max.value ? max.value.trim() : '';
-      if (maxVal !== '') u.searchParams.set(max.name, maxVal);
-      else u.searchParams.delete(max.name);
-    }
-    u.searchParams.delete('page');
+    if (min) { if (min.value) u.searchParams.set(min.name, min.value); else u.searchParams.delete(min.name); }
+    if (max) { if (max.value) u.searchParams.set(max.name, max.value); else u.searchParams.delete(max.name); }
     location.href = u.toString();
   }
   function cpgOpenSidebar() {
@@ -917,129 +898,41 @@
       }).catch(function () { busy = false; });
     }, { rootMargin: '300px' }).observe(trigger);
   }
-    // Mobile Card Photo Swipe Touch & Scroll Controller (Real-time tracking & smooth transition)
-  var cpgActiveSlider = null;
+  // Mobile Card Photo Swipe Touch and Dot Tracking
   var cpgTouchStartX = 0;
   var cpgTouchStartY = 0;
-  var cpgStartTime = 0;
-  var cpgInitialScrollLeft = 0;
-  var cpgIsHorizontalSwipe = null;
-  var cpgWasSwiped = false;
-  var cpgSwipeTimeout = null;
+  var cpgIsSwiping = false;
 
   document.addEventListener('touchstart', function(e) {
-    if (window.innerWidth > 1024) return;
-    if (!e.touches || e.touches.length !== 1) return;
     var slider = e.target.closest('[data-cpg-slider]');
-    if (!slider) return;
-
-    var slides = slider.querySelectorAll('.cpg-card-slide');
-    if (slides.length <= 1) return;
-
-    cpgActiveSlider = slider;
-    cpgTouchStartX = e.touches[0].clientX;
-    cpgTouchStartY = e.touches[0].clientY;
-    cpgStartTime = Date.now();
-    cpgInitialScrollLeft = slider.scrollLeft;
-    cpgIsHorizontalSwipe = null;
-
-    // Disable CSS scroll-snap and smooth animation during finger drag so scrollLeft tracks finger in real-time
-    slider.style.setProperty('scroll-snap-type', 'none', 'important');
-    slider.style.setProperty('scroll-behavior', 'auto', 'important');
-  }, { passive: true, capture: true });
+    if (slider) {
+      cpgIsSwiping = false;
+      cpgTouchStartX = e.touches[0].clientX;
+      cpgTouchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
 
   document.addEventListener('touchmove', function(e) {
-    if (!cpgActiveSlider || !cpgTouchStartX) return;
-    if (!e.touches || e.touches.length !== 1) return;
-
-    var dx = e.touches[0].clientX - cpgTouchStartX;
-    var dy = e.touches[0].clientY - cpgTouchStartY;
-
-    if (cpgIsHorizontalSwipe === null) {
-      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
-        if (Math.abs(dx) > Math.abs(dy)) {
-          cpgIsHorizontalSwipe = true;
-        } else {
-          cpgIsHorizontalSwipe = false;
-          cpgActiveSlider.style.removeProperty('scroll-snap-type');
-          cpgActiveSlider.style.removeProperty('scroll-behavior');
-          cpgActiveSlider = null;
-          return;
-        }
+    if (cpgTouchStartX) {
+      var diffX = Math.abs(e.touches[0].clientX - cpgTouchStartX);
+      var diffY = Math.abs(e.touches[0].clientY - cpgTouchStartY);
+      if (diffX > 7 && diffX > diffY) {
+        cpgIsSwiping = true;
       }
     }
-
-    if (cpgIsHorizontalSwipe === true) {
-      if (e.cancelable) e.preventDefault();
-      cpgActiveSlider.scrollLeft = cpgInitialScrollLeft - dx;
-      cpgWasSwiped = true;
-    }
-  }, { passive: false, capture: true });
-
-  document.addEventListener('touchend', function(e) {
-    if (cpgActiveSlider && cpgIsHorizontalSwipe === true) {
-      var w = cpgActiveSlider.clientWidth || 180;
-      var slides = cpgActiveSlider.querySelectorAll('.cpg-card-slide');
-      var maxIndex = Math.max(0, slides.length - 1);
-
-      var touch = e.changedTouches && e.changedTouches[0];
-      var endX = touch ? touch.clientX : cpgTouchStartX;
-      var dx = endX - cpgTouchStartX;
-      var dt = Math.max(1, Date.now() - cpgStartTime);
-      var speed = Math.abs(dx) / dt;
-
-      var currentIdx = Math.round(cpgInitialScrollLeft / w);
-      var targetIdx = currentIdx;
-
-      // Sensitive flick or drag threshold (>35px or >20px with velocity)
-      if (dx < -35 || (dx < -20 && speed > 0.25)) {
-        targetIdx = Math.min(currentIdx + 1, maxIndex);
-      } else if (dx > 35 || (dx > 20 && speed > 0.25)) {
-        targetIdx = Math.max(currentIdx - 1, 0);
-      }
-
-      // Re-enable smooth transition to target slide
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
-      cpgActiveSlider.scrollTo({
-        left: targetIdx * w,
-        behavior: 'smooth'
-      });
-
-      cpgWasSwiped = true;
-      clearTimeout(cpgSwipeTimeout);
-      cpgSwipeTimeout = setTimeout(function() {
-        cpgWasSwiped = false;
-      }, 350);
-    } else if (cpgActiveSlider) {
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
-    }
-    cpgActiveSlider = null;
-    cpgTouchStartX = 0;
-    cpgTouchStartY = 0;
-    cpgIsHorizontalSwipe = null;
-  }, { passive: true, capture: true });
-
-  document.addEventListener('touchcancel', function() {
-    if (cpgActiveSlider) {
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
-    }
-    cpgActiveSlider = null;
-    cpgTouchStartX = 0;
-    cpgTouchStartY = 0;
-    cpgIsHorizontalSwipe = null;
-  }, { passive: true, capture: true });
+  }, { passive: true });
 
   document.addEventListener('click', function(e) {
-    if (cpgWasSwiped) {
+    if (cpgIsSwiping) {
       var slide = e.target.closest('.cpg-card-slide');
       if (slide) {
         e.preventDefault();
         e.stopPropagation();
       }
+      cpgIsSwiping = false;
     }
+    cpgTouchStartX = 0;
+    cpgTouchStartY = 0;
   }, true);
 
 
