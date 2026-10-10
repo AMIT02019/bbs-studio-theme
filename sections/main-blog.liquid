@@ -57,6 +57,7 @@
   .bbs-journal-card {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   .bbs-journal-img-wrap {
     display: flex;
@@ -114,6 +115,7 @@
     line-height: 1.68;
     color: #5c534b;
     margin: 0 0 24px 0;
+    flex-grow: 1;
   }
   .bbs-journal-btn {
     display: inline-flex;
@@ -131,37 +133,10 @@
     text-transform: uppercase;
     text-decoration: none !important;
     align-self: flex-start;
+    margin-top: auto;
     transition: all 0.25s ease;
   }
   .bbs-journal-btn:hover {
-    background: #36221c !important;
-    border-color: #36221c !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-  }
-  .bbs-journal-footer {
-    margin-top: 52px;
-    padding-top: 32px;
-    border-top: 1px solid #e6e1da;
-    text-align: center;
-  }
-  .bbs-journal-loadmore {
-    display: inline-block;
-    padding: 13px 38px;
-    border: 1px solid #9e9488;
-    background: transparent;
-    color: #36221c !important;
-    -webkit-text-fill-color: #36221c !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-decoration: none !important;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .bbs-journal-loadmore:hover {
     background: #36221c !important;
     border-color: #36221c !important;
     color: #ffffff !important;
@@ -251,14 +226,6 @@
           </a>
         </article>
       {%- endfor -%}
-    </div>
-
-    <div class="bbs-journal-footer">
-      {%- if paginate.next -%}
-        <a href="{{ paginate.next.url }}" class="bbs-journal-loadmore">LOAD MORE STORIES</a>
-      {%- else -%}
-        <button type="button" class="bbs-journal-loadmore" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">LOAD MORE STORIES</button>
-      {%- endif -%}
     </div>
   </div>
 </div>

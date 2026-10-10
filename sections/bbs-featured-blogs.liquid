@@ -47,6 +47,7 @@
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-card {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-img-wrap {
     display: flex;
@@ -104,6 +105,7 @@
     line-height: 1.68;
     color: #5c534b;
     margin: 0 0 24px 0;
+    flex-grow: 1;
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-readmore {
     display: inline-flex;
@@ -121,36 +123,10 @@
     text-transform: uppercase;
     text-decoration: none !important;
     align-self: flex-start;
+    margin-top: auto;
     transition: all 0.25s ease;
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-readmore:hover {
-    background: #36221c !important;
-    border-color: #36221c !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-  }
-  #bbs-featured-blogs-{{ section.id }} .bbs-fb-footer {
-    margin-top: 52px;
-    padding-top: 32px;
-    border-top: 1px solid #e6e1da;
-    text-align: center;
-  }
-  #bbs-featured-blogs-{{ section.id }} .bbs-fb-viewall {
-    display: inline-block;
-    padding: 13px 38px;
-    border: 1px solid #9e9488;
-    background: transparent;
-    color: #36221c !important;
-    -webkit-text-fill-color: #36221c !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-decoration: none !important;
-    transition: all 0.25s ease;
-  }
-  #bbs-featured-blogs-{{ section.id }} .bbs-fb-viewall:hover {
     background: #36221c !important;
     border-color: #36221c !important;
     color: #ffffff !important;
@@ -236,14 +212,6 @@
         </article>
       {%- endfor -%}
     </div>
-
-    {%- if section.settings.show_view_all -%}
-      <div class="bbs-fb-footer">
-        <a href="{{ selected_blog.url | default: '/blogs/news' }}" class="bbs-fb-viewall">
-          LOAD MORE STORIES
-        </a>
-      </div>
-    {%- endif -%}
   </div>
 </section>
 {%- endif -%}
