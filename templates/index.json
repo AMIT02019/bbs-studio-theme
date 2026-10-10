@@ -604,6 +604,23 @@
         "ai_gen_block_c582a29_RNpV9Q"
       ],
       "settings": {}
+    },
+    "bbs_featured_blogs": {
+      "type": "bbs-featured-blogs",
+      "settings": {
+        "blog": "news",
+        "kicker": "CURATED STORIES & ARTIST SPOTLIGHTS",
+        "heading": "FROM OUR BLOGS",
+        "subtitle": "Explore archival stories, provenance notes, and curated exhibitions from our featured artists and collectors.",
+        "post_limit": 3,
+        "show_view_all": true,
+        "button_text": "VIEW ALL BLOGS →",
+        "background_color": "#faf8f5",
+        "heading_color": "#5a3a0a",
+        "heading_size": 34,
+        "padding_top": 75,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
@@ -615,6 +632,7 @@
     "1779387469a3ae875b",
     "1779388174dfe2079f",
     "1780139308cf84150b",
-    "17793899179af5c3d9"
+    "17793899179af5c3d9",
+    "bbs_featured_blogs"
   ]
 }
