@@ -1,32 +1,268 @@
 <style>
-  .blog-btn:hover,
-  .blog-btn:hover .text,
-  .blog-btn:hover span,
-  .button.blog-btn:hover,
-  .button.blog-btn:hover *,
-  .button-2.blog-btn:hover,
-  .button-2.blog-btn:hover *,
-  .article-item .blog-btn:hover,
-  .article-item .blog-btn:hover * {
+  .bbs-journal-page {
+    background-color: #fbfaf8;
+    padding: 36px 0 80px;
+    border-top: 1px solid #ece7df;
+  }
+  .bbs-journal-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 55px;
+  }
+  .bbs-journal-breadcrumb {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #7a7269;
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+  .bbs-journal-breadcrumb a {
+    color: #7a7269;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .bbs-journal-breadcrumb a:hover {
+    color: #36221c;
+  }
+  .bbs-journal-breadcrumb .bbs-bc-sep {
+    margin: 0 8px;
+    color: #9e9488;
+  }
+  .bbs-journal-header {
+    margin-bottom: 42px;
+  }
+  .bbs-journal-heading {
+    font-family: 'Georgia', 'Playfair Display', 'Times New Roman', serif !important;
+    font-size: 46px !important;
+    font-weight: 400 !important;
+    color: #36221c !important;
+    line-height: 1.15 !important;
+    margin: 0 0 10px 0 !important;
+    letter-spacing: -0.01em !important;
+    text-transform: none !important;
+  }
+  .bbs-journal-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    letter-spacing: 0.06em !important;
+    color: #6e655c !important;
+    margin: 0 !important;
+    text-transform: none !important;
+  }
+  .bbs-journal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 52px 48px;
+  }
+  .bbs-journal-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .bbs-journal-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #f2f0ec;
+    overflow: hidden;
+    margin-bottom: 22px;
+    text-decoration: none;
+  }
+  .bbs-journal-img-wrap img {
+    width: 92%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .bbs-journal-card:hover .bbs-journal-img-wrap img {
+    transform: scale(1.025);
+  }
+  .bbs-journal-meta {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7a7067;
+    margin-bottom: 12px;
+  }
+  .bbs-journal-meta .bbs-meta-dot {
+    margin: 0 8px;
+  }
+  .bbs-journal-card-title {
+    font-family: 'Georgia', 'Playfair Display', 'Times New Roman', serif !important;
+    font-size: 28px !important;
+    font-weight: 400 !important;
+    line-height: 1.28 !important;
+    color: #2b1d16 !important;
+    margin: 0 0 14px 0 !important;
+    text-transform: none !important;
+  }
+  .bbs-journal-card-title a {
+    color: inherit !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+  }
+  .bbs-journal-card-title a:hover {
+    color: #6e472b !important;
+  }
+  .bbs-journal-excerpt {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.68;
+    color: #5c534b;
+    margin: 0 0 24px 0;
+  }
+  .bbs-journal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 22px;
+    border: 1px solid #9e9488;
+    background: transparent;
+    color: #36221c !important;
+    -webkit-text-fill-color: #36221c !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    align-self: flex-start;
+    transition: all 0.25s ease;
+  }
+  .bbs-journal-btn:hover {
+    background: #36221c !important;
+    border-color: #36221c !important;
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
-    background-color: #3d1d14 !important;
-    border-color: #3d1d14 !important;
+  }
+  .bbs-journal-footer {
+    margin-top: 52px;
+    padding-top: 32px;
+    border-top: 1px solid #e6e1da;
+    text-align: center;
+  }
+  .bbs-journal-loadmore {
+    display: inline-block;
+    padding: 13px 38px;
+    border: 1px solid #9e9488;
+    background: transparent;
+    color: #36221c !important;
+    -webkit-text-fill-color: #36221c !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .bbs-journal-loadmore:hover {
+    background: #36221c !important;
+    border-color: #36221c !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+  @media (max-width: 991px) {
+    .bbs-journal-container {
+      padding: 0 24px;
+    }
+    .bbs-journal-grid {
+      gap: 36px 28px;
+    }
+    .bbs-journal-heading {
+      font-size: 38px !important;
+    }
+    .bbs-journal-card-title {
+      font-size: 24px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .bbs-journal-page {
+      padding: 24px 0 56px;
+    }
+    .bbs-journal-container {
+      padding: 0 18px;
+    }
+    .bbs-journal-heading {
+      font-size: 32px !important;
+    }
+    .bbs-journal-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
   }
 </style>
-{% assign blog_layout = settings.blog_layout %}
 
-{% if blog_layout == "default" %}
-    {% render 'blog-default' %}
-{% elsif blog_layout == "simple" %}
-    {% render 'blog-simple' %}
-{% elsif blog_layout == "full_width" %}
-    {% render 'blog-full-width' %}
-{% elsif blog_layout == "masonry" %}
-    {% render 'blog-masonry' %}
-{% elsif blog_layout == "list" %}
-    {% render 'blog-list' %}
-{% endif %}
+{%- paginate blog.articles by 10 -%}
+<div class="bbs-journal-page">
+  <div class="bbs-journal-container">
+    <nav class="bbs-journal-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="bbs-bc-sep">/</span>
+      <span>Journal</span>
+    </nav>
+
+    <header class="bbs-journal-header">
+      <h1 class="bbs-journal-heading">Journal &amp; Stories</h1>
+      <p class="bbs-journal-subtitle">Artists, archives and objects with a story to tell.</p>
+    </header>
+
+    <div class="bbs-journal-grid">
+      {%- for article in blog.articles -%}
+        {%- assign clean_title = article.title | remove: 'Beg Borrow Steal Studio Presents: ' | remove: "'" | remove: "’" | remove: "‘" -%}
+        <article class="bbs-journal-card">
+          <a href="{{ article.url }}" class="bbs-journal-img-wrap">
+            {%- if article.image != blank -%}
+              <img
+                src="{{ article.image | image_url: width: 1100 }}"
+                alt="{{ article.image.alt | default: clean_title | escape }}"
+                loading="lazy"
+                width="1100"
+                height="720">
+            {%- endif -%}
+          </a>
+
+          <div class="bbs-journal-meta">
+            <span>{{ article.published_at | date: '%b %d, %Y' | upcase }}</span>
+            <span class="bbs-meta-dot">&bull;</span>
+            <span>{{ article.author | default: 'BEG BORROW STEAL STUDIO' | upcase }}</span>
+          </div>
+
+          <h2 class="bbs-journal-card-title">
+            <a href="{{ article.url }}">{{ clean_title }}</a>
+          </h2>
+
+          <div class="bbs-journal-excerpt">
+            {%- if article.excerpt != blank -%}
+              {{ article.excerpt | strip_html }}
+            {%- else -%}
+              {{ article.content | strip_html | truncatewords: 36 }}
+            {%- endif -%}
+          </div>
+
+          <a href="{{ article.url }}" class="bbs-journal-btn">
+            <span>READ STORY</span>
+            <span>&rarr;</span>
+          </a>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <div class="bbs-journal-footer">
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" class="bbs-journal-loadmore">LOAD MORE STORIES</a>
+      {%- else -%}
+        <button type="button" class="bbs-journal-loadmore" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">LOAD MORE STORIES</button>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
 
 {% schema %}
 {
