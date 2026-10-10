@@ -1,0 +1,97 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "1779531797578522e2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2619c73_FDprRw": {
+          "type": "ai_gen_block_2619c73",
+          "settings": {
+            "collection_1": "bracelets-cuffs",
+            "custom_title_1": "Designer Bracelets",
+            "page_link_1": "/collections/bracelets-cuffs",
+            "collection_2": "bracelets",
+            "custom_title_2": "Vintage Bracelets",
+            "page_link_2": "/collections/bracelets",
+            "collection_3": "",
+            "custom_title_3": "",
+            "page_link_3": "",
+            "collection_4": "",
+            "custom_title_4": "",
+            "page_link_4": "",
+            "collection_5": "",
+            "custom_title_5": "",
+            "page_link_5": "",
+            "collection_6": "",
+            "custom_title_6": "",
+            "page_link_6": "",
+            "collection_7": "",
+            "custom_title_7": "",
+            "page_link_7": "",
+            "collection_8": "",
+            "custom_title_8": "",
+            "page_link_8": "",
+            "collection_9": "",
+            "custom_title_9": "",
+            "page_link_9": "",
+            "collection_10": "",
+            "custom_title_10": "",
+            "page_link_10": "",
+            "collection_11": "",
+            "custom_title_11": "",
+            "page_link_11": "",
+            "collection_12": "",
+            "custom_title_12": "",
+            "page_link_12": "",
+            "desktop_width_percent": 100,
+            "max_width": 1400,
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 20,
+            "card_background": "#ffffff",
+            "border_radius": 14,
+            "image_aspect_ratio": 100,
+            "placeholder_background": "#f5f5f5",
+            "hover_lift": 5,
+            "hover_shadow_y": 12,
+            "hover_shadow_blur": 30,
+            "hover_shadow_color": "#0000001f",
+            "content_padding": 16,
+            "text_align": "center",
+            "title_font_size": 20,
+            "title_font_weight": "500",
+            "title_color": "#5a3a0a",
+            "custom_image_1": "shopify://shop_images/Jewellery-23_1.jpg",
+            "custom_image_2": "shopify://shop_images/JEWELLERY_4-2285.jpg"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2619c73_FDprRw"
+      ],
+      "custom_css": [
+        "[class*=\"ai-collection-categories-wrapper\"] > * {border: 1px solid #dcdcdc; border-radius: 16px; padding: 20px; background: #ffffff; transition: all 0.3s ease;}",
+        "[class*=\"ai-collection-categories-wrapper\"] > *:hover {border-color: #000; transform: translateY(-4px);}"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "1779531797578522e2"
+  ]
+}
