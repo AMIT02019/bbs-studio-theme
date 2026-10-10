@@ -477,6 +477,72 @@
           <div class="cpg-sidebar-title">Filters</div>
 
           {%- liquid
+            assign subcat_items_str = ''
+            assign subcat_parent_url = ''
+            case collection.handle
+              when 'all-earrings', 'earrings', 'earrings-1'
+                assign subcat_parent_url = '/collections/all-earrings'
+                assign subcat_items_str = 'earrings:Designer Earrings:197,earrings-1:Vintage Earrings:135'
+              when 'all-necklaces', 'necklace', 'necklaces'
+                assign subcat_parent_url = '/collections/all-necklaces'
+                assign subcat_items_str = 'necklace:Designer Necklaces:75,necklaces:Vintage Necklaces:47'
+              when 'all-rings', 'rings', 'rings-1'
+                assign subcat_parent_url = '/collections/all-rings'
+                assign subcat_items_str = 'rings:Designer Rings:11,rings-1:Vintage Rings:9'
+              when 'all-bracelets', 'bracelets-cuffs', 'bracelets'
+                assign subcat_parent_url = '/collections/all-bracelets'
+                assign subcat_items_str = 'bracelets-cuffs:Designer Bracelets:21,bracelets:Vintage Bracelets:0'
+              when 'all-brooches', 'broaches', 'brooches'
+                assign subcat_parent_url = '/collections/all-brooches'
+                assign subcat_items_str = 'broaches:Designer Brooches:17,brooches:Vintage Brooches:16'
+              when 'handbags', 'designer-bags', 'bags'
+                assign subcat_parent_url = '/collections/handbags'
+                assign subcat_items_str = 'designer-bags:Designer Bags:8,bags:Vintage Bags:37'
+              when 'clothing', 'designer-clothing', 'vintage-clothing', 'denim-jacket'
+                assign subcat_parent_url = '/collections/clothing'
+                assign subcat_items_str = 'designer-clothing:Designer Clothing:24,vintage-clothing:Vintage Clothing:62,denim-jacket:Denim Jackets:57'
+            endcase
+          -%}
+          {%- if subcat_items_str != blank -%}
+            {%- assign subcat_items = subcat_items_str | split: ',' -%}
+            <div class="cpg-filter-group" id="cpg-fg-SubCategory">
+              <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-SubCategory')">
+                <span>Sub-Category</span>
+                <span class="cpg-toggle-icon">−</span>
+              </div>
+              <div class="cpg-filter-body">
+                {%- for sc_item in subcat_items -%}
+                  {%- assign sc_parts = sc_item | split: ':' -%}
+                  {%- assign sc_h = sc_parts[0] -%}
+                  {%- assign sc_title = sc_parts[1] -%}
+                  {%- assign sc_fb = sc_parts[2] | plus: 0 -%}
+                  {%- assign sc_live = collections[sc_h].all_products_count -%}
+                  {%- if sc_live != blank and sc_live >= 0 -%}
+                    {%- assign sc_cnt = sc_live -%}
+                  {%- else -%}
+                    {%- assign sc_cnt = sc_fb -%}
+                  {%- endif -%}
+                  {%- assign sc_active = false -%}
+                  {%- if collection.handle == sc_h -%}
+                    {%- assign sc_active = true -%}
+                  {%- endif -%}
+                  {%- if sc_active -%}
+                    {%- assign sc_dest = subcat_parent_url -%}
+                  {%- else -%}
+                    {%- assign sc_dest = '/collections/' | append: sc_h -%}
+                  {%- endif -%}
+                  <label class="cpg-filter-option {% if sc_active %}is-active{% endif %}">
+                    <input type="checkbox" {% if sc_active %}checked{% endif %}
+                      onchange="window.location='{{ sc_dest }}'">
+                    {{ sc_title }}
+                    <span class="cpg-filter-count">({{ sc_cnt }})</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- liquid
             comment
               Build a lookup of native storefront filter labels so block-based
               tag filters (e.g. the "Brand" block) can render alongside native

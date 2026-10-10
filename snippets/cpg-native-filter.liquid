@@ -161,9 +161,9 @@
             {%- assign is_pt_active = true -%}
           {%- elsif collection.handle == pt_key -%}
             {%- assign is_pt_active = true -%}
-          {%- elsif pt_key == 'jewellery' and collection.handle == 'jewellery' or collection.handle == 'earrings' or collection.handle == 'necklace' or collection.handle == 'necklaces' or collection.handle == 'rings' or collection.handle == 'bracelets-cuffs' or collection.handle == 'broaches' or collection.handle == 'earrings-1' or collection.handle == 'rings-1' or collection.handle == 'brooches' -%}
+          {%- elsif pt_key == 'jewellery' and collection.handle == 'jewellery' or collection.handle == 'earrings' or collection.handle == 'necklace' or collection.handle == 'necklaces' or collection.handle == 'rings' or collection.handle == 'bracelets-cuffs' or collection.handle == 'broaches' or collection.handle == 'earrings-1' or collection.handle == 'rings-1' or collection.handle == 'brooches' or collection.handle == 'all-earrings' or collection.handle == 'all-necklaces' or collection.handle == 'all-rings' or collection.handle == 'all-bracelets' or collection.handle == 'all-brooches' -%}
             {%- assign is_pt_active = true -%}
-          {%- elsif pt_key == 'bags' and collection.handle == 'designer-bags' -%}
+          {%- elsif pt_key == 'bags' and collection.handle == 'designer-bags' or collection.handle == 'handbags' -%}
             {%- assign is_pt_active = true -%}
           {%- elsif pt_key == 'clothing' and collection.handle == 'vintage-clothing' or collection.handle == 'designer-clothing' or collection.handle == 'denim-jacket' -%}
             {%- assign is_pt_active = true -%}
