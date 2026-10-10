@@ -48,6 +48,15 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    background: #ffffff;
+    border: 1px solid #ded7cc;
+    padding: 24px 24px 28px;
+    box-shadow: 0 4px 18px rgba(43, 29, 22, 0.04);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #bbs-featured-blogs-{{ section.id }} .bbs-fb-card:hover {
+    border-color: #c5bba8;
+    box-shadow: 0 10px 28px rgba(43, 29, 22, 0.08);
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-img-wrap {
     display: flex;
@@ -55,16 +64,20 @@
     justify-content: center;
     width: 100%;
     aspect-ratio: 16 / 10;
-    background: #f2f0ec;
+    background: #f8f6f2;
+    border: 1px solid #e5dfd5;
+    padding: 12px;
+    box-sizing: border-box;
     overflow: hidden;
     margin-bottom: 22px;
     text-decoration: none;
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-img-wrap img {
-    width: 92%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    border: 1px solid #ebe5dc;
     transition: transform 0.5s ease;
   }
   #bbs-featured-blogs-{{ section.id }} .bbs-fb-card:hover .bbs-fb-img-wrap img {
