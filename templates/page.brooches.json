@@ -84,6 +84,7 @@
         "ai_gen_block_2619c73_FDprRw"
       ],
       "custom_css": [
+        "[class*=\"ai-collection-categories-wrapper\"] {padding: 40px 24px 60px; box-sizing: border-box;}",
         "[class*=\"ai-collection-categories-wrapper\"] > * {border: 1px solid #dcdcdc; border-radius: 16px; padding: 20px; background: #ffffff; transition: all 0.3s ease;}",
         "[class*=\"ai-collection-categories-wrapper\"] > *:hover {border-color: #000; transform: translateY(-4px);}"
       ],
