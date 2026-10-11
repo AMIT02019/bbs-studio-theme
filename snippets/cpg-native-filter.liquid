@@ -29,6 +29,35 @@
   {%- assign display_title = 'Category' -%}
 {%- endif -%}
 
+{%- assign is_brand_facet = false -%}
+{%- if is_home_decor == false -%}
+  {%- if fl == 'brands' or fl == 'brand' or fl == 'vendor' or fl == 'product vendor' -%}
+    {%- assign is_brand_facet = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign non_brand_vendors = '|african artifacts|cameo|ceramic|chinese art|crockery|denim jacket|estate|european art|fine gold|indian antique|islamic|japanese artifacts|micro mosaic|mosaic|vintage|vintage bag|vintage brooches|vintage clothing|vintage earrings|vintage necklace|vintage ring|vintage textile|vintage watches|' -%}
+
+{%- assign should_render_group = true -%}
+{%- if is_brand_facet and filter.type == 'list' -%}
+  {%- assign valid_brand_count = 0 -%}
+  {%- for v in filter.values -%}
+    {%- assign vl_dc = v.label | downcase | strip -%}
+    {%- assign vl_chk = '|' | append: vl_dc | append: '|' -%}
+    {%- assign is_nb = false -%}
+    {%- if non_brand_vendors contains vl_chk -%}
+      {%- assign is_nb = true -%}
+    {%- endif -%}
+    {%- if v.active or is_nb == false -%}
+      {%- assign valid_brand_count = valid_brand_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if valid_brand_count == 0 -%}
+    {%- assign should_render_group = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if should_render_group -%}
 <div class="cpg-filter-group {% if csd == 'close' %}is-collapsed{% endif %}" id="cpg-fg-{% if is_home_decor and fl == 'brands' or is_home_decor and fl == 'brand' or is_home_decor and fl == 'vendor' %}Category{% else %}{{ index }}{% endif %}">
   <div class="cpg-filter-title" onclick="cpgToggleFilter('cpg-fg-{% if is_home_decor and fl == 'brands' or is_home_decor and fl == 'brand' or is_home_decor and fl == 'vendor' %}Category{% else %}{{ index }}{% endif %}')">
     <span>{{ display_title }}</span>
@@ -37,19 +66,31 @@
   <div class="cpg-filter-body">
 
     {%- if filter.type == 'price_range' -%}
+      {%- assign min_val_unit = '' -%}
+      {%- if filter.min_value.value != blank -%}
+        {%- assign min_val_unit = filter.min_value.value | divided_by: 100.0 | floor -%}
+      {%- endif -%}
+      {%- assign max_val_unit = '' -%}
+      {%- if filter.max_value.value != blank -%}
+        {%- assign max_val_unit = filter.max_value.value | divided_by: 100.0 | ceil -%}
+      {%- endif -%}
       <div class="cpg-price-inputs">
         <div class="cpg-price-field">
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmin" name="{{ filter.min_value.param_name }}"
-            value="{{ filter.min_value.value | default: '' }}"
-            min="0" max="{{ filter.range_max }}" placeholder="0">
+            value="{{ min_val_unit }}"
+            min="0" placeholder="Min"
+            aria-label="Minimum price"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
         </div>
         <div style="display:flex;align-items:center;color:#bbb;padding:0 2px;">–</div>
         <div class="cpg-price-field">
           <span>{{ cur }}</span>
           <input type="number" id="cpg-pmax" name="{{ filter.max_value.param_name }}"
-            value="{{ filter.max_value.value | default: '' }}"
-            min="0" max="{{ filter.range_max }}" placeholder="{{ filter.range_max }}">
+            value="{{ max_val_unit }}"
+            min="0" placeholder="Max"
+            aria-label="Maximum price"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();cpgApplyPrice();}">
         </div>
       </div>
       <button type="button" class="cpg-price-apply" onclick="cpgApplyPrice()">Apply</button>
@@ -109,7 +150,7 @@
 
       {%- elsif is_home_decor and fl == 'brands' or is_home_decor and fl == 'brand' or is_home_decor and fl == 'vendor' -%}
         {%- comment -%} Home Decor Subcategories under CATEGORY heading {%- endcomment -%}
-        {%- assign hd_brands = 'indian-antique:Indian Antique:89,crockery:Ceramics:6,african-artifacts:African Artifacts:27,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:12,chinese-art:Chinese Artifacts:7' | split: ',' -%}
+        {%- assign hd_brands = 'indian-antique:Indian Antique:89,crockery:Ceramics:6,african-artifacts:African Artifacts:12,islamic:Islamic Artifacts:10,japanese-artifacts:Japanese Artifacts:47,ceramic:Crockery:28,artwork:Artwork:0,christian-art:Christian Art:0,european-art:European Artifacts:12,chinese-art:Chinese Artifacts:7' | split: ',' -%}
         {%- for item in hd_brands -%}
           {%- assign parts = item | split: ':' -%}
           {%- assign col_h = parts[0] -%}
@@ -140,7 +181,7 @@
 
       {%- elsif fl == 'product type' -%}
         {%- comment -%} Store Product Types: Jewellery, Clothing, Watches, Sunglasses, Bags, Home Decor, Textiles {%- endcomment -%}
-        {%- assign pt_items = 'jewellery:Jewellery:/collections/jewellery:313,clothing:Clothing:/collections/clothing:127,watches:Watches:/collections/watches:60,sunglasses:Sunglasses:/collections/sunglasses:22,bags:Bags:/collections/bags:42,home-decor:Home Decor:/collections/home-decor-curios:202,textiles:Textiles:/collections/textiles:22' | split: ',' -%}
+        {%- assign pt_items = 'jewellery:Jewellery:/pages/designer-jewellery:313,clothing:Clothing:/collections/clothing:127,watches:Watches:/collections/watches:60,sunglasses:Sunglasses:/collections/sunglasses:22,bags:Bags:/collections/bags:42,home-decor:Home Decor:/collections/home-decor-curios:202,textiles:Textiles:/collections/textiles:22' | split: ',' -%}
         {%- for item in pt_items -%}
           {%- assign parts = item | split: ':' -%}
           {%- assign pt_key = parts[0] -%}
@@ -161,7 +202,7 @@
             {%- assign is_pt_active = true -%}
           {%- elsif collection.handle == pt_key -%}
             {%- assign is_pt_active = true -%}
-          {%- elsif pt_key == 'jewellery' and collection.handle == 'jewellery' or collection.handle == 'earrings' or collection.handle == 'necklace' or collection.handle == 'necklaces' or collection.handle == 'rings' or collection.handle == 'bracelets-cuffs' or collection.handle == 'broaches' or collection.handle == 'earrings-1' or collection.handle == 'rings-1' or collection.handle == 'brooches' or collection.handle == 'all-earrings' or collection.handle == 'all-necklaces' or collection.handle == 'all-rings' or collection.handle == 'all-bracelets' or collection.handle == 'all-brooches' -%}
+          {%- elsif pt_key == 'jewellery' and collection.handle == 'jewellery' or collection.handle == 'all-earrings' or collection.handle == 'all-necklaces' or collection.handle == 'all-rings' or collection.handle == 'all-bracelets' or collection.handle == 'all-brooches' or collection.handle == 'earrings' or collection.handle == 'necklace' or collection.handle == 'necklaces' or collection.handle == 'rings' or collection.handle == 'bracelets-cuffs' or collection.handle == 'bracelets' or collection.handle == 'broaches' or collection.handle == 'earrings-1' or collection.handle == 'rings-1' or collection.handle == 'brooches' -%}
             {%- assign is_pt_active = true -%}
           {%- elsif pt_key == 'bags' and collection.handle == 'designer-bags' or collection.handle == 'handbags' -%}
             {%- assign is_pt_active = true -%}
@@ -179,20 +220,33 @@
       {%- else -%}
         {%- comment -%} Default checkbox list {%- endcomment -%}
         {%- assign display_type = section.settings.filter_display_type -%}
+        {%- assign rendered_count = 0 -%}
         {%- for v in filter.values -%}
-          <label class="cpg-filter-option{% if forloop.index > limit %} cpg-extra{% endif %}"
-            {% if forloop.index > limit and display_type == 'show-more' %}style="display:none"{% endif %}>
-            <input type="checkbox" {% if v.active %}checked{% endif %}
-              onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
-            {{ v.label }}
-            <span class="cpg-filter-count">({{ v.count }})</span>
-          </label>
+          {%- assign skip_val = false -%}
+          {%- if is_brand_facet and v.active == false -%}
+            {%- assign vl_dc = v.label | downcase | strip -%}
+            {%- assign vl_chk = '|' | append: vl_dc | append: '|' -%}
+            {%- if non_brand_vendors contains vl_chk -%}
+              {%- assign skip_val = true -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- unless skip_val -%}
+            {%- assign rendered_count = rendered_count | plus: 1 -%}
+            <label class="cpg-filter-option{% if rendered_count > limit %} cpg-extra{% endif %}"
+              {% if rendered_count > limit and display_type == 'show-more' %}style="display:none"{% endif %}>
+              <input type="checkbox" {% if v.active %}checked{% endif %}
+                onchange="window.location='{% if v.active %}{{ v.url_to_remove }}{% else %}{{ v.url_to_add }}{% endif %}'">
+              {{ v.label }}
+              <span class="cpg-filter-count">({{ v.count }})</span>
+            </label>
+          {%- endunless -%}
         {%- endfor -%}
-        {%- if display_type == 'show-more' and filter.values.size > limit -%}
-          <span class="cpg-filter-show-more" onclick="cpgShowMore(this)">+ {{ filter.values.size | minus: limit }} more</span>
+        {%- if display_type == 'show-more' and rendered_count > limit -%}
+          <span class="cpg-filter-show-more" onclick="cpgShowMore(this)">+ Show more</span>
         {%- endif -%}
       {%- endif -%}
 
     {%- endif -%}
   </div>
 </div>
+{%- endif -%}
