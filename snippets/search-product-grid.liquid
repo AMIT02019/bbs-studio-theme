@@ -112,7 +112,24 @@
   padding: 5px 0; cursor: pointer; font-size: 13px; color: #333;
 }
 .cpg-filter-option input[type="checkbox"] {
-  width: 15px; height: 15px; cursor: pointer; accent-color: #1a1a1a; flex-shrink: 0;
+  display: inline-block !important;
+  position: static !important;
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-appearance: checkbox !important;
+  appearance: checkbox !important;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  accent-color: #1a1a1a !important;
+  flex-shrink: 0 !important;
+  pointer-events: auto !important;
 }
 .cpg-filter-count { margin-left: auto; color: #bbb; font-size: 11px; }
 .cpg-filter-show-more {
@@ -125,7 +142,15 @@
   padding: 6px 8px; display: flex; align-items: center; gap: 3px; font-size: 13px;
 }
 .cpg-price-field span { color: #888; }
-.cpg-price-field input { border: none; width: 100%; font-size: 13px; outline: none; background: transparent; }
+.cpg-price-field input {
+  border: none; width: 100%; font-size: 13px; outline: none; background: transparent;
+  -moz-appearance: textfield !important; appearance: textfield !important;
+}
+.cpg-price-field input::-webkit-outer-spin-button,
+.cpg-price-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
 .cpg-price-apply {
   width: 100%; padding: 8px; background: #1a1a1a; color: #fff;
   border: none; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 4px;
@@ -459,7 +484,7 @@
             {%- if hidden_filters contains ord_check -%}{%- continue -%}{%- endif -%}
             {%- for filter in search.filters -%}
               {%- assign nfl = filter.label | downcase | strip -%}
-              {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+              {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
               {%- if nfl == ord_label -%}
                 {% render 'cpg-native-filter', filter: filter, index: filter.label, csd: csd, section: section, currency: cart.currency.symbol %}
               {%- endif -%}
@@ -468,7 +493,7 @@
           {%- comment -%} 2) Remaining facets not in the explicit order {%- endcomment -%}
           {%- for filter in search.filters -%}
             {%- assign nfl = filter.label | downcase | strip -%}
-            {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+            {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
             {%- assign nfl_check = '|' | append: nfl | append: '|' -%}
             {%- if hidden_filters contains nfl_check -%}{%- continue -%}{%- endif -%}
             {%- unless filter_order_str contains nfl_check -%}

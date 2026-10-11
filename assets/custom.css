@@ -168,11 +168,44 @@ body.template-search #MainContent,
   flex-direction: column !important;
 }
 
-.cpg-sidebar-title { order: 0; }
+.cpg-sidebar-title { order: -2; }
+#cpg-fg-SubCategory { order: -1; }
 #cpg-fg-Price { order: 1; }
 #cpg-fg-Availability { order: 2; }
-#cpg-fg-Category, #cpg-fg-Brands { order: 3; }
+#cpg-fg-Category, #cpg-fg-Brands, #cpg-fg-Brand { order: 3; }
 [id="cpg-fg-Product type"] { order: 4; }
+.cpg-sidebar-inner > .cpg-filter-group { order: 5; }
+
+.cpg-filter-option input[type="checkbox"] {
+  display: inline-block !important;
+  position: static !important;
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-appearance: checkbox !important;
+  appearance: checkbox !important;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  accent-color: #1a1a1a !important;
+  flex-shrink: 0 !important;
+  pointer-events: auto !important;
+}
+
+.cpg-price-field input[type="number"]::-webkit-outer-spin-button,
+.cpg-price-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+.cpg-price-field input[type="number"] {
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
 
 
 /* Vintage Designer Jewellery Page Grid Text */

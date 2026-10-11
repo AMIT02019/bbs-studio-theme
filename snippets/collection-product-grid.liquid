@@ -117,7 +117,23 @@
 }
 .cpg-filter-option input[type="checkbox"] {
   display: inline-block !important;
-  width: 15px; height: 15px; cursor: pointer; accent-color: #1a1a1a; flex-shrink: 0;
+  position: static !important;
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-appearance: checkbox !important;
+  appearance: checkbox !important;
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  accent-color: #1a1a1a !important;
+  flex-shrink: 0 !important;
+  pointer-events: auto !important;
 }
 .cpg-filter-count { margin-left: auto; color: #bbb; font-size: 11px; }
 .cpg-filter-show-more {
@@ -130,7 +146,15 @@
   padding: 6px 8px; display: flex; align-items: center; gap: 3px; font-size: 13px;
 }
 .cpg-price-field span { color: #888; }
-.cpg-price-field input { border: none; width: 100%; font-size: 13px; outline: none; background: transparent; }
+.cpg-price-field input {
+  border: none; width: 100%; font-size: 13px; outline: none; background: transparent;
+  -moz-appearance: textfield !important; appearance: textfield !important;
+}
+.cpg-price-field input::-webkit-outer-spin-button,
+.cpg-price-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
 .cpg-price-apply {
   width: 100%; padding: 8px; background: #1a1a1a; color: #fff;
   border: none; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 4px;
@@ -451,8 +475,19 @@
           {%- endfor -%}
           {%- if f.type == 'price_range' -%}
             {%- if f.min_value.value != blank or f.max_value.value != blank -%}
+              {%- assign sym = cart.currency.symbol | default: '₹' -%}
               <span class="cpg-active-tag">
-                ₹{{ f.min_value.value | default: 0 }} – ₹{{ f.max_value.value | default: f.range_max }}
+                {%- if f.min_value.value != blank and f.max_value.value != blank -%}
+                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
+                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
+                  {{ sym }}{{ chip_min }} – {{ sym }}{{ chip_max }}
+                {%- elsif f.min_value.value != blank -%}
+                  {%- assign chip_min = f.min_value.value | divided_by: 100.0 | floor -%}
+                  {{ sym }}{{ chip_min }}+
+                {%- elsif f.max_value.value != blank -%}
+                  {%- assign chip_max = f.max_value.value | divided_by: 100.0 | ceil -%}
+                  Up to {{ sym }}{{ chip_max }}
+                {%- endif -%}
                 <a href="{{ f.url_to_remove }}" aria-label="Remove price">×</a>
               </span>
             {%- endif -%}
@@ -552,6 +587,9 @@
             for f in collection.filters
               assign f_label = f.label | downcase | strip
               assign native_labels = native_labels | append: '|' | append: f_label | append: '|'
+              if f_label == 'brands' or f_label == 'brand' or f_label == 'vendor' or f_label == 'product vendor'
+                assign native_labels = native_labels | append: '|brand||brands||vendor||product vendor|'
+              endif
             endfor
             comment
               Filters to hide for now (pipe-delimited, lowercase). Clear this
@@ -879,8 +917,17 @@
     var min = document.getElementById('cpg-pmin');
     var max = document.getElementById('cpg-pmax');
     var u = new URL(location.href);
-    if (min) { if (min.value) u.searchParams.set(min.name, min.value); else u.searchParams.delete(min.name); }
-    if (max) { if (max.value) u.searchParams.set(max.name, max.value); else u.searchParams.delete(max.name); }
+    if (min) {
+      var minVal = min.value ? min.value.trim() : '';
+      if (minVal !== '') u.searchParams.set(min.name, minVal);
+      else u.searchParams.delete(min.name);
+    }
+    if (max) {
+      var maxVal = max.value ? max.value.trim() : '';
+      if (maxVal !== '') u.searchParams.set(max.name, maxVal);
+      else u.searchParams.delete(max.name);
+    }
+    u.searchParams.delete('page');
     location.href = u.toString();
   }
   function cpgOpenSidebar() {
