@@ -9,23 +9,34 @@
                         {{- 'templates.search.suggestions' | t -}}
                     </h2>
                     <ul id="predictive-search-results-queries-list" class="predictive-search__results-list d-flex flex-wrap list-unstyled r-gap c-gap" role="group" aria-labelledby="predictive-search-queries" style="--r-gap: 1.5rem; --c-gap: 1.5rem;">
+                        {%- assign rendered_titles = '' -%}
                         {%- for query in predictive_search.resources.queries -%}
-                            <li id="predictive-search-option-query-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                                <a href="{{ query.url }}" class="predictive-search__item link link--style-line u-none color-foreground border d-block" tabindex="-1">
-                                    <div class="predictive-search__item-content">
-                                        {% render 'icon-search' %}<p class="predictive-search__item-heading link-style m-0 color-light predictive-search__item-query-result d-inline-block" aria-label="{{ query.text }}">{{ query.styled_text }}</p>
-                                    </div>
-                                </a>
-                            </li>
+                            {%- assign q_title = query.text | downcase | strip -%}
+                            {%- assign check_q = '|' | append: q_title | append: '|' -%}
+                            {%- unless rendered_titles contains check_q -%}
+                                {%- assign rendered_titles = rendered_titles | append: '|' | append: q_title | append: '|' -%}
+                                <li id="predictive-search-option-query-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
+                                    <a href="{{ query.url }}" class="predictive-search__item link link--style-line u-none color-foreground border d-block" tabindex="-1">
+                                        <div class="predictive-search__item-content">
+                                            {% render 'icon-search' %}<p class="predictive-search__item-heading link-style m-0 color-light predictive-search__item-query-result d-inline-block" aria-label="{{ query.text }}">{{ query.styled_text }}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {%- endunless -%}
                         {%- endfor -%}
                         {%- for collection in predictive_search.resources.collections -%}
-                            <li id="predictive-search-option-collection-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
-                                <a href="{{ collection.url }}" class="predictive-search__item link link--style-line u-none color-foreground border d-block" tabindex="-1">
-                                    <div class="predictive-search__item-content">
-                                        {% render 'icon-search' %}<p class="predictive-search__item-heading link-style m-0 color-light d-inline-block">{{ collection.title }}</p>
-                                    </div>
-                                </a>
-                            </li>
+                            {%- assign col_title = collection.title | downcase | strip -%}
+                            {%- assign check_col = '|' | append: col_title | append: '|' -%}
+                            {%- unless rendered_titles contains check_col -%}
+                                {%- assign rendered_titles = rendered_titles | append: '|' | append: col_title | append: '|' -%}
+                                <li id="predictive-search-option-collection-{{ forloop.index }}" class="predictive-search__list-item" role="option" aria-selected="false">
+                                    <a href="{{ collection.url }}" class="predictive-search__item link link--style-line u-none color-foreground border d-block" tabindex="-1">
+                                        <div class="predictive-search__item-content">
+                                            {% render 'icon-search' %}<p class="predictive-search__item-heading link-style m-0 color-light d-inline-block">{{ collection.title }}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {%- endunless -%}
                         {%- endfor -%}
                     </ul>
                 </div>
