@@ -1046,10 +1046,38 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
     display: block !important;
 }
 
-
 /* ==========================================================================
    Predictive Search & Dropdown Suggestions Enhanced Styling
    ========================================================================== */
+
+.header-nav-hamburger .header__search-input .quickSearchResultsWrap {
+    right: 15px !important;
+    left: auto !important;
+    width: 600px !important;
+}
+
+.quickSearchResultsWrap {
+    width: 600px !important;
+    max-width: 95vw !important;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.18) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+}
+
+.quickSearchResults {
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    padding: 20px 24px !important;
+}
+
+.predictive-search .container,
+.predictive-search .quickSearchResultsBlock {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
 
 /* 1. Ensure predictive search dropdown is shown when results exist or open */
 predictive-search[open] .predictive-search.predictive-search--header,
@@ -1079,23 +1107,6 @@ predictive-search[open] .search-modal {
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-}
-
-.quickSearchResultsWrap {
-    width: 580px !important;
-    max-width: 95vw !important;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.18) !important;
-    border-radius: 8px !important;
-    background: #ffffff !important;
-    padding: 0 !important;
-    right: 0 !important;
-    left: auto !important;
-}
-
-.quickSearchResults {
-    max-height: 80vh !important;
-    overflow-y: auto !important;
-    padding: 20px !important;
 }
 
 /* 4. Suggestion pills styling */
@@ -1163,6 +1174,14 @@ predictive-search[open] .search-modal {
     gap: 16px !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .product {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 #predictive-search-results-list .card-media {
@@ -1186,7 +1205,7 @@ predictive-search[open] .search-modal {
 }
 
 #predictive-search-results-list .card-title {
-    font-size: 12px !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
     line-height: 1.35 !important;
     color: #232323 !important;
@@ -1195,7 +1214,8 @@ predictive-search[open] .search-modal {
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     text-align: center !important;
-    margin: 0 !important;
+    margin: 0 0 4px 0 !important;
+    white-space: normal !important;
 }
 
 /* 6. Price display cleanliness */
