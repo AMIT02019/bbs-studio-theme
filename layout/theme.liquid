@@ -143,8 +143,10 @@
             endif
         -%}
 
+    {%- comment -%}
     {% render 'sq-assets' %}
- {% render 'sq-dropdown' %} 
+    {% render 'sq-dropdown' %}
+    {%- endcomment -%} 
  {% render 'schema' %}
 
   {% if template == 'list-collections' %}

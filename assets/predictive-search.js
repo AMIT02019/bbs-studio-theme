@@ -6,7 +6,7 @@ class PredictiveSearch extends SearchForm {
     this.trendingAndProductsBlock = this.querySelector('[data-quick-trending-products]');
     this.closeStickySearchButton = document.querySelector('.header-search-close');
     this.productToShow = this.dataset.productToShow;
-    this.searchDetails = this.querySelector('.search_details');
+    this.searchDetails = this.querySelector('.search_details') || this.closest('details');
     this.predictiveSearch = this.querySelector('predictive-search')
     this.allPredictiveSearchInstances = document.querySelectorAll('predictive-search');
     this.isOpen = false;
@@ -253,7 +253,7 @@ class PredictiveSearch extends SearchForm {
     this.setLiveRegionResults();
     this.open();
     this.hideTrendingAndProducts();
-    if($('.dropdown-item[data-currency]').length){
+    if(typeof $ !== 'undefined' && $('.dropdown-item[data-currency]').length){
       if ((window.show_multiple_currencies && typeof Currency != 'undefined' && Currency.currentCurrency != shopCurrency) || window.show_auto_currency) {
         Currency.convertAll(window.shop_currency, $('#currencies .active').attr('data-currency'), 'span.money', 'money_format');
       }
@@ -279,6 +279,10 @@ class PredictiveSearch extends SearchForm {
     this.setAttribute('open', true);
     this.input.setAttribute('aria-expanded', true);
     this.isOpen = true;
+    if (this.searchDetails) {
+      this.searchDetails.setAttribute('open', 'true');
+      this.searchDetails.open = true;
+    }
   }
 
   close(clearSearchTerm = false) {
@@ -301,11 +305,16 @@ class PredictiveSearch extends SearchForm {
     this.input.setAttribute('aria-expanded', false);
     this.resultsMaxHeight = false;
     this.predictiveSearchResults.removeAttribute('style');
+    if (this.searchDetails && clearSearchTerm) {
+      this.searchDetails.removeAttribute('open');
+      this.searchDetails.open = false;
+    }
   }
 
   showTrendingAndProducts() {
-    if (!this.trendingAndProductsBlock) return 
-    this.trendingAndProductsBlock.classList.add('is-show')
+    if (!this.trendingAndProductsBlock) return;
+    this.trendingAndProductsBlock.style.removeProperty('display');
+    this.trendingAndProductsBlock.classList.add('is-show');
     this.trendingAndProductsBlock.classList.remove('hidden');
     const lazyImgs = this.trendingAndProductsBlock.querySelectorAll('img[data-srcset], img[data-src]');
     lazyImgs.forEach(img => {
@@ -317,10 +326,10 @@ class PredictiveSearch extends SearchForm {
   }
 
   hideTrendingAndProducts() {
-    if (!this.trendingAndProductsBlock) return 
-
-    this.trendingAndProductsBlock.classList.remove('is-show')
+    if (!this.trendingAndProductsBlock) return;
+    this.trendingAndProductsBlock.classList.remove('is-show');
     this.trendingAndProductsBlock.classList.add('hidden');
+    this.trendingAndProductsBlock.style.setProperty('display', 'none', 'important');
   }
 
   onDocClick(e) {
@@ -342,35 +351,33 @@ class PredictiveSearch extends SearchForm {
   }
 
   updateViewAllLink(searchTerm) {
-    const qsViewAllLink = document.querySelector('[data-qs-view-all-link]');
-    if (!qsViewAllLink) return 
-    // const linkTotal = `${routes.search_url}?q=${encodeURIComponent(searchTerm)}&${encodeURIComponent('resources[type]')}=product`
+    const qsViewAllLink = this.querySelector('[data-qs-view-all-link]') || document.querySelector('[data-qs-view-all-link]');
+    if (!qsViewAllLink) return;
     const linkTotal = `${routes.search_url}?q=${encodeURIComponent(searchTerm)}&options%5Bprefix%5D=last&type=product`;
     
-    qsViewAllLink.href = linkTotal
+    qsViewAllLink.href = linkTotal;
     return this.getTotalResults(linkTotal).then(count => {
-      qsViewAllLink.innerHTML = qsViewAllLink.innerHTML.replace('()', `(${count})`)
-    });
+      if (count) {
+        qsViewAllLink.innerHTML = qsViewAllLink.innerHTML.replace(/\(\d*\)/, `(${count})`);
+      }
+    }).catch(() => {});
   }
 
   getTotalResults(url) {
     return fetch(url)
       .then((response) => {
-        if (!response.ok) {
-          var error = new Error(response.status);
-          this.close();
-          throw error;
-        }
-
+        if (!response.ok) return '';
         return response.text();
       })  
       .then((text) => {
-        const totalCount = new DOMParser().parseFromString(text, 'text/html').querySelector('[id^="SearchSection"]').dataset.searchCount;
-        return totalCount
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        const countEl = doc.querySelector('[id^="SearchSection"]') || doc.querySelector('[data-search-count]') || doc.querySelector('.search__product-count');
+        const totalCount = countEl?.dataset?.searchCount || countEl?.textContent?.replace(/\D/g, '') || '';
+        return totalCount;
       })
       .catch((error) => {
-        this.close();
-        throw error;
+        console.warn('Could not retrieve total search count:', error);
+        return '';
       });
   }
 

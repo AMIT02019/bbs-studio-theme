@@ -401,9 +401,8 @@ span.sq-filter-color-swatch-item {
     width: 60px;
 }
 
-.predictive-search.predictive-search--header {
-    display: none !important;
-}
+/* .predictive-search.predictive-search--header display:none removed */
+.predictive-search.predictive-search--header { display: none; }
 
 .sq-dropdown-body .sq-results {
     flex-direction: column;
