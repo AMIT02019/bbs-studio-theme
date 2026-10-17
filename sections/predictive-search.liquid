@@ -117,13 +117,7 @@
             {%- else -%}
                 <div class="predictive-search__result-group d-block w-100">
                     <div id="predictive-search-option-search-keywords" class="predictive-search__list-item productViewAll" role="option">
-                        <a href="{{ routes.search_url }}?q=*type=product" class="predictive-search__item predictive-search__item--term link link--text h5 animate-arrow button button-view-all" tabindex="-1" data-qs-view-all-link>
-                            {%- if search.results_count == 0 -%}
-                                {{ 'templates.search.no_results' | t: terms: predictive_search.terms }}
-                            {%- else -%}
-                                {{ 'general.search.view_all' | t: count: search.results_count }}
-                            {%- endif -%}
-                        </a>
+                        <a href="{{ routes.search_url }}?q={{ predictive_search.terms }}&options%5Bprefix%5D=last&type=product" class="predictive-search__item predictive-search__item--term link link--text h5 animate-arrow button button-view-all" tabindex="-1" data-qs-view-all-link>View all results</a>
                     </div>
                     {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
                 </div>
