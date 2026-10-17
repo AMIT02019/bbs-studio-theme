@@ -5,7 +5,7 @@
         <div class="container">
             {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
                 <div class="predictive-search__result-group d-block w-100">
-                    <h2 id="predictive-search-queries" class="predictive-search__heading b-bottom">
+                    <h2 id="predictive-search-queries" class="predictive-search__heading">
                         {{- 'templates.search.suggestions' | t -}}
                     </h2>
                     <ul id="predictive-search-results-queries-list" class="predictive-search__results-list d-flex flex-wrap list-unstyled r-gap c-gap" role="group" aria-labelledby="predictive-search-queries" style="--r-gap: 1.5rem; --c-gap: 1.5rem;">

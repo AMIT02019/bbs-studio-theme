@@ -1047,40 +1047,10 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 }
 
 /* ==========================================================================
-   Predictive Search & Dropdown Suggestions - Luxury Alignment & Placement Fix
+   Predictive Search & Dropdown Suggestions - Final Luxury Alignment & Structure
    ========================================================================== */
 
-/* 1. Ensure predictive search dropdown is shown when results exist or open */
-predictive-search[open] .predictive-search.predictive-search--header,
-predictive-search[results="true"] .predictive-search.predictive-search--header,
-predictive-search[open] [data-predictive-search],
-predictive-search[results="true"] [data-predictive-search] {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-/* 2. Hide trending products overlay whenever search results are active */
-predictive-search[open] [data-quick-trending-products],
-predictive-search[results="true"] [data-quick-trending-products],
-.quickSearchResultsBlock[data-quick-trending-products].hidden {
-    display: none !important;
-}
-
-/* 3. Outer dropdown modal styling */
-details.search_details[open] > .search-modal,
-predictive-search[open] .search-modal {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* 4. Dropdown Container Placement, Dimensions & Elevation */
+/* 1. Modal Container Placement, Dimensions & Elevation */
 .header-nav-hamburger .header__search-input .quickSearchResultsWrap,
 .quickSearchResultsWrap {
     width: 580px !important;
@@ -1098,10 +1068,11 @@ predictive-search[open] .search-modal {
 }
 
 .quickSearchResults {
-    max-height: calc(85vh - 120px) !important;
+    max-height: min(88vh, 760px) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 22px 24px 24px !important;
+    padding: 24px 24px 24px !important;
+    box-sizing: border-box !important;
 }
 
 .quickSearchResults .container,
@@ -1125,30 +1096,49 @@ predictive-search[open] .search-modal {
     border-radius: 4px;
 }
 
-/* 5. Section Headings (SUGGESTIONS & PRODUCT RESULTS) */
+/* 2. Unified Section Headings (SUGGESTIONS & PRODUCT RESULTS) */
 .predictive-search__heading,
 #predictive-search-queries,
-#predictive-search-products {
+#predictive-search-products,
+.quickSearchResultsBlock .search-block-title {
     font-family: inherit !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     color: #888888 !important;
+    border: none !important;
     border-bottom: 1px solid #f0f0f0 !important;
-    padding-bottom: 10px !important;
-    margin-top: 0 !important;
-    margin-bottom: 14px !important;
+    padding: 0 0 10px 0 !important;
+    margin: 0 0 14px 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 #predictive-search-products {
-    margin-top: 22px !important;
+    margin-top: 24px !important;
 }
 
-/* 6. Suggestion Pills & Highlighting (NO MORE NEON YELLOW) */
+.quickSearchResultsBlock .search-block-title .text,
+#predictive-search-products .text,
+#predictive-search-queries .text {
+    font-family: inherit !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: #888888 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    display: inline-block !important;
+}
+
+/* 3. Suggestion Pills & Zero Disjointed Underline */
 #predictive-search-results-queries-list {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -1162,62 +1152,101 @@ predictive-search[open] .search-modal {
     margin: 0 !important;
     padding: 0 !important;
     display: inline-block !important;
+    background: transparent !important;
+    border: none !important;
 }
 
-#predictive-search-results-queries-list li a {
+#predictive-search-results-queries-list li a,
+.predictive-search__item--term {
     display: inline-flex !important;
     align-items: center !important;
     gap: 7px !important;
     padding: 8px 14px !important;
-    background: #f8f8f8 !important;
-    border: 1px solid #e8e8e8 !important;
+    background: #f6f6f6 !important;
+    border: 1px solid #e2e2e2 !important;
     border-radius: 20px !important;
-    font-size: 12.5px !important;
-    color: #2b2b2b !important;
+    font-size: 13px !important;
+    color: #1a1a1a !important;
     text-decoration: none !important;
     font-weight: 500 !important;
     line-height: 1 !important;
     transition: all 0.2s ease !important;
 }
 
-#predictive-search-results-queries-list li a:hover {
-    background: #111111 !important;
-    color: #ffffff !important;
-    border-color: #111111 !important;
-}
-
-#predictive-search-results-queries-list li a:hover mark {
-    color: #ffffff !important;
+/* Force dark text and clean inherit for unselected/normal state */
+#predictive-search-results-queries-list li a *,
+#predictive-search-results-queries-list li a p,
+#predictive-search-results-queries-list li a span,
+#predictive-search-results-queries-list li a mark {
+    color: #1a1a1a !important;
+    background: transparent !important;
 }
 
 #predictive-search-results-queries-list li a svg,
 #predictive-search-results-queries-list li a .icon-search-1 {
     width: 12px !important;
     height: 12px !important;
-    fill: currentColor !important;
-    opacity: 0.65 !important;
-    transform: none !important;
-    padding: 0 !important;
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+    opacity: 0.7 !important;
 }
 
-/* Replace ugly neon yellow <mark> with elegant luxury styling */
+/* ELIMINATE AWKWARD SINGLE-LETTER UNDERLINES IN PILLS */
 #predictive-search-results-queries-list mark,
 .predictive-search mark {
     background: transparent !important;
     color: inherit !important;
-    font-weight: 700 !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-    text-decoration-thickness: 1.5px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
 }
 
-/* 7. Product Grid & Card Alignment (Fixes Grey Box & Staggered Prices) */
+/* Hover, Focus, and Active/Selected state: Rich dark black with pure white text on EVERYTHING */
+#predictive-search-results-queries-list li:hover a,
+#predictive-search-results-queries-list li a:hover,
+#predictive-search-results-queries-list li a:focus,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a,
+#predictive-search-results-queries-list li a[aria-selected="true"] {
+    background: #111111 !important;
+    border-color: #111111 !important;
+    color: #ffffff !important;
+}
+
+#predictive-search-results-queries-list li:hover a *,
+#predictive-search-results-queries-list li a:hover *,
+#predictive-search-results-queries-list li a:focus *,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a *,
+#predictive-search-results-queries-list li a[aria-selected="true"] * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-decoration: none !important;
+}
+
+#predictive-search-results-queries-list li:hover a mark,
+#predictive-search-results-queries-list li a:hover mark,
+#predictive-search-results-queries-list li a:focus mark,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a mark,
+#predictive-search-results-queries-list li a[aria-selected="true"] mark {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+#predictive-search-results-queries-list li:hover a svg,
+#predictive-search-results-queries-list li a:hover svg,
+#predictive-search-results-queries-list li a:focus svg,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a svg,
+#predictive-search-results-queries-list li a[aria-selected="true"] svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* 4. Product Grid & Card Alignment */
 #predictive-search-results-list .products-grid,
 .quickSearchResultsBlock .products-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 16px !important;
-    padding: 4px 0 0 0 !important;
+    padding: 0 !important;
     margin: 0 !important;
     align-items: stretch !important;
     white-space: normal !important;
@@ -1259,7 +1288,7 @@ predictive-search[open] .search-modal {
     background: transparent !important;
 }
 
-/* ELIMINATE THE WEIRD GREY BOX: Force .card-media to pure white and square aspect-ratio */
+/* Card Media Container: Pure white square with subtle rounded border */
 #predictive-search-results-list .card-media,
 .quickSearchResultsBlock .card-media {
     position: relative !important;
@@ -1285,8 +1314,8 @@ predictive-search[open] .search-modal {
     bottom: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    max-width: 86% !important;
-    max-height: 86% !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
     margin: auto !important;
     padding: 0 !important;
     object-fit: contain !important;
@@ -1304,7 +1333,7 @@ predictive-search[open] .search-modal {
     transform: scale(1.04) !important;
 }
 
-/* Hide extra overlays / skeleton loader leftovers inside predictive search cards */
+/* Hide extra overlays / skeleton loader leftovers */
 .quickSearchResultsBlock .data-lazy-loading,
 .quickSearchResultsBlock .media-loading,
 .quickSearchResultsBlock .card-product__group,
@@ -1316,7 +1345,7 @@ predictive-search[open] .search-modal {
     display: none !important;
 }
 
-/* 8. Card Information & Price Alignment in Horizontal Row */
+/* 5. Card Information & Horizontal Price Alignment */
 #predictive-search-results-list .card-information,
 .quickSearchResultsBlock .card-information {
     display: flex !important;
@@ -1382,10 +1411,7 @@ predictive-search[open] .search-modal {
 }
 
 #predictive-search-results-list .price dl,
-.quickSearchResultsBlock .price dl {
-    margin: 0 !important;
-}
-
+.quickSearchResultsBlock .price dl,
 #predictive-search-results-list .price dd,
 .quickSearchResultsBlock .price dd {
     margin: 0 !important;
@@ -1399,32 +1425,47 @@ predictive-search[open] .search-modal {
     display: none !important;
 }
 
-/* 9. View All Results Button */
-.predictive-search__item--term.button-view-all {
-    display: block !important;
+/* 6. View All Results Button - NO REDUNDANT GREY LINE & CLEAN BOTTOM SPACING */
+.predictive-search__result-group .predictive-search__list-item.productViewAll,
+.quickSearchResultsBlock .productViewAll,
+.productViewAll {
+    border: none !important;
+    border-top: none !important;
+    padding: 0 !important;
+    margin: 20px 0 0 0 !important;
     width: 100% !important;
-    margin-top: 18px !important;
-    padding: 12px 18px !important;
+    display: block !important;
+}
+
+.quickSearchResultsBlock .button-view-all,
+.predictive-search__item--term.button-view-all {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 13px 20px !important;
     background: #111111 !important;
     color: #ffffff !important;
-    text-align: center !important;
     border-radius: 6px !important;
     font-size: 12px !important;
     font-weight: 700 !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    box-sizing: border-box !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
 }
 
+.quickSearchResultsBlock .button-view-all:hover,
 .predictive-search__item--term.button-view-all:hover {
     background: #333333 !important;
     color: #ffffff !important;
     transform: translateY(-1px) !important;
 }
 
-/* 10. Mobile Responsive Adaptations */
+/* 7. Mobile Adaptations */
 @media (max-width: 767px) {
     .halo-sidebar_search .quickSearchResultsWrap {
         position: relative !important;
@@ -1441,164 +1482,4 @@ predictive-search[open] .search-modal {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
     }
-}
-
-
-/* ==========================================================================
-   Suggestion Pills - Luxury Contrast & Zero Invisible Text Fix
-   ========================================================================== */
-
-#predictive-search-results-queries-list {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-    padding: 0 !important;
-    margin: 0 0 4px 0 !important;
-    list-style: none !important;
-}
-
-#predictive-search-results-queries-list li {
-    margin: 0 !important;
-    padding: 0 !important;
-    display: inline-block !important;
-    background: transparent !important;
-    border: none !important;
-}
-
-#predictive-search-results-queries-list li a,
-.predictive-search__item--term {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 7px !important;
-    padding: 8px 14px !important;
-    background: #f6f6f6 !important;
-    border: 1px solid #e2e2e2 !important;
-    border-radius: 20px !important;
-    font-size: 13px !important;
-    color: #1a1a1a !important;
-    text-decoration: none !important;
-    font-weight: 500 !important;
-    line-height: 1 !important;
-    transition: all 0.2s ease !important;
-}
-
-/* Force dark text and clean inherit for unselected/normal state */
-#predictive-search-results-queries-list li a *,
-#predictive-search-results-queries-list li a p,
-#predictive-search-results-queries-list li a span,
-#predictive-search-results-queries-list li a mark {
-    color: #1a1a1a !important;
-    background: transparent !important;
-}
-
-#predictive-search-results-queries-list li a svg,
-#predictive-search-results-queries-list li a .icon-search-1 {
-    width: 12px !important;
-    height: 12px !important;
-    fill: #1a1a1a !important;
-    color: #1a1a1a !important;
-    opacity: 0.7 !important;
-}
-
-/* Underline matching search keywords cleanly */
-#predictive-search-results-queries-list mark,
-.predictive-search mark {
-    background: transparent !important;
-    color: inherit !important;
-    font-weight: 700 !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-    text-decoration-thickness: 1.5px !important;
-    text-decoration-color: #1a1a1a !important;
-}
-
-/* Hover, Focus, and Active/Selected state: Rich dark black with pure white text on EVERYTHING */
-#predictive-search-results-queries-list li:hover a,
-#predictive-search-results-queries-list li a:hover,
-#predictive-search-results-queries-list li a:focus,
-#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a,
-#predictive-search-results-queries-list li a[aria-selected="true"] {
-    background: #111111 !important;
-    border-color: #111111 !important;
-    color: #ffffff !important;
-}
-
-#predictive-search-results-queries-list li:hover a *,
-#predictive-search-results-queries-list li a:hover *,
-#predictive-search-results-queries-list li a:focus *,
-#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a *,
-#predictive-search-results-queries-list li a[aria-selected="true"] * {
-    color: #ffffff !important;
-    fill: #ffffff !important;
-}
-
-#predictive-search-results-queries-list li:hover a mark,
-#predictive-search-results-queries-list li a:hover mark,
-#predictive-search-results-queries-list li a:focus mark,
-#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a mark,
-#predictive-search-results-queries-list li a[aria-selected="true"] mark {
-    color: #ffffff !important;
-    text-decoration-color: rgba(255, 255, 255, 0.7) !important;
-}
-
-#predictive-search-results-queries-list li:hover a svg,
-#predictive-search-results-queries-list li a:hover svg,
-#predictive-search-results-queries-list li a:focus svg,
-#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a svg,
-#predictive-search-results-queries-list li a[aria-selected="true"] svg {
-    fill: #ffffff !important;
-    color: #ffffff !important;
-    opacity: 1 !important;
-}
-
-/* Container dimensions & breathing room */
-.quickSearchResultsWrap {
-    width: 580px !important;
-    max-width: calc(100vw - 32px) !important;
-    right: 0 !important;
-    left: auto !important;
-    top: calc(100% + 8px) !important;
-    background: #ffffff !important;
-    border-radius: 12px !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14) !important;
-    border: 1px solid #ebebeb !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    z-index: 9999 !important;
-}
-
-.quickSearchResults {
-    max-height: min(88vh, 760px) !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 22px 24px 26px !important;
-}
-
-/* Ensure View All button has clean spacing */
-.quickSearchResultsBlock .productViewAll {
-    margin-top: 18px !important;
-    margin-bottom: 4px !important;
-    width: 100% !important;
-}
-
-.quickSearchResultsBlock .button-view-all {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    padding: 13px 20px !important;
-    background: #111111 !important;
-    color: #ffffff !important;
-    border-radius: 6px !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    letter-spacing: 1px !important;
-    text-transform: uppercase !important;
-    text-decoration: none !important;
-    transition: background 0.2s ease !important;
-}
-
-.quickSearchResultsBlock .button-view-all:hover {
-    background: #333333 !important;
-    color: #ffffff !important;
 }
