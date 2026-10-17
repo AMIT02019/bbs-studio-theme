@@ -1008,62 +1008,53 @@ predictive-search[open] .search-modal {
     z-index: 9999 !important;
 }
 
-/* 4b. ELIMINATE ALL GHOST INNER BORDERS AND INNER FRAMES ON NESTED ELEMENTS */
-.search-modal .quickSearchResults,
-.search-modal .quickSearchResultsBlock,
-.search-modal .container,
-.search-modal .predictive-search,
-.search-modal .quickSearchResults .quickSearchResultsWrap,
-.search-modal .quickSearchResults div.predictive-search,
-.search-modal [data-predictive-search],
-.search-modal #predictive-search-results,
-.header-nav-hamburger .header__search-input .search-modal .quickSearchResults .quickSearchResultsWrap,
-.header-nav-hamburger .header__search-input .search-modal .quickSearchResults div.predictive-search {
-    border: 0 none transparent !important;
-    border-width: 0 !important;
-    border-style: none !important;
-    border-color: transparent !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
+/* 4b. Single Outer Scroll Container with 24px Left & Right Padding */
+.search-modal.modal__content.quickSearch > .quickSearchResultsWrap > .quickSearchResults,
+.quickSearchResultsWrap > .quickSearchResults:first-child,
 .quickSearchResults {
+    display: block !important;
     max-height: min(88vh, 760px) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 24px 24px 24px !important;
+    padding: 24px 24px 24px 24px !important;
     box-sizing: border-box !important;
     background: transparent !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #d4d4d4 #f8f8f8 !important;
 }
 
+/* Sleek custom scrollbar - ONLY 1 SCROLLBAR */
+.quickSearchResultsWrap > .quickSearchResults::-webkit-scrollbar {
+    width: 6px !important;
+}
+.quickSearchResultsWrap > .quickSearchResults::-webkit-scrollbar-track {
+    background: #f8f8f8 !important;
+}
+.quickSearchResultsWrap > .quickSearchResults::-webkit-scrollbar-thumb {
+    background: #d4d4d4 !important;
+    border-radius: 4px !important;
+}
+
+/* 4c. ELIMINATE 2ND SCROLLBAR & GHOST FRAMES: All nested elements must NOT scroll and have 0 extra padding */
+.quickSearchResults .predictive-search,
+.quickSearchResults .quickSearchResultsWrap,
+.quickSearchResults .quickSearchResultsBlock,
+.quickSearchResults #predictive-search-results,
 .quickSearchResults .container,
-.predictive-search .container,
-.predictive-search .quickSearchResultsBlock {
+.quickSearchResults .predictive-search__result-group {
+    overflow: visible !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    max-height: none !important;
+    height: auto !important;
     padding: 0 !important;
     margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
     width: 100% !important;
     max-width: 100% !important;
-}
-
-/* Sleek custom scrollbar */
-.quickSearchResults::-webkit-scrollbar {
-    width: 5px;
-}
-.quickSearchResults::-webkit-scrollbar-track {
-    background: #f8f8f8;
-}
-.quickSearchResults::-webkit-scrollbar-thumb {
-    background: #d4d4d4;
-    border-radius: 4px;
 }
 
 /* 5. Unified Section Headings (SUGGESTIONS & PRODUCT RESULTS) */
