@@ -1437,3 +1437,525 @@ predictive-search[open] .search-modal {
         gap: 12px !important;
     }
 }
+
+
+/* ==========================================================================
+   Predictive Search & Dropdown Suggestions - Final Luxury Alignment & Structure
+   ========================================================================== */
+
+/* 1. Ensure predictive search dropdown is shown when results exist or open */
+predictive-search[open] .predictive-search.predictive-search--header,
+predictive-search[results="true"] .predictive-search.predictive-search--header,
+predictive-search[open] [data-predictive-search],
+predictive-search[results="true"] [data-predictive-search] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 2. Hide trending products overlay whenever search results are active */
+predictive-search[open] [data-quick-trending-products],
+predictive-search[results="true"] [data-quick-trending-products],
+.quickSearchResultsBlock[data-quick-trending-products].hidden {
+    display: none !important;
+}
+
+/* 3. Search Modal Anchor & Search Bar Visibility Fix (NEVER COVER SEARCH INPUT) */
+details.search_details,
+predictive-search.search-modal__form,
+.header__search-input {
+    position: relative !important;
+}
+
+.search-modal.modal__content.quickSearch,
+details.search_details[open] > .search-modal,
+predictive-search[open] .search-modal {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* 4. Dropdown Container Placement, Dimensions & Elevation - ROOT MODAL ONLY */
+.header-nav-hamburger .header__search-input > .search-modal > .quickSearchResultsWrap,
+.search-modal.modal__content.quickSearch > .quickSearchResultsWrap,
+.search-modal > .quickSearchResultsWrap,
+.search_details > .search-modal > .quickSearchResultsWrap {
+    position: absolute !important;
+    top: 10px !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 580px !important;
+    max-width: calc(100vw - 32px) !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14) !important;
+    border: 1px solid #ebebeb !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    z-index: 9999 !important;
+}
+
+/* 4b. ZERO INNER FRAMES / ZERO GHOST BORDERS ON NESTED CONTAINERS */
+.quickSearchResults .predictive-search,
+.quickSearchResults .quickSearchResultsWrap,
+.quickSearchResultsWrap .predictive-search,
+.quickSearchResultsWrap .quickSearchResultsWrap,
+.quickSearchResultsBlock,
+.quickSearchResults .container {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.quickSearchResults {
+    max-height: min(88vh, 760px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 24px 24px 24px !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+}
+
+.quickSearchResults .container,
+.predictive-search .container,
+.predictive-search .quickSearchResultsBlock {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Sleek custom scrollbar */
+.quickSearchResults::-webkit-scrollbar {
+    width: 5px;
+}
+.quickSearchResults::-webkit-scrollbar-track {
+    background: #f8f8f8;
+}
+.quickSearchResults::-webkit-scrollbar-thumb {
+    background: #d4d4d4;
+    border-radius: 4px;
+}
+
+/* 5. Unified Section Headings (SUGGESTIONS & PRODUCT RESULTS) */
+.predictive-search__heading,
+#predictive-search-queries,
+#predictive-search-products,
+.quickSearchResultsBlock .search-block-title {
+    font-family: inherit !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: #888888 !important;
+    border: none !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding: 0 0 10px 0 !important;
+    margin: 0 0 14px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+#predictive-search-products {
+    margin-top: 24px !important;
+}
+
+.quickSearchResultsBlock .search-block-title .text,
+#predictive-search-products .text,
+#predictive-search-queries .text {
+    font-family: inherit !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: #888888 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    display: inline-block !important;
+}
+
+/* 6. Suggestion Pills - Luxury Contrast & Zero Disjointed Underline */
+#predictive-search-results-queries-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+#predictive-search-results-queries-list li {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+#predictive-search-results-queries-list li a,
+.predictive-search__item--term {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 8px 14px !important;
+    background: #f6f6f6 !important;
+    border: 1px solid #e2e2e2 !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Force dark text and clean inherit for unselected/normal state */
+#predictive-search-results-queries-list li a *,
+#predictive-search-results-queries-list li a p,
+#predictive-search-results-queries-list li a span,
+#predictive-search-results-queries-list li a mark {
+    color: #1a1a1a !important;
+    background: transparent !important;
+}
+
+#predictive-search-results-queries-list li a svg,
+#predictive-search-results-queries-list li a .icon-search-1 {
+    width: 12px !important;
+    height: 12px !important;
+    fill: #1a1a1a !important;
+    color: #1a1a1a !important;
+    opacity: 0.7 !important;
+}
+
+/* ELIMINATE AWKWARD SINGLE-LETTER UNDERLINES IN PILLS */
+#predictive-search-results-queries-list mark,
+.predictive-search mark {
+    background: transparent !important;
+    color: inherit !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+/* Hover, Focus, and Active/Selected state: Rich dark black with pure white text on EVERYTHING */
+#predictive-search-results-queries-list li:hover a,
+#predictive-search-results-queries-list li a:hover,
+#predictive-search-results-queries-list li a:focus,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a,
+#predictive-search-results-queries-list li a[aria-selected="true"] {
+    background: #111111 !important;
+    border-color: #111111 !important;
+    color: #ffffff !important;
+}
+
+#predictive-search-results-queries-list li:hover a *,
+#predictive-search-results-queries-list li a:hover *,
+#predictive-search-results-queries-list li a:focus *,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a *,
+#predictive-search-results-queries-list li a[aria-selected="true"] * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    text-decoration: none !important;
+}
+
+#predictive-search-results-queries-list li:hover a mark,
+#predictive-search-results-queries-list li a:hover mark,
+#predictive-search-results-queries-list li a:focus mark,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a mark,
+#predictive-search-results-queries-list li a[aria-selected="true"] mark {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+#predictive-search-results-queries-list li:hover a svg,
+#predictive-search-results-queries-list li a:hover svg,
+#predictive-search-results-queries-list li a:focus svg,
+#predictive-search-results-queries-list li.predictive-search__list-item[aria-selected="true"] a svg,
+#predictive-search-results-queries-list li a[aria-selected="true"] svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* 7. Product Grid & Card Alignment - Full Width 3-Column Edge-to-Edge Grid */
+#predictive-search-results-list .products-grid,
+.quickSearchResultsBlock .products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: stretch !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .products-grid .product,
+#predictive-search-results-list .product,
+.quickSearchResultsBlock .products-grid .product,
+.quickSearchResultsBlock .product {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#predictive-search-results-list .product-item,
+.quickSearchResultsBlock .product-item,
+#predictive-search-results-list .card,
+.quickSearchResultsBlock .card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .card-product,
+.quickSearchResultsBlock .card-product,
+#predictive-search-results-list .card-product__wrapper,
+.quickSearchResultsBlock .card-product__wrapper {
+    position: relative !important;
+    width: 100% !important;
+    background: transparent !important;
+}
+
+/* Card Media Container: Pure white square with subtle rounded border */
+#predictive-search-results-list .card-media,
+.quickSearchResultsBlock .card-media {
+    position: relative !important;
+    width: 100% !important;
+    padding-bottom: 100% !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    border: 1px solid #f0f0f0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0 !important;
+}
+
+/* Center product image inside the white card */
+#predictive-search-results-list .card-media img,
+.quickSearchResultsBlock .card-media img {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    margin: auto !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: transform 0.3s ease !important;
+}
+
+#predictive-search-results-list .card-product:hover .card-media img,
+.quickSearchResultsBlock .card-product:hover .card-media img {
+    transform: scale(1.04) !important;
+}
+
+/* Hide extra overlays / skeleton loader leftovers */
+.quickSearchResultsBlock .data-lazy-loading,
+.quickSearchResultsBlock .media-loading,
+.quickSearchResultsBlock .card-product__group,
+.quickSearchResultsBlock .wrapper-item-size,
+.quickSearchResultsBlock .card-action,
+.quickSearchResultsBlock .card-action__group,
+.quickSearchResultsBlock .card-summary,
+.quickSearchResultsBlock .card-list__hidden {
+    display: none !important;
+}
+
+/* 8. Card Information: Perfect Block & Title Alignment */
+#predictive-search-results-list .card-information,
+.quickSearchResultsBlock .card-information {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    justify-content: flex-start !important;
+    padding-top: 10px !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .card-information__wrapper,
+.quickSearchResultsBlock .card-information__wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    text-align: left !important;
+}
+
+#predictive-search-results-list .card__heading,
+.quickSearchResultsBlock .card__heading {
+    margin: 0 0 6px 0 !important;
+    width: 100% !important;
+    text-align: left !important;
+}
+
+#predictive-search-results-list .card-title,
+.quickSearchResultsBlock .card-title {
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    color: #232323 !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .card-title:hover,
+.quickSearchResultsBlock .card-title:hover {
+    color: #000000 !important;
+}
+
+#predictive-search-results-list .card-price,
+.quickSearchResultsBlock .card-price {
+    margin-top: auto !important;
+    padding-top: 4px !important;
+    width: 100% !important;
+    text-align: left !important;
+}
+
+#predictive-search-results-list .price,
+.quickSearchResultsBlock .price {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #232323 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    line-height: 1 !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+#predictive-search-results-list .price dl,
+.quickSearchResultsBlock .price dl,
+#predictive-search-results-list .price dd,
+.quickSearchResultsBlock .price dd {
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+#predictive-search-results-list .price:not(.price--on-sale) .price__sale,
+#predictive-search-results-list .price.price--on-sale .price__regular,
+#predictive-search-results-list .unit-price,
+#predictive-search-results-list .visually-hidden,
+#predictive-search-results-list .hidden {
+    display: none !important;
+}
+
+/* 9. View All Results Button - NO REDUNDANT GREY LINE & CLEAN BOTTOM SPACING */
+.predictive-search__result-group .predictive-search__list-item.productViewAll,
+.quickSearchResultsBlock .productViewAll,
+.productViewAll {
+    border: none !important;
+    border-top: none !important;
+    padding: 0 !important;
+    margin: 20px 0 0 0 !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+.quickSearchResultsBlock .button-view-all,
+.predictive-search__item--term.button-view-all {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 13px 20px !important;
+    background: #111111 !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    box-sizing: border-box !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+}
+
+.quickSearchResultsBlock .button-view-all:hover,
+.predictive-search__item--term.button-view-all:hover {
+    background: #333333 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 10. Mobile Adaptations */
+@media (max-width: 767px) {
+    .halo-sidebar_search .quickSearchResultsWrap {
+        position: relative !important;
+        width: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+    }
+
+    .halo-sidebar_search #predictive-search-results-list .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+}
