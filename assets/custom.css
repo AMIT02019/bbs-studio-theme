@@ -2382,7 +2382,7 @@ a[href*="mailto:"] {
   }
 }
 
-/* BBS Product Description - Capitalize First Letter of Every Word */
+/* BBS Product Description - Normal Sentence Case (No forced capitalization) */
 .pp-desc__text,
 .pp-desc__text p,
 .pp-desc__text span,
@@ -2392,7 +2392,7 @@ a[href*="mailto:"] {
 .product__description,
 .product__description p,
 .halo-text-format p {
-  text-transform: capitalize !important;
+  text-transform: none !important;
 }
 
 /* BBS Product Description - Standardized Attribute & Paragraph Spacing */
