@@ -2442,10 +2442,127 @@ a[href*="mailto:"] {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   BBS MAIN HEADER NAVIGATION - SINGLE LINE MENU FIX (KEEP 18px FONT)
+   BBS MAIN HEADER NAVIGATION - RESPONSIVE SINGLE LINE MENU FIX
    ───────────────────────────────────────────────────────────── */
 @media screen and (min-width: 1025px) {
   /* 1. Prevent side elements from monopolizing 300px each */
+  .header-nav-hamburger--style1 .header-logo.header-item--side {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  .header-nav-hamburger--style1 .header-icons.header-item--side {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    gap: 16px !important;
+  }
+
+  /* 2. Give maximum available flex room to the center menu */
+  .header-nav-hamburger--style1 .main-menu.header-item {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .header-nav-hamburger .header__inline-menu {
+    width: 100% !important;
+  }
+
+  /* 3. STRICTLY FORCE SINGLE LINE (NO WRAP) */
+  .header-nav-hamburger .list-menu--inline,
+  .header-nav-hamburger .main-menu--wrapper .list-menu--inline,
+  .main-menu-hasLabel .main-menu--wrapper .list-menu--inline {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .header-nav-hamburger .menu-lv-item {
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action,
+  .header-nav-hamburger .menu-lv-1__action .text {
+    white-space: nowrap !important;
+    letter-spacing: 0.05em !important;
+  }
+}
+
+/* 4. Tablets & Small Laptops (1025px to 1250px) - Keep 18px */
+@media screen and (min-width: 1025px) and (max-width: 1250px) {
+  .header__inline-menu .menu-lv-1__action,
+  .header__inline-menu .menu-lv-1__action .text,
+  .list-menu--inline .menu-lv-1__action,
+  .list-menu--inline .menu-lv-1__action .text,
+  .section-header-navigation .menu-lv-1__action,
+  .section-header-navigation .menu-lv-1__action .text,
+  .header-navigation .menu-lv-1__action,
+  .header-navigation .menu-lv-1__action .text,
+  .header__menu-item.menu-lv-1__action,
+  .header__menu-item.menu-lv-1__action .text {
+    font-size: 18px !important;
+  }
+
+  .header-nav-hamburger .header__search-input.style-2 .search.search-modal__form {
+    width: 165px !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+/* 5. Laptops & Standard Desktops (1251px to 1600px) - Increased font size (21px) */
+@media screen and (min-width: 1251px) and (max-width: 1600px) {
+  .header__inline-menu .menu-lv-1__action,
+  .header__inline-menu .menu-lv-1__action .text,
+  .list-menu--inline .menu-lv-1__action,
+  .list-menu--inline .menu-lv-1__action .text,
+  .section-header-navigation .menu-lv-1__action,
+  .section-header-navigation .menu-lv-1__action .text,
+  .header-navigation .menu-lv-1__action,
+  .header-navigation .menu-lv-1__action .text,
+  .header__menu-item.menu-lv-1__action,
+  .header__menu-item.menu-lv-1__action .text {
+    font-size: 21px !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* 6. Large Desktop Monitors (1601px+) - 22px */
+@media screen and (min-width: 1601px) {
+  .header__inline-menu .menu-lv-1__action,
+  .header__inline-menu .menu-lv-1__action .text,
+  .list-menu--inline .menu-lv-1__action,
+  .list-menu--inline .menu-lv-1__action .text,
+  .section-header-navigation .menu-lv-1__action,
+  .section-header-navigation .menu-lv-1__action .text,
+  .header-navigation .menu-lv-1__action,
+  .header-navigation .menu-lv-1__action .text,
+  .header__menu-item.menu-lv-1__action,
+  .header__menu-item.menu-lv-1__action .text {
+    font-size: 22px !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* 1. Prevent side elements from monopolizing 300px each */
   .header-nav-hamburger--style1 .header-logo.header-item--side {
     min-width: auto !important;
     width: auto !important;
