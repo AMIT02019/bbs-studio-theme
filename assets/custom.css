@@ -2442,166 +2442,103 @@ a[href*="mailto:"] {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MOBILE DRAWER NAVIGATION (halo-navigation-mobile-list)
+   BBS MAIN HEADER NAVIGATION - SINGLE LINE MENU FIX (TABLET & DESKTOP)
    ───────────────────────────────────────────────────────────── */
-.bbs-mm-mobile-wrapper {
-  padding: 12px 14px !important;
+@media screen and (min-width: 1025px) {
+  /* 1. Prevent side elements from monopolizing 300px each */
+  .header-nav-hamburger--style1 .header-logo.header-item--side {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  .header-nav-hamburger--style1 .header-icons.header-item--side {
+    min-width: auto !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    gap: 16px !important;
+  }
+
+  /* 2. Give maximum available flex room to the center menu */
+  .header-nav-hamburger--style1 .main-menu.header-item {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .header-nav-hamburger .header__inline-menu {
+    width: 100% !important;
+  }
+
+  /* 3. STRICTLY FORCE SINGLE LINE (NO WRAP) */
+  .header-nav-hamburger .list-menu--inline,
+  .header-nav-hamburger .main-menu--wrapper .list-menu--inline,
+  .main-menu-hasLabel .main-menu--wrapper .list-menu--inline {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .header-nav-hamburger .menu-lv-item {
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action,
+  .header-nav-hamburger .menu-lv-1__action .text {
+    white-space: nowrap !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
-.bbs-mm-mobile-section-header {
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: #5a3a0a !important;
-  margin-bottom: 12px !important;
-  padding-bottom: 4px !important;
-  border-bottom: 1px solid #f0ede8 !important;
+/* 4. Responsive font size & padding adjustments between 1025px and 1350px (iPads / Laptops) */
+@media screen and (min-width: 1025px) and (max-width: 1350px) {
+  .header-nav-hamburger .header__search-input.style-2 .search.search-modal__form {
+    width: 180px !important;
+  }
+
+  .header-nav-hamburger .menu-lv-1__action {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .header__inline-menu .menu-lv-1__action,
+  .header__inline-menu .menu-lv-1__action .text,
+  .list-menu--inline .menu-lv-1__action,
+  .list-menu--inline .menu-lv-1__action .text,
+  .section-header-navigation .menu-lv-1__action,
+  .section-header-navigation .menu-lv-1__action .text,
+  .header-navigation .menu-lv-1__action,
+  .header-navigation .menu-lv-1__action .text,
+  .header__menu-item.menu-lv-1__action,
+  .header__menu-item.menu-lv-1__action .text {
+    font-size: 15px !important;
+  }
 }
 
-.bbs-mm-mobile-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 12px 8px !important;
-  margin-bottom: 20px !important;
-}
+/* 5. For wider screens (> 1350px), generous padding & 16px font */
+@media screen and (min-width: 1351px) {
+  .header-nav-hamburger .menu-lv-1__action {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
 
-.bbs-mm-mobile-item {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-align: center !important;
-  text-decoration: none !important;
-  color: #3e2723 !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  padding: 8px 4px !important;
-  border-radius: 8px !important;
-  background: #faf8f5 !important;
-  border: 1px solid #f0eae1 !important;
-  transition: transform 0.15s ease, background-color 0.15s ease !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-.bbs-mm-mobile-item:active {
-  background-color: #f1ebd9 !important;
-  transform: scale(0.96) !important;
-}
-
-.bbs-mm-mobile-thumb {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  overflow: hidden !important;
-  background: #ffffff !important;
-  border: 1px solid #e2ded7 !important;
-  margin-bottom: 6px !important;
-  flex-shrink: 0 !important;
-}
-
-.bbs-mm-mobile-thumb img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-.bbs-mm-mobile-curated {
-  margin-bottom: 18px !important;
-}
-
-.bbs-mm-mobile-curated-links {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 8px !important;
-}
-
-.bbs-mm-mobile-link {
-  display: flex !important;
-  align-items: center !important;
-  font-size: 12px !important;
-  color: #4a3828 !important;
-  text-decoration: none !important;
-  padding: 8px 10px !important;
-  background: #faf8f5 !important;
-  border-radius: 6px !important;
-  border: 1px solid #f0eae1 !important;
-  font-weight: 500 !important;
-  min-height: 40px !important;
-  box-sizing: border-box !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  transition: background-color 0.15s ease, transform 0.15s ease !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-.bbs-mm-mobile-link:active {
-  background-color: #f0e6d6 !important;
-  transform: scale(0.98) !important;
-}
-
-.bbs-mm-mobile-promo {
-  margin-top: 10px !important;
-}
-
-.bbs-mm-mobile-banner {
-  position: relative !important;
-  display: block !important;
-  width: 100% !important;
-  height: 110px !important;
-  border-radius: 8px !important;
-  overflow: hidden !important;
-  text-decoration: none !important;
-}
-
-.bbs-mm-mobile-banner img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-.bbs-mm-mobile-banner-text {
-  position: absolute !important;
-  inset: 0 !important;
-  background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-end !important;
-  padding: 10px 14px !important;
-  color: #ffffff !important;
-}
-
-.bbs-mm-mobile-banner-text .badge {
-  font-size: 9px !important;
-  letter-spacing: 0.12em !important;
-  color: #e5d3b3 !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-}
-
-.bbs-mm-mobile-banner-text .title {
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.05em !important;
-  color: #ffffff !important;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   BBS MAIN HEADER NAVIGATION - TOP-LEVEL MENU ITEMS (18px)
-   ───────────────────────────────────────────────────────────── */
-.header__inline-menu .menu-lv-1__action,
-.header__inline-menu .menu-lv-1__action .text,
-.list-menu--inline .menu-lv-1__action,
-.list-menu--inline .menu-lv-1__action .text,
-.section-header-navigation .menu-lv-1__action,
-.section-header-navigation .menu-lv-1__action .text,
-.header-navigation .menu-lv-1__action,
-.header-navigation .menu-lv-1__action .text,
-.header__menu-item.menu-lv-1__action,
-.header__menu-item.menu-lv-1__action .text {
-  font-size: 18px !important;
+  .header__inline-menu .menu-lv-1__action,
+  .header__inline-menu .menu-lv-1__action .text,
+  .list-menu--inline .menu-lv-1__action,
+  .list-menu--inline .menu-lv-1__action .text,
+  .section-header-navigation .menu-lv-1__action,
+  .section-header-navigation .menu-lv-1__action .text,
+  .header-navigation .menu-lv-1__action,
+  .header-navigation .menu-lv-1__action .text,
+  .header__menu-item.menu-lv-1__action,
+  .header__menu-item.menu-lv-1__action .text {
+    font-size: 16px !important;
+  }
 }
 
 /* Blog Read More & Button Hover Contrast Fix */
