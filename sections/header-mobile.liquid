@@ -22,20 +22,15 @@
                             </div>
                             <style>.nav-menu-tab{background: {{ block.settings.menu_tab_bg }};}</style>
                         {%-  when 'search' -%}
-                            <details-modal class="header__iconItem header__search{% if block.settings.popup_action %} show-popup-rtl{% endif %}" style="--i-color: {{ block.settings.color }}">
-                                <details>
-                                    <summary class="header__icon header__icon--search header__icon--summary link link--text focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}" data-search-mobile>
-                                        <span>
-                                            {% if block.settings.icon == '1' %}
-                                            {% render 'icon-search', class: 'modal__toggle-open icon icon-search w-24 h-24' %}
-                                            {% else %}
-                                            {% render 'icon-search-01', class: 'modal__toggle-open icon icon-search w-24 h-24' %}
-                                            {% endif %}
-                                            {% render 'icon-close', class: 'modal__toggle-close icon icon-close w-24 h-24' %}
-                                        </span>
-                                    </summary>
-                                </details>
-                            </details-modal>
+                            <div class="header-mobile--icon item__mobile--search">
+                                <button type="button" class="header__icon myalmari-search-trigger" aria-label="Open search" aria-expanded="false" data-myalmari-search-open>
+                                    <svg class="icon icon-search" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <span class="visually-hidden">Open search</span>
+                                </button>
+                            </div>
                         {%-  when 'logo' -%}
                             <div class="header-mobile--icon" style="--logo-font-size: {{ block.settings.logo_font_size }}px; --logo-font-weight: {{ block.settings.logo_font_weight }}; --logo-color: {{ block.settings.logo_color }}">
                                 {%- if menu_tab.size > 0 -%}

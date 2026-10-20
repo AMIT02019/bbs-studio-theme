@@ -336,81 +336,13 @@
                     {%- endif -%}
                 {%- endif -%}
                 {%- if block.settings.show_search or block.settings.show_search_sticky -%}
-                    {%- if block.settings.use_search_input -%}
-                        <details-modal class="header__iconItem header__search style-{{ block.settings.search_input_style }} header__search-input{% if block.settings.show_search_left_to_right %} search__ltr{% endif %}" style="--search-color: {{ block.settings.search_color }}; --bg-search-color: {{ block.settings.bg_search_color }}; --search-icon-color: {{ block.settings.search_icon_color }}; --search-border-color: {{ block.settings.search_border_color }}">
-                            {%- if settings.show_quick_search -%}
-                                <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}" data-product-to-show="{{ settings.quick_search_to_show }}">
-                            {%- endif -%}
-                            <details class="search_details">
-                                <summary class="header__search-full" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
-                                    <button type="button" class="header-search-close" aria-label="{{ 'general.common.close' | t }}">{% render 'icon-close' %}</button>
-                                    <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-                                        <div class="field">
-                                            <input class="search__input field__input form-input-placeholder" id="Search-In-Modal-Basic" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.search' | t }}" autocomplete="off" {%- if settings.show_quick_search -%}role="combobox" aria-expanded="false" aria-owns="predictive-search-results-list" aria-controls="predictive-search-results-list" aria-haspopup="listbox" aria-autocomplete="list" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"{%- endif -%}>
-                                            <button class="button search__button field__button focus-inset" aria-label="{{ 'general.search.search' | t }}">{% render 'icon-search-02' %}</button>
-                                            <input type="hidden" name="options[prefix]" value="last">
-                                            <input type="hidden" name="type" value="product">
-                                            <label class="field__label hiddenLabels" for="Search-In-Modal-Basic">{{ 'general.search.search' | t }}</label>
-                                        </div>
-                                        
-                                    </form>
-                                </summary>
-                                <div class="search-modal modal__content{% if settings.show_quick_search %} quickSearch{% endif %}" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-                                    {%- if settings.show_quick_search -%}
-                                        {% render 'halo-quick-search', sectionId: 'quick-basic-list-result' %}
-                                    {%- endif -%}
-                                </div>
-                            </details>
-                            {%- if settings.show_quick_search -%}
-                                </predictive-search>
-                            {%- endif -%}
-                        </details-modal>
-                    {%- else -%}
-                        <details-modal class="header__iconItem header__search{% if block.settings.show_search_sticky%}{% if block.settings.show_search %}{% else %} hide-main-menu{% endif %}{% else %}{% if block.settings.show_search %} show-main-menu{% endif %}{% endif %}{% if block.settings.search_dropdown == 'default'%} header__search-default{% else %} header__search-custom{% endif %}">
-                            <details class="search_details search_details--popup">
-                                <summary class="header__icon header__icon--search header__icon--summary link link--text focus-inset modal__toggle h-100{% if block.settings.icons_layout == 'text' %} link-effect{% endif %}" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}" data-search-menu-sticky-form data-search-menu>
-                                    {%- if block.settings.icons_layout == 'text' -%}
-                                        <span class="text__icon modal__toggle-open icon icon-search">{{ 'general.search.title' | t }}</span>
-                                    {%- else -%}
-                                        {%- case block.settings.search_icon -%}
-                                            {%-  when '1' -%}
-                                                {% render 'icon-search', class: 'modal__toggle-open icon icon-search', width: width_icons_pls_2, stroke: stroke, icon_custom: icon_search_custom %}
-                                            {%-  when '2' -%}
-                                                {% render 'icon-search-06', class: 'stroke-icon modal__toggle-open icon icon-search', width: width_icons_pls_2, stroke: stroke, icon_custom: icon_search_custom %}
-                                            {%-  when '3' -%}
-                                                {% render 'icon-search-05', class: 'modal__toggle-open icon icon-search', width: width_icons, stroke: stroke, icon_custom: icon_search_custom %}
-                                        {%- endcase -%}
-                                    {%- endif -%}
-                                </summary>
-                                <div class="search-modal modal__content{% if settings.show_quick_search %} quickSearch{% endif %}" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
-                                    <div class="search-modal__content search-modal__content-bottom d-block p-relative maw-100 text-center" tabindex="-1">
-                                        <div class="container">
-                                            <button type="button" class="header-search-close button-effect search-modal__close-button link--text focus-inset d-block p-zero float-r text-right" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close', class: 'icon icon-close' %}</button>
-                                        {%- if settings.show_quick_search -%}
-                                                <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}" data-product-to-show="{{ settings.quick_search_to_show }}">
-                                            {%- endif -%}
-                                            <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-                                                <div class="field">
-                                                    <input class="search__input field__input form-input-placeholder" id="Search-In-Modal-Menu-Hamburger" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.search_a_product' | t }}" autocomplete="off" {%- if settings.show_quick_search -%}role="combobox" aria-expanded="false" aria-owns="predictive-search-results-list" aria-controls="predictive-search-results-list" aria-haspopup="listbox" aria-autocomplete="list" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"{%- endif -%}>
-                                                    <input type="hidden" name="options[prefix]" value="last">
-                                                    <input type="hidden" name="type" value="product">
-                                                    <label class="field__label hiddenLabels" for="Search-In-Modal-Menu-Hamburger">{{ 'general.search.search' | t }}</label>
-                                                    <button class="button search__button field__button focus-inset pr-0 text-right" aria-label="{{ 'general.search.search' | t }}">{% render 'icon-search-06' %}</button>
-                                                </div>
-                                                {%- if settings.show_quick_search -%}
-                                                    {%- if settings.show_search_trending or settings.show_search_product -%}{%- render 'quick-searching-trending-products', sectionId: 'nav-hamburger-list-result' -%}{%- endif -%}
-                                                    {%- render 'predictive-search-results' -%}
-                                                {%- endif -%}
-                                            </form>
-                                            </div>
-                                        {%- if settings.show_quick_search -%}
-                                            </predictive-search>
-                                        {%- endif -%}
-                                    </div>
-                                </div>
-                            </details>
-                        </details-modal>
-                    {%- endif -%}
+                    <button type="button" class="header__iconItem header__icon myalmari-search-trigger" aria-label="Open search" aria-expanded="false" data-myalmari-search-open>
+                        <svg class="icon icon-search" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <span class="visually-hidden">Open search</span>
+                    </button>
                 {%- endif -%}
                 {%- unless block.settings.customer_icon == '1' -%}
                     {%- if shop.customer_accounts_enabled -%}

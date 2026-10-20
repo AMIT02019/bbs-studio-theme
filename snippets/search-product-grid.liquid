@@ -112,24 +112,7 @@
   padding: 5px 0; cursor: pointer; font-size: 13px; color: #333;
 }
 .cpg-filter-option input[type="checkbox"] {
-  display: inline-block !important;
-  position: static !important;
-  clip: auto !important;
-  clip-path: none !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  -webkit-appearance: checkbox !important;
-  appearance: checkbox !important;
-  width: 15px !important;
-  height: 15px !important;
-  min-width: 15px !important;
-  min-height: 15px !important;
-  margin: 0 !important;
-  cursor: pointer !important;
-  accent-color: #1a1a1a !important;
-  flex-shrink: 0 !important;
-  pointer-events: auto !important;
+  width: 15px; height: 15px; cursor: pointer; accent-color: #1a1a1a; flex-shrink: 0;
 }
 .cpg-filter-count { margin-left: auto; color: #bbb; font-size: 11px; }
 .cpg-filter-show-more {
@@ -142,15 +125,7 @@
   padding: 6px 8px; display: flex; align-items: center; gap: 3px; font-size: 13px;
 }
 .cpg-price-field span { color: #888; }
-.cpg-price-field input {
-  border: none; width: 100%; font-size: 13px; outline: none; background: transparent;
-  -moz-appearance: textfield !important; appearance: textfield !important;
-}
-.cpg-price-field input::-webkit-outer-spin-button,
-.cpg-price-field input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0 !important;
-}
+.cpg-price-field input { border: none; width: 100%; font-size: 13px; outline: none; background: transparent; }
 .cpg-price-apply {
   width: 100%; padding: 8px; background: #1a1a1a; color: #fff;
   border: none; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 4px;
@@ -484,7 +459,7 @@
             {%- if hidden_filters contains ord_check -%}{%- continue -%}{%- endif -%}
             {%- for filter in search.filters -%}
               {%- assign nfl = filter.label | downcase | strip -%}
-              {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+              {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
               {%- if nfl == ord_label -%}
                 {% render 'cpg-native-filter', filter: filter, index: filter.label, csd: csd, section: section, currency: cart.currency.symbol %}
               {%- endif -%}
@@ -493,7 +468,7 @@
           {%- comment -%} 2) Remaining facets not in the explicit order {%- endcomment -%}
           {%- for filter in search.filters -%}
             {%- assign nfl = filter.label | downcase | strip -%}
-            {%- if nfl == 'vendor' or nfl == 'product vendor' or nfl == 'brands' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
+            {%- if nfl == 'vendor' or nfl == 'product vendor' -%}{%- assign nfl = 'brand' -%}{%- endif -%}
             {%- assign nfl_check = '|' | append: nfl | append: '|' -%}
             {%- if hidden_filters contains nfl_check -%}{%- continue -%}{%- endif -%}
             {%- unless filter_order_str contains nfl_check -%}
@@ -612,11 +587,19 @@
     </div>
 
     {%- else -%}
-      <div class="cpg-empty">
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <p style="font-size:15px;margin:0 0 8px;color:#888;">No results found for "{{ search.terms | escape }}"</p>
+      <div class="myalmari-search-page-empty">
+        <p class="myalmari-search-empty-msg">No results could be found. Please try again with a different query.</p>
+        <form action="{{ routes.search_url }}" method="get" role="search" class="myalmari-search-page-empty-form">
+          <div class="myalmari-search-page-empty-field">
+            <input type="search" name="q" value="" placeholder="Search for..." class="myalmari-search-page-empty-input" autocomplete="off" aria-label="Search for...">
+            <button type="submit" class="myalmari-search-page-empty-btn" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
     {%- endif -%}
 
@@ -696,120 +679,61 @@
   window.cpgToggleFilter = cpgToggleFilter; window.cpgShowMore = cpgShowMore;
   window.cpgApplyPrice = cpgApplyPrice; window.cpgOpenSidebar = cpgOpenSidebar;
   window.cpgCloseSidebar = cpgCloseSidebar; window.cpgAddToCart = cpgAddToCart;
-  // Mobile Card Photo Swipe Touch & Scroll Controller (Real-time tracking & smooth transition)
+  // Mobile Card Photo Swipe Touch & Scroll Controller
   var cpgActiveSlider = null;
   var cpgTouchStartX = 0;
   var cpgTouchStartY = 0;
-  var cpgStartTime = 0;
   var cpgInitialScrollLeft = 0;
   var cpgIsHorizontalSwipe = null;
   var cpgWasSwiped = false;
   var cpgSwipeTimeout = null;
 
   document.addEventListener('touchstart', function(e) {
-    if (window.innerWidth > 1024) return;
-    if (!e.touches || e.touches.length !== 1) return;
     var slider = e.target.closest('[data-cpg-slider]');
     if (!slider) return;
-
-    var slides = slider.querySelectorAll('.cpg-card-slide');
-    if (slides.length <= 1) return;
-
     cpgActiveSlider = slider;
     cpgTouchStartX = e.touches[0].clientX;
     cpgTouchStartY = e.touches[0].clientY;
-    cpgStartTime = Date.now();
     cpgInitialScrollLeft = slider.scrollLeft;
     cpgIsHorizontalSwipe = null;
-
-    // Disable CSS scroll-snap and smooth animation during finger drag so scrollLeft tracks finger in real-time
-    slider.style.setProperty('scroll-snap-type', 'none', 'important');
-    slider.style.setProperty('scroll-behavior', 'auto', 'important');
-  }, { passive: true, capture: true });
+  }, { passive: true });
 
   document.addEventListener('touchmove', function(e) {
     if (!cpgActiveSlider || !cpgTouchStartX) return;
-    if (!e.touches || e.touches.length !== 1) return;
-
     var dx = e.touches[0].clientX - cpgTouchStartX;
     var dy = e.touches[0].clientY - cpgTouchStartY;
 
     if (cpgIsHorizontalSwipe === null) {
       if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
-        if (Math.abs(dx) > Math.abs(dy)) {
-          cpgIsHorizontalSwipe = true;
-        } else {
-          cpgIsHorizontalSwipe = false;
-          cpgActiveSlider.style.removeProperty('scroll-snap-type');
-          cpgActiveSlider.style.removeProperty('scroll-behavior');
-          cpgActiveSlider = null;
-          return;
-        }
+        cpgIsHorizontalSwipe = Math.abs(dx) > Math.abs(dy);
       }
     }
 
     if (cpgIsHorizontalSwipe === true) {
-      if (e.cancelable) e.preventDefault();
       cpgActiveSlider.scrollLeft = cpgInitialScrollLeft - dx;
       cpgWasSwiped = true;
     }
-  }, { passive: false, capture: true });
+  }, { passive: true });
 
   document.addEventListener('touchend', function(e) {
     if (cpgActiveSlider && cpgIsHorizontalSwipe === true) {
       var w = cpgActiveSlider.clientWidth || 180;
-      var slides = cpgActiveSlider.querySelectorAll('.cpg-card-slide');
-      var maxIndex = Math.max(0, slides.length - 1);
-
-      var touch = e.changedTouches && e.changedTouches[0];
-      var endX = touch ? touch.clientX : cpgTouchStartX;
-      var dx = endX - cpgTouchStartX;
-      var dt = Math.max(1, Date.now() - cpgStartTime);
-      var speed = Math.abs(dx) / dt;
-
-      var currentIdx = Math.round(cpgInitialScrollLeft / w);
-      var targetIdx = currentIdx;
-
-      // Sensitive flick or drag threshold (>35px or >20px with velocity)
-      if (dx < -35 || (dx < -20 && speed > 0.25)) {
-        targetIdx = Math.min(currentIdx + 1, maxIndex);
-      } else if (dx > 35 || (dx > 20 && speed > 0.25)) {
-        targetIdx = Math.max(currentIdx - 1, 0);
-      }
-
-      // Re-enable smooth transition to target slide
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
+      var targetIdx = Math.round(cpgActiveSlider.scrollLeft / w);
       cpgActiveSlider.scrollTo({
         left: targetIdx * w,
         behavior: 'smooth'
       });
-
       cpgWasSwiped = true;
       clearTimeout(cpgSwipeTimeout);
       cpgSwipeTimeout = setTimeout(function() {
         cpgWasSwiped = false;
       }, 350);
-    } else if (cpgActiveSlider) {
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
     }
     cpgActiveSlider = null;
     cpgTouchStartX = 0;
     cpgTouchStartY = 0;
     cpgIsHorizontalSwipe = null;
-  }, { passive: true, capture: true });
-
-  document.addEventListener('touchcancel', function() {
-    if (cpgActiveSlider) {
-      cpgActiveSlider.style.removeProperty('scroll-snap-type');
-      cpgActiveSlider.style.removeProperty('scroll-behavior');
-    }
-    cpgActiveSlider = null;
-    cpgTouchStartX = 0;
-    cpgTouchStartY = 0;
-    cpgIsHorizontalSwipe = null;
-  }, { passive: true, capture: true });
+  }, { passive: true });
 
   document.addEventListener('click', function(e) {
     if (cpgWasSwiped) {
