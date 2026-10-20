@@ -99,37 +99,38 @@
   }
 
   function getHeaderBottom() {
+    const mobileHeader = document.querySelector('.header-mobile');
     const desktopHeader = document.querySelector('.header-navigation') ||
                           document.querySelector('.section-header-navigation') ||
+                          document.querySelector('#shopify-section-header') ||
                           document.querySelector('sticky-header');
-    const mobileHeader = document.querySelector('.header-mobile');
 
     let target = null;
-    if (window.innerWidth <= 1024 && mobileHeader && mobileHeader.offsetParent !== null) {
+    if (window.innerWidth <= 1024 && mobileHeader && mobileHeader.clientHeight > 0) {
       target = mobileHeader;
-    } else if (desktopHeader && desktopHeader.offsetParent !== null) {
+    } else if (desktopHeader && desktopHeader.clientHeight > 0) {
       target = desktopHeader;
-    } else {
-      target = document.querySelector('header');
     }
 
     if (target) {
       const rect = target.getBoundingClientRect();
-      return Math.max(0, Math.round(rect.bottom));
+      if (rect && rect.bottom > 0) {
+        return Math.round(rect.bottom);
+      }
     }
-    return 70;
+    return 140;
   }
 
   function updatePosition() {
-    if (!searchWrapper || !searchWrapper.classList.contains('is-open') || !searchPanel) return;
+    if (!searchWrapper || !searchPanel) return;
     const bottom = getHeaderBottom();
     searchPanel.style.top = bottom + 'px';
   }
 
   function openSearch() {
     if (!searchWrapper) return;
-    updatePosition();
     searchWrapper.classList.add('is-open');
+    updatePosition();
     searchWrapper.setAttribute('aria-hidden', 'false');
 
     document.querySelectorAll('[data-myalmari-search-open]').forEach(function (btn) {
@@ -463,14 +464,8 @@
       </div>
     `;
 
-    // Combine
-    html = `
-      <div class="myalmari-search-results-content">
-        ${leftColumnHtml}
-        ${rightColumnHtml}
-      </div>
-    `;
-
+    // Combine - inject directly into searchContent without nested div
+    html = `${leftColumnHtml}${rightColumnHtml}`;
     searchContent.innerHTML = html;
 
     // Attach Tab Switching Events
