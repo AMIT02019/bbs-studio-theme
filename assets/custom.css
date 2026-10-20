@@ -927,6 +927,26 @@ h1, h2, h3, h4, h5, h6,
   stroke: #3E2723 !important;
 }
 
+/* Search Icon Outline & Color Matching */
+.myalmari-search-trigger,
+.myalmari-search-trigger svg,
+.header__icon.myalmari-search-trigger svg,
+.header__iconItem.myalmari-search-trigger svg {
+  color: #3E2723 !important;
+  fill: none !important;
+  stroke: #3E2723 !important;
+}
+
+.myalmari-search-trigger svg circle,
+.myalmari-search-trigger svg line,
+.header__icon.myalmari-search-trigger svg circle,
+.header__iconItem.myalmari-search-trigger svg circle,
+.header__icon.myalmari-search-trigger svg line,
+.header__iconItem.myalmari-search-trigger svg line {
+  fill: none !important;
+  stroke: #3E2723 !important;
+}
+
 /* 6. Footer Section Text & Links */
 .footer,
 .footer p,

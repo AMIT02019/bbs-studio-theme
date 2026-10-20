@@ -13,7 +13,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--header_icons_color, #111111);
+  color: #3E2723 !important;
   transition: opacity 0.2s ease, transform 0.2s ease;
   line-height: 1;
 }
@@ -22,10 +22,26 @@
   opacity: 0.75;
 }
 
-.myalmari-search-trigger svg {
+.myalmari-search-trigger svg,
+.myalmari-search-trigger svg.icon-search,
+.header__icon.myalmari-search-trigger svg,
+.header__iconItem.myalmari-search-trigger svg {
   display: block;
   width: 22px;
   height: 22px;
+  fill: none !important;
+  stroke: #3E2723 !important;
+  color: #3E2723 !important;
+}
+
+.myalmari-search-trigger svg circle,
+.myalmari-search-trigger svg line,
+.header__icon.myalmari-search-trigger svg circle,
+.header__iconItem.myalmari-search-trigger svg circle,
+.header__icon.myalmari-search-trigger svg line,
+.header__iconItem.myalmari-search-trigger svg line {
+  fill: none !important;
+  stroke: #3E2723 !important;
 }
 
 /* Modal Wrapper & Backdrop */
