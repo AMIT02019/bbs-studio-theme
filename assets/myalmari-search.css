@@ -136,7 +136,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #111111;
+  color: #3E2723 !important;
   margin-right: 14px;
   flex-shrink: 0;
 }
@@ -145,6 +145,17 @@
   width: 22px;
   height: 22px;
   display: block;
+  fill: none !important;
+  stroke: #3E2723 !important;
+}
+
+.myalmari-search-icon svg circle {
+  fill: none !important;
+  stroke: #3E2723 !important;
+}
+
+.myalmari-search-icon svg line {
+  stroke: #3E2723 !important;
 }
 
 .myalmari-search-input {
@@ -176,11 +187,11 @@
   border: none;
   padding: 8px;
   cursor: pointer;
-  color: #111111;
+  color: #3E2723 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
+  opacity: 0.85;
   transition: opacity 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
 }
@@ -191,9 +202,14 @@
 }
 
 .myalmari-search-close svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: block;
+  stroke: #3E2723 !important;
+}
+
+.myalmari-search-close svg line {
+  stroke: #3E2723 !important;
 }
 
 /* Results Section */
