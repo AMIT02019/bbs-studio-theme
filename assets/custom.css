@@ -2548,3 +2548,22 @@ a[href*="mailto:"] {
 
 /* Blog Read More & Button Hover Contrast Fix */
 .blog-btn:hover, .blog-btn:hover .text, .blog-btn:hover span, .button.blog-btn:hover, .button.blog-btn:hover *, .button-2.blog-btn:hover, .button-2.blog-btn:hover *, .article-item .blog-btn:hover, .article-item .blog-btn:hover * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; background-color: #3d1d14 !important; border-color: #3d1d14 !important; }
+
+/* 8 Category Grid 5% Black Overlay for Text Readability */
+[class*="ai-vintage-grid__overlay"] {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  transition: background 0.4s ease !important;
+}
+
+[class*="ai-vintage-grid__card"]:hover [class*="ai-vintage-grid__overlay"] {
+  background: rgba(0, 0, 0, 0.12) !important;
+}
+
