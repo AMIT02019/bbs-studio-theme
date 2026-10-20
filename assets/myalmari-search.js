@@ -99,7 +99,6 @@
   }
 
   function getHeaderBottom() {
-    // Check desktop and mobile header elements
     const desktopHeader = document.querySelector('.header-navigation') ||
                           document.querySelector('.section-header-navigation') ||
                           document.querySelector('sticky-header');
@@ -181,7 +180,6 @@
   }
 
   function extractCondition(product) {
-    // 1. Check tags for condition indicators
     const knownConditions = ['NEW', 'VERY GOOD', 'EXCELLENT', 'GOOD', 'LIKE NEW', 'PRISTINE', 'FAIR', 'NEVER BEEN USED'];
     if (product.tags && Array.isArray(product.tags)) {
       for (let i = 0; i < product.tags.length; i++) {
@@ -199,7 +197,6 @@
       }
     }
 
-    // 2. Check product description if available
     if (product.body) {
       const match = product.body.match(/<strong>Condition:?<\/strong>\s*([^<.,]+)/i);
       if (match && match[1]) {
@@ -218,6 +215,29 @@
     return null;
   }
 
+  function productMatchesQuery(p, query) {
+    // Partial-word matching must work: "bir" matches "Birkin"
+    // Disallow spelling / typo tolerance for completely unrelated strings
+    const q = query.toLowerCase().trim();
+    if (!q) return false;
+    const title = (p.title || '').toLowerCase();
+    const vendor = (p.vendor || '').toLowerCase();
+    const type = (p.type || '').toLowerCase();
+    const handle = (p.handle || '').toLowerCase();
+    const tags = Array.isArray(p.tags) ? p.tags.join(' ').toLowerCase() : '';
+    const body = (p.body || '').toLowerCase();
+
+    const tokens = q.split(/\s+/).filter(Boolean);
+    return tokens.every(token => 
+      title.includes(token) || 
+      vendor.includes(token) || 
+      type.includes(token) || 
+      handle.includes(token) || 
+      tags.includes(token) || 
+      body.includes(token)
+    );
+  }
+
   function fetchLiveSuggestions(query) {
     const url = `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,query&resources[limit]=10`;
 
@@ -227,14 +247,16 @@
         return res.json();
       })
       .then(function (data) {
-        // If user changed query while fetching, ignore outdated response
         if (query !== activeQuery) return;
 
         if (searchLoading) searchLoading.style.display = 'none';
 
         const resources = data.resources && data.resources.results ? data.resources.results : {};
         const queries = resources.queries || [];
-        const products = (resources.products || []).slice(0, 4);
+        const rawProducts = resources.products || [];
+        // Filter out non-matching products to avoid false typo/spelling fallbacks
+        const matchedProducts = rawProducts.filter(p => productMatchesQuery(p, query));
+        const products = matchedProducts.slice(0, 4);
         const collections = resources.collections || [];
 
         renderResults(query, queries, products, collections);
@@ -279,7 +301,7 @@
         }
         return `
           <li>
-            <a href="/search?q=${encodeURIComponent(q.text)}" class="myalmari-suggestion-link">
+            <a href="/search?q=${encodeURIComponent(q.text)}&type=product" class="myalmari-suggestion-link">
               ${displayHtml}
             </a>
           </li>
@@ -426,7 +448,7 @@
     // VIEW ALL RESULTS BUTTON
     const viewAllBtnHtml = `
       <div class="myalmari-view-all-wrap">
-        <a href="/search?q=${encodeURIComponent(query)}" class="myalmari-view-all-btn">
+        <a href="/search?q=${encodeURIComponent(query)}&type=product" class="myalmari-view-all-btn">
           VIEW ALL RESULTS
         </a>
       </div>
