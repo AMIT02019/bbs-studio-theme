@@ -22,9 +22,11 @@
             "collection_1": "necklace",
             "custom_title_1": "Designer Necklaces",
             "page_link_1": "/collections/necklace",
-            "collection_2": "necklaces",
+            "custom_image_1": "shopify://shop_images/Jewellery-26_resized.jpg",
+            "collection_2": "vintage-necklaces",
             "custom_title_2": "Vintage Necklaces",
             "page_link_2": "/collections/necklaces",
+            "custom_image_2": "shopify://shop_images/JEWELLERY3-0680.jpg",
             "collection_3": "",
             "custom_title_3": "",
             "page_link_3": "",
@@ -73,9 +75,7 @@
             "text_align": "center",
             "title_font_size": 20,
             "title_font_weight": "500",
-            "title_color": "#5a3a0a",
-            "custom_image_1": "shopify://shop_images/Jewellery-26_resized.jpg",
-            "custom_image_2": "shopify://shop_images/JEWELLERY3-0680.jpg"
+            "title_color": "#5a3a0a"
           },
           "blocks": {}
         }

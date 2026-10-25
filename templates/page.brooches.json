@@ -19,12 +19,14 @@
         "ai_gen_block_2619c73_FDprRw": {
           "type": "ai_gen_block_2619c73",
           "settings": {
-            "collection_1": "broaches",
+            "collection_1": "designer-brooches",
             "custom_title_1": "Designer Brooches",
             "page_link_1": "/collections/broaches",
-            "collection_2": "brooches",
+            "custom_image_1": "shopify://shop_images/Jewellery-78_1.jpg",
+            "collection_2": "vintage-brooches",
             "custom_title_2": "Vintage Brooches",
             "page_link_2": "/collections/brooches",
+            "custom_image_2": "shopify://shop_images/JEWELLERY_1-0647_ef1ba48d-eb28-4c28-9552-13c11c4a01cf.jpg",
             "collection_3": "",
             "custom_title_3": "",
             "page_link_3": "",
@@ -73,9 +75,7 @@
             "text_align": "center",
             "title_font_size": 20,
             "title_font_weight": "500",
-            "title_color": "#5a3a0a",
-            "custom_image_1": "shopify://shop_images/Jewellery-78_1.jpg",
-            "custom_image_2": "shopify://shop_images/JEWELLERY_1-0647_ef1ba48d-eb28-4c28-9552-13c11c4a01cf.jpg"
+            "title_color": "#5a3a0a"
           },
           "blocks": {}
         }
