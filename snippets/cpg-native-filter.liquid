@@ -36,9 +36,14 @@
   {%- endif -%}
 {%- endif -%}
 
-{%- assign non_brand_vendors = '|african artifacts|cameo|ceramic|chinese art|crockery|denim jacket|estate|european art|fine gold|indian antique|islamic|japanese artifacts|micro mosaic|mosaic|vintage|vintage bag|vintage brooches|vintage clothing|vintage earrings|vintage necklace|vintage ring|vintage textile|vintage watches|' -%}
+{%- assign non_brand_vendors = '|african artifacts|cameo|ceramic|chinese art|crockery|denim jacket|estate|european art|fine gold|indian antique|islamic|japanese artifacts|micro mosaic|mosaic|vintage|vintage bag|vintage brooches|vintage clothing|vintage earrings|vintage necklace|vintage ring|vintage textile|vintage watches|arpana caur|jyoti bhatt|manu parekh|raja ravi varma|sunil das|jamini roy|m.f. husain|mf husain|f.n. souza|fn souza|tyeb mehta|s.h. raza|sh raza|akbar padamsee|' -%}
 
 {%- assign should_render_group = true -%}
+{%- if fl == 'product type' -%}
+  {%- comment -%} Suppress fake redirecting product type checkboxes in collection storefronts {%- endcomment -%}
+  {%- assign should_render_group = false -%}
+{%- endif -%}
+
 {%- if is_brand_facet and filter.type == 'list' -%}
   {%- assign valid_brand_count = 0 -%}
   {%- for v in filter.values -%}
@@ -52,7 +57,17 @@
       {%- assign valid_brand_count = valid_brand_count | plus: 1 -%}
     {%- endif -%}
   {%- endfor -%}
-  {%- if valid_brand_count == 0 -%}
+  {%- if valid_brand_count <= 1 and filter.values.first.active == false -%}
+    {%- assign should_render_group = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if filter.type == 'list' and filter.values.size <= 1 -%}
+  {%- assign has_active_val = false -%}
+  {%- for v in filter.values -%}
+    {%- if v.active -%}{%- assign has_active_val = true -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if has_active_val == false -%}
     {%- assign should_render_group = false -%}
   {%- endif -%}
 {%- endif -%}
