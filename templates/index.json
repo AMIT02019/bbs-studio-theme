@@ -197,8 +197,8 @@
             "vendor": "CARTIER",
             "tag": "",
             "image": "shopify://shop_images/1ee96319-0e4d-4df4-9f81-4a8d4cbd1a59.png",
-            "title": "",
-            "link": "https://begborrowstealstudio.com/collections/all?filter.p.vendor=SCHIAPARELLI&filter.p.vendor=Cartier&sort_by=created-descending"
+            "title": "CARTIER",
+            "link": "/collections/all?filter.p.vendor=Cartier&sort_by=created-descending"
           }
         }
       },
