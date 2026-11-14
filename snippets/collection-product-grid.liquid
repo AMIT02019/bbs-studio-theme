@@ -742,7 +742,7 @@
                       {%- if product.images.size > 0 -%}
                         {%- for image in product.images limit: 6 -%}
                           <a class="cpg-card-slide{% if forloop.first %} is-first{% elsif forloop.index == 2 %} is-second{% else %} is-extra{% endif %}"
-                             href="{{ product.url | within: collection }}"
+                             href="{{ product.url }}"
                              title="{{ product.title | escape }}">
                             <img
                               class="cpg-slide-img"
@@ -753,7 +753,7 @@
                           </a>
                         {%- endfor -%}
                       {%- else -%}
-                        <a class="cpg-card-slide is-first" href="{{ product.url | within: collection }}">
+                        <a class="cpg-card-slide is-first" href="{{ product.url }}">
                           {{ 'product-1' | placeholder_svg_tag: 'cpg-slide-img' }}
                         </a>
                       {%- endif -%}
@@ -771,7 +771,7 @@
 
                   <div class="cpg-card-body">
                     <div class="cpg-vendor"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>
-                    <div class="cpg-title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                    <div class="cpg-title"><a href="{{ product.url }}">{{ product.title }}</a></div>
                     <div class="cpg-price">
                       {%- if on_sale -%}
                         <span class="cpg-price-sale">{% render 'indian-price', price: product.price %}</span>
@@ -808,7 +808,7 @@
                       {%- if product.images.size > 0 -%}
                         {%- for image in product.images limit: 6 -%}
                           <a class="cpg-card-slide{% if forloop.first %} is-first{% elsif forloop.index == 2 %} is-second{% else %} is-extra{% endif %}"
-                             href="{{ product.url | within: collection }}"
+                             href="{{ product.url }}"
                              title="{{ product.title | escape }}">
                             <img
                               class="cpg-slide-img"
@@ -819,7 +819,7 @@
                           </a>
                         {%- endfor -%}
                       {%- else -%}
-                        <a class="cpg-card-slide is-first" href="{{ product.url | within: collection }}">
+                        <a class="cpg-card-slide is-first" href="{{ product.url }}">
                           {{ 'product-1' | placeholder_svg_tag: 'cpg-slide-img' }}
                         </a>
                       {%- endif -%}
@@ -834,7 +834,7 @@
 
                   <div class="cpg-card-body">
                     <div class="cpg-vendor"><a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a></div>
-                    <div class="cpg-title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                    <div class="cpg-title"><a href="{{ product.url }}">{{ product.title }}</a></div>
                     <div class="cpg-price">
                       {%- if on_sale -%}
                         <span class="cpg-price-sale">{% render 'indian-price', price: product.price %}</span>
