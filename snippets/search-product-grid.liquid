@@ -683,6 +683,68 @@
           <p class="bbs-empty-concierge-text">Looking for a specific archive piece, brand, or SKU?</p>
           <a href="/pages/contact-us" class="bbs-empty-concierge-btn">Contact Concierge Sourcing</a>
         </div>
+
+        <!-- Client-side SKU instant fallback resolver -->
+        <script>
+        (async function() {
+          try {
+            var params = new URLSearchParams(window.location.search);
+            var q = params.get('q');
+            if (!q) return;
+            var normQ = q.trim().toLowerCase();
+            var cleanQ = normQ.replace(/[^a-z0-9]/g, '');
+            var isSku = /^bbs/i.test(cleanQ) || (/\d/.test(cleanQ) && /[a-z]/i.test(cleanQ) && cleanQ.length >= 3);
+            if (!isSku) return;
+
+            var indexUrl = window.__BBS_SKU_INDEX_URL || "{{ 'bbs-sku-index.json' | asset_url }}";
+            var res = await fetch(indexUrl);
+            if (!res.ok) return;
+            var data = await res.json();
+            if (!data || !data.skus || !data.products) return;
+
+            var pIdx = data.skus[normQ];
+            if (pIdx === undefined) pIdx = data.skus[cleanQ];
+            if (pIdx === undefined && (normQ.startsWith('bbs_') || normQ.startsWith('bbs-') || normQ.startsWith('bbs '))) {
+              var shortQ = normQ.replace(/^bbs[_\-\s]+/, '');
+              pIdx = data.skus[shortQ] ?? data.skus[shortQ.replace(/[^a-z0-9]/g, '')];
+            }
+            if (pIdx === undefined && !cleanQ.startsWith('bbs')) {
+              pIdx = data.skus['bbs' + cleanQ] ?? data.skus['bbs_' + cleanQ];
+            }
+
+            if (pIdx !== undefined && data.products[pIdx]) {
+              var item = data.products[pIdx];
+              var emptyEl = document.querySelector('.myalmari-search-page-empty');
+              if (emptyEl) {
+                var numPrice = Math.round(Number(item.price || 0)).toLocaleString('en-IN');
+                emptyEl.innerHTML = `
+                  <div class="cpg-search-heading" style="margin-bottom: 24px; padding: 14px 0 10px; border-bottom: 1px solid #e5e5e5;">
+                    <strong>1</strong> result for <strong>"${q.replace(/"/g, '&quot;')}"</strong>
+                  </div>
+                  <div class="cpg-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-bottom: 40px; max-width: 320px;">
+                    <div class="cpg-card">
+                      <div class="cpg-card-img">
+                        <a class="cpg-card-slide is-first" href="${item.url}" title="${item.title.replace(/"/g, '&quot;')}">
+                          <img class="cpg-slide-img" src="${item.image}" alt="${item.title.replace(/"/g, '&quot;')}" width="800" height="800" loading="lazy">
+                        </a>
+                      </div>
+                      <div class="cpg-card-body">
+                        <div class="cpg-vendor"><a href="/collections/vendors?q=${encodeURIComponent(item.vendor)}">${item.vendor}</a></div>
+                        <div class="cpg-title"><a href="${item.url}">${item.title}</a></div>
+                        <div class="cpg-price">
+                          <span class="cpg-price-reg">RS. ${numPrice}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }
+            }
+          } catch (err) {
+            console.warn('SKU search fallback error:', err);
+          }
+        })();
+        </script>
       </div>
     {%- endif -%}
 

@@ -16,6 +16,64 @@
   let debounceTimer = null;
   let activeQuery = '';
   let lastActiveTrigger = null;
+  let skuIndexData = null;
+  let skuIndexLoading = false;
+
+  function loadSkuIndex() {
+    if (skuIndexData || skuIndexLoading) return;
+    skuIndexLoading = true;
+    const indexUrl = window.__BBS_SKU_INDEX_URL || '/assets/bbs-sku-index.json';
+    fetch(indexUrl)
+      .then(function (res) {
+        if (!res.ok) throw new Error('Failed to load SKU index: ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        skuIndexData = data;
+      })
+      .catch(function (err) {
+        console.warn('BBS SKU index notice:', err);
+      })
+      .finally(function () {
+        skuIndexLoading = false;
+      });
+  }
+
+  function lookupSkuInIndex(query) {
+    if (!skuIndexData || !skuIndexData.skus || !skuIndexData.products) return null;
+    const q = (query || '').toLowerCase().trim();
+    if (!q || q.length < 3) return null;
+    const cleanQ = q.replace(/[^a-z0-9]/g, '');
+
+    let pIdx = skuIndexData.skus[q];
+    if (pIdx === undefined) pIdx = skuIndexData.skus[cleanQ];
+    if (pIdx === undefined && (q.startsWith('bbs_') || q.startsWith('bbs-') || q.startsWith('bbs '))) {
+      const shortQ = q.replace(/^bbs[_\-\s]+/, '');
+      pIdx = skuIndexData.skus[shortQ];
+      if (pIdx === undefined) pIdx = skuIndexData.skus[shortQ.replace(/[^a-z0-9]/g, '')];
+    }
+    if (pIdx === undefined && !cleanQ.startsWith('bbs')) {
+      pIdx = skuIndexData.skus['bbs' + cleanQ];
+      if (pIdx === undefined) pIdx = skuIndexData.skus['bbs_' + cleanQ];
+    }
+
+    if (pIdx !== undefined && skuIndexData.products[pIdx]) {
+      const p = skuIndexData.products[pIdx];
+      return {
+        id: p.id,
+        title: p.title,
+        handle: p.handle,
+        vendor: p.vendor,
+        price: p.price,
+        compare_at_price_max: '0.00',
+        image: p.image,
+        featured_image: { url: p.image },
+        url: p.url,
+        tags: [query, p.title]
+      };
+    }
+    return null;
+  }
 
   function init() {
     searchWrapper = document.getElementById('myalmari-search-wrapper');
@@ -96,6 +154,13 @@
     // Adjust position on window scroll or resize
     window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition, { passive: true });
+
+    // Pre-load SKU index in background
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(loadSkuIndex);
+    } else {
+      setTimeout(loadSkuIndex, 1000);
+    }
   }
 
   function getHeaderBottom() {
@@ -129,6 +194,7 @@
 
   function openSearch() {
     if (!searchWrapper) return;
+    loadSkuIndex();
     searchWrapper.classList.add('is-open');
     updatePosition();
     searchWrapper.setAttribute('aria-hidden', 'false');
@@ -354,6 +420,23 @@
           }
         }
 
+        // Instant SKU lookup integration: if query matches SKU index, include it
+        const matchedSkuProduct = lookupSkuInIndex(query);
+        if (matchedSkuProduct) {
+          const alreadyIncluded = scoredProducts.some(function(item) {
+            return item.product.handle === matchedSkuProduct.handle || String(item.product.id) === String(matchedSkuProduct.id);
+          });
+          if (!alreadyIncluded) {
+            scoredProducts.unshift({ product: matchedSkuProduct, score: 9999 });
+          }
+          if (queries.length === 0) {
+            queries.push({
+              text: query.toUpperCase(),
+              styled_text: '<strong>' + escapeHtml(query.toUpperCase()) + '</strong>'
+            });
+          }
+        }
+
         // Sort descending by relevance score
         scoredProducts.sort(function(a, b) {
           return b.score - a.score;
@@ -371,6 +454,13 @@
         console.error('My Almari search error:', err);
         if (query !== activeQuery) return;
         if (searchLoading) searchLoading.style.display = 'none';
+
+        const fallbackSku = lookupSkuInIndex(query);
+        if (fallbackSku) {
+          renderResults(query, [{ text: query.toUpperCase(), styled_text: '<strong>' + escapeHtml(query.toUpperCase()) + '</strong>' }], [fallbackSku], []);
+          return;
+        }
+
         renderNoResults();
       });
   }
@@ -388,8 +478,14 @@
     if (!searchContent) return;
 
     if (queries.length === 0 && products.length === 0 && collections.length === 0) {
-      renderNoResults();
-      return;
+      const fallbackSku = lookupSkuInIndex(query);
+      if (fallbackSku) {
+        products = [fallbackSku];
+        queries = [{ text: query.toUpperCase(), styled_text: '<strong>' + escapeHtml(query.toUpperCase()) + '</strong>' }];
+      } else {
+        renderNoResults();
+        return;
+      }
     }
 
     let html = '';
