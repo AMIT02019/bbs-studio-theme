@@ -158,6 +158,9 @@
           </div>
         {%- endif -%}
       </div>
+      {%- if show_social -%}
+        {% render 'footer-social', block: block, social_is_nested: true %}
+      {%- endif -%}
     </div>
   </div>
 </div>
