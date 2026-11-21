@@ -1,35 +1,6 @@
 {% doc %}
   @prompt
-    <section class="recent-products">
-      <div class="page-width">
-        <h2>Recently Added Products</h2>
-    
-        <div class="recent-products-grid">
-          {% assign recent_products = collections.all.products | sort: 'created_at' | reverse %}
-    
-          {% for product in recent_products limit: 8 %}
-            <a href="{{ product.url }}" class="product-card">
-    
-              {% if product.featured_image %}
-                <img
-                  src="{{ product.featured_image | image_url: width: 600 }}"
-                  alt="{{ product.title }}"
-                  width="600"
-                  height="600"
-                >
-              {% endif %}
-    
-              <h3>{{ product.title }}</h3>
-    
-              <div class="price">
-                {{ product.price | money }}
-              </div>
-    
-            </a>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
+    Elevated luxury recently added products section for Beg Borrow Steal Studio
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
@@ -47,11 +18,26 @@
     padding: 0 20px;
   }
 
-  .ai-recent-products-heading-{{ ai_gen_id }} {
+  .ai-recent-products-header-{{ ai_gen_id }} {
     text-align: {{ block.settings.heading_alignment }};
     margin: 0 0 {{ block.settings.heading_margin_bottom }}px;
+  }
+
+  .ai-recent-products-heading-{{ ai_gen_id }} {
+    margin: 0;
     color: {{ block.settings.heading_color }};
     font-size: {{ block.settings.heading_size }}px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  .ai-recent-products-subtitle-{{ ai_gen_id }} {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #888888;
+    letter-spacing: 0.3px;
   }
 
   .ai-recent-products-grid-{{ ai_gen_id }} {
@@ -61,44 +47,110 @@
   }
 
   .ai-recent-product-card-{{ ai_gen_id }} {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease;
+    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
   }
 
   .ai-recent-product-card-{{ ai_gen_id }}:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: #e2ded8;
   }
 
   .ai-recent-product-image-wrapper-{{ ai_gen_id }} {
     position: relative;
     width: 100%;
-    padding-bottom: 100%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: {{ block.settings.image_border_radius }}px;
-    background-color: {{ block.settings.image_background_color }};
-    margin-bottom: {{ block.settings.image_margin_bottom }}px;
+    background-color: {{ block.settings.image_background_color | default: '#ffffff' }};
+    display: block;
   }
 
   .ai-recent-product-image-{{ ai_gen_id }} {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain !important;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-recent-product-image-{{ ai_gen_id }}.is-primary {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .ai-recent-product-image-{{ ai_gen_id }}.is-hover {
+    opacity: 0;
+    z-index: 2;
+  }
+
+  @media (min-width: 1025px) and (hover: hover) {
+    .ai-recent-product-card-{{ ai_gen_id }}:hover .ai-recent-product-image-{{ ai_gen_id }}.is-primary {
+      opacity: 0;
+    }
+    .ai-recent-product-card-{{ ai_gen_id }}:hover .ai-recent-product-image-{{ ai_gen_id }}.is-hover {
+      opacity: 1;
+    }
+  }
+
+  .ai-recent-product-badges-{{ ai_gen_id }} {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .ai-recent-badge-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.5;
+  }
+
+  .ai-recent-badge-sale-{{ ai_gen_id }} {
+    background: #e8000d;
+    color: #ffffff;
+  }
+
+  .ai-recent-badge-condition-{{ ai_gen_id }} {
+    background: rgba(255, 255, 255, 0.94);
+    color: #333333;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .ai-recent-badge-sold-{{ ai_gen_id }} {
+    background: #1a1a1a;
+    color: #ffffff;
   }
 
   .ai-recent-product-placeholder-{{ ai_gen_id }} {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #f8f8f8;
   }
 
   .ai-recent-product-placeholder-{{ ai_gen_id }} svg {
@@ -107,17 +159,71 @@
     opacity: 0.3;
   }
 
+  .ai-recent-product-body-{{ ai_gen_id }} {
+    padding: 12px 14px 16px;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .ai-recent-product-vendor-{{ ai_gen_id }} {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #999999;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
   .ai-recent-product-title-{{ ai_gen_id }} {
-    margin: 0 0 {{ block.settings.title_margin_bottom }}px;
+    margin: 0 0 8px;
     font-size: {{ block.settings.title_size }}px;
     color: {{ block.settings.title_color }};
     font-weight: {{ block.settings.title_font_weight }};
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 36px;
+    text-align: left;
+    transition: color 0.2s ease;
+  }
+
+  .ai-recent-product-card-{{ ai_gen_id }}:hover .ai-recent-product-title-{{ ai_gen_id }} {
+    color: #472B03;
+  }
+
+  .ai-recent-product-price-wrap-{{ ai_gen_id }} {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    flex-wrap: wrap;
+    text-align: left;
   }
 
   .ai-recent-product-price-{{ ai_gen_id }} {
     font-size: {{ block.settings.price_size }}px;
     color: {{ block.settings.price_color }};
     font-weight: {{ block.settings.price_font_weight }};
+    text-align: left;
+  }
+
+  .ai-recent-price-sale-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: 700;
+    color: #e8000d;
+    text-align: left;
+  }
+
+  .ai-recent-price-compare-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: #bbbbbb;
+    text-decoration: line-through;
+    text-align: left;
   }
 
   @media screen and (max-width: 989px) {
@@ -129,10 +235,30 @@
   @media screen and (max-width: 749px) {
     .ai-recent-products-grid-{{ ai_gen_id }} {
       grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: 10px;
     }
 
     .ai-recent-products-heading-{{ ai_gen_id }} {
-      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+      font-size: calc({{ block.settings.heading_size }}px * 0.75);
+    }
+
+    .ai-recent-product-image-{{ ai_gen_id }} {
+      padding: 10px;
+    }
+
+    .ai-recent-product-body-{{ ai_gen_id }} {
+      padding: 8px 10px 12px;
+    }
+
+    .ai-recent-product-title-{{ ai_gen_id }} {
+      font-size: 12px;
+      min-height: 32px;
+      margin-bottom: 6px;
+    }
+
+    .ai-recent-product-price-{{ ai_gen_id }},
+    .ai-recent-price-sale-{{ ai_gen_id }} {
+      font-size: 13px;
     }
   }
 {% endstyle %}
@@ -140,38 +266,105 @@
 <recent-products-{{ ai_gen_id }} class="ai-recent-products-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-recent-products-container-{{ ai_gen_id }}">
     {% if block.settings.heading != blank %}
-      <h2 class="ai-recent-products-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      <div class="ai-recent-products-header-{{ ai_gen_id }}">
+        <h2 class="ai-recent-products-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+        <p class="ai-recent-products-subtitle-{{ ai_gen_id }}">Explore the newest arrivals in our curated vintage archive</p>
+      </div>
     {% endif %}
 
     <div class="ai-recent-products-grid-{{ ai_gen_id }}">
-      {% assign recent_products = collections.all.products | sort: 'created_at' | reverse %}
+      {%- assign current_prod_id = product.id -%}
+      {%- assign recent_products = collections.all.products | sort: 'created_at' | reverse -%}
+      {%- assign shown_count = 0 -%}
 
-      {% for product in recent_products limit: block.settings.products_to_show %}
-        <a href="{{ product.url }}" class="ai-recent-product-card-{{ ai_gen_id }}">
+      {%- for p in recent_products -%}
+        {%- if p.id == current_prod_id -%}{%- continue -%}{%- endif -%}
+        {%- if shown_count >= block.settings.products_to_show -%}{%- break -%}{%- endif -%}
+        {%- assign shown_count = shown_count | plus: 1 -%}
+
+        {%- assign on_sale = false -%}
+        {%- if p.compare_at_price > p.price -%}{%- assign on_sale = true -%}{%- endif -%}
+        {%- assign pct = 0 -%}
+        {%- if on_sale -%}
+          {%- assign pct = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price | round -%}
+        {%- endif -%}
+
+        {%- assign condition_tag = '' -%}
+        {%- for tag in p.tags -%}
+          {%- if tag == 'New' or tag == 'Excellent' or tag == 'Very Good' or tag == 'Good' or tag == 'Fair' -%}
+            {%- assign condition_tag = tag -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign p_images = p.media | default: p.images -%}
+
+        <a href="{{ p.url }}" class="ai-recent-product-card-{{ ai_gen_id }}">
           <div class="ai-recent-product-image-wrapper-{{ ai_gen_id }}">
-            {% if product.featured_image %}
+            <div class="ai-recent-product-badges-{{ ai_gen_id }}">
+              {%- unless p.available -%}
+                <span class="ai-recent-badge-{{ ai_gen_id }} ai-recent-badge-sold-{{ ai_gen_id }}">Sold</span>
+              {%- endunless -%}
+              {%- if on_sale -%}
+                <span class="ai-recent-badge-{{ ai_gen_id }} ai-recent-badge-sale-{{ ai_gen_id }}">-{{ pct }}%</span>
+              {%- endif -%}
+              {%- if condition_tag != '' -%}
+                <span class="ai-recent-badge-{{ ai_gen_id }} ai-recent-badge-condition-{{ ai_gen_id }}">{{ condition_tag }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- if p_images.size > 0 -%}
               <img
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                alt="{{ product.title | escape }}"
-                width="600"
-                height="600"
+                src="{{ p_images[0] | image_url: width: 800 }}"
+                alt="{{ p.title | escape }}"
+                width="800"
+                height="800"
                 loading="lazy"
-                class="ai-recent-product-image-{{ ai_gen_id }}"
+                class="ai-recent-product-image-{{ ai_gen_id }} is-primary"
               >
-            {% else %}
+              {%- if p_images.size > 1 -%}
+                <img
+                  src="{{ p_images[1] | image_url: width: 800 }}"
+                  alt="{{ p.title | escape }}"
+                  width="800"
+                  height="800"
+                  loading="lazy"
+                  class="ai-recent-product-image-{{ ai_gen_id }} is-hover"
+                >
+              {%- endif -%}
+            {%- elsif p.featured_image -%}
+              <img
+                src="{{ p.featured_image | image_url: width: 800 }}"
+                alt="{{ p.title | escape }}"
+                width="800"
+                height="800"
+                loading="lazy"
+                class="ai-recent-product-image-{{ ai_gen_id }} is-primary"
+              >
+            {%- else -%}
               <div class="ai-recent-product-placeholder-{{ ai_gen_id }}">
                 {{ 'product-1' | placeholder_svg_tag }}
               </div>
-            {% endif %}
+            {%- endif -%}
           </div>
 
-          <h3 class="ai-recent-product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+          <div class="ai-recent-product-body-{{ ai_gen_id }}">
+            {%- if p.vendor != blank -%}
+              <div class="ai-recent-product-vendor-{{ ai_gen_id }}">{{ p.vendor }}</div>
+            {%- endif -%}
 
-          <div class="ai-recent-product-price-{{ ai_gen_id }}">
-            {{ product.price | money }}
+            <h3 class="ai-recent-product-title-{{ ai_gen_id }}">{{ p.title }}</h3>
+
+            <div class="ai-recent-product-price-wrap-{{ ai_gen_id }}">
+              {%- if on_sale -%}
+                <span class="ai-recent-price-sale-{{ ai_gen_id }}">{% render 'indian-price', price: p.price %}</span>
+                <span class="ai-recent-price-compare-{{ ai_gen_id }}">{% render 'indian-price', price: p.compare_at_price %}</span>
+              {%- else -%}
+                <span class="ai-recent-product-price-{{ ai_gen_id }}">{% render 'indian-price', price: p.price %}</span>
+              {%- endif -%}
+            </div>
           </div>
         </a>
-      {% endfor %}
+      {%- endfor -%}
     </div>
   </div>
 </recent-products-{{ ai_gen_id }}>
@@ -182,11 +375,8 @@
       constructor() {
         super();
       }
-
-      connectedCallback() {
-      }
+      connectedCallback() {}
     }
-
     customElements.define('recent-products-{{ ai_gen_id }}', RecentProducts{{ ai_gen_id }});
   })();
 </script>
@@ -204,7 +394,7 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Recently added products"
+      "default": "Recently Added Products"
     },
     {
       "type": "range",
@@ -213,7 +403,7 @@
       "min": 2,
       "max": 12,
       "step": 1,
-      "default": 8
+      "default": 5
     },
     {
       "type": "header",
@@ -237,7 +427,7 @@
       "max": 1600,
       "step": 50,
       "unit": "px",
-      "default": 1200
+      "default": 1450
     },
     {
       "type": "range",
@@ -246,7 +436,7 @@
       "min": 2,
       "max": 6,
       "step": 1,
-      "default": 4
+      "default": 5
     },
     {
       "type": "select",
@@ -302,13 +492,13 @@
       "max": 60,
       "step": 2,
       "unit": "px",
-      "default": 32
+      "default": 24
     },
     {
       "type": "color",
       "id": "heading_color",
       "label": "Color",
-      "default": "#000000"
+      "default": "#472B03"
     },
     {
       "type": "range",
@@ -318,7 +508,7 @@
       "max": 60,
       "step": 5,
       "unit": "px",
-      "default": 30
+      "default": 25
     },
     {
       "type": "header",
@@ -327,28 +517,18 @@
     {
       "type": "range",
       "id": "image_border_radius",
-      "label": "Image border radius",
+      "label": "Card border radius",
       "min": 0,
       "max": 30,
       "step": 2,
       "unit": "px",
-      "default": 8
+      "default": 6
     },
     {
       "type": "color",
       "id": "image_background_color",
       "label": "Image background",
-      "default": "#f4f4f4"
-    },
-    {
-      "type": "range",
-      "id": "image_margin_bottom",
-      "label": "Image margin bottom",
-      "min": 5,
-      "max": 30,
-      "step": 5,
-      "unit": "px",
-      "default": 15
+      "default": "#ffffff"
     },
     {
       "type": "range",
@@ -358,7 +538,7 @@
       "max": 24,
       "step": 1,
       "unit": "px",
-      "default": 16
+      "default": 13
     },
     {
       "type": "select",
@@ -376,17 +556,7 @@
       "type": "color",
       "id": "title_color",
       "label": "Title color",
-      "default": "#000000"
-    },
-    {
-      "type": "range",
-      "id": "title_margin_bottom",
-      "label": "Title margin bottom",
-      "min": 5,
-      "max": 20,
-      "step": 5,
-      "unit": "px",
-      "default": 10
+      "default": "#1a1a1a"
     },
     {
       "type": "range",
@@ -414,7 +584,7 @@
       "type": "color",
       "id": "price_color",
       "label": "Price color",
-      "default": "#000000"
+      "default": "#1a1a1a"
     },
     {
       "type": "header",
@@ -438,7 +608,7 @@
       "max": 100,
       "step": 5,
       "unit": "px",
-      "default": 40
+      "default": 50
     }
   ],
   "presets": [
