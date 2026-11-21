@@ -242,17 +242,18 @@
       }
     }
 
+    const isSkuQuery = /^bbs[\s_-]?[a-z0-9]+/i.test(q) || (/^[a-z0-9_-]{4,}$/i.test(q) && /\d/.test(q) && /[a-z]/i.test(q));
+
     const cleanQ = q.replace(/[^a-z0-9]/g, '');
     const cleanImg = image.replace(/[^a-z0-9]/g, '');
-    if (cleanQ.length >= 4 && cleanImg.includes(cleanQ)) {
+    if (isSkuQuery && cleanQ.length >= 4 && cleanImg.includes(cleanQ)) {
       matchesSku = true;
     }
 
-    if (url.includes('_psq=' + encodeURIComponent(q).toLowerCase()) || url.includes('_psq=' + q)) {
+    if (isSkuQuery && (url.includes('_psq=' + encodeURIComponent(q).toLowerCase()) || url.includes('_psq=' + q))) {
       matchesSku = true;
     }
 
-    const isSkuQuery = /^bbs[\s_-]?[a-z0-9]+/i.test(q) || (/^[a-z0-9_-]{4,}$/i.test(q) && /\d/.test(q) && /[a-z]/i.test(q));
     if (isSkuQuery && matchesSku) {
       return 1000; // Top priority for SKU matches!
     }
