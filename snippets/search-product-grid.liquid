@@ -350,7 +350,7 @@
   <div class="{{ container_class }}">
 
     {%- comment -%} Search result heading {%- endcomment -%}
-    {%- if search.performed -%}
+    {%- if search.performed and search.results_count > 0 -%}
       <p class="cpg-search-heading">
         <strong>{{ search.results_count }}</strong> result{% if search.results_count != 1 %}s{% endif %} for <strong>"{{ search.terms | escape }}"</strong>
       </p>
