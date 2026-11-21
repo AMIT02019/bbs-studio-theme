@@ -1410,7 +1410,7 @@ a[href*="mailto:"] {
   }
 }
 
-/* Footer text size 14px */
+/* Footer text size 12px */
 .footer,
 .footer .footer-block__heading,
 .footer .footer-block__item,
@@ -1428,7 +1428,7 @@ a[href*="mailto:"] {
 .footer .footer__content-bottom .footer__copyright,
 .footer .footer__content-bottom .footer__copyright p,
 .footer .footer__content-bottom .footer__copyright a {
-  font-size: 14px !important;
+  font-size: 12px !important;
 }
 
 
