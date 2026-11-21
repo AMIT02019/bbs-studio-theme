@@ -714,13 +714,15 @@
 
             if (pIdx !== undefined && data.products[pIdx]) {
               var item = data.products[pIdx];
+              var topHeading = document.querySelector('.cpg-search-heading');
+              if (topHeading) topHeading.remove();
               var emptyEl = document.querySelector('.myalmari-search-page-empty');
               if (emptyEl) {
                 var numPrice = Math.round(Number(item.price || 0)).toLocaleString('en-IN');
                 emptyEl.innerHTML = `
-                  <div class="cpg-search-heading" style="margin-bottom: 24px; padding: 14px 0 10px; border-bottom: 1px solid #e5e5e5;">
+                  <p class="cpg-search-heading" style="margin-bottom: 24px;">
                     <strong>1</strong> result for <strong>"${q.replace(/"/g, '&quot;')}"</strong>
-                  </div>
+                  </p>
                   <div class="cpg-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-bottom: 40px; max-width: 320px;">
                     <div class="cpg-card">
                       <div class="cpg-card-img">
