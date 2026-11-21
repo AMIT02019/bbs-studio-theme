@@ -593,18 +593,96 @@
 
     {%- else -%}
       <div class="myalmari-search-page-empty">
-        <p class="myalmari-search-empty-msg">No results could be found. Please try again with a different query.</p>
-        <form action="{{ routes.search_url }}" method="get" role="search" class="myalmari-search-page-empty-form">
-          <div class="myalmari-search-page-empty-field">
-            <input type="search" name="q" value="" placeholder="Search for..." class="myalmari-search-page-empty-input" autocomplete="off" aria-label="Search for...">
-            <button type="submit" class="myalmari-search-page-empty-btn" aria-label="Search">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
+        <div class="bbs-empty-search-hero">
+          <div class="bbs-empty-search-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#472B03" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11" stroke-dasharray="2 2"></line>
+            </svg>
           </div>
-        </form>
+          <h2 class="bbs-empty-search-title">NO RESULTS FOUND FOR "{{ search.terms | escape }}"</h2>
+          <p class="bbs-empty-search-subtitle">
+            We couldn't find any archive pieces matching your exact query. Please check the spelling, try broader keywords or brand names, or explore our curated collections below.
+          </p>
+
+          <!-- Search refinement form -->
+          <form action="{{ routes.search_url }}" method="get" role="search" class="myalmari-search-page-empty-form">
+            <div class="myalmari-search-page-empty-field">
+              <input
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="SEARCH ARCHIVE PIECES OR SKU..."
+                class="myalmari-search-page-empty-input"
+                autocomplete="off"
+                aria-label="Search for..."
+              >
+              <input type="hidden" name="type" value="product">
+              <input type="hidden" name="options[prefix]" value="last">
+              <input type="hidden" name="options[fields]" value="title,body,vendor,product_type,tag,variants.title,variants.sku">
+              <button type="submit" class="myalmari-search-page-empty-btn" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Popular Search Categories / Pills -->
+          <div class="bbs-empty-categories-wrap">
+            <span class="bbs-empty-cat-heading">EXPLORE POPULAR ARCHIVE CATEGORIES</span>
+            <div class="bbs-empty-pills">
+              <a href="/collections/necklace" class="bbs-empty-pill">Vintage Jewellery</a>
+              <a href="/collections/watches" class="bbs-empty-pill">Vintage Watches</a>
+              <a href="/collections/bags" class="bbs-empty-pill">Vintage Bags</a>
+              <a href="/collections/clothing" class="bbs-empty-pill">Vintage Clothing</a>
+              <a href="/collections/home-decor-curios" class="bbs-empty-pill">Home Décor & Curios</a>
+              <a href="/collections/textiles" class="bbs-empty-pill">Vintage Textiles</a>
+              <a href="/collections/all" class="bbs-empty-pill bbs-empty-pill--all">View All Pieces</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Curated Recommendations Grid -->
+        <div class="bbs-empty-recommendations">
+          <div class="bbs-empty-rec-header">
+            <h3 class="bbs-empty-rec-title">FEATURED ARCHIVE PIECES</h3>
+            <p class="bbs-empty-rec-sub">Explore rare highlights from our curated vintage collection</p>
+          </div>
+
+          <div class="cpg-grid bbs-empty-rec-grid">
+            {%- assign rec_collection = collections['all'] -%}
+            {%- for item in rec_collection.products limit: 4 -%}
+              <div class="cpg-card" data-product-id="{{ item.id }}">
+                <div class="cpg-card-img">
+                  <div class="cpg-card-slider">
+                    {%- assign item_images = item.media | default: item.images -%}
+                    {%- if item_images.size > 0 -%}
+                      <a class="cpg-card-slide is-first" href="{{ item.url }}" title="{{ item.title | escape }}">
+                        <img class="cpg-slide-img" src="{{ item_images.first | image_url: width: 800 }}" alt="{{ item.title | escape }}" width="800" height="800" loading="lazy">
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+                <div class="cpg-card-body">
+                  <div class="cpg-vendor"><a href="{{ item.vendor | url_for_vendor }}">{{ item.vendor }}</a></div>
+                  <div class="cpg-title"><a href="{{ item.url }}">{{ item.title }}</a></div>
+                  <div class="cpg-price">
+                    <span class="cpg-price-reg">{% render 'indian-price', price: item.price %}</span>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <!-- Concierge Personal Sourcing Assistance -->
+        <div class="bbs-empty-concierge">
+          <p class="bbs-empty-concierge-text">Looking for a specific archive piece, brand, or SKU?</p>
+          <a href="/pages/contact-us" class="bbs-empty-concierge-btn">Contact Concierge Sourcing</a>
+        </div>
       </div>
     {%- endif -%}
 

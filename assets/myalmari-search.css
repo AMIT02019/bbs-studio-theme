@@ -686,3 +686,182 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Enhanced Empty Search Page Experience */
+.myalmari-search-page-empty {
+  text-align: center;
+  padding: 40px 20px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bbs-empty-search-hero {
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+
+.bbs-empty-search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #FAF7F2;
+  margin-bottom: 18px;
+}
+
+.bbs-empty-search-title {
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.bbs-empty-search-subtitle {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #666666;
+  margin: 0 auto 24px;
+  max-width: 540px;
+}
+
+.bbs-empty-categories-wrap {
+  margin-top: 32px;
+}
+
+.bbs-empty-cat-heading {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #888888;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.bbs-empty-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.bbs-empty-pill {
+  display: inline-block;
+  padding: 7px 15px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  color: #333333;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.bbs-empty-pill:hover {
+  background: #111111;
+  color: #ffffff;
+  border-color: #111111;
+}
+
+.bbs-empty-pill--all {
+  background: #FAF7F2;
+  border-color: #472B03;
+  color: #472B03;
+  font-weight: 600;
+}
+
+.bbs-empty-pill--all:hover {
+  background: #472B03;
+  color: #ffffff;
+}
+
+.bbs-empty-recommendations {
+  margin-top: 50px;
+  padding-top: 40px;
+  border-top: 1px solid #ebebeb;
+  text-align: left;
+}
+
+.bbs-empty-rec-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.bbs-empty-rec-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #111111;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.bbs-empty-rec-sub {
+  font-size: 12px;
+  color: #777777;
+  margin: 0;
+}
+
+.bbs-empty-rec-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+}
+
+.bbs-empty-concierge {
+  margin-top: 50px;
+  padding: 22px 30px;
+  background: #FAF7F2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  text-align: left;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bbs-empty-concierge-text {
+  font-size: 14px;
+  color: #472B03;
+  font-weight: 500;
+  margin: 0;
+}
+
+.bbs-empty-concierge-btn {
+  display: inline-block;
+  background: #472B03;
+  color: #ffffff !important;
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.bbs-empty-concierge-btn:hover {
+  background: #2a1801;
+}
+
+@media (max-width: 820px) {
+  .bbs-empty-rec-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .bbs-empty-concierge {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+}

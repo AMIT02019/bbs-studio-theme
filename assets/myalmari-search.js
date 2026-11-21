@@ -216,31 +216,118 @@
     return null;
   }
 
-  function productMatchesQuery(p, query) {
-    // Partial-word matching must work: "bir" matches "Birkin"
-    // Disallow spelling / typo tolerance for completely unrelated strings
+  function calculateProductScore(p, query) {
     const q = query.toLowerCase().trim();
-    if (!q) return false;
+    if (!q) return 0;
+
     const title = (p.title || '').toLowerCase();
     const vendor = (p.vendor || '').toLowerCase();
     const type = (p.type || '').toLowerCase();
     const handle = (p.handle || '').toLowerCase();
-    const tags = Array.isArray(p.tags) ? p.tags.join(' ').toLowerCase() : '';
+    const tags = Array.isArray(p.tags) ? p.tags.map(function(t) { return t.toLowerCase(); }) : [];
+    const tagsStr = tags.join(' ');
     const body = (p.body || '').toLowerCase();
+    const image = (p.image || (p.featured_image ? p.featured_image.url : '') || '').toLowerCase();
+    const url = (p.url || '').toLowerCase();
 
-    const tokens = q.split(/\s+/).filter(Boolean);
-    return tokens.every(token => 
-      title.includes(token) || 
-      vendor.includes(token) || 
-      type.includes(token) || 
-      handle.includes(token) || 
-      tags.includes(token) || 
-      body.includes(token)
-    );
+    // Check SKU: in variants, in image filename, or in Shopify _psq
+    let matchesSku = false;
+    if (p.variants && Array.isArray(p.variants)) {
+      for (let i = 0; i < p.variants.length; i++) {
+        const sku = (p.variants[i].sku || '').toLowerCase();
+        if (sku && (sku === q || sku.includes(q) || q.includes(sku))) {
+          matchesSku = true;
+          break;
+        }
+      }
+    }
+
+    const cleanQ = q.replace(/[^a-z0-9]/g, '');
+    const cleanImg = image.replace(/[^a-z0-9]/g, '');
+    if (cleanQ.length >= 4 && cleanImg.includes(cleanQ)) {
+      matchesSku = true;
+    }
+
+    if (url.includes('_psq=' + encodeURIComponent(q).toLowerCase()) || url.includes('_psq=' + q)) {
+      matchesSku = true;
+    }
+
+    const isSkuQuery = /^bbs[\s_-]?[a-z0-9]+/i.test(q) || (/^[a-z0-9_-]{4,}$/i.test(q) && /\d/.test(q) && /[a-z]/i.test(q));
+    if (isSkuQuery && matchesSku) {
+      return 1000; // Top priority for SKU matches!
+    }
+
+    let score = 0;
+
+    // 1. Exact match in title
+    if (title === q) {
+      score += 250;
+    } else if (title.startsWith(q + ' ') || title.includes(' ' + q + ' ') || title.endsWith(' ' + q)) {
+      score += 150;
+    } else if (title.includes(q)) {
+      score += 90;
+    }
+
+    // 2. Exact match in vendor (Brand)
+    if (vendor === q) {
+      score += 180;
+    } else if (vendor.includes(q)) {
+      score += 100;
+    }
+
+    // 3. Match in tags
+    if (tags.some(function(t) { return t === q; })) {
+      score += 120;
+    } else if (tagsStr.includes(q)) {
+      score += 60;
+    }
+
+    // 4. Match in handle or type
+    if (handle === q || handle.includes(q)) {
+      score += 50;
+    }
+    if (type && type.includes(q)) {
+      score += 40;
+    }
+
+    // 5. Multi-token queries (all tokens must match somewhere relevant)
+    const tokens = q.split(/[\s_-]+/).filter(Boolean);
+    if (tokens.length > 1) {
+      const allTokensMatch = tokens.every(function(token) {
+        return title.includes(token) || 
+               vendor.includes(token) || 
+               tagsStr.includes(token) || 
+               handle.includes(token) ||
+               matchesSku;
+      });
+      if (allTokensMatch) {
+        score += 80;
+      }
+    }
+
+    if (matchesSku) {
+      score += 200;
+    }
+
+    // Filter out completely unrelated products (fuzzy / typo pollution)
+    const hasAnyRelevantMatch = tokens.some(function(token) {
+      return title.includes(token) || 
+             vendor.includes(token) || 
+             tagsStr.includes(token) || 
+             handle.includes(token) || 
+             matchesSku;
+    });
+
+    if (!hasAnyRelevantMatch) {
+      return 0; // Filter out products that have no relevant connection
+    }
+
+    return score;
   }
 
   function fetchLiveSuggestions(query) {
-    const url = `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,query&resources[limit]=10`;
+    // Explicitly query all essential product fields including variants.sku
+    const url = `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection,query&resources[options][fields]=title,body,vendor,product_type,tag,variants.title,variants.sku&resources[options][unavailable_products]=hide&resources[limit]=10`;
 
     fetch(url)
       .then(function (res) {
@@ -255,9 +342,26 @@
         const resources = data.resources && data.resources.results ? data.resources.results : {};
         const queries = resources.queries || [];
         const rawProducts = resources.products || [];
-        // Filter out non-matching products to avoid false typo/spelling fallbacks
-        const matchedProducts = rawProducts.filter(p => productMatchesQuery(p, query));
-        const products = matchedProducts.slice(0, 4);
+
+        // Score, filter and rank products by relevance
+        const scoredProducts = [];
+        for (let i = 0; i < rawProducts.length; i++) {
+          const p = rawProducts[i];
+          const score = calculateProductScore(p, query);
+          if (score > 0) {
+            scoredProducts.push({ product: p, score: score });
+          }
+        }
+
+        // Sort descending by relevance score
+        scoredProducts.sort(function(a, b) {
+          return b.score - a.score;
+        });
+
+        const products = scoredProducts.slice(0, 4).map(function(item) {
+          return item.product;
+        });
+
         const collections = resources.collections || [];
 
         renderResults(query, queries, products, collections);
