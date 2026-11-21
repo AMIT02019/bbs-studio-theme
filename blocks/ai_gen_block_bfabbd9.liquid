@@ -282,6 +282,48 @@
       margin-bottom: 30px;
     }
   }
+
+  /* Security & validation styles */
+  .ai-contact-error-msg-{{ ai_gen_id }} {
+    display: none;
+    color: #d32f2f;
+    font-size: 12px;
+    margin-top: 5px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .ai-contact-error-msg-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-contact-image-input-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }},
+  .ai-contact-image-textarea-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }},
+  .ai-contact-image-file-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }} {
+    border-color: #d32f2f !important;
+    background-color: #fffbfa !important;
+  }
+
+  .ai-contact-image-input-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }}:focus,
+  .ai-contact-image-textarea-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }}:focus,
+  .ai-contact-image-file-{{ ai_gen_id }}.ai-contact-invalid-{{ ai_gen_id }}:focus {
+    outline: 2px solid #d32f2f !important;
+    outline-offset: 1px;
+  }
+
+  .ai-contact-file-hint-{{ ai_gen_id }} {
+    display: block;
+    font-size: 11px;
+    color: #777;
+    margin-top: 4px;
+    letter-spacing: 0.2px;
+  }
+
+  .ai-contact-image-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
 {% endstyle %}
 
 <contact-image-{{ ai_gen_id }} class="ai-contact-image-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
@@ -310,6 +352,19 @@
             </div>
           {% endif %}
 
+          <!-- Anti-Spam Honeypot Field (hidden from real users, traps spam bots) -->
+          <div style="position: absolute !important; left: -9999px !important; top: -9999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important;" aria-hidden="true">
+            <label for="contact-website-{{ ai_gen_id }}">Leave this field empty</label>
+            <input
+              type="text"
+              id="contact-website-{{ ai_gen_id }}"
+              name="contact[b_website_security]"
+              tabindex="-1"
+              autocomplete="new-password"
+              value=""
+            >
+          </div>
+
           <div class="ai-contact-image-field-{{ ai_gen_id }}">
             <label for="contact-name-{{ ai_gen_id }}" class="ai-contact-image-label-{{ ai_gen_id }}">
               Name <span aria-label="required">*</span>
@@ -322,7 +377,13 @@
               value="{% if form.name %}{{ form.name }}{% endif %}"
               required
               aria-required="true"
+              minlength="2"
+              maxlength="60"
+              pattern="^[a-zA-Z\u00C0-\u024F\s\.\'\-]{2,60}$"
+              title="Please enter a valid name (2-60 letters, spaces, hyphens, and apostrophes only)"
+              autocomplete="name"
             >
+            <div class="ai-contact-error-msg-{{ ai_gen_id }}" id="contact-name-error-{{ ai_gen_id }}" role="alert"></div>
           </div>
 
           <div class="ai-contact-image-field-{{ ai_gen_id }}">
@@ -337,8 +398,12 @@
               value="{% if form.email %}{{ form.email }}{% endif %}"
               required
               aria-required="true"
+              maxlength="100"
+              pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+              title="Please enter a valid email address (e.g. name@example.com)"
               autocomplete="email"
             >
+            <div class="ai-contact-error-msg-{{ ai_gen_id }}" id="contact-email-error-{{ ai_gen_id }}" role="alert"></div>
           </div>
 
           <div class="ai-contact-image-field-{{ ai_gen_id }}">
@@ -351,7 +416,9 @@
               name="contact[subject]"
               class="ai-contact-image-input-{{ ai_gen_id }}"
               value="{% if form.subject %}{{ form.subject }}{% endif %}"
+              maxlength="100"
             >
+            <div class="ai-contact-error-msg-{{ ai_gen_id }}" id="contact-subject-error-{{ ai_gen_id }}" role="alert"></div>
           </div>
 
           <div class="ai-contact-image-field-{{ ai_gen_id }}">
@@ -362,7 +429,9 @@
               id="contact-message-{{ ai_gen_id }}"
               name="contact[body]"
               class="ai-contact-image-textarea-{{ ai_gen_id }}"
+              maxlength="2000"
             >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            <div class="ai-contact-error-msg-{{ ai_gen_id }}" id="contact-message-error-{{ ai_gen_id }}" role="alert"></div>
           </div>
 
           <div class="ai-contact-image-field-{{ ai_gen_id }}">
@@ -374,7 +443,10 @@
               id="contact-file-{{ ai_gen_id }}"
               name="contact[file]"
               class="ai-contact-image-file-{{ ai_gen_id }}"
+              accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf"
             >
+            <span class="ai-contact-file-hint-{{ ai_gen_id }}">Allowed formats: JPG, PNG, WEBP, PDF (Max 5MB)</span>
+            <div class="ai-contact-error-msg-{{ ai_gen_id }}" id="contact-file-error-{{ ai_gen_id }}" role="alert"></div>
           </div>
 
           <button type="submit" class="ai-contact-image-button-{{ ai_gen_id }}">
@@ -412,25 +484,252 @@
 
       connectedCallback() {
         const form = this.querySelector('form');
-        if (form) {
-          form.addEventListener('submit', function(e) {
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
+        if (!form) return;
 
-            requiredFields.forEach(function(field) {
-              if (!field.value.trim()) {
-                isValid = false;
-                field.setAttribute('aria-invalid', 'true');
-              } else {
-                field.removeAttribute('aria-invalid');
-              }
-            });
+        // Form elements
+        const nameInput = form.querySelector('#contact-name-{{ ai_gen_id }}');
+        const emailInput = form.querySelector('#contact-email-{{ ai_gen_id }}');
+        const subjectInput = form.querySelector('#contact-subject-{{ ai_gen_id }}');
+        const messageInput = form.querySelector('#contact-message-{{ ai_gen_id }}');
+        const fileInput = form.querySelector('#contact-file-{{ ai_gen_id }}');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const honeypot = form.querySelector('#contact-website-{{ ai_gen_id }}');
 
-            if (!isValid) {
-              e.preventDefault();
+        // Error message elements
+        const nameError = form.querySelector('#contact-name-error-{{ ai_gen_id }}');
+        const emailError = form.querySelector('#contact-email-error-{{ ai_gen_id }}');
+        const subjectError = form.querySelector('#contact-subject-error-{{ ai_gen_id }}');
+        const messageError = form.querySelector('#contact-message-error-{{ ai_gen_id }}');
+        const fileError = form.querySelector('#contact-file-error-{{ ai_gen_id }}');
+
+        // Validation patterns
+        // Name: 2-60 letters (including international accents), spaces, hyphens, periods, apostrophes only.
+        const nameRegex = /^[a-zA-Z\u00C0-\u024F\s\.\'\-]{2,60}$/;
+        // Email: standard RFC-compliant pattern requiring valid user, domain and 2+ char TLD.
+        const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,63}$/;
+        // Dangerous script/injection patterns
+        const dangerousPattern = /<[^>]*>|javascript:|data:|vbscript:|onload=|onerror=|onclick=|<script|<\/script/i;
+
+        function setError(input, errorEl, msg) {
+          if (!input || !errorEl) return;
+          input.classList.add('ai-contact-invalid-{{ ai_gen_id }}');
+          input.setAttribute('aria-invalid', 'true');
+          errorEl.textContent = msg;
+          errorEl.classList.add('active');
+        }
+
+        function clearError(input, errorEl) {
+          if (!input || !errorEl) return;
+          input.classList.remove('ai-contact-invalid-{{ ai_gen_id }}');
+          input.removeAttribute('aria-invalid');
+          errorEl.textContent = '';
+          errorEl.classList.remove('active');
+        }
+
+        function validateName() {
+          if (!nameInput) return true;
+          const val = nameInput.value.trim();
+          if (!val) {
+            setError(nameInput, nameError, 'Name is required.');
+            return false;
+          }
+          if (val.length < 2) {
+            setError(nameInput, nameError, 'Name must be at least 2 characters.');
+            return false;
+          }
+          if (val.length > 60) {
+            setError(nameInput, nameError, 'Name cannot exceed 60 characters.');
+            return false;
+          }
+          if (dangerousPattern.test(val)) {
+            setError(nameInput, nameError, 'Name contains disallowed characters or script tags.');
+            return false;
+          }
+          if (!nameRegex.test(val)) {
+            setError(nameInput, nameError, 'Name can only contain letters, spaces, hyphens, and apostrophes (no numbers or special characters).');
+            return false;
+          }
+          clearError(nameInput, nameError);
+          return true;
+        }
+
+        function validateEmail() {
+          if (!emailInput) return true;
+          const val = emailInput.value.trim();
+          if (!val) {
+            setError(emailInput, emailError, 'Email address is required.');
+            return false;
+          }
+          if (val.length > 100) {
+            setError(emailInput, emailError, 'Email address cannot exceed 100 characters.');
+            return false;
+          }
+          if (dangerousPattern.test(val) || /\s/.test(val)) {
+            setError(emailInput, emailError, 'Email address cannot contain spaces or invalid characters.');
+            return false;
+          }
+          if (!emailRegex.test(val)) {
+            setError(emailInput, emailError, 'Please enter a valid email address (e.g. name@example.com).');
+            return false;
+          }
+          clearError(emailInput, emailError);
+          return true;
+        }
+
+        function validateSubject() {
+          if (!subjectInput) return true;
+          const val = subjectInput.value.trim();
+          if (!val) {
+            clearError(subjectInput, subjectError);
+            return true;
+          }
+          if (val.length > 100) {
+            setError(subjectInput, subjectError, 'Subject cannot exceed 100 characters.');
+            return false;
+          }
+          if (dangerousPattern.test(val) || /[<>{}\[\]\\;]/.test(val)) {
+            setError(subjectInput, subjectError, 'Subject cannot contain code, HTML tags, or brackets (<, >, {, }).');
+            return false;
+          }
+          clearError(subjectInput, subjectError);
+          return true;
+        }
+
+        function validateMessage() {
+          if (!messageInput) return true;
+          const val = messageInput.value.trim();
+          if (!val) {
+            clearError(messageInput, messageError);
+            return true;
+          }
+          if (val.length > 2000) {
+            setError(messageInput, messageError, 'Message cannot exceed 2000 characters.');
+            return false;
+          }
+          if (dangerousPattern.test(val)) {
+            setError(messageInput, messageError, 'Message contains disallowed HTML tags or script content.');
+            return false;
+          }
+          clearError(messageInput, messageError);
+          return true;
+        }
+
+        function validateFile() {
+          if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            clearError(fileInput, fileError);
+            return true;
+          }
+          const file = fileInput.files[0];
+          const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'pdf'];
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+          const maxSizeBytes = 5 * 1024 * 1024; // 5 MB
+
+          const fileName = file.name || '';
+          const ext = fileName.split('.').pop().toLowerCase();
+
+          if (!allowedExtensions.includes(ext) || (file.type && !allowedTypes.includes(file.type.toLowerCase()))) {
+            setError(fileInput, fileError, 'Invalid file type. Only JPG, PNG, WEBP, or PDF files are permitted.');
+            fileInput.value = '';
+            return false;
+          }
+
+          if (file.size > maxSizeBytes) {
+            setError(fileInput, fileError, 'File size exceeds 5MB limit. Please select a smaller file.');
+            fileInput.value = '';
+            return false;
+          }
+
+          clearError(fileInput, fileError);
+          return true;
+        }
+
+        // Live event listeners
+        if (nameInput) {
+          nameInput.addEventListener('input', function() {
+            if (dangerousPattern.test(this.value)) {
+              this.value = this.value.replace(/[<>{}\[\]\\]/g, '');
+            }
+            if (nameError.classList.contains('active')) {
+              validateName();
             }
           });
+          nameInput.addEventListener('blur', validateName);
         }
+
+        if (emailInput) {
+          emailInput.addEventListener('input', function() {
+            if (emailError.classList.contains('active')) {
+              validateEmail();
+            }
+          });
+          emailInput.addEventListener('blur', validateEmail);
+        }
+
+        if (subjectInput) {
+          subjectInput.addEventListener('input', function() {
+            if (/[<>{}\[\]\\]/.test(this.value)) {
+              this.value = this.value.replace(/[<>{}\[\]\\]/g, '');
+            }
+            if (subjectError.classList.contains('active')) {
+              validateSubject();
+            }
+          });
+          subjectInput.addEventListener('blur', validateSubject);
+        }
+
+        if (messageInput) {
+          messageInput.addEventListener('input', function() {
+            if (messageError.classList.contains('active')) {
+              validateMessage();
+            }
+          });
+          messageInput.addEventListener('blur', validateMessage);
+        }
+
+        if (fileInput) {
+          fileInput.addEventListener('change', validateFile);
+        }
+
+        // Form submission handler
+        form.addEventListener('submit', function(e) {
+          // Honeypot check - trap bots silently
+          if (honeypot && honeypot.value.trim() !== '') {
+            e.preventDefault();
+            e.stopPropagation();
+            console.warn('Spam bot blocked.');
+            return;
+          }
+
+          const isNameValid = validateName();
+          const isEmailValid = validateEmail();
+          const isSubjectValid = validateSubject();
+          const isMessageValid = validateMessage();
+          const isFileValid = validateFile();
+
+          if (!isNameValid || !isEmailValid || !isSubjectValid || !isMessageValid || !isFileValid) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!isNameValid && nameInput) {
+              nameInput.focus();
+            } else if (!isEmailValid && emailInput) {
+              emailInput.focus();
+            } else if (!isSubjectValid && subjectInput) {
+              subjectInput.focus();
+            } else if (!isMessageValid && messageInput) {
+              messageInput.focus();
+            } else if (!isFileValid && fileInput) {
+              fileInput.focus();
+            }
+            return;
+          }
+
+          // Valid submission - prevent double submission
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+          }
+        });
       }
     }
 
