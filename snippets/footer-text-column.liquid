@@ -87,9 +87,7 @@
         <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
             <img src="{{ 'bbs_logo_official.svg' | asset_url }}" 
                  alt="{{ shop.name | escape }}" 
-                 width="135" 
-                 height="155" 
-                 style="width: 135px !important; max-width: 135px !important; height: auto !important; object-fit: contain !important; display: block !important;" 
+                 width="90" height="103" style="width: 90px !important; max-width: 90px !important; height: auto !important; object-fit: contain !important; display: block !important;" 
                  loading="lazy">
         </a>
       </div>
@@ -162,7 +160,4 @@
       </div>
     </div>
   </div>
-  {%- if show_social -%}
-    {% render 'footer-social', block: block, social_is_nested: true %}
-  {%- endif -%}
 </div>
