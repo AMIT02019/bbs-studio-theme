@@ -207,7 +207,7 @@
     "cart_product_gift": "gift-wrapping",
     "gift_content": "Do you want a gift wrap?",
     "main_cart_gift_content": "DO YOU WANT A GIFT WRAP?",
-    "show_cart_shipping": true,
+    "show_cart_shipping": false,
     "show_quick_cart_popular_product": false,
     "quick_cart_popular_product_title": "You May Also Like",
     "quick_cart_popular_product_collection": "jewellery",
