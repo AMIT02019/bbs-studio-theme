@@ -18,6 +18,7 @@
       "blocks": {
         "heading_shipping": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "SHIPPING POLICY",
             "heading_size": 32,
