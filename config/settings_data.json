@@ -207,7 +207,7 @@
     "cart_product_gift": "gift-wrapping",
     "gift_content": "Do you want a gift wrap?",
     "main_cart_gift_content": "DO YOU WANT A GIFT WRAP?",
-    "show_cart_shipping": false,
+    "show_cart_shipping": true,
     "show_quick_cart_popular_product": false,
     "quick_cart_popular_product_title": "You May Also Like",
     "quick_cart_popular_product_collection": "jewellery",
@@ -556,7 +556,8 @@
         "settings": {}
       }
     },
-    "share_image": "shopify://shop_images/bbs_social_share.png"
+    "share_image": "shopify://shop_images/bbs_social_share.png",
+    "show_calculator_free_shipping_message": false
   },
   "platform_customizations": {
     "custom_css": []
